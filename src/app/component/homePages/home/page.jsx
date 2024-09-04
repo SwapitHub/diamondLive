@@ -1,19 +1,19 @@
 "use client"; 
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
-import  {Banner}  from "../Banner";
-import { ShopDiamondShape } from "../ShopDiamondShape";
-import { SeeProducts } from "../SeeProducts";
-import { ShopDiamondCotegory } from "../ShopDiamondCotegory";
-import { BridalJewellery } from "../BridalJewellery";
+import { useMemo, useState } from "react";
+import { AnniversaryRingFeatured } from "../AnniversaryRingFeatured";
 import { AnniversaryRings } from "../AnniversaryRings";
+import { Banner } from "../Banner";
+import { BridalJewellery } from "../BridalJewellery";
 import { CelebarteLove } from "../CelebarteLove";
-import { WeddingCollection } from "../WeddingCollection";
 import { EngagementBridal } from "../EngagementBridal";
 import LoveBrilliance from "../LoveBrilliance";
-import { AnniversaryRingFeatured } from "../AnniversaryRingFeatured";
+import { SeeProducts } from "../SeeProducts";
+import { ShopDiamondCotegory } from "../ShopDiamondCotegory";
+import { ShopDiamondShape } from "../ShopDiamondShape";
+import { WeddingCollection } from "../WeddingCollection";
 
-export const HomePage = () => {
+ const HomePage = () => {
   const [shapeData, setShapeData] = useState([]);
   const [shopStyle, setShopStyle] = useState([]);
   const [homeContext, setHomeContext] = useState([]);
@@ -201,3 +201,5 @@ export const HomePage = () => {
     </>
   );
 };
+
+export default HomePage;
