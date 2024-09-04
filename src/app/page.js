@@ -44,11 +44,10 @@ export default function Home() {
         ) : (
           <>
             <DataProvider>
-              hgjhgjhgjhgjhg
-              {/* <ScrollToTopOnNavigate />
+              <ScrollToTopOnNavigate />
               <Header />
               <HomePage />
-              <Footer /> */}
+              <Footer />
             </DataProvider>
           </>
         )}

@@ -20,14 +20,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <UserProvider>
+        shamsher
+        {/* <UserProvider>
           <ReduxProvider>
             {children}
             <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/45427602.js"></script>
 
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/45427602.js"></script>
           </ReduxProvider>
-        </UserProvider>
+        </UserProvider> */}
       </body>
     </html>
   );
