@@ -13,7 +13,7 @@ import { EngagementBridal } from "../EngagementBridal";
 import LoveBrilliance from "../LoveBrilliance";
 import { AnniversaryRingFeatured } from "../AnniversaryRingFeatured";
 
-export const HomePage = () => {
+ const HomePage = () => {
   const [shapeData, setShapeData] = useState([]);
   const [shopStyle, setShopStyle] = useState([]);
   const [homeContext, setHomeContext] = useState([]);
@@ -201,3 +201,5 @@ export const HomePage = () => {
     </>
   );
 };
+
+export default HomePage;
