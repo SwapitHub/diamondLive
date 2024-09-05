@@ -20,7 +20,7 @@ export const Footer = () => {
   useEffect(() => {
     axios
       .get(
-        `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/siteinfo`
+        `https://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/siteinfo`
       )
       .then((res) => {
         setFtrIcon(res.data.data);
@@ -35,7 +35,7 @@ export const Footer = () => {
 
   useEffect(() => {
     axios
-      .get('http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/footer-pages')
+      .get('https://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/footer-pages')
       .then((res) => {
         setFooterData(res.data.data);
       })
@@ -87,7 +87,7 @@ export const Footer = () => {
                     <span>
                       <Link href={`tel:+${ftrIcon.phone}`}>
                         <svg
-                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns="https://www.w3.org/2000/svg"
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
@@ -115,7 +115,7 @@ export const Footer = () => {
                     <span>
                       <Link href={`mailto:${ftrIcon.email}`}>
                         <svg
-                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns="https://www.w3.org/2000/svg"
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
@@ -143,7 +143,7 @@ export const Footer = () => {
                     <span>
                       <Link href={`${ftrIcon.instagram}`} target="_blank">
                         <svg
-                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns="https://www.w3.org/2000/svg"
                           width="25"
                           height="24"
                           viewBox="0 0 25 24"
@@ -178,7 +178,7 @@ export const Footer = () => {
                     <span>
                       <Link href={`${ftrIcon.facebook}`} target="_blank">
                         <svg
-                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns="https://www.w3.org/2000/svg"
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
@@ -213,7 +213,7 @@ export const Footer = () => {
                     <span>
                       <Link href={`${ftrIcon.pinterest}`} target="_blank">
                         <svg
-                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns="https://www.w3.org/2000/svg"
                           width="25"
                           height="24"
                           viewBox="0 0 25 24"

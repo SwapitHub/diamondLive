@@ -11,7 +11,7 @@ import { CelebarteLove } from "../CelebarteLove";
 import { EngagementBridal } from "../EngagementBridal";
 import LoveBrilliance from "../LoveBrilliance";
 import { AnniversaryRingFeatured } from "../AnniversaryRingFeatured";
-import WeddingCollection from "../WeddingCollection";
+import { WeddingCollection } from "../WeddingCollection";
 
  const HomePage = () => {
   const [shapeData, setShapeData] = useState([]);
@@ -128,7 +128,41 @@ import WeddingCollection from "../WeddingCollection";
    }, []);
 
 
- 
+  const [engagementRings, setEngagementRings]= useState()
+  const[weddingJewelry,setWeddingJewelry] = useState()
+  const[weddingCollection, setWeddingCollection] =useState()
+  useMemo(() => {
+    axios
+      .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Natural diamonds`)
+      .then((res) => {
+        setEngagementRings(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useMemo(() => {
+    axios
+      .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Gemstones`)
+      .then((res) => {
+        setWeddingJewelry(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useMemo(() => {
+    axios
+      .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Lab Grown Diamonds`)
+      .then((res) => {
+        setWeddingCollection(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
 
 
@@ -156,8 +190,7 @@ import WeddingCollection from "../WeddingCollection";
         <BridalJewellery home={homeAllSections}/>
         <AnniversaryRings/>
         <CelebarteLove home={homeAllSections}/>
-
-        <WeddingCollection/>
+        <WeddingCollection engagementRings={engagementRings} weddingJewelry={weddingJewelry} weddingCollection={weddingCollection}/>
 
         <EngagementBridal home={homeAllSections}/>
 
@@ -169,4 +202,4 @@ import WeddingCollection from "../WeddingCollection";
   );
 };
 
-export default HomePage;
+export default HomePage
