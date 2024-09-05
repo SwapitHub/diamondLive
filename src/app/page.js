@@ -9,10 +9,12 @@ import { Header } from "./_componentStatic/Header";
 import "./globals.css";
 import "./style/globals.css";
 import HomePage from "./component/homePages/home/page";
+import Example from "./testing/Exaple";
 export const UserContext = createContext(null);
 
 export default function Home() {
   let [loading, setLoading] = useState(true);
+  console.log(process.env);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -44,9 +46,10 @@ export default function Home() {
           <>
             
               <ScrollToTopOnNavigate />
-              <Header />
+              <Example/>
+              {/* <Header />
               <HomePage />
-              <Footer />
+              <Footer /> */}
           </>
         )}
         <ToastContainer

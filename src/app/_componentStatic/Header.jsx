@@ -404,7 +404,7 @@ export const Header = () => {
                                       />
                                     </i>
                                   ) : null}
-                                  <Link href={`${subRes.alias}`}>
+                                  <Link href={`/${subRes.alias}`}>
                                     {subRes.name}
                                   </Link>
                                 </li>

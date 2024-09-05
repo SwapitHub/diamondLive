@@ -1,10 +1,12 @@
-// pages/wedding-collection.js
+"use client"
 import React from "react";
 import DOMPurify from "dompurify";
 import Link from "next/link";
 import axios from "axios"; // Ensure axios is imported
 
 const WeddingCollection = ({ engagementRings, weddingJewelry, weddingCollection }) => {
+  console.log(process.env);
+  
   return (
     <section className="own-engagment gemstone WeddingCollection">
       <div className="container">
@@ -64,7 +66,7 @@ const WeddingCollection = ({ engagementRings, weddingJewelry, weddingCollection 
 export async function getServerSideProps() {
   try {
     // Fetch engagement rings data using environment variable
-    const engagementRingsRes = await axios.get(process.env.API_ENGAGEMENT_RINGS);
+    const engagementRingsRes = await axios.get(process.env.API_ENGAGEMENT_RINGs);
     const engagementRings = engagementRingsRes.data.data;
 
     // Fetch wedding jewelry data using environment variable
