@@ -19,7 +19,7 @@ import { v4 as uuidv4 } from "uuid";
 // import { productList } from "../../../redux/productAction";
 // import LoaderSpinner from "../../LoaderSpinner";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { productList } from "../../../../store/actions/productActions";
 import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
@@ -31,7 +31,7 @@ import { Footer } from "@/app/_componentStatic/Footer";
 // import { Tabbing } from "../reusable_components/Tabbing";
 
 const StartWithASetting = (data) => {
-    
+    const searchParams = useSearchParams();
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ const StartWithASetting = (data) => {
 
   const menuMetal = pathSegments[2] || "";
 
-  const diamond_origin ='natural';
+  const diamond_origin =searchParams.get('diamond_origin');
   const user_id = secureLocalStorage.getItem("formData");
   const ring = "ring";
   const [items, setItems] = useState([]);
@@ -141,7 +141,7 @@ const StartWithASetting = (data) => {
   }, [menuMetal]);
 
   // bridal set for start
-  const checkedBridalSets = true;
+  const checkedBridalSets = searchParams.get("bridal-sets");
   let checkedBridalSetsNew = checkedBridalSets === "true";
 
   const [localBridalData, setLocalBridalData] = useState(checkedBridalSetsNew);
@@ -170,7 +170,7 @@ const StartWithASetting = (data) => {
   // gemstone
   const [newData, setNewData] = useState([]);
   const [diamondData, setDiamondData] = useState([]);
-  const stock_num = 0;
+  const stock_num = searchParams.get("stock_num");
 
   useMemo(() => {
     const fetchData = async () => {

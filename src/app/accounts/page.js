@@ -1,23 +1,23 @@
-import SearchPage from "./searchClient";
+import { MyAccountDashboard } from "./MyAccountDashboard";
 
-const fetchMetawishlist = async () => {
-  let wishlistServer = [];
+const fetchAccount = async () => {
+  let account = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=wishlist`
+      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=accounts`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    wishlistServer = await response.json();
+    account = await response.json();
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-  return wishlistServer;
+  return account;
 };
 
 export async function generateMetadata() {
-  const data = await fetchMetawishlist();
+  const data = await fetchAccount();
 
   if (data) {
     const metadata = {
@@ -61,13 +61,13 @@ export async function generateMetadata() {
     },
   };
 }
-const WishlistPageServer = async () => {
-  const wishlistServer = await fetchMetawishlist();
+const accountPageServer = async () => {
+  const account = await fetchAccount();
   return (
     <>
-      <SearchPage wishlistServer={wishlistServer} />
+      <MyAccountDashboard account={account} />
     </>
   );
 };
 
-export default WishlistPageServer;
+export default accountPageServer;

@@ -6,10 +6,9 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { Footer } from "./_componentStatic/Footer";
 import { Header } from "./_componentStatic/Header";
-import { DataProvider } from "./context/DataContext";
+import { HomePage } from "./component/homePages/home/page";
 import "./globals.css";
 import "./style/globals.css";
-import HomePage from "./component/homePages/home/page";
 export const UserContext = createContext(null);
 
 export default function Home() {
@@ -43,12 +42,11 @@ export default function Home() {
           <p>Loader...</p>
         ) : (
           <>
-            <DataProvider>
+            
               <ScrollToTopOnNavigate />
               <Header />
               <HomePage />
               <Footer />
-            </DataProvider>
           </>
         )}
         <ToastContainer

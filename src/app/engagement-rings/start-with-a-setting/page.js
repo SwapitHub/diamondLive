@@ -2,9 +2,8 @@ import StartWithASetting from "./RingListPageClient";
 
 
 async function fetchDataFromAPI(detailRingPage) {
-  const response = await fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/footer-pages`);
+  const response = await fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/check?menu=engagement-rings&subcategory=start-with-a-setting`);
   const data = await response.json();
-  console.log(data);
   
   return data;
 }
@@ -12,11 +11,25 @@ async function fetchDataFromAPI(detailRingPage) {
 export async function generateMetadata({ params }) {
   const data = await fetchDataFromAPI(params.detailRingPage);
 
-  if (Array.isArray(data.data)) {
-    const metadata = data.data.map((item) => ({
-      title: item.name || "Default Title",
-      description: item.description || "Default Description", 
-    }))[0]; 
+  if (data) {
+    const metadata = {
+      title: data.data.meta_title || "Default Title",
+      description: data.data.meta_description || "Default Description",
+      openGraph: {
+        title: data.data.meta_title || "Default Title",
+        description: data.data.meta_description || "Default Description",
+        url: data.data.meta_url || "http://default-url.com",
+        siteName: data.data.meta_site_name || "Default Site Name",
+        images: [
+          {
+            url: data.data.meta_image_url || "http://default-image-url.com",
+            width: 800,
+            height: 600,
+            alt: data.data.meta_image_alt || "Default Image Alt",
+          },
+        ],
+      },
+    };
 
     return metadata;
   }
@@ -24,6 +37,20 @@ export async function generateMetadata({ params }) {
   return {
     title: "Default Title",
     description: "Default Description",
+    openGraph: {
+      title: "Default Title",
+      description: "Default Description",
+      url: "http://default-url.com",
+      siteName: "Default Site Name",
+      images: [
+        {
+          url: "http://default-image-url.com",
+          width: 800,
+          height: 600,
+          alt: "Default Image Alt",
+        },
+      ],
+    },
   };
 }
 

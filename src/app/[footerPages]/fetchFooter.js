@@ -1,13 +1,11 @@
 "use client";
-import axios from "axios";
 import DOMPurify from "dompurify";
 import $ from "jquery";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Footer } from "../_componentStatic/Footer";
 import Header from "../_componentStatic/Header";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
-import Head from "next/head";
 
 const ContactUs = ({ posts }) => {
   const [FooterData, setFooterData] = useState([]);

@@ -1,23 +1,23 @@
-import SearchPage from "./searchClient";
+import { LoginSignup } from "./LoginClient";
 
-const fetchMetawishlist = async () => {
-  let wishlistServer = [];
+const fetchLogin = async () => {
+  let login = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=wishlist`
+      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=login`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    wishlistServer = await response.json();
+    login = await response.json();
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-  return wishlistServer;
+  return login;
 };
 
 export async function generateMetadata() {
-  const data = await fetchMetawishlist();
+  const data = await fetchLogin();
 
   if (data) {
     const metadata = {
@@ -61,13 +61,13 @@ export async function generateMetadata() {
     },
   };
 }
-const WishlistPageServer = async () => {
-  const wishlistServer = await fetchMetawishlist();
+const LoginPageServer = async () => {
+  const login = await fetchLogin();
   return (
     <>
-      <SearchPage wishlistServer={wishlistServer} />
+      <LoginSignup login={login} />
     </>
   );
 };
 
-export default WishlistPageServer;
+export default LoginPageServer;

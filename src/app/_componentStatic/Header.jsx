@@ -21,6 +21,8 @@ import Link from "next/link";
 import { WishlistHover } from "./WishlistHover";
 import { CartHover } from "./CartHover";
 import { SearchSuggestion } from "./SearchSuggestion";
+import { Account } from "./Account";
+import { OrderHistory } from "./OrderHistory";
 export const Header = () => {
   const [active, setActive] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -134,17 +136,17 @@ export const Header = () => {
   const [bag, setBag] = useState(false);
   function handleWish() {
     setWishHovered(true);
-    setShowSuggestionHeader(false)
+    setShowSuggestionHeader(false);
     setActive(false);
   }
   function handleMouse() {
     setHovered(true);
-    setShowSuggestionHeader(false)
+    setShowSuggestionHeader(false);
     setActive(false);
   }
   function handleBag() {
     setBag(true);
-    setShowSuggestionHeader(false)
+    setShowSuggestionHeader(false);
     setActive(false);
   }
   // =========
@@ -344,9 +346,9 @@ export const Header = () => {
                       }`}
                   </span>
                   <AiOutlineUser />
-                </Link>
+                </Link> 
 
-                {/* {hovered && userId ? <OrderHistory /> : <Account />} */}
+                {hovered && userId ? <OrderHistory /> : <Account />}
               </div>
             </div>
           </div>
@@ -357,70 +359,62 @@ export const Header = () => {
                 var urlslug = "";
 
                 return (
-                  
-                    <li className={res.slug} key={res?.id}>
-                      <Link
-                        href={
-                          res.slug == "gemstones"
-                            ? `gemstone`
-                            : res.slug == "diamonds"
-                            ? `diamond`
-                            : res.slug
-                        }
-                      >
-                        {res.name}
-                      </Link>
-                      <div className="engagement-ring flex">
-                        {res.categories?.map((catRes) => {
-                          return (
-                           
-                              <ul>
-                                <li key={catRes?.id}>
-                                  <Link
-                                    href={`${
-                                      res.name === "BRAND"
-                                        ? catRes.slug
-                                        : "javascript:void(0)"
-                                    }`}
-                                    style={{
-                                      cursor:
-                                        res.name === "BRAND"
-                                          ? "pointer"
-                                          : "text",
-                                    }}
-                                  >
-                                    {catRes.name}
+                  <li className={res.slug} key={res?.id}>
+                    <Link
+                      href={
+                        res.slug == "gemstones"
+                          ? `gemstone`
+                          : res.slug == "diamonds"
+                          ? `diamond`
+                          : res.slug
+                      }
+                    >
+                      {res.name}
+                    </Link>
+                    <div className="engagement-ring flex">
+                      {res.categories?.map((catRes) => {
+                        return (
+                          <ul>
+                            <li key={catRes?.id}>
+                              <Link
+                                href={`${
+                                  res.name === "BRAND"
+                                    ? catRes.slug
+                                    : "javascript:void(0)"
+                                }`}
+                                style={{
+                                  cursor:
+                                    res.name === "BRAND" ? "pointer" : "text",
+                                }}
+                              >
+                                {catRes.name}
+                              </Link>
+                            </li>
+
+                            {catRes.subcategories.map((subRes) => {
+                              return (
+                                <li key={subRes?.id}>
+                                  {subRes.image ? (
+                                    <i>
+                                      <img
+                                        width="auto"
+                                        height="auto"
+                                        src={subRes.image}
+                                        alt={subRes.name}
+                                      />
+                                    </i>
+                                  ) : null}
+                                  <Link href={`${subRes.alias}`}>
+                                    {subRes.name}
                                   </Link>
                                 </li>
-
-                                {catRes.subcategories.map((subRes) => {
-                                  return (
-                                   
-                                      <li key={subRes?.id}>
-                                        {subRes.image ? (
-                                          <i>
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              src={subRes.image}
-                                              alt={subRes.name}
-                                            />
-                                          </i>
-                                        ) : null}
-                                        <Link href={`${subRes.alias}`}>
-                                          {subRes.name}
-                                        </Link>
-                                      </li>
-                                   
-                                  );
-                                })}
-                              </ul>
-                           
-                          );
-                        })}
-                      </div>
-                    </li>
-                 
+                              );
+                            })}
+                          </ul>
+                        );
+                      })}
+                    </div>
+                  </li>
                 );
               })}
             </ul>
@@ -591,7 +585,7 @@ export const Header = () => {
                           <ul>
                             <li key={catItem?.id}>
                               <Link
-                                 href={`${
+                                href={`${
                                   item.name === "BRAND"
                                     ? catItem.slug
                                     : "javascript:void(0)"
@@ -607,26 +601,24 @@ export const Header = () => {
                             </li>
                             {catItem.subcategories.map((subItem, index) => {
                               return (
-                               
-                                  <li key={subItem?.id}>
-                                    {subItem.image ? (
-                                      <i>
-                                        <img
-                                          width="auto"
-                                          height="auto"
-                                          src={subItem.image}
-                                          alt={subItem?.name}
-                                        />
-                                      </i>
-                                    ) : null}
-                                    <Link
-                                      onClick={ToggleClass}
-                                      href={`${subItem.alias}`}
-                                    >
-                                      {subItem.name}
-                                    </Link>
-                                  </li>
-                               
+                                <li key={subItem?.id}>
+                                  {subItem.image ? (
+                                    <i>
+                                      <img
+                                        width="auto"
+                                        height="auto"
+                                        src={subItem.image}
+                                        alt={subItem?.name}
+                                      />
+                                    </i>
+                                  ) : null}
+                                  <Link
+                                    onClick={ToggleClass}
+                                    href={`${subItem.alias}`}
+                                  >
+                                    {subItem.name}
+                                  </Link>
+                                </li>
                               );
                             })}
                           </ul>
@@ -638,7 +630,10 @@ export const Header = () => {
               ))}
             </nav>
             <div className="nav-mobile-logo">
-              <Link href="/" onClick={active === true ? ToggleClass : undefined}>
+              <Link
+                href="/"
+                onClick={active === true ? ToggleClass : undefined}
+              >
                 <LazyLoadImage
                   width="auto"
                   height="auto"
@@ -674,8 +669,7 @@ export const Header = () => {
                       ? ""
                       : "bag-active"
                   }`}
-                >                  
-
+                >
                   <Link href={"/wishlist"}>
                     <AiOutlineHeart />
                   </Link>
@@ -703,7 +697,6 @@ export const Header = () => {
                   onKeyUp={(e) => handleSuggestion(e.target.value)}
                   value={searching}
                 />
-                
               </form>
               <div className="search-icon">
                 <Link href="/search">
