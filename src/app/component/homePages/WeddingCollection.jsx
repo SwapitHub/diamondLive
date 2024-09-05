@@ -2,7 +2,7 @@
 import React from "react";
 import DOMPurify from "dompurify";
 import Link from "next/link";
-import axios from "axios"; // Make sure axios is imported
+import axios from "axios"; // Ensure axios is imported
 
 const WeddingCollection = ({ engagementRings, weddingJewelry, weddingCollection }) => {
   return (
@@ -63,22 +63,16 @@ const WeddingCollection = ({ engagementRings, weddingJewelry, weddingCollection 
 // Fetch data using getServerSideProps
 export async function getServerSideProps() {
   try {
-    // Fetch engagement rings data
-    const engagementRingsRes = await axios.get(
-      "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Natural diamonds"
-    );
+    // Fetch engagement rings data using environment variable
+    const engagementRingsRes = await axios.get(process.env.API_ENGAGEMENT_RINGS);
     const engagementRings = engagementRingsRes.data.data;
 
-    // Fetch wedding jewelry data
-    const weddingJewelryRes = await axios.get(
-      "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Gemstones"
-    );
+    // Fetch wedding jewelry data using environment variable
+    const weddingJewelryRes = await axios.get(process.env.API_WEDDING_JEWELRY);
     const weddingJewelry = weddingJewelryRes.data.data;
 
-    // Fetch wedding collection data
-    const weddingCollectionRes = await axios.get(
-      "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Lab Grown Diamonds"
-    );
+    // Fetch wedding collection data using environment variable
+    const weddingCollectionRes = await axios.get(process.env.API_WEDDING_COLLECTION);
     const weddingCollection = weddingCollectionRes.data.data;
 
     // Pass fetched data as props to the component
