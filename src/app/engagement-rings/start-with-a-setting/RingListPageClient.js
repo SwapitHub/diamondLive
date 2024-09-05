@@ -22,28 +22,31 @@ import { v4 as uuidv4 } from "uuid";
 import { useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { productList } from "../../../../store/actions/productActions";
-import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
+import {
+  addToWishlist,
+  removeToWishlist,
+} from "../../../../store/actions/wishlistAction";
 import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
 import Header from "@/app/_componentStatic/Header";
 import { Footer } from "@/app/_componentStatic/Footer";
+import { Tabbing } from "@/app/_componentStatic/Tabbing";
+import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 // import { HeaderMetaTag } from "../../../seoTags/MetaTagHeader";
 // import { Tabbing } from "../reusable_components/Tabbing";
 
 const StartWithASetting = (data) => {
-    const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
-  const router = useRouter(); 
+  const router = useRouter();
 
   const [pathSegments, setPathSegments] = useState([]);
   const [queryParams, setQueryParams] = useState({});
   useEffect(() => {
     if (router.pathname) {
-      const segments = router.pathname
-        .split("/")
-        .filter((segment) => segment);
+      const segments = router.pathname.split("/").filter((segment) => segment);
       setPathSegments(segments);
     }
     setQueryParams(new URLSearchParams(window.location.search));
@@ -54,15 +57,14 @@ const StartWithASetting = (data) => {
 
   const { menuShapeName, menuShopStyle, trellisRing } = queryParams;
 
-
   const menuMetal = pathSegments[2] || "";
 
-  const diamond_origin =searchParams.get('diamond_origin');
+  const diamond_origin = searchParams.get("diamond_origin");
   const user_id = secureLocalStorage.getItem("formData");
   const ring = "ring";
   const [items, setItems] = useState([]);
- 
-  const {baseUrl, imgAssetsUrl, imgBaseUrl} = useContext(UserContext)
+
+  const { baseUrl, imgAssetsUrl, imgBaseUrl } = useContext(UserContext);
   const options = [
     { value: "best_seller", label: "Best Sellers" },
     { value: "Newest", label: "Newest" },
@@ -163,7 +165,6 @@ const StartWithASetting = (data) => {
     router.push(newURL); // Updated from history.replace
     setLocalBridalData((prevState) => !prevState);
   };
-  
 
   // bridal set for end
 
@@ -212,7 +213,7 @@ const StartWithASetting = (data) => {
 
       const headers = {
         Authorization:
-        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
+          "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
       };
 
       try {
@@ -288,12 +289,13 @@ const StartWithASetting = (data) => {
                 ...prevData,
                 ...updatedProducts,
               ]);
-              setLoading(false);
             } else {
               setFilterRoseData(updatedProducts);
             }
 
-            setLoading(false);
+            setTimeout(() => {
+              setLoading(false);
+            }, 1500);
           }
         })
         .catch(() => {
@@ -578,7 +580,6 @@ const StartWithASetting = (data) => {
     secureLocalStorage.removeItem("clickedShape");
     secureLocalStorage.removeItem("metaColorIds");
   };
-  
 
   const resetAllColor = () => {
     commonMetalColor("White");
@@ -590,7 +591,6 @@ const StartWithASetting = (data) => {
     setMetalColorValue(white);
     secureLocalStorage.removeItem("metaColorIds");
   };
-  
 
   // =============== shop by  style end==============
 
@@ -966,12 +966,9 @@ const StartWithASetting = (data) => {
 
   var newJoinBridalSet = newSubCategory.concat(bridalSetSearch);
 
-
-  
   return (
     <>
-    
-    <Header/>
+      <Header />
       {/* <HeaderMetaTag
         mainCategory={mainCategory}
         menuShapeName
@@ -1019,18 +1016,17 @@ const StartWithASetting = (data) => {
       >
         <div className="main-content choose-setting-pages ">
           {stock_num ? (
-            // <Tabbing
-            //   newData={newData}
-            //   stock_num={stock_num}
-            //   type="diamond-ring"
-            //   ringName={`2. Choose Rings`}
-            //   ringLink={`javascript:void(0)`}
-            //   diamondName={` 1. Choose Diamonds`}
-            //   diamondLink={`/engagement-rings/start-with-a-diamond/`}
-            //   gemStoneName={`1. Choose Gemstones`}
-            //   gemStoneLink={`/gemstones/start-with-a-gemstone`}
-            // />
-            null
+            <Tabbing
+              newData={newData}
+              stock_num={stock_num}
+              type="diamond-ring"
+              ringName={`2. Choose Rings`}
+              ringLink={`javascript:void(0)`}
+              diamondName={` 1. Choose Diamonds`}
+              diamondLink={`/engagement-rings/start-with-a-diamond/`}
+              gemStoneName={`1. Choose Gemstones`}
+              gemStoneLink={`/gemstones/start-with-a-gemstone`}
+            />
           ) : (
             <>
               <h1 className="center">
@@ -1042,14 +1038,14 @@ const StartWithASetting = (data) => {
               </h1>
 
               {/* ====================create your ring start */}
-              {/* <Tabbing
+              <Tabbing
                 newData={newData}
                 type="ring"
                 ringName={`1. Choose Setting`}
                 ringLink={`javascript:void(0)`}
                 diamondName={` 2. Choose Diamonds`}
                 diamondLink={`/engagement-rings/start-with-a-diamond/`}
-              /> */}
+              />
             </>
           )}
           {/* ====================create your ring end */}
@@ -1603,7 +1599,10 @@ const StartWithASetting = (data) => {
           ))}
           {shapeName && (
             <div className={`breadCram `}>
-              <Link href="javascript:void(0)" onClick={() => handleShapeRemove()}>
+              <Link
+                href="javascript:void(0)"
+                onClick={() => handleShapeRemove()}
+              >
                 {`Shape ` + shapeName}
                 <span>
                   <IoClose />
@@ -1989,23 +1988,19 @@ const StartWithASetting = (data) => {
               </div>
             ))
           ) : (
-            <h3 className="center">data not found</h3>
+            <h3 className="center">{loading ? null : "Data Not Found"}</h3>
           )}
         </div>
         {/* <div>
           <ProductListMoreToExplore />
           </div> */}
-        <div>{loading && '...Loading'}</div>
-        <div>
-          {/* <ProductListFaq /> */}
-        </div>
+        <div>{loading && <LoaderSpinner/>}</div>
+        <div>{/* <ProductListFaq /> */}</div>
       </div>
 
-      <Footer/>
+      <Footer />
     </>
   );
 };
 
 export default StartWithASetting;
-
-

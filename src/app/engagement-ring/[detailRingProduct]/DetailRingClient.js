@@ -606,7 +606,7 @@ const DetailRingProduct = ({ ringDetail }) => {
   // ==============center stone
   const [centerStoneData, setCenterStoneData] = useState();
   const handleCenterStone = (centerStoneData) => {
-    setCenterStoneData(centerStoneData);
+    setCenterStoneData((prev)=>centerStoneData === prev ? null : centerStoneData);
   };
   const handleCenterStoneFull = () => {
     if (!selectedOption) {
@@ -4657,6 +4657,23 @@ ${changeClick === rose ? "active" : ""}
                               </div>
                             </div>
                           </div>
+                          {centerStoneData ? (
+                            <div className="ring-info">
+                              <span>Diamond Information</span>
+                              <div>
+                                <span>Centerstone: {centerStoneData}</span>
+                              </div>
+                              <div>
+                                <span>Color: F - H</span>
+                              </div>
+                              <div>
+                                <span>Clarity: VS+ </span>
+                              </div>
+                              <div>
+                                <span>Cut: Very Good</span>
+                              </div>
+                            </div>
+                          ) : null}
                         </div>
                       </div>
                     </div>

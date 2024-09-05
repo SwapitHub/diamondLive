@@ -95,10 +95,10 @@ h4 {
   padding-top: 0; 
 }
 
-/* @font-face {
-  font-family: Sackers Gothic Light AT;
-  src: url(../fonts/Sackers\ Gothic\ Light\ AT\ Regular.otf);
-} */
+@font-face {
+  font-family: 'Sackers Gothic Light AT Regular';
+  src: url('/_next/static/media/Sackers%20Gothic%20Light%20AT%20Regular.a2647ab9.otf') format('opentype');
+}
 
 .button {
   border-radius: 5px;
@@ -1772,7 +1772,6 @@ section.shipping-delivery {
 }
 
 .shipping-fees > h3,
-section.diamond-buying-guide h3,
 .lab-grown-diamonds-main h3,
 .ring-sizer h3,
 .our-story h3 {
@@ -1781,6 +1780,10 @@ section.diamond-buying-guide h3,
   padding-top: 25px;
   padding-bottom: 15px;
 }
+section.diamond-buying-guide h3{
+  margin-top: 20px
+}
+
 
 .shipping-delivery-main .shipping-content > p {
   padding: 10px 0;

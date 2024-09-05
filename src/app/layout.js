@@ -1,9 +1,10 @@
 import { Inter } from "next/font/google";
 import { UserProvider } from "./context/UserContext";
-import "./globals.css";
 import ReduxProvider from "./reduxProvider";
-import "./style/globals.css";
 import { DataProvider } from "./context/DataContext";
+import "./style/app.css";
+import "./style/style.css";
+
 
 const inter = Inter({ subsets: ["latin"] });
 

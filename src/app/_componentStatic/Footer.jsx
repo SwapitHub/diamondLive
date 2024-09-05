@@ -7,7 +7,7 @@ import NewsLetter from "./NewsLetter";
 import { UserContext } from "../context/UserContext";
 export const Footer = () => {
   const [selected, setSelected] = useState(null);
-const {baseUrl} = useContext(UserContext)
+ const {baseUrl} = useContext(UserContext)
   const toggle = (i) => {
     if (selected === i) {
       setSelected(null);
@@ -20,7 +20,9 @@ const {baseUrl} = useContext(UserContext)
   const [ftrIcon, setFtrIcon] = useState([]);
   useEffect(() => {
     axios
-      .get(`${baseUrl}/siteinfo`)
+      .get(
+        `${baseUrl}/siteinfo`
+      )
       .then((res) => {
         setFtrIcon(res.data.data);
       })
@@ -86,7 +88,7 @@ const {baseUrl} = useContext(UserContext)
                     <span>
                       <Link href={`tel:+${ftrIcon.phone}`}>
                         <svg
-                          xmlns="https://www.w3.org/2000/svg"
+                          xmlns="http://www.w3.org/2000/svg"
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
@@ -114,7 +116,7 @@ const {baseUrl} = useContext(UserContext)
                     <span>
                       <Link href={`mailto:${ftrIcon.email}`}>
                         <svg
-                          xmlns="https://www.w3.org/2000/svg"
+                          xmlns="http://www.w3.org/2000/svg"
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
@@ -142,7 +144,7 @@ const {baseUrl} = useContext(UserContext)
                     <span>
                       <Link href={`${ftrIcon.instagram}`} target="_blank">
                         <svg
-                          xmlns="https://www.w3.org/2000/svg"
+                          xmlns="http://www.w3.org/2000/svg"
                           width="25"
                           height="24"
                           viewBox="0 0 25 24"
@@ -177,7 +179,7 @@ const {baseUrl} = useContext(UserContext)
                     <span>
                       <Link href={`${ftrIcon.facebook}`} target="_blank">
                         <svg
-                          xmlns="https://www.w3.org/2000/svg"
+                          xmlns="http://www.w3.org/2000/svg"
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
@@ -212,7 +214,7 @@ const {baseUrl} = useContext(UserContext)
                     <span>
                       <Link href={`${ftrIcon.pinterest}`} target="_blank">
                         <svg
-                          xmlns="https://www.w3.org/2000/svg"
+                          xmlns="http://www.w3.org/2000/svg"
                           width="25"
                           height="24"
                           viewBox="0 0 25 24"

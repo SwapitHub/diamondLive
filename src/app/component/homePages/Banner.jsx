@@ -6,7 +6,6 @@ import Slider from "react-slick";
 
 export const Banner = ({homeContext}) => {
   
-console.log(homeContext);
 
 
   const settings = {

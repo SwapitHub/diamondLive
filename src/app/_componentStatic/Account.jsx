@@ -140,12 +140,7 @@ export const Account = () => {
                 .get(
                   URL,
 
-                  {
-                    headers: {
-                      "Content-Type": "application/json",
-                      "X-CSRF-TOKEN": shapeData,
-                    },
-                  }
+                  
                 )
                 .then((response) => {
                   if (response.status === 200) {
@@ -286,10 +281,7 @@ export const Account = () => {
 
               axios
                 .get(wishListURL, {
-                  headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": shapeData,
-                  },
+                 
                 })
                 .then((response) => {
                   if (response.status === 200) {
