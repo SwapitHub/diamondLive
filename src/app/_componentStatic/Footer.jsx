@@ -1,12 +1,13 @@
 "use client";
 import axios from "axios";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { FooterMobile } from "./FooterMobile";
 import NewsLetter from "./NewsLetter";
+import { UserContext } from "../context/UserContext";
 export const Footer = () => {
   const [selected, setSelected] = useState(null);
-
+const {baseUrl} = useContext(UserContext)
   const toggle = (i) => {
     if (selected === i) {
       setSelected(null);
@@ -19,9 +20,7 @@ export const Footer = () => {
   const [ftrIcon, setFtrIcon] = useState([]);
   useEffect(() => {
     axios
-      .get(
-        `https://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/siteinfo`
-      )
+      .get(`${baseUrl}/siteinfo`)
       .then((res) => {
         setFtrIcon(res.data.data);
       })
@@ -35,7 +34,7 @@ export const Footer = () => {
 
   useEffect(() => {
     axios
-      .get('https://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/footer-pages')
+      .get(`${baseUrl}/footer-pages`)
       .then((res) => {
         setFooterData(res.data.data);
       })
