@@ -1,6 +1,6 @@
 "use client"; 
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import  {Banner}  from "../Banner";
 import { ShopDiamondShape } from "../ShopDiamondShape";
 import { SeeProducts } from "../SeeProducts";
@@ -12,16 +12,19 @@ import { EngagementBridal } from "../EngagementBridal";
 import LoveBrilliance from "../LoveBrilliance";
 import { AnniversaryRingFeatured } from "../AnniversaryRingFeatured";
 import { WeddingCollection } from "../WeddingCollection";
+import { UserContext } from "@/app/context/UserContext";
 
  const HomePage = () => {
   const [shapeData, setShapeData] = useState([]);
   const [shopStyle, setShopStyle] = useState([]);
   const [homeContext, setHomeContext] = useState([]);
   const[homeAllSections, setHomeAllSections] = useState([])
-
+  const {   
+    baseUrl
+  } = useContext(UserContext);
   useMemo(() => {
     axios
-      .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/diamondshape`)
+      .get(`${baseUrl}/diamondshape`)
       .then((res) => {
         setShapeData(res.data.data);
       })
@@ -34,7 +37,7 @@ import { WeddingCollection } from "../WeddingCollection";
   useMemo(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/product-style`);
+        const response = await axios.get(`${baseUrl}/product-style`);
         setShopStyle(response.data.data);
       } catch (error) {
         console.log("shop style api error:", error);
@@ -48,7 +51,7 @@ import { WeddingCollection } from "../WeddingCollection";
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/banners`
+          `${baseUrl}/banners`
         );
         const data = response.data.data;
 
@@ -65,7 +68,7 @@ import { WeddingCollection } from "../WeddingCollection";
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/homecontent`
+          `${baseUrl}/homecontent`
         );
         const data = response.data.data;
 
@@ -85,7 +88,7 @@ import { WeddingCollection } from "../WeddingCollection";
   const [diamondStuds, setDiamondStuds] = useState()
   useMemo(() => {
      axios
-       .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Trellis Rings`)
+       .get(`${baseUrl}/widget/Trellis Rings`)
        .then((res) => {
          setAnniversaryRings(res.data.data);
        })
@@ -96,7 +99,7 @@ import { WeddingCollection } from "../WeddingCollection";
  
    useMemo(() => {
      axios
-       .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Vintage Rings`)
+       .get(`${baseUrl}/widget/Vintage Rings`)
        .then((res) => {
          setDiamondPendants(res.data.data);
        })
@@ -107,7 +110,7 @@ import { WeddingCollection } from "../WeddingCollection";
  
    useMemo(() => {
      axios
-       .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Eternity Rings`)
+       .get(`${baseUrl}/widget/Eternity Rings`)
        .then((res) => {
          setTennisBracelets(res.data.data);
        })
@@ -118,7 +121,7 @@ import { WeddingCollection } from "../WeddingCollection";
  
    useMemo(() => {
      axios
-       .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Nature Inspired Rings`)
+       .get(`${baseUrl}/widget/Nature Inspired Rings`)
        .then((res) => {
          setDiamondStuds(res.data.data);
        })
@@ -133,7 +136,7 @@ import { WeddingCollection } from "../WeddingCollection";
   const[weddingCollection, setWeddingCollection] =useState()
   useMemo(() => {
     axios
-      .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Natural diamonds`)
+      .get(`${baseUrl}/widget/Natural diamonds`)
       .then((res) => {
         setEngagementRings(res.data.data);
       })
@@ -144,7 +147,7 @@ import { WeddingCollection } from "../WeddingCollection";
 
   useMemo(() => {
     axios
-      .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Gemstones`)
+      .get(`${baseUrl}/widget/Gemstones`)
       .then((res) => {
         setWeddingJewelry(res.data.data);
       })
@@ -155,7 +158,7 @@ import { WeddingCollection } from "../WeddingCollection";
 
   useMemo(() => {
     axios
-      .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/widget/Lab Grown Diamonds`)
+      .get(`${baseUrl}/widget/Lab Grown Diamonds`)
       .then((res) => {
         setWeddingCollection(res.data.data);
       })
@@ -170,7 +173,7 @@ import { WeddingCollection } from "../WeddingCollection";
   const[siteInfo,setSiteInfo]= useState()
   useMemo(() => {
     axios
-      .get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/siteinfo`)
+      .get(`${baseUrl}/siteinfo`)
       .then((res) => {
         setSiteInfo(res.data.data);
       })
