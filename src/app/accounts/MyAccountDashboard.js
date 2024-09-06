@@ -76,7 +76,7 @@ export const MyAccountDashboard = () => {
 
   return (
     <>
-    <Header/>
+  
       {/* <MetaTagCategoryPage
         mainCategory={mainCategory}
         currentUrl={currentUrl}
@@ -446,7 +446,7 @@ export const MyAccountDashboard = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      
     </>
   );
 };

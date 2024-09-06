@@ -15,7 +15,7 @@ const ForgetPass = () => {
   }
   return (
     <>
-    <Header/>
+   
       <section className="password-rest">
         <div className="container">
           
@@ -61,7 +61,7 @@ const ForgetPass = () => {
           </div>
         </div>
       </section>
-      <Footer/>
+      
     </>
   );
 };

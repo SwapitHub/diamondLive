@@ -968,7 +968,7 @@ const StartWithASetting = (data) => {
 
   return (
     <>
-      {/* <Header /> */}
+    
       {/* <HeaderMetaTag
         mainCategory={mainCategory}
         menuShapeName
@@ -1998,7 +1998,7 @@ const StartWithASetting = (data) => {
         <div>{/* <ProductListFaq /> */}</div>
       </div>
 
-      {/* <Footer /> */}
+      
     </>
   );
 };

@@ -287,7 +287,7 @@ const WishList = ({wishlistServer}) => {
         mainCategory={mainCategory}
         currentUrl={currentUrl}
       /> */}
-    <Header/>
+   
       {userId ? (
         <section className="wishlist-main wishlist-data-base">
           <div className="container">
@@ -3493,7 +3493,7 @@ const WishList = ({wishlistServer}) => {
           </div>
         </section>
       )}
-      <Footer/>
+     
     </>
   );
 };

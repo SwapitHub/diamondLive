@@ -442,7 +442,7 @@ export const LoginSignup = () => {
   return (
     <>
      {/* <MetaTagCategoryPage mainCategory={mainCategory}  currentUrl={currentUrl}/> */}
-     <Header/>
+   
       <div className="my-accout-section">
         <div className="container container-1290-list-pages">
           
@@ -589,7 +589,7 @@ export const LoginSignup = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+     
     </>
   );
 };

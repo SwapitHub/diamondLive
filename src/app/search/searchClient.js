@@ -485,7 +485,7 @@ const SearchPage = () => {
   return (
 
     <>
-    <Header/>
+   
     {/* <MetaTagCategoryPage mainCategory={mainCategory}  currentUrl={currentUrl}/> */}
 
       <div className="search-filter-sort-parent">
@@ -828,7 +828,7 @@ const SearchPage = () => {
         </div>
       </div>
       <div>{loading && <LoaderSpinner />}</div>
-      <Footer/>
+      
     </>
   );
 };

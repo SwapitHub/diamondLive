@@ -59,7 +59,7 @@ const Help = () => {
   };
   return (
     <>
-    <Header/>
+   
       <section className="request-help-main">
         <div className="container">
           <div className="request-helped-cnt">
@@ -242,7 +242,7 @@ const Help = () => {
           </div>
         </div>
       </section>
-      <Footer/>
+      
     </>
   );
 };

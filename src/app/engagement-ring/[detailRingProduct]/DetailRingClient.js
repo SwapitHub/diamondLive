@@ -728,7 +728,7 @@ const DetailRingProduct = ({ ringDetail }) => {
   };
   return (
     <>
-      <Header />
+   
       {/* <MetaTagDetailsPage
         description={
           filterData?.product?.meta_description
@@ -4911,7 +4911,7 @@ ${changeClick === rose ? "active" : ""}
           </>
         </div>
       </div>
-      <Footer />
+     
     </>
   );
 };
