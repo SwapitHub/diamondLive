@@ -249,7 +249,7 @@ export const Header = () => {
                 <LazyLoadImage
                   width="auto"
                   height="auto"
-                  // effect="blur"
+                  effect="blur"
                   src={siteInfo?.logo}
                   alt="samaLogo"
                 />

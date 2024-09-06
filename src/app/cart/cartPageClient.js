@@ -382,7 +382,6 @@ const CartPage = ({ cart }) => {
 
   return (
     <>
-      <Header />
       {/* <MetaTagCategoryPage
         mainCategory={mainCategory}
         currentUrl={currentUrl}
@@ -3152,7 +3151,6 @@ const CartPage = ({ cart }) => {
           </div>
         </div>
       )}
-      <Footer />
     </>
   );
 };

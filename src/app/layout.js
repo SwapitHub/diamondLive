@@ -4,6 +4,8 @@ import ReduxProvider from "./reduxProvider";
 import { DataProvider } from "./context/DataContext";
 import "./style/app.css";
 import "./style/style.css";
+import Header from "./_componentStatic/Header";
+import { Footer } from "./_componentStatic/Footer";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -15,6 +17,7 @@ export default function RootLayout({ children }) {
         <UserProvider>
           <DataProvider>
             <ReduxProvider>
+              <Header/>
               {children}
               <script
                 type="text/javascript"
@@ -31,6 +34,7 @@ export default function RootLayout({ children }) {
                 defer
                 src="//js.hs-scripts.com/45427602.js"
               ></script>
+              <Footer/>
             </ReduxProvider>
           </DataProvider>
         </UserProvider>

@@ -1,11 +1,13 @@
 "use client";
+import axios from "axios";
 import DOMPurify from "dompurify";
 import $ from "jquery";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Footer } from "../_componentStatic/Footer";
 import Header from "../_componentStatic/Header";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
+import Head from "next/head";
 
 const ContactUs = ({ posts }) => {
   const [FooterData, setFooterData] = useState([]);
@@ -60,13 +62,12 @@ const ContactUs = ({ posts }) => {
   }, [location.pathname]);
   return (
     <>
-      <Header />
       <div className="container">
         <div className="footer-all-pages-display">
           {loader ? (
             <LoaderSpinner />
           ) : (
-            FooterData.map((item) => {
+            Array.isArray(FooterData) && FooterData.map((item) => {
               return (
                 <>
                   {item.pages.map((innerItem) => {
@@ -121,7 +122,6 @@ const ContactUs = ({ posts }) => {
           )}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

@@ -44,9 +44,9 @@ export default function Home() {
           <>
             
               <ScrollToTopOnNavigate />
-              <Header />
+              {/* <Header /> */}
               <HomePage />
-              <Footer />
+              {/* <Footer /> */}
           </>
         )}
         <ToastContainer

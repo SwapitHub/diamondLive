@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoMdHeart } from "react-icons/io";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -9,20 +9,18 @@ import { useParams } from "react-router-dom";
 import SlickSlider from "react-slick";
 import { v4 as uuidv4 } from "uuid";
 
+import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
+import { Tabbing } from "@/app/_componentStatic/Tabbing";
+import { UserContext } from "@/app/context/UserContext";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { IoClose } from "react-icons/io5";
 import secureLocalStorage from "react-secure-storage";
-import { UserContext } from "@/app/context/UserContext";
+import { productList } from "../../../../store/actions/productActions";
 import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../store/actions/wishlistAction";
-import { productList } from "../../../../store/actions/productActions";
-import { useRouter } from "next/navigation";
-import { Tabbing } from "@/app/_componentStatic/Tabbing";
-import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
-import Link from "next/link";
-import Header from "@/app/_componentStatic/Header";
-import { Footer } from "@/app/_componentStatic/Footer";
 
 export const ChooseGemstones = () => {
   const gemSlug = new URLSearchParams(location.search);
@@ -637,7 +635,6 @@ export const ChooseGemstones = () => {
 
   return (
     <>
-      <Header />
       <section className="gemstone-main">
         <div className="container container-1290-list-pages">
           <div className="main-content choose-setting-pages">
@@ -1286,7 +1283,6 @@ export const ChooseGemstones = () => {
           {data.length < 1 && <h2 className="center">{loading ? null : "Data Not Found"}</h2>}
         </div>
       </section>
-      <Footer />
     </>
   );
 };
