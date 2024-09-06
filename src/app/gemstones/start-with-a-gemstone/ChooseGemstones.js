@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import SlickSlider from "react-slick";
 import { v4 as uuidv4 } from "uuid";
-
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";

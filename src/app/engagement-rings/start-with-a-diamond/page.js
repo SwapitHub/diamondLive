@@ -22,7 +22,7 @@ export async function generateMetadata() {
         siteName: data.data.meta_site_name || "Default Site Name",
         images: [
           {
-            url: data.data.meta_image_url || "http://default-image-url.com",
+            url: data.data.meta_image_url || "https://vd-v360.s3.ap-south-1.amazonaws.com/imaged/A1049/still.jpg",
             width: 800,
             height: 600,
             alt: data.data.meta_image_alt || "Default Image Alt",

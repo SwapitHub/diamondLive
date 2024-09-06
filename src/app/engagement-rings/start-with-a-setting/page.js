@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
         siteName: data.data.meta_site_name || "Default Site Name",
         images: [
           {
-            url: data.data.meta_image_url || "http://default-image-url.com",
+            url: data.data.meta_image_url || "https://assets.rocksama.com/products/images/SA50281-E18W-18/SA50281-E18W-18.alt1.jpg",
             width: 800,
             height: 600,
             alt: data.data.meta_image_alt || "Default Image Alt",
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }) {
       siteName: "Default Site Name",
       images: [
         {
-          url: "http://default-image-url.com",
+          url: "https://assets.rocksama.com/products/images/SA50281-E18W-18/SA50281-E18W-18.alt1.jpg",
           width: 800,
           height: 600,
           alt: "Default Image Alt",

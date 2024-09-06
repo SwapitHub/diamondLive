@@ -22,7 +22,7 @@ export async function generateMetadata() {
         siteName: data.data.meta_site_name || "Default Site Name",
         images: [
           {
-            url: data.data.meta_image_url || "http://default-image-url.com",
+            url: data.data.meta_image_url || "https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/153584550/tse0670_9a395331-4a47-4c1a-b911-049a9d2d8664.png",
             width: 800,
             height: 600,
             alt: data.data.meta_image_alt || "Default Image Alt",
@@ -44,7 +44,7 @@ export async function generateMetadata() {
       siteName: "Default Site Name",
       images: [
         {
-          url: "http://default-image-url.com",
+          url: "https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/153584550/tse0670_9a395331-4a47-4c1a-b911-049a9d2d8664.png",
           width: 800,
           height: 600,
           alt: "Default Image Alt",
