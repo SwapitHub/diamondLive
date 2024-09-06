@@ -2,7 +2,7 @@ import Home from "./PageStatic";
 
 
 async function fetchDataFromAPI() {
-  const response = await fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/siteinfo`);
+  const response = await fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=final_ring_gemstone`);
   const data = await response.json();
   
   return data;
