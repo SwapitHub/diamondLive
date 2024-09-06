@@ -4,7 +4,7 @@ const fetchMeta = async () => {
   let diamond = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=view_diamond`
+      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=gemstones-detail`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -16,7 +16,7 @@ const fetchMeta = async () => {
   return diamond;
 };
 
-const fetchDiamondDetail = async (diamond_origin, stock_num) => {
+const fetchGemstoneDetail = async (stock_num) => {
   let diamond = [];
   try {
     const headers = {
@@ -24,7 +24,7 @@ const fetchDiamondDetail = async (diamond_origin, stock_num) => {
         "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
     };
     const response = await fetch(
-      `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&stock_num=XBGPRET0920`,
+      `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&stock_num=${stock_num}`,
       {
         method: "GET",
         headers: headers,
@@ -41,38 +41,15 @@ const fetchDiamondDetail = async (diamond_origin, stock_num) => {
 };
 
 export async function generateMetadata({ searchParams }) {
-  const { diamond_origin, stock_num } = searchParams;
+  const { stock_num } = searchParams;
 
   const data = await fetchMeta();
 
-  const diamondDetails = await fetchDiamondDetail(diamond_origin, stock_num);
+  const gemstone = await fetchGemstoneDetail(stock_num);
 
-  const defaultMetadata = {
-    title: "Default Title",
-    description: "Default Description",
-    openGraph: {
-      title: "Default Title",
-      description: "Default Description",
-      url: "http://default-url.com",
-      siteName: "Default Site Name",
-      images: [
-        {
-          url: "http://default-image-url.com",
-          width: 800,
-          height: 600,
-          alt: "Default Image Alt",
-        },
-      ],
-    },
-  };
 
-  if (
-    diamondDetails &&
-    diamondDetails.response &&
-    diamondDetails.response.body &&
-    diamondDetails.response.body.diamonds
-  ) {
-    const metadataList = diamondDetails.response.body.diamonds.map((item) => {
+  if (gemstone) {
+    const metadataList = gemstone.response.body.gemstones.map((item) => {
       return {
         title: item.short_title || data.data?.title,
         description: item.short_title || data.data?.description,
@@ -93,23 +70,19 @@ export async function generateMetadata({ searchParams }) {
       };
     });
 
-    return metadataList[0] || defaultMetadata;
+    return metadataList[0];
   }
-
-  // Return default metadata if no diamonds are available
-  return defaultMetadata;
 }
 const DiamondPage = async ({ searchParams }) => {
-  const { diamond_origin, stock_num } = searchParams;
+  const { stock_num } = searchParams;
 
   const diamondMeta = await fetchMeta();
 
-  const diamondDetails = await fetchDiamondDetail(diamond_origin, stock_num);
-console.log(diamondDetails);
+  const gemstone = await fetchGemstoneDetail(stock_num);
 
   return (
     <>
-      <GemstonesDetail diamondDetails={diamondDetails.response.body.diamonds} />
+      <GemstonesDetail gemstone={gemstone.response.body.gemstones} />
     </>
   );
 };

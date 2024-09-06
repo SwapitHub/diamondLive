@@ -1,65 +1,101 @@
 import FinalGemstone from "./FinalRingGematoneClient";
 
-
-async function fetchDataFromAPI() {
-  const response = await fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=final_ring_gemstone`);
-  const data = await response.json();
-  
-  return data;
-}
-
-export async function generateMetadata() {
-  const data = await fetchDataFromAPI();
-
-  if (data) {
-    const metadata = {
-      title: data.data.meta_title || "Default Title",
-      description: data.data.meta_description || "Default Description",
-      openGraph: {
-        title: data.data.meta_title || "Default Title",
-        description: data.data.meta_description || "Default Description",
-        url: data.data.meta_url || "http://default-url.com",
-        siteName: data.data.meta_site_name || "Default Site Name",
-        images: [
-          {
-            url: data.data.meta_image_url || "https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/153584546/xbgpret0920_e5376bda-221d-4d62-910d-beab2b0b7d43.png",
-            width: 800,
-            height: 600,
-            alt: data.data.meta_image_alt || "Default Image Alt",
-          },
-        ],
-      },
-    };
-
-    return metadata;
+const fetchMeta = async () => {
+  let gemstone = [];
+  try {
+    const response = await fetch(
+      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=final_ring_gemstone`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    gemstone = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
+  return gemstone;
+};
 
+const fetchGemstoneData = async (stock_num, ) => {
+  let gemstone = [];
+  try {
+    const headers = {
+      Authorization:
+        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
+    };
+    const response = await fetch(
+      `https://apiservices.vdbapp.com//v2/gemstones?stock_num=${stock_num}`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    gemstone = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return gemstone;
+};
+
+const fetchRingDetail = async (productSlug) => {
+  let ring = [];
+  try {
+    
+    const response = await fetch(
+      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/product/${productSlug}`,
+      
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    ring = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return ring;
+};
+export async function generateMetadata({params}) {
+  const {productSlug} = params
+  const data = await fetchRingDetail(productSlug);
+  const Metadata = await fetchMeta();
+
+  
   return {
-    title: "Default Title",
-    description: "Default Description",
+    title: data.data?.name || "Default Title",
+    description: data.data?.description || "Default Description",
     openGraph: {
-      title: "Default Title",
-      description: "Default Description",
-      url: "http://default-url.com",
-      siteName: "Default Site Name",
+      title: data.data?.name || "Default Title",
+      description: data.data?.description || "Default Description",
+      url: data.data?.default_image_url || "http://default-url.com",
+      siteName: data.data?.meta_site_name || "Default Site Name",
       images: [
         {
-          url: "http://default-image-url.com",
+          url: data.data?.default_image_url || "http://default-image-url.com",
           width: 800,
           height: 600,
-          alt: "Default Image Alt",
+          alt: data.data?.name || "Default Image Alt",
         },
       ],
     },
   };
-}
 
-export default async function DetailRingPage() {
-  const data = await fetchDataFromAPI();
+}
+const gemstonePage = async ({searchParams, params}) => {
+  const {stock_num} = searchParams
+  const {productSlug} = params
+  const gemstoneData = await fetchGemstoneData(stock_num);
+  const ringData = await fetchRingDetail(productSlug);
+  
+  
   
   return (
-    <div>
-      <FinalGemstone data={data} />
-    </div>
+    <>
+      <FinalGemstone gemstoneDataServer={gemstoneData.response.body.gemstones} ringData={ringData}/>
+    </>
   );
-}
+};
+
+export default gemstonePage;

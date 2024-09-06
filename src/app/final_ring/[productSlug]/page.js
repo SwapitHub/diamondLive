@@ -59,53 +59,31 @@ const fetchRingDetail = async (productSlug) => {
   }
   return ring;
 };
-export async function generateMetadata() {
-  const data = await fetchMeta();
+export async function generateMetadata({params}) {
+  const {productSlug} = params
+  const data = await fetchRingDetail(productSlug);
+  const Metadata = await fetchMeta();
 
-  const defaultMetadata = {
-    title: "Default Title",
-    description: "Default Description",
+  
+  return {
+    title: data.data?.name || "Default Title",
+    description: data.data?.description || "Default Description",
     openGraph: {
-      title: "Default Title",
-      description: "Default Description",
-      url: "http://default-url.com",
-      siteName: "Default Site Name",
+      title: data.data?.name || "Default Title",
+      description: data.data?.description || "Default Description",
+      url: data.data?.default_image_url || "http://default-url.com",
+      siteName: data.data?.meta_site_name || "Default Site Name",
       images: [
         {
-          url: "http://default-image-url.com",
+          url: data.data?.default_image_url || "http://default-image-url.com",
           width: 800,
           height: 600,
-          alt: "Default Image Alt",
+          alt: data.data?.name || "Default Image Alt",
         },
       ],
     },
   };
 
-  if (data) {
-    const metadata = {
-      title: data.data.meta_title || "Default Title",
-      description: data.data.meta_description || "Default Description",
-      openGraph: {
-        title: data.data.meta_title || "Default Title",
-        description: data.data.meta_description || "Default Description",
-        url: data.data.meta_url || "http://default-url.com",
-        siteName: data.data.meta_site_name || "Default Site Name",
-        images: [
-          {
-            url: data.data.meta_image_url || "http://default-image-url.com",
-            width: 800,
-            height: 600,
-            alt: data.data.meta_image_alt || "Default Image Alt",
-          },
-        ],
-      },
-    };
-
-    return metadata;
-  }
-
-  // Return default metadata if no diamonds are available
-  return defaultMetadata;
 }
 const DiamondPage = async ({searchParams, params}) => {
   const {stock_num, diamond_origin} = searchParams

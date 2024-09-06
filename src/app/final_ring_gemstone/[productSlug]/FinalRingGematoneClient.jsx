@@ -27,7 +27,7 @@ import secureLocalStorage from "react-secure-storage";
 import { addToCart } from "../../../../store/actions/cartActions";
 import { addToWishlist } from "../../../../store/actions/wishlistAction";
 
-export default function FinalGemstone(){
+export default function FinalGemstone({gemstoneDataServer, ringData}){
   const productType = "ring_gemstone";
   const { baseUrl,imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
 
@@ -63,29 +63,7 @@ export default function FinalGemstone(){
     }
   }, [open]);
   useMemo(() => {
-    const fetchData = async () => {
-      const url = `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&stock_num=${stock_num}`;
-      const params = {
-        stock_item_type: "gemstones",
-        status: "pending",
-        page_number: 1,
-        page_size: 30,
-      };
-
-      const headers = {
-        Authorization:
-          "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-      };
-
-      try {
-        const response = await axios.get(url, { params, headers });
-        setData(response.data.response.body.gemstones);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+   setData(gemstoneDataServer)
   }, []);
 
   const toggleOrderShow = (index) => {
@@ -144,28 +122,11 @@ export default function FinalGemstone(){
   const rose = "18k-rose-gold";
   const platinum = "platinum";
   useMemo(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/product/${productSlug}`);
-
-        const product = response.data.data;
-        const imgUrl = product.internal_sku;
-
-        // Update state with both product and imgUrl
-        setFilterData({
-          product: product,
-          imgUrl: imgUrl,
-        });
-
-        const similarProductsData = JSON.parse(product.similar_products);
-        setSimilarProducts(similarProductsData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [productSlug]);
+    setFilterData({
+      product: ringData.data,
+      imgUrl: ringData.data.internal_sku
+    })
+  }, [productSlug])
   // ring api details Api end
 
   // =======================

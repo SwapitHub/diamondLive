@@ -152,11 +152,13 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
 
   useMemo(() => {
     setFilterData({
-      filterData: ringData.data,
+      product: ringData.data,
       imgUrl: ringData.data.internal_sku
     })
   }, [productSlug]);
   // ring api details Api end
+
+  
 
   // =======================
   const userId = secureLocalStorage.getItem("formData");

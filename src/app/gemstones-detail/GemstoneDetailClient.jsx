@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import React, { useContext, useEffect, useMemo, useState } from "react";
@@ -26,7 +26,9 @@ import { DropHint } from "../_componentStatic/DropHint";
 import Image from "next/image";
 import { addToCart } from "../../../store/actions/cartActions";
 
-export default function GemstonesDetail() {
+export default function GemstonesDetail({ gemstone }) {
+  console.log(gemstone);
+
   const dispatch = useDispatch();
   const [diamondDetails, setDiamondDetails] = useState(false);
   const [banner, setBanner] = useState({});
@@ -34,10 +36,10 @@ export default function GemstonesDetail() {
   const [averagePopup, setAveragePopup] = useState(false);
   const [hiddenContent, setHiddencontent] = useState(false);
   const [data, setData] = useState([]);
-  const { baseUrl, imgAssetsUrl, } = useContext(UserContext);
+  const { baseUrl, imgAssetsUrl } = useContext(UserContext);
   const [removeWishList, setRemoveWishList] = useState();
   const wishListDataBase = useSelector((state) => state.productDataWishlist);
-console.log(data);
+  console.log(data);
 
   const toggleDiamond = () => {
     setDiamondDetails(!diamondDetails);
@@ -59,36 +61,11 @@ console.log(data);
   }, [averagePopup]);
 
   const searchParams = useSearchParams();
-  const stockNum = searchParams.get('stock_num');
+  const stockNum = searchParams.get("stock_num");
 
   useMemo(() => {
-    const fetchData = async () => {
-      const url = `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&stock_num=${stockNum}`;
-      const params = {
-        stock_item_type: "gemstones",
-        status: "pending",
-        page_number: 1,
-        page_size: 30,
-      };
-console.log(url);
-
-      const headers = {
-        Authorization:
-        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-      };
-
-      try {
-        const response = await axios.get(url, { params, headers });
-        setData(response.data.response.body.gemstones);
-        console.log(response);
-        
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    setData(gemstone);
+  }, [gemstone]);
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.toLocaleString("default", {
@@ -97,8 +74,6 @@ console.log(url);
 
   const currentDay = currentDate.getDate();
   const wishlist = useSelector((state) => state.wishlistData);
-
-
 
   const handleWishlist = async (
     item,
@@ -229,7 +204,10 @@ console.log(url);
   const { setHelpData } = useData();
 
   const handleClick = (diamond) => {
-    secureLocalStorage.setItem('helpData', JSON.stringify({diamond:diamond}))
+    secureLocalStorage.setItem(
+      "helpData",
+      JSON.stringify({ diamond: diamond })
+    );
     setHelpData({ diamond: diamond });
     navigate("/help");
   };
@@ -243,18 +221,23 @@ console.log(url);
   wishlist.map((item) => {
     beforeLoginWishlistIds.push(item.diamond?.id || item.item?.id);
   });
-  const handleError =(e)=>{
+  const handleError = (e) => {
     e.target.onerror = null;
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-  }
+  };
 
- 
   return (
     <>
       <div className="sticky-right-column gemstone-details-page">
         <div className="container">
           {/* ====================create your ring start */}
-          <Tabbing gemStoneName={`1. Choose Gemstone`} ringName={`2. Choose Rings`} gemStoneLink={`/gemstones/start-with-a-gemstone`} ringLink={`/engagement-rings/start-with-a-setting`} type={"gemstone"}/>
+          <Tabbing
+            gemStoneName={`1. Choose Gemstone`}
+            ringName={`2. Choose Rings`}
+            gemStoneLink={`/gemstones/start-with-a-gemstone`}
+            ringLink={`/engagement-rings/start-with-a-setting`}
+            type={"gemstone"}
+          />
 
           {/* ====================create your ring end */}
           <div className="sticky-right-column">
@@ -264,18 +247,15 @@ console.log(url);
 
                 return (
                   <>
-                  
                     <div className="left-product-images left-product-details">
                       <div className="main-zoom-iamge">
-                      
-                          <LazyLoadImage
-                            width="auto"
-                            height="auto"
-                            src={item.image_url}
-                            alt={item.short_title}
+                        <LazyLoadImage
+                          width="auto"
+                          height="auto"
+                          src={item.image_url}
+                          alt={item.short_title}
                           onError={handleError}
-
-                          />
+                        />
                       </div>
                     </div>
 
@@ -307,10 +287,8 @@ console.log(url);
                               height="auto"
                               src={`${imgAssetsUrl}/frontend/images/BlackRing.png`}
                               alt={item.short_title}
-                          onError={handleError}
-
+                              onError={handleError}
                             />
-                  
                           </div>
                           <div className="right-purchage-icon-content">
                             <h4 className="media-heading">LAST DAY!</h4>
@@ -654,4 +632,4 @@ console.log(url);
       </div>
     </>
   );
-};
+}

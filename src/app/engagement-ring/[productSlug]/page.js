@@ -1,7 +1,6 @@
 // File: app/engagement-ring/[...detailRingProduct]/page.js
 
-import ChooseRingGemstone from "./ChooseRingGemstone";
-
+import DetailRingProduct from "./DetailRingClient";
 
 const fetchDetailMeta = async (productSlug) => {
   let ringDetail = [];
@@ -19,32 +18,9 @@ const fetchDetailMeta = async (productSlug) => {
   return ringDetail;
 };
 
-const fetchGemstoneDetail = async (stock_num) => {
-  let gemstone = [];
-  try {
-    const headers = {
-      Authorization:
-        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-    };
-    const response = await fetch(
-      `https://apiservices.vdbapp.com//v2/gemstones?stock_num=${stock_num}`,
-      {
-        method: "GET",
-        headers: headers,
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    gemstone = await response.json();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-  return gemstone;
-};
-
 export async function generateMetadata({ params }) {
-  const { productSlug } = params
+  const {productSlug} = params
+
   const data = await fetchDetailMeta(productSlug);
 
   // Return metadata if needed
@@ -68,17 +44,14 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function RingDetailPage({ searchParams, params }) {
-  const { productSlug } = params;
-  const {stock_num, color} = searchParams;
-  const gemstoneDetail = await fetchGemstoneDetail(stock_num);
+export default async function RingDetailPage({ params }) {
+ const {productSlug} = params
+
   const ringDetail = await fetchDetailMeta(productSlug);
 
-  
-  
   return (
     <>
-      <ChooseRingGemstone ringDetail={ringDetail} gemstoneDetail={gemstoneDetail.response.body.gemstones} listColor={color}/>
+      <DetailRingProduct ringDetail={ringDetail} />
     </>
   );
 }

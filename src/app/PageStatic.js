@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 
 
 import HomePage from "./component/homePages/home/page";
+import LoaderSpinner from "./_componentStatic/LoaderSpinner";
 export const UserContext = createContext(null);
 
 export default function Home() {
@@ -37,7 +38,7 @@ export default function Home() {
     <>
       <div className="App">
         {loading ? (
-          <p>Loader...</p>
+        <LoaderSpinner/>
         ) : (
           <>
             
