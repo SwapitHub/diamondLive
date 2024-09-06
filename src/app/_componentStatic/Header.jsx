@@ -184,38 +184,7 @@ export const Header = () => {
       });
   }, []);
 
-  // meta detail start
-  // const currentUrl = window.location.href;
-
-  // useEffect(() => {
-  //   const metaTags = document.getElementsByTagName("meta");
-  //   Array.from(metaTags).forEach((tag) => {
-  //     if (tag.getAttribute("name") === "description") {
-  //       tag.setAttribute("content", siteInfo?.meta_description || "");
-  //     }
-  //     // if (tag.getAttribute('name') === 'keywords') {
-  //     //   tag.setAttribute('content', siteInfo?.meta_keyword || '');
-  //     // }
-  //     if (tag.getAttribute("property") === "og:title") {
-  //       tag.setAttribute("content", siteInfo?.meta_title || "");
-  //     }
-  //     if (tag.getAttribute("property") === "og:description") {
-  //       tag.setAttribute("content", siteInfo?.meta_description || "");
-  //     }
-  //     if (tag.getAttribute("property") === "og:url") {
-  //       tag.setAttribute("content", currentUrl || "");
-  //     }
-  //     if (tag.getAttribute("property") === "og:image") {
-  //       tag.setAttribute("content", siteInfo?.logo || "");
-  //     }
-  //   });
-  // }, [siteInfo, currentUrl]);
-
-  // useEffect(() => {
-  //   if (siteInfo?.meta_title) {
-  //     document.title = siteInfo?.meta_title;
-  //   }
-  // }, [siteInfo]);
+  
 
   return (
     <>
@@ -249,7 +218,7 @@ export const Header = () => {
                 <LazyLoadImage
                   width="auto"
                   height="auto"
-                  effect="blur"
+                  // effect="blur"
                   src={siteInfo?.logo}
                   alt="samaLogo"
                 />

@@ -13,7 +13,7 @@ const fetchFooterData = async () => {
   let posts = [];
   try {
     const response = await fetch(
-      `https://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/footer-pages`
+      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/footer-pages`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

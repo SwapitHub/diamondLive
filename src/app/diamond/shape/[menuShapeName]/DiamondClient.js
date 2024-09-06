@@ -1,35 +1,34 @@
 "use client";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import SlickSlider from "react-slick";
 import Slider from "react-slider";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import Link from "next/link";
 
-import { useDispatch, useSelector } from "react-redux";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import secureLocalStorage from "react-secure-storage";
-import { UserContext } from "@/app/context/UserContext";
-import { useParams, useRouter} from "next/navigation";
-import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
-import Header from "@/app/_componentStatic/Header";
-import { Footer } from "@/app/_componentStatic/Footer";
+import { Tabbing } from "@/app/_componentStatic/Tabbing";
+import { UserContext } from "@/app/context/UserContext";
+import { useParams, useRouter } from "next/navigation";
 import { IoClose } from "react-icons/io5";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useDispatch, useSelector } from "react-redux";
+import secureLocalStorage from "react-secure-storage";
 
-const ChooseDiamonds = () => {
+const ChooseDiamondsShape = () => {
   const queryParams = new URLSearchParams();
   const font_style = queryParams.get("font_style");
   const textEngraving = queryParams.get("textEngraving");
+  const router = useRouter()
   
   var { productSlug } = useParams();
 
   const productColor = queryParams.get("color");
   const { menuShapeName } = useParams();
-
+  console.log(menuShapeName);
   
   const listColor = queryParams.get("color");
   const diamond_original = queryParams.get("diamond_original");
@@ -42,9 +41,15 @@ const ChooseDiamonds = () => {
   const pageSize = 30;
 
   let shapeSlider = "";
-  
+  if (menuShapeName) {
+    shapeSlider = `&shapes[]=${
+      menuShapeName?.slice(0, 1).toUpperCase() + menuShapeName?.slice(1)
+    }`;
+  }
+  const conMenuShapeName = menuShapeName?.split(" ");
   const [shapeDataSlider, setShapeDataSlider] = useState([]);
 
+  
   useEffect(() => {
     const item = secureLocalStorage.getItem("shapeDiamondData");
 
@@ -62,8 +67,17 @@ const ChooseDiamonds = () => {
     setShapeDataSlider(storedData);
   }, []);
 
- 
+  useEffect(() => {
+    if (menuShapeName) {
+      setShapeDataSlider(conMenuShapeName);
+      secureLocalStorage.setItem(
+        "shapeDiamondData",
+        JSON.stringify(conMenuShapeName)
+      );
+    }
+  }, [menuShapeName]);
 
+  // const [menuShapeNames, setMenuShapeNames] = useState(menuShapeName);
   const [labGrownDetails, setLabGrownDetails] = useState();
   const [activeResult, setActiveResult] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
@@ -200,7 +214,9 @@ const ChooseDiamonds = () => {
       updatedShapeDataSlider = [...currentShapeDataSlider, styleItem];
     }
 
-    // Update state
+    if(menuShapeName && shapeDataSlider.length == 1){
+        router.push('/engagement-rings/start-with-a-diamond');
+    }
     setShapeDataSlider(updatedShapeDataSlider);
 
     // Save to local storage
@@ -244,7 +260,14 @@ const ChooseDiamonds = () => {
   };
   const handleResetAll = () => {
     const searchParams = new URLSearchParams(location.search);
-    
+    // if (menuShapeName) {
+    //   searchParams.delete("shape");
+    //   const newSearchString = searchParams.toString();
+    //   const newURL = `${"/diamonds"}${
+    //     newSearchString ? `?${newSearchString}` : ""
+    //   }`;
+    //   history.replace(newURL);
+    // }
     setShapeDataSlider([]);
     setCaratRange([minCaratRange, maxCaratRange]);
     setDiamondPriceRange([minDiamondPriceRange, maxDiamondPriceRange]);
@@ -856,7 +879,7 @@ const ChooseDiamonds = () => {
         // image="https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/36274429/1701007RubyCushion1_17ct_3932_77c52f06-f67b-4338-8cd9-abcd817c178c.jpg"
         currentUrl={currentUrl}
       /> */}
-      <Header />
+      
       <div
         className={`container choose-diamonds container-1290-list-pages ${
           productSlug ? "chooseDiamond-active" : null
@@ -2146,9 +2169,9 @@ const ChooseDiamonds = () => {
           </div>
         </div>
       </div>
-      <Footer />
+     
     </>
   );
 };
 
-export default ChooseDiamonds;
+export default ChooseDiamondsShape;

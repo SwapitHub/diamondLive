@@ -9,10 +9,6 @@ const nextConfig = {
         destination: '/engagement-rings/start-with-a-diamond/', 
       },
       {
-        source: '/diamond/shape/:menuShapeName',
-        destination: '/engagement-rings/start-with-a-diamond/?:menuShapeName', 
-      },
-      {
         source: '/diamonds/search-lab-diamonds/lab_grown',
         destination: '/engagement-rings/start-with-a-diamond/', 
       },
