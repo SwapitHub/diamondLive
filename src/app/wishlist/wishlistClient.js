@@ -14,6 +14,7 @@ import { UserContext } from "../context/UserContext";
 import Link from "next/link";
 import Header from "../_componentStatic/Header";
 import { Footer } from "../_componentStatic/Footer";
+import { ContinueShoping } from "../_componentStatic/ContinueShopping";
 
 const WishList = ({wishlistServer}) => {
     

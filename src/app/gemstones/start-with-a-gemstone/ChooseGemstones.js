@@ -1207,10 +1207,12 @@ export const ChooseGemstones = () => {
                             <LazyLoadImage
                               width="auto"
                               height="auto"
+                              effect="blur"
                               className="lazy-image"
                               src={item.image_url}
                               alt={item?.short_title}
                               onError={handleError}
+                              
                             />
                             <div className="dia-gems">
                               {user_id ? (

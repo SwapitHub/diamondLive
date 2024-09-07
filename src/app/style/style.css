@@ -4520,8 +4520,8 @@ button.slick-arrow.slick-prev:after {
   width: 100%;
 }
 
-.wedding-page .diamond-wrp .bridalSets.dmd-rgt .bridalSets-img img {
-  width: 100%;
+.wedding-page .diamond-wrp .bridalSets.dmd-rgt .bridalSets-img img , .gemstone-slide{
+  width: 100% !important;
 }
 
 .bridalSets-necklaces.flex .bridalSets-text span {

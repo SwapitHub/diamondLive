@@ -1,27 +1,25 @@
-import { MyAccountDashboard } from "./MyAccountDashboard";
+import SuccessPayment from "./SuccessPayment";
 
-const fetchAccount = async () => {
-  let account = [];
+const fetchSuccessServer = async () => {
+  let success = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=accounts`
+      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=success`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    account = await response.json();
+    success = await response.json();
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-  return account;
+  return success;
 };
 
 export async function generateMetadata() {
-  const data = await fetchAccount();
-  console.log(data);
-  
+  const data = await fetchSuccessServer();
 
- if (data) {
+  if (data) {
     const metadata = {
       title: data.data.meta_title || "Default Title",
       description: data.data.meta_description || "Default Description",
@@ -32,7 +30,7 @@ export async function generateMetadata() {
         siteName: data.data.meta_site_name || "Default Site Name",
         images: [
           {
-            url: data.data.meta_image_url ||  "https://assets.rocksama.com/public/storage/images/1716284040_SAMA.png",
+            url: data.data.meta_image_url || "https://assets.rocksama.com/public/storage/images/1716284040_SAMA.png",
             width: 800,
             height: 600,
             alt: data.data.meta_image_alt || "Default Image Alt",
@@ -43,7 +41,7 @@ export async function generateMetadata() {
 
     return metadata;
   }
- 
+
   return {
     title: "Default Title",
     description: "Default Description",
@@ -63,13 +61,14 @@ export async function generateMetadata() {
     },
   };
 }
-const accountPageServer = async () => {
-  const account = await fetchAccount();
+const SuccessServer = async ({params}) => {
+  const {order_id} = params
+  const success = await fetchSuccessServer();
   return (
     <>
-      <MyAccountDashboard account={account} />
+      <SuccessPayment success={success} order_id={order_id}/>
     </>
   );
 };
 
-export default accountPageServer;
+export default SuccessServer;

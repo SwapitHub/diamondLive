@@ -1,24 +1,22 @@
 "use client";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import SlickSlider from "react-slick";
 import Slider from "react-slider";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import Link from "next/link";
 
-import { useDispatch, useSelector } from "react-redux";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import secureLocalStorage from "react-secure-storage";
-import { UserContext } from "@/app/context/UserContext";
-import { useParams, useRouter} from "next/navigation";
-import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
-import Header from "@/app/_componentStatic/Header";
-import { Footer } from "@/app/_componentStatic/Footer";
+import { Tabbing } from "@/app/_componentStatic/Tabbing";
+import { UserContext } from "@/app/context/UserContext";
+import { useParams, useRouter } from "next/navigation";
 import { IoClose } from "react-icons/io5";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useDispatch, useSelector } from "react-redux";
+import secureLocalStorage from "react-secure-storage";
 
 const ChooseDiamonds = () => {
   const queryParams = new URLSearchParams();

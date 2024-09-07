@@ -19,6 +19,10 @@ import { v4 as uuidv4 } from "uuid";
 // import { productList } from "../../../redux/productAction";
 // import LoaderSpinner from "../../LoaderSpinner";
 
+import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
+import { Tabbing } from "@/app/_componentStatic/Tabbing";
+import { UserContext } from "@/app/context/UserContext";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { productList } from "../../../../store/actions/productActions";
@@ -26,12 +30,6 @@ import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../store/actions/wishlistAction";
-import { UserContext } from "@/app/context/UserContext";
-import Link from "next/link";
-import Header from "@/app/_componentStatic/Header";
-import { Footer } from "@/app/_componentStatic/Footer";
-import { Tabbing } from "@/app/_componentStatic/Tabbing";
-import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 // import { HeaderMetaTag } from "../../../seoTags/MetaTagHeader";
 // import { Tabbing } from "../reusable_components/Tabbing";
 
@@ -295,7 +293,7 @@ const StartWithASetting = (data) => {
 
             setTimeout(() => {
               setLoading(false);
-            }, 1500);
+            }, 5500);
           }
         })
         .catch(() => {
@@ -357,7 +355,7 @@ const StartWithASetting = (data) => {
           setPage((prev) => prev + 1);
           setTimeout(() => {
             setLoading(false);
-          }, 1000);
+          }, 4000);
         }
       } catch (error) {
         console.log(error);
@@ -444,7 +442,7 @@ const StartWithASetting = (data) => {
       const newURL = `${"/engagement-rings/start-with-a-setting"}${
         newSearchString ? `?${newSearchString}` : ""
       }`;
-      history.replace(newURL);
+      router.replace(newURL);
       setShapeName(shapeNameItem);
 
       secureLocalStorage.setItem("clickedShape", shapeNameItem);
@@ -468,7 +466,7 @@ const StartWithASetting = (data) => {
     const newURL = `${"/engagement-rings/start-with-a-setting"}${
       newSearchString ? `?${newSearchString}` : ""
     }`;
-    history.replace(newURL);
+    router.replace(newURL);
   };
 
   // =============== shop by metal end ==============
@@ -969,15 +967,7 @@ const StartWithASetting = (data) => {
   return (
     <>
     
-      {/* <HeaderMetaTag
-        mainCategory={mainCategory}
-        menuShapeName
-        subCategory={`${
-          checkedBridalSets === true ? newSubCategory : newJoinBridalSet
-        }`}
-        // image="https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/36274429/1701007RubyCushion1_17ct_3932_77c52f06-f67b-4338-8cd9-abcd817c178c.jpg"
-        currentUrl={currentUrl}
-      /> */}
+      
       {stock_num ? (
         <div className="sticky-gemstone-name">
           {(newData.length > 0 ? newData : diamondData).map((item, i) => {

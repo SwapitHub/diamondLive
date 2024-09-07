@@ -1,28 +1,26 @@
 "use client";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CiGift, CiHeart } from "react-icons/ci";
 import { IoIosClose } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import GooglePayButton from "@google-pay/button-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaExclamationCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { v4 as uuidv4 } from "uuid";
-import { addToWishlist } from "../../../store/actions/wishlistAction";
 import {
   productList,
   productListCart,
 } from "../../../store/actions/productActions";
-import { useRouter } from "next/navigation";
-import { UserContext } from "../context/UserContext";
-import Header from "../_componentStatic/Header";
-import { Footer } from "../_componentStatic/Footer";
-import Link from "next/link";
-import Head from "next/head";
+import { addToWishlist } from "../../../store/actions/wishlistAction";
 import { ChooseYourImpact } from "../_componentStatic/ChooseYourImpact";
+import { UserContext } from "../context/UserContext";
+import { removeFromCart } from "../../../store/actions/cartActions";
+import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 
 const CartPage = ({ cart }) => {
 
@@ -109,7 +107,7 @@ const CartPage = ({ cart }) => {
   }, []);
 
   const removeProduct = (item) => {
-    dispatch(removeToCart(item));
+    dispatch(removeFromCart(item));
   };
   const calculateTotalPrice = () => {
     let total = 0;
@@ -165,17 +163,17 @@ const CartPage = ({ cart }) => {
       ring_price,
     };
     dispatch(addToWishlist(newItem));
-    dispatch(removeToCart(removingItem));
+    dispatch(removeFromCart(removingItem));
   }
 
   function handleWishlistGemstoneAndBand(item) {
     dispatch(addToWishlist(item));
-    dispatch(removeToCart(item));
+    dispatch(removeFromCart(item));
   }
 
   function handleWishDataDiamonds(item) {
     dispatch(addToWishlist(item));
-    dispatch(removeToCart(item));
+    dispatch(removeFromCart(item));
   }
 
   // =======remove to card
@@ -332,7 +330,7 @@ const CartPage = ({ cart }) => {
 
     cartData.map((item) => {
       if ((item.item?.id || item.ring_data?.id) === ring_id) {
-        dispatch(removeToCart(item));
+        dispatch(removeFromCart(item));
       }
     });
   };
@@ -347,7 +345,7 @@ const CartPage = ({ cart }) => {
           item?.ring_data?.id ||
           item.ring_id) === parseInt(ring_id)
       ) {
-        dispatch(removeToCart(item));
+        dispatch(removeFromCart(item));
         dispatch(addToWishlist(item));
       }
     });
@@ -393,7 +391,7 @@ const CartPage = ({ cart }) => {
               <div className="shoping-card-main-wrap">
                 <div className="shoping-card">
                   {loader ? (
-                    <p>Loading....</p>
+                    <p><LoaderSpinner/></p>
                   ) : (
                     cartDetails?.map((item, index) => {
                       const selectedMetalColor = metalColor.find(
