@@ -1,19 +1,17 @@
 "use client";
 import axios from "axios";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { VscChromeClose } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
-import { addToCart} from "../../../store/actions/cartActions";
+import { addToCart } from "../../../store/actions/cartActions";
 // import { MetaTagCategoryPage } from "../../seoTags/MetaTagCategoryPage";
 // import { ContinueShoping } from "../AllRings/reusable_components/ContinueShoping";
-import { productList, productListCart } from "../../../store/actions/productActions";
-import { validateEmail } from "../_componentStatic/ValidationFunctions";
-import { removeToWishlist } from "../../../store/actions/wishlistAction";
-import { UserContext } from "../context/UserContext";
 import Link from "next/link";
-import Header from "../_componentStatic/Header";
-import { Footer } from "../_componentStatic/Footer";
+import { productList, productListCart } from "../../../store/actions/productActions";
+import { removeToWishlist } from "../../../store/actions/wishlistAction";
+import { validateEmail } from "../_componentStatic/ValidationFunctions";
+import { UserContext } from "../context/UserContext";
 import { ContinueShoping } from "../_componentStatic/ContinueShopping";
 
 const WishList = ({wishlistServer}) => {

@@ -329,13 +329,13 @@ export const Header = () => {
                 return (
                   <li className={res.slug} key={res?.id}>
                     <Link
-                      href={`/${
+                      href={
                         res.slug == "gemstones"
-                          ? `gemstone`
+                          ? `/gemstone`
                           : res.slug == "diamonds"
-                          ? `diamond`
+                          ? `/diamond`
                           : res.slug
-                      }`}
+                      }
                     >
                       {res.name}
                     </Link>
