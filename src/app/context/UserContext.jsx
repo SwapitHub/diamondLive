@@ -15,9 +15,11 @@ export const UserProvider = ({ children }) => {
   const [loadingCart, setLoadingCart] = useState(false);
   const [toggle, setToggle] = useState(1);
 
-  const baseUrl = "https://api.rocksama.com/admin/api/v1";
+  const baseUrl = "/api";
   const imgBaseUrl = "https://assets.rocksama.com/products/images";
   const imgAssetsUrl = "https://assets.rocksama.com";
+
+
 
   return (
     <UserContext.Provider

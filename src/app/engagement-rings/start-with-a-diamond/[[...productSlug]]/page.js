@@ -1,4 +1,3 @@
-import ChooseDiamondsPage from "../page";
 import ChooseDiamonds from "./StartWithDiamondClient";
 
 
@@ -64,7 +63,6 @@ export default async function DetailRingPage({ params }) {
         <div>
                
           <ChooseDiamonds data={data} productSlug={productSlug[0]} natural={productSlug[1]}/>      
-       <ChooseDiamondsPage data={data} productSlug={productSlug[0]} natural={productSlug[1]}/>
                    
         </div>
       );

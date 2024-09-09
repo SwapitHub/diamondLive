@@ -33,6 +33,10 @@ const nextConfig = {
         source: '/engagement-rings/:trellis',
         destination: '/engagement-rings/start-with-a-setting/', 
       },
+      {
+        source: '/api/:path*', 
+        destination: 'https://api.rocksama.com/admin/api/v1/:path*',
+      },
     ];
   },
 };
