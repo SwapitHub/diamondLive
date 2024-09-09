@@ -16,6 +16,7 @@ const nextConfig = {
         source: '/diamonds/color-diamonds/start-with-a-diamond',
         destination: '/engagement-rings/start-with-a-diamond/', 
       },
+     
       {
         source: '/engagement-rings/start-with-bridal-set',
         destination: '/engagement-rings/start-with-a-setting?bridal-sets=true', 

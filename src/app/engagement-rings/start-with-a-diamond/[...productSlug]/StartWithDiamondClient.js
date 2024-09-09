@@ -12,25 +12,28 @@ import "slick-carousel/slick/slick.css";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { IoClose } from "react-icons/io5";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 
-const ChooseDiamonds = () => {
-  const queryParams = new URLSearchParams();
+const ChooseDiamonds = ({productSlug,natural}) => {
+  const queryParams =  useSearchParams();
   const font_style = queryParams.get("font_style");
   const textEngraving = queryParams.get("textEngraving");
   
-  var { productSlug } = useParams();
+  
 
   const productColor = queryParams.get("color");
   const { menuShapeName } = useParams();
 
   
   const listColor = queryParams.get("color");
+  
   const diamond_original = queryParams.get("diamond_original");
+  console.log(diamond_original);
+  
   const center_stone = queryParams.get("center_stone");
   const ring_size = queryParams.get("ring_size");
   const diamondColor = queryParams.get("diamonds");
@@ -66,7 +69,7 @@ const ChooseDiamonds = () => {
   const [activeResult, setActiveResult] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
 
-    const pathSegments = location.pathname.split("/");
+    const pathSegments = location
     const lastPathSegment = pathSegments[pathSegments.length - 1];
     const initialType = lastPathSegment === "lab_grown" ? "lab_grown" : "natural";
   const [type, setType] = useState();
@@ -87,12 +90,14 @@ const ChooseDiamonds = () => {
 
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
   useEffect(() => {
-    const newPathSegments = location.pathname.split("/");
+    const newPathSegments = location;
     const newLastPathSegment = newPathSegments[newPathSegments.length - 1];
-    const newType = newLastPathSegment === "lab_grown" ? "lab_grown" : "";
+    const newType = newLastPathSegment === "lab_grown" ? "lab_grown" : diamond_original;
+    console.log(newLastPathSegment);
+    
     setNewDiamondType(newType);
     setType(newType)
-  }, [location.pathname]);
+  }, [location]);
 
   const [checked, setChecked] = useState(false);
   const [checkedSecond, setCheckedSecond] = useState(false);
