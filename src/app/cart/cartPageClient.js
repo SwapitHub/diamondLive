@@ -345,11 +345,14 @@ const CartPage = ({ cart }) => {
   //   const mainCategory = pathSegments[0] || "";
 
   const handleClickCheckOut = () => {
-    navigate(user_id ? "/check_out" : "/login", {
-      state: { from: location.pathname },
-    });
-    if (!user_id) {
-      toast.info("Please log in to proceed to checkout. ", {
+    
+    if (user_id) {
+      navigate.push("/check_out");
+    } else {
+      navigate.push("/login", {
+        state: { from: window.location.pathname }, 
+      });
+      toast.info("Please log in to proceed to checkout.", {
         position: "top-right",
         className: "foo-bar",
       });

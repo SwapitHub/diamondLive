@@ -1,21 +1,23 @@
-import { ChooseGemstonesPage } from "./ChooseGemstonesPage";
+import ChooseDiamondsShape from "./DiamondClient";
 
-async function fetchDataFromAPI(gemAttribute, gemFilter) {
+async function fetchDataFromAPI(diamond, diamondFilter) {
   const response = await fetch(
-    `${process.env.BASE_URL}/check?menu=gemstone&subcategory=start-with-a-gemstone`
+    `${
+      process.env.BASE_URL
+    }/check?menu=diamond&subcategory=diamond/${diamond}${
+      diamondFilter ? `/${diamondFilter}` : ""
+    }`
   );
-  
   const data = await response.json();
 
   return data;
 }
 
 export async function generateMetadata({ params }) {
-  const { gemAttribute, gemFilter } = params;
-  const filterValue = Array.isArray(gemFilter) ? gemFilter[0] : gemFilter;
-  const data = await fetchDataFromAPI(gemAttribute, filterValue);
+  const { diamonds, diamondFilter } = params;
+  const data = await fetchDataFromAPI(diamonds, diamondFilter);
 
-  if (data !== null) {
+  if (data) {
     const metadata = {
       title: data.data?.meta_title || "Default Title",
       description: data.data?.meta_description || "Default Description",
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }) {
           {
             url:
               data.data?.meta_image_url ||
-              "https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/153584550/tse0670_9a395331-4a47-4c1a-b911-049a9d2d8664.png",
+              "https://vd-v360.s3.ap-south-1.amazonaws.com/imaged/A1049/still.jpg",
             width: 800,
             height: 600,
             alt: data.data?.meta_image_alt || "Default Image Alt",
@@ -50,7 +52,7 @@ export async function generateMetadata({ params }) {
       siteName: "Default Site Name",
       images: [
         {
-          url: "https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/153584550/tse0670_9a395331-4a47-4c1a-b911-049a9d2d8664.png",
+          url: "http://default-image-url.com",
           width: 800,
           height: 600,
           alt: "Default Image Alt",
@@ -61,18 +63,14 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function DetailRingPage({ params }) {
-  const { gemAttribute, gemFilter } = params;
-  const filterValue = Array.isArray(gemFilter) ? gemFilter[0] : gemFilter;
-  const data = await fetchDataFromAPI(gemAttribute, filterValue);
+  const { diamonds, diamondFilter } = params;
+  const data = await fetchDataFromAPI(diamonds, diamondFilter);
+
   
 
   return (
     <div>
-      <ChooseGemstonesPage
-        gemAttribute={gemAttribute}
-        gemFilter={filterValue}
-        gemData={data}
-      />
+      <ChooseDiamondsShape diamonds={diamonds} diamondsFilter={diamondFilter ? diamondFilter[0] : diamondFilter} />
     </div>
   );
 }

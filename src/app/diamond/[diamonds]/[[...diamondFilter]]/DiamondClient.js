@@ -18,18 +18,23 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 
-const ChooseDiamondsShape = () => {
+const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
   const queryParams = new URLSearchParams();
   const font_style = queryParams.get("font_style");
   const textEngraving = queryParams.get("textEngraving");
-  const router = useRouter()
-  
+  const router = useRouter();
+
   var { productSlug } = useParams();
 
   const productColor = queryParams.get("color");
-  const { menuShapeName } = useParams();
-  console.log(menuShapeName);
-  
+  const [menuShapeName, setMenuShapeName] = useState();
+
+  useEffect(()=>{
+    if(diamonds === 'shape'){
+      setMenuShapeName(diamondsFilter)
+    }
+  },[])
+
   const listColor = queryParams.get("color");
   const diamond_original = queryParams.get("diamond_original");
   const center_stone = queryParams.get("center_stone");
@@ -49,7 +54,6 @@ const ChooseDiamondsShape = () => {
   const conMenuShapeName = menuShapeName?.split(" ");
   const [shapeDataSlider, setShapeDataSlider] = useState([]);
 
-  
   useEffect(() => {
     const item = secureLocalStorage.getItem("shapeDiamondData");
 
@@ -82,12 +86,16 @@ const ChooseDiamondsShape = () => {
   const [activeResult, setActiveResult] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
 
-    const pathSegments = location.pathname.split("/");
-    const lastPathSegment = pathSegments[pathSegments.length - 1];
-    const initialType = lastPathSegment === "lab_grown" ? "lab_grown" : "natural";
-  const [type, setType] = useState();
+  const pathSegments = location.pathname.split("/");
+  const lastPathSegment = pathSegments[pathSegments.length - 1];
+  const initialType = lastPathSegment === "lab_grown" ? "lab_grown" : "natural";
+  const [type, setType] = useState(initialType);
+
+  const [newDiamondType, setNewDiamondType] = useState(
+    diamond_original || initialType
+  );
+
   
-  const [newDiamondType, setNewDiamondType] = useState(diamond_original || initialType);
   const handleTypeChange = (newType) => {
     setType(newType);
     setNewDiamondType(newType);
@@ -107,7 +115,7 @@ const ChooseDiamondsShape = () => {
     const newLastPathSegment = newPathSegments[newPathSegments.length - 1];
     const newType = newLastPathSegment === "lab_grown" ? "lab_grown" : "";
     setNewDiamondType(newType);
-    setType(newType)
+    setType(newType);
   }, [location.pathname]);
 
   const [checked, setChecked] = useState(false);
@@ -214,8 +222,8 @@ const ChooseDiamondsShape = () => {
       updatedShapeDataSlider = [...currentShapeDataSlider, styleItem];
     }
 
-    if(menuShapeName && shapeDataSlider.length == 1){
-        router.push('/engagement-rings/start-with-a-diamond');
+    if (menuShapeName && shapeDataSlider.length == 1) {
+      setMenuShapeName("");
     }
     setShapeDataSlider(updatedShapeDataSlider);
 
@@ -230,6 +238,10 @@ const ChooseDiamondsShape = () => {
     setShapeDataSlider((prevSelectedStyles) =>
       prevSelectedStyles?.filter((selectedShape) => selectedShape !== shape)
     );
+    if(menuShapeName){
+
+      setMenuShapeName('')
+    }
     secureLocalStorage.setItem("shapeDiamondData", shapeDataSlider);
   };
   const handleRemoveCarat = () => {
@@ -260,14 +272,9 @@ const ChooseDiamondsShape = () => {
   };
   const handleResetAll = () => {
     const searchParams = new URLSearchParams(location.search);
-    // if (menuShapeName) {
-    //   searchParams.delete("shape");
-    //   const newSearchString = searchParams.toString();
-    //   const newURL = `${"/diamonds"}${
-    //     newSearchString ? `?${newSearchString}` : ""
-    //   }`;
-    //   history.replace(newURL);
-    // }
+    if (menuShapeName) {
+      setMenuShapeName("");
+    }
     setShapeDataSlider([]);
     setCaratRange([minCaratRange, maxCaratRange]);
     setDiamondPriceRange([minDiamondPriceRange, maxDiamondPriceRange]);
@@ -459,6 +466,7 @@ const ChooseDiamondsShape = () => {
             "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
         };
 
+        
         try {
           setLoading(true);
 
@@ -879,7 +887,7 @@ const ChooseDiamondsShape = () => {
         // image="https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/36274429/1701007RubyCushion1_17ct_3932_77c52f06-f67b-4338-8cd9-abcd817c178c.jpg"
         currentUrl={currentUrl}
       /> */}
-      
+
       <div
         className={`container choose-diamonds container-1290-list-pages ${
           productSlug ? "chooseDiamond-active" : null
@@ -2169,7 +2177,6 @@ const ChooseDiamondsShape = () => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };

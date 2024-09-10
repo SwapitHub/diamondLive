@@ -2,35 +2,38 @@ import { Inter } from "next/font/google";
 import { UserProvider } from "./context/UserContext";
 import ReduxProvider from "./reduxProvider";
 import { DataProvider } from "./context/DataContext";
-import "./style/app.css";
 import "./style/style.css";
+import 'react-toastify/dist/ReactToastify.css';
 import Header from "./_componentStatic/Header";
 import { Footer } from "./_componentStatic/Footer";
+import ToastWrapper from "@/ToastWrapper";
 
 
 const inter = Inter({ subsets: ["latin"] });
-// async function fetchDataFromAPI() {
-//   const response = await fetch(`${process.env.BASE_URL}/siteinfo`);
-//   const data = await response.json();
+async function fetchDataFromAPI() {
+  const response = await fetch(`${process.env.BASE_URL}/siteinfo`);
+  const data = await response.json();
 
-//   return data;
-// }
+  return data;
+}
 
-// export async function generateMetadata() {
-//   const data = await fetchDataFromAPI();
-// console.log(data);
+export async function generateMetadata() {
+  const data = await fetchDataFromAPI();
+console.log(data);
 
-//   return {
+  return {
    
-//     icons: {
-//       icon: `${data.favicon}`
-//     },
-//   };
-// }
+    icons: {
+      icon: `${data.favicon}`
+    },
+  };
+}
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+      <ToastWrapper>
+       
         <UserProvider>
           <DataProvider>
             <ReduxProvider>
@@ -55,6 +58,7 @@ export default function RootLayout({ children }) {
             </ReduxProvider>
           </DataProvider>
         </UserProvider>
+        </ToastWrapper>
       </body>
     </html>
   );

@@ -25,15 +25,16 @@ import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
-import { productList } from "../../../../store/actions/productActions";
+import { productList } from "../../../../../store/actions/productActions";
 import {
   addToWishlist,
   removeToWishlist,
-} from "../../../../store/actions/wishlistAction";
+} from "../../../../../store/actions/wishlistAction";
 // import { HeaderMetaTag } from "../../../seoTags/MetaTagHeader";
 // import { Tabbing } from "../reusable_components/Tabbing";
 
-const StartWithASetting = (data) => {
+const StartWithASetting = ({ rings, ringFilter }) => {
+
   const searchParams = useSearchParams();
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
   const [removeWishList, setRemoveWishList] = useState();
@@ -53,7 +54,17 @@ const StartWithASetting = (data) => {
   const mainCategory = pathSegments[0] || "";
   const subCategory = pathSegments;
 
-  const { menuShapeName, menuShopStyle, trellisRing } = queryParams;
+  let menuShapeName, menuShopStyle, trellisRing;
+
+  useEffect(() => {
+    if (rings === "shape") {
+      menuShapeName = ringFilter;
+    } else if (rings === "style") {
+      menuShopStyle = ringFilter;
+    } else {
+      trellisRing = rings;
+    }
+  }, []);
 
   const menuMetal = pathSegments[2] || "";
 
@@ -160,7 +171,7 @@ const StartWithASetting = (data) => {
     const newURL = `/engagement-rings/start-with-a-setting${
       newSearchString ? `?${newSearchString}` : ""
     }`;
-    router.push(newURL); // Updated from history.replace
+    router.push(newURL); 
     setLocalBridalData((prevState) => !prevState);
   };
 
@@ -421,16 +432,10 @@ const StartWithASetting = (data) => {
 
   const shapeOnclick = (shapeNameItem) => {
     const clickedShape = secureLocalStorage.getItem("clickedShape");
-    const searchParams = new URLSearchParams(window.location.search);
 
     if (clickedShape == shapeNameItem) {
       // If the clicked shape is already active, remove the filter
-      searchParams.delete("shape");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/engagement-rings/start-with-a-setting"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      history.replace(newURL);
+     
 
       secureLocalStorage.removeItem("clickedShape");
       setShapeBreadCamb("");
@@ -451,7 +456,6 @@ const StartWithASetting = (data) => {
 
   // =============== shop by metal start ==============
   const metalOnclick = (metaColorId, metalValueColor, MetalColorName) => {
-    console.log(metaColorId, metalValueColor, MetalColorName);
 
     setMetalColorValue(metalValueColor);
     if (metaColorId === metalId) {
@@ -500,9 +504,11 @@ const StartWithASetting = (data) => {
         "selectedShopStyleIds",
         JSON.stringify([menuShopStyle])
       );
+      secureLocalStorage.removeItem("clickedShape");
     }
     if (menuShapeName) {
       secureLocalStorage.setItem("clickedShape", menuShapeName);
+      secureLocalStorage.removeItem("selectedShopStyleIds");
     }
   }, [menuShopStyle, menuShapeName]);
   useEffect(() => {
@@ -526,13 +532,7 @@ const StartWithASetting = (data) => {
       updatedStyleDataSlider = activeStyleIds.filter(
         (item) => item !== styleItem
       );
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.delete("style");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/engagement-rings/start-with-a-setting"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      history.replace(newURL);
+      
     } else {
       updatedStyleDataSlider = [...activeStyleIds, styleItem];
     }
@@ -549,25 +549,11 @@ const StartWithASetting = (data) => {
   const getBridalSetData = () => {
     setLocalBridalData(false);
     secureLocalStorage.removeItem("bridalSetsData");
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.delete("bridal-sets");
-    const newSearchString = searchParams.toString();
-    const newURL = `${"/engagement-rings/start-with-a-setting"}${
-      newSearchString ? `?${newSearchString}` : ""
-    }`;
-    history.replace(newURL);
+    
   };
 
   const resetAllShape = () => {
-    if (menuShapeName) {
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.delete("shape");
-      const newSearchString = searchParams.toString();
-      const newURL = `/engagement-rings/start-with-a-setting${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      router.push(newURL); // Updated from history.replace
-    }
+    
     commonMetalColor("White");
     setActiveStyleIds([]);
     setShapeName();
@@ -935,25 +921,13 @@ const StartWithASetting = (data) => {
       );
       // if (menuStyleNames?.includes(gemStyle)) {
 
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.delete("style");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/engagement-rings/start-with-a-setting"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      history.replace(newURL);
+      
       // }
       return updatedStyles;
     });
   };
   const handleShapeRemove = () => {
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.delete("shape");
-    const newSearchString = searchParams.toString();
-    const newURL = `${"/engagement-rings/start-with-a-setting"}${
-      newSearchString ? `?${newSearchString}` : ""
-    }`;
-    history.replace(newURL);
+    
     setShapeName();
     secureLocalStorage.removeItem("clickedShape");
   };
@@ -966,8 +940,6 @@ const StartWithASetting = (data) => {
 
   return (
     <>
-    
-      
       {stock_num ? (
         <div className="sticky-gemstone-name">
           {(newData.length > 0 ? newData : diamondData).map((item, i) => {
@@ -1984,11 +1956,9 @@ const StartWithASetting = (data) => {
         {/* <div>
           <ProductListMoreToExplore />
           </div> */}
-        <div>{loading && <LoaderSpinner/>}</div>
+        <div>{loading && <LoaderSpinner />}</div>
         <div>{/* <ProductListFaq /> */}</div>
       </div>
-
-      
     </>
   );
 };

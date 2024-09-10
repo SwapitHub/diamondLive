@@ -3,17 +3,14 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { validateEmail, validatePass } from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
-import Link from "next/link";
-import Header from "../_componentStatic/Header";
-import { Footer } from "../_componentStatic/Footer";
 export const LoginSignup = () => {
-  const router = useRouter()
-  // const location = useLocation()
+  const router = useRouter();
 
   const cartData = useSelector((state) => state.cartData);
   const wishlistData = useSelector((state) => state.wishlistData);
@@ -193,7 +190,6 @@ export const LoginSignup = () => {
             setTimeout(() => {
               // router.push(previousPath==="" ? "/accounts" : "/cart");
               router.push('/accounts')
-              window.location.reload(true);
             }, 3000);
 
             wishlistData.forEach((item) => {
