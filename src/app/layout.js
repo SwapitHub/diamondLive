@@ -31,7 +31,7 @@ console.log(data);
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
       <ToastWrapper>
        
         <UserProvider>
