@@ -1,7 +1,7 @@
 /* page.module.css */
 @font-face {
     font-family: 'Sackers Gothic Light AT'; /* Use quotes for names with spaces */
-    src: url('/_next/static/media/Sackers%20Gothic%20Light%20AT%20Regular.a2647ab9.otf') format('opentype');
+    src: url('./fonts/Sackers\ Gothic\ Light\ AT\ Regular.otf') format('opentype');
     font-weight: normal; /* Define weight if necessary */
     font-style: normal; /* Define style if necessary */
   }
