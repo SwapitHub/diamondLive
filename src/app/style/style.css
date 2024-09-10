@@ -34,7 +34,7 @@ li {
 }
 
 body {
-  font-family: Montserrat;
+  font-family: Montserrat !important;
   overflow-x: hidden;
   background: #F6F6F6 !important;
   font-style: normal;
