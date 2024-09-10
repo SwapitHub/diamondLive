@@ -1,9 +1,13 @@
 import ChooseDiamondsShape from "./DiamondClient";
 
 async function fetchDataFromAPI(diamond, diamondFilter) {
-  const response = await fetch(
-    `${process.env.BASE_URL}/check?menu=engagement-rings&subcategory=start-with-a-diamond`
-  );
+  
+  const menu = "engagement-rings" || "diamond"; 
+const subcategory = "start-with-a-diamond" || "diamond/start-with-a-diamond/lab_grown"; 
+const response = await fetch(
+    `${process.env.BASE_URL}/check?menu=${menu}&subcategory=${subcategory}`
+);
+
   const data = await response.json();
 
   return data;
@@ -62,6 +66,7 @@ export default async function DetailRingPage({ params }) {
   const { diamonds, diamondFilter } = params;
   const data = await fetchDataFromAPI(diamonds, diamondFilter);
 
+  console.log(data);
   
 
   return (
