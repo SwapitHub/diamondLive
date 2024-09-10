@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from "./_componentStatic/Header";
 import { Footer } from "./_componentStatic/Footer";
 import ToastWrapper from "@/ToastWrapper";
+import styles from './page.module.css';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,7 +32,7 @@ console.log(data);
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className={styles.customFont}>
       <ToastWrapper>
        
         <UserProvider>

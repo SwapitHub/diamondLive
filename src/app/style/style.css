@@ -95,10 +95,6 @@ h4 {
   padding-top: 0; 
 }
 
-@font-face {
-  font-family: Sackers Gothic Light AT;
-  src: url('/_next/static/media/Sackers%20Gothic%20Light%20AT%20Regular.a2647ab9.otf') format('opentype');
-}
 
 .button {
   border-radius: 5px;
