@@ -2,11 +2,7 @@ import ChooseDiamondsShape from "./DiamondClient";
 
 async function fetchDataFromAPI(diamond, diamondFilter) {
   const response = await fetch(
-    `${
-      process.env.BASE_URL
-    }/check?menu=diamond&subcategory=diamond/${diamond}${
-      diamondFilter ? `/${diamondFilter}` : ""
-    }`
+    `${process.env.BASE_URL}/check?menu=engagement-rings&subcategory=start-with-a-diamond`
   );
   const data = await response.json();
 
