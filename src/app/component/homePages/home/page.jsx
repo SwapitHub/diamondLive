@@ -182,6 +182,7 @@ import { UserContext } from "@/app/context/UserContext";
       });
   }, []);
 
+  console.log(homeAllSections);
   
   return (
     <>
@@ -191,7 +192,7 @@ import { UserContext } from "@/app/context/UserContext";
         <SeeProducts anniversaryRings={anniversaryRings} diamondPendants={diamondPendants} tennisBracelets={tennisBracelets} diamondStuds={diamondStuds}/>
         <ShopDiamondCotegory shopStyle={shopStyle}/>
         <BridalJewellery home={homeAllSections}/>
-        <AnniversaryRings/>
+        <AnniversaryRings home={homeAllSections}/>
         <CelebarteLove home={homeAllSections}/>
         <WeddingCollection engagementRings={engagementRings} weddingJewelry={weddingJewelry} weddingCollection={weddingCollection}/>
 

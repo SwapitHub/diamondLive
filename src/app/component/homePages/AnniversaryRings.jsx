@@ -1,26 +1,13 @@
-import axios from "axios";
+"use client"
 import Link from "next/link";
-import React, {  useEffect, useMemo, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
-export const AnniversaryRings = () => {
-  const [homeAllSections, setHomeAllSections] = useState([]);
-  useMemo(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${process.env.BASE_URL}/homecontent`);
-        const data = response.data.data;
+export const AnniversaryRings = ({home}) => {
+  console.log(home);
 
-        setHomeAllSections(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  
   return (
     <>
       <div className="ShopCategory ShopDiamondCotegory Anniversary Rings">
@@ -29,7 +16,8 @@ export const AnniversaryRings = () => {
 
           <div className="flex-container">
             <div className="flex">
-              {homeAllSections?.shopbycategory?.map((item,i) => {
+              {home?.shopbycategory?.map((item,i) => {
+                
                 return (
                  
                     <div className="column-width" key={i}>

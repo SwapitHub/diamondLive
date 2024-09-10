@@ -10,10 +10,11 @@ export const ShopDiamondShape = ({shapeData}) => {
           <h3>Shop Diamonds by Shape</h3>
           <div className="flex">
             {shapeData?.map((shapeItem, i) => {
+              
               return (
                
                   <div className="ShopDiamondShape-img-text" key={i}>
-                    <Link href="#">
+                    <Link href={`/diamond/shape/${shapeItem.shape}`}>
                       <div className="own-ring-white">
                       <LazyLoadImage src={shapeItem.icon} alt={shapeItem.shape}  width="auto"  height="auto"  />
 

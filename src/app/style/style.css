@@ -14685,6 +14685,9 @@ section.add-matching-wedding-band .love-right-content h4 {
 .lab-grown-diamonds-main h4 {
   font-size: 20px;
 }
+.home-page  .Shop-by-Style .column-width {
+  width: 100% !important;
+}
 
 @media (min-width: 2250px) {
   .bridalSets,

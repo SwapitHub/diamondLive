@@ -54,15 +54,17 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   const mainCategory = pathSegments[0] || "";
   const subCategory = pathSegments;
 
-  let menuShapeName, menuShopStyle, trellisRing;
+  let menuShapeName, menuShopStyle;
+  const [trellisRing, setTrellisRing] = useState();
 
   useEffect(() => {
     if (rings === "shape") {
       menuShapeName = ringFilter;
+      
     } else if (rings === "style") {
       menuShopStyle = ringFilter;
     } else {
-      trellisRing = rings;
+      setTrellisRing(rings)
     }
   }, []);
 
@@ -261,6 +263,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
           ? `&subcategory=${trellisRing == null ? "" : trellisRing}`
           : ""
       }`;
+      
       axios
         .get(URLNEW)
         .then((res) => {

@@ -18,7 +18,7 @@ export const ShopDiamondCotegory = ({shopStyle}) => {
   };
   return (
     <>
-      <div className="ShopCategory ShopDiamondCotegory">
+      <div className="ShopCategory ShopDiamondCotegory Shop-by-Style">
         <div className="container">
           <h3>Shop Engagement Ring Settings</h3>
           <div className="slider-flex-category desktop">
