@@ -70,7 +70,6 @@ const ContactUs = ({ posts }) => {
                   {item.pages.map((innerItem) => {
                     return (
                       <>
-                        {console.log(location.pathname)}
                         {location.pathname == "/" + innerItem.slug ? (
                           <>
                             <div

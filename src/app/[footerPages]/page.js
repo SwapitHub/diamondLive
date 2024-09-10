@@ -1,6 +1,5 @@
 // app/contact/page.tsx (or .js)
 
-import Head from "next/head";
 import ContactUs from "./fetchFooter";
 
 // Fetch data at build time

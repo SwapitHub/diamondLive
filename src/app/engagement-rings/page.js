@@ -22,14 +22,13 @@ const fetchMeta = async () => {
 export async function generateMetadata() {
   const data = await fetchMeta();
 
-  console.log(data);
   
   return {
-    title: data.data?.name || "Default Title",
-    description: data.data?.description || "Default Description",
+    title: data.data?.meta_title || "Default Title",
+    description: data.data?.meta_description || "Default Description",
     openGraph: {
-      title: data.data?.name || "Default Title",
-      description: data.data?.description || "Default Description",
+      title: data.data?.meta_title || "Default Title",
+      description: data.data?.meta_description || "Default Description",
       url: data.data?.default_image_url || "http://default-url.com",
       siteName: data.data?.meta_site_name || "Default Site Name",
       images: [
