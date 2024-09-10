@@ -10,7 +10,7 @@ export const AnniversaryRings = () => {
   useMemo(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/homecontent`);
+        const response = await axios.get(`${process.env.BASE_URL}/homecontent`);
         const data = response.data.data;
 
         setHomeAllSections(data);

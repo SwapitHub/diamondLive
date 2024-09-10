@@ -4,7 +4,7 @@ const fetchMetaCart = async () => {
   let cart = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=cart`
+      `${process.env.BASE_URL}/cms-metadata?route=cart`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -30,7 +30,7 @@ export async function generateMetadata() {
         siteName: data.data.meta_site_name || "Default Site Name",
         images: [
           {
-            url: data.data.meta_image_url || "http://default-image-url.com",
+            url: data.data.meta_image_url || "https://assets.rocksama.com/public/storage/images/1716284040_SAMA.png",
             width: 800,
             height: 600,
             alt: data.data.meta_image_alt || "Default Image Alt",

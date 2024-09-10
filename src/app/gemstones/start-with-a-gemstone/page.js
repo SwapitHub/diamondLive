@@ -2,7 +2,7 @@ import { ChooseGemstones } from "./ChooseGemstones";
 
 
 async function fetchDataFromAPI() {
-  const response = await fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/check?menu=gemstone&subcategory=start-with-a-gemstone`);
+  const response = await fetch(`${process.env.BASE_URL}/check?menu=gemstone&subcategory=start-with-a-gemstone`);
   const data = await response.json();
   
   return data;

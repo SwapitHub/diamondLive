@@ -1,11 +1,8 @@
 "use client";
-import axios from "axios";
 import DOMPurify from "dompurify";
 import $ from "jquery";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { Footer } from "../_componentStatic/Footer";
-import Header from "../_componentStatic/Header";
+import { useEffect, useState } from "react";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 import Head from "next/head";
 
@@ -84,33 +81,7 @@ const ContactUs = ({ posts }) => {
                                 __html: DOMPurify.sanitize(innerItem.content),
                               }}
                             ></div>
-                            {/* <Head>
-                              <title>
-                                {innerItem.title
-                                  ? innerItem.title
-                                  : innerItem.name}
-                              </title>
-                              <meta
-                                name="description"
-                                content={
-                                  innerItem.meta_description
-                                    ? truncateMetaDescription(
-                                        innerItem.meta_description
-                                      )
-                                    : truncateMetaDescription(
-                                        innerItem.description
-                                      )
-                                }
-                              />
-                              <meta
-                                name="keywords"
-                                content={
-                                  innerItem.meta_keyword
-                                    ? innerItem.meta_keyword
-                                    : innerItem.keyword
-                                }
-                              />
-                            </Head> */}
+                            
                           </>
                         ) : null}
                       </>

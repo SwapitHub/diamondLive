@@ -4,7 +4,7 @@ const fetchMeta = async () => {
   let diamond = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=gemstones-detail`
+      `${process.env.BASE_URL}/cms-metadata?route=gemstones-detail`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

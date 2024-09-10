@@ -4,7 +4,7 @@ const fetchLogin = async () => {
   let login = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=login`
+      `${process.env.BASE_URL}/cms-metadata?route=login`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

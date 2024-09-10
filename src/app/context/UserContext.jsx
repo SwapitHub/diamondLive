@@ -19,8 +19,6 @@ export const UserProvider = ({ children }) => {
   const imgBaseUrl = "https://assets.rocksama.com/products/images";
   const imgAssetsUrl = "https://assets.rocksama.com";
 
-
-
   return (
     <UserContext.Provider
       value={{

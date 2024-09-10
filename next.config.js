@@ -35,10 +35,9 @@ const nextConfig = {
       },
       {
         source: '/api/:path*', 
-        destination: 'https://api.rocksama.com/admin/api/v1/:path*',
+        destination: 'https://api.rocksama.com/api/v1/:path*',
       },
     ];
   },
 };
-
 module.exports = nextConfig;

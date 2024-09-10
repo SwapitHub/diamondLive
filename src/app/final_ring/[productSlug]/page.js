@@ -4,7 +4,7 @@ const fetchMeta = async () => {
   let diamond = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=final_ring`
+      `${process.env.BASE_URL}/cms-metadata?route=final_ring`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -47,7 +47,7 @@ const fetchRingDetail = async (productSlug) => {
   try {
     
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/product/${productSlug}`,
+      `${process.env.BASE_URL}/product/${productSlug}`,
       
     );
     if (!response.ok) {
@@ -75,7 +75,7 @@ export async function generateMetadata({params}) {
       siteName: data.data?.meta_site_name || "Default Site Name",
       images: [
         {
-          url: data.data?.default_image_url || "http://default-image-url.com",
+          url: data.data?.default_image_url || "https://assets.rocksama.com/public/storage/images/1716284040_SAMA.png",
           width: 800,
           height: 600,
           alt: data.data?.name || "Default Image Alt",

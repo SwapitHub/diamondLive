@@ -7,6 +7,7 @@ import { UserContext } from "../context/UserContext";
 import { removeToWishlist } from "../../../store/actions/wishlistAction";
 import { addToCart } from "../../../store/actions/cartActions";
 import Link from "next/link";
+import { productList, productListCart } from "../../../store/actions/productActions";
 
 
 export const WishlistHover = () => {

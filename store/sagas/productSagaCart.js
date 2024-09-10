@@ -6,7 +6,7 @@ const user_id = secureLocalStorage.getItem('formData');
 
 function* getProducts() {
     try {
-        const response = yield fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/getcart-items?user_id=${user_id}`);
+        const response = yield fetch(`https://api.rocksama.com/api/v1/getcart-items?user_id=${user_id}`);
         if (!response.ok) {
             throw new Error("Failed to fetch cart items");
         }

@@ -7,7 +7,7 @@ const fetchDetailMeta = async (productSlug) => {
   let ringDetail = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/product/${productSlug}`
+      `${process.env.BASE_URL}/product/${productSlug}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -54,11 +54,11 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: data.data?.name || "Default Title",
       description: data.data?.description || "Default Description",
-      url: data.data?.default_image_url || "http://default-url.com",
+      url: data.data?.default_image_url || "https://assets.rocksama.com/public/storage/images/1716284040_SAMA.png",
       siteName: data.data?.meta_site_name || "Default Site Name",
       images: [
         {
-          url: data.data?.default_image_url || "http://default-image-url.com",
+          url: data.data?.default_image_url || "https://assets.rocksama.com/public/storage/images/1716284040_SAMA.png",
           width: 800,
           height: 600,
           alt: data.data?.name || "Default Image Alt",

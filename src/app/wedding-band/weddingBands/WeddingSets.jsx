@@ -48,7 +48,7 @@ export const WeddingSets = () => {
                                 </div>
                             </div>
                             <div className="bridalSets-img">
-                                <LazyLoadImage src={`${imgAssetsUrl}/frontend/images/hands1.jpg`} alt="ring_promotion_banner_desktop_2" loading="lazy" effect="blur" width="auto"  height="auto"  />
+                                <LazyLoadImage src={`${imgAssetsUrl}/frontend/images/hands1.jpg`} alt="ring_promotion_banner_desktop_2" loading="lazy"  width="auto"  height="auto"  />
                             </div>
                           
                         </div>
@@ -67,7 +67,7 @@ export const WeddingSets = () => {
                                 </div>
                             </div>
                             <div className="bridalSets-img">
-                                <LazyLoadImage src={`${imgAssetsUrl}/frontend/images/hand3.jpg`} alt="ring_promotion_banner_desktop_2" loading="lazy" effect="blur" width="auto"  height="auto"  />
+                                <LazyLoadImage src={`${imgAssetsUrl}/frontend/images/hand3.jpg`} alt="ring_promotion_banner_desktop_2" loading="lazy"  width="auto"  height="auto"  />
                             </div>
                           
                         </div>

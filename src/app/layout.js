@@ -9,7 +9,24 @@ import { Footer } from "./_componentStatic/Footer";
 
 
 const inter = Inter({ subsets: ["latin"] });
+// async function fetchDataFromAPI() {
+//   const response = await fetch(`${process.env.BASE_URL}/siteinfo`);
+//   const data = await response.json();
 
+//   return data;
+// }
+
+// export async function generateMetadata() {
+//   const data = await fetchDataFromAPI();
+// console.log(data);
+
+//   return {
+   
+//     icons: {
+//       icon: `${data.favicon}`
+//     },
+//   };
+// }
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

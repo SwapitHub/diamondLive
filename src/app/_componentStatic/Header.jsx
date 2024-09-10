@@ -334,7 +334,7 @@ export const Header = () => {
                           ? `/gemstone`
                           : res.slug == "diamonds"
                           ? `/diamond`
-                          : res.slug
+                          : `/${res.slug}`
                       }
                     >
                       {res.name}
@@ -347,7 +347,7 @@ export const Header = () => {
                               <Link
                                 href={`${
                                   res.name === "BRAND"
-                                    ? catRes.slug
+                                    ? `/${catRes.slug}`
                                     : "javascript:void(0)"
                                 }`}
                                 style={{
@@ -541,10 +541,10 @@ export const Header = () => {
                         <Link
                           href={
                             item.slug == "gemstones"
-                              ? `gemstone`
+                              ? `/gemstone`
                               : item.slug == "diamonds"
-                              ? `diamond`
-                              : item.slug
+                              ? `/diamond`
+                              : `/${item.slug}`
                           }
                         >
                           {item.name}
@@ -555,7 +555,7 @@ export const Header = () => {
                               <Link
                                 href={`${
                                   item.name === "BRAND"
-                                    ? catItem.slug
+                                    ? `/${catItem.slug}`
                                     : "javascript:void(0)"
                                 }`}
                                 style={{
@@ -582,7 +582,7 @@ export const Header = () => {
                                   ) : null}
                                   <Link
                                     onClick={ToggleClass}
-                                    href={`${subItem.alias}`}
+                                    href={`/${subItem.alias}`}
                                   >
                                     {subItem.name}
                                   </Link>

@@ -2,7 +2,8 @@ import StartWithASetting from "./RingListPageClient";
 
 
 async function fetchDataFromAPI(detailRingPage) {
-  const response = await fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/check?menu=engagement-rings&subcategory=start-with-a-setting`);
+  
+  const response = await fetch(`${process.env.BASE_URL}/check?menu=engagement-rings&subcategory=start-with-a-setting`);
   const data = await response.json();
   
   return data;

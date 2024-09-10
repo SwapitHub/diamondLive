@@ -4,7 +4,7 @@ const fetchMetawishlist = async () => {
   let wishlistServer = [];
   try {
     const response = await fetch(
-      `http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/cms-metadata?route=wishlist`
+      `${process.env.BASE_URL}/cms-metadata?route=wishlist`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

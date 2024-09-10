@@ -2,7 +2,7 @@ import ChooseDiamonds from "./StartWithDiamondClient";
 
 
 async function fetchDataFromAPI() {
-  const response = await fetch(`http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/v1/check?menu=engagement-rings&subcategory=start-with-a-diamond`);
+  const response = await fetch(`${process.env.BASE_URL}/check?menu=engagement-rings&subcategory=start-with-a-diamond`);
   const data = await response.json();
   
   return data;
@@ -44,7 +44,7 @@ export async function generateMetadata() {
       siteName: "Default Site Name",
       images: [
         {
-          url: "http://default-image-url.com",
+          url: "https://assets.rocksama.com/public/storage/images/1716284040_SAMA.png",
           width: 800,
           height: 600,
           alt: "Default Image Alt",
@@ -59,10 +59,11 @@ export async function generateMetadata() {
 export default async function DetailRingPage({ params }) {
   const data = await fetchDataFromAPI();
   const { productSlug } = params;
+  
   return (
         <div>
                
-          <ChooseDiamonds data={data} productSlug={productSlug[0]} natural={productSlug[1]}/>      
+          <ChooseDiamonds data={data} productSlug={productSlug[0]}/>      
                    
         </div>
       );

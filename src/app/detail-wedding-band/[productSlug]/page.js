@@ -1,9 +1,8 @@
-// File: app/engagement-ring/[...detailRingProduct]/page.js
+import { WeddingBandsDetail } from "./WeddingBandDetail";
 
-import DetailRingProduct from "./DetailRingClient";
 
 const fetchDetailMeta = async (productSlug) => {
-  let ringDetail = [];
+  let bandDetail = [];
   try {
     const response = await fetch(
       `${process.env.BASE_URL}/product/${productSlug}`
@@ -11,11 +10,11 @@ const fetchDetailMeta = async (productSlug) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    ringDetail = await response.json();
+    bandDetail = await response.json();
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-  return ringDetail;
+  return bandDetail;
 };
 
 export async function generateMetadata({ params }) {
@@ -44,14 +43,14 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function RingDetailPage({ params }) {
+export default async function bandDetailPage({ params }) {
  const {productSlug} = params
 
-  const ringDetail = await fetchDetailMeta(productSlug);
+  const bandDetail = await fetchDetailMeta(productSlug);
 
   return (
     <>
-      <DetailRingProduct ringDetail={ringDetail} />
+      <WeddingBandsDetail bandDetail={bandDetail} productSlug={productSlug}/>
     </>
   );
 }
