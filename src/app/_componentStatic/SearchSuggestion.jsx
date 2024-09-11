@@ -60,7 +60,6 @@ export const SearchSuggestion = ({ suggestionData, suggestion }) => {
                             <LazyLoadImage
                               width="auto"
                               height="auto"
-                              effect="blur"
                               src={item?.default_image_url}
                               alt={item?.name}
                               onError={(e) => {

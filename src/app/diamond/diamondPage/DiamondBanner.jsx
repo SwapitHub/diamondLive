@@ -39,8 +39,7 @@ export const DiamondBanner = () => {
 
               <h1> Diamonds</h1>
               <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque,
-                quisquam.
+              Timeless Beauty, Your Way: Natural and Lab-Grown Diamonds to Celebrate Your Love
               </span>
               <div className="btn-bar">
                 <Link

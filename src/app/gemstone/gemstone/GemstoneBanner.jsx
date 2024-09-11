@@ -54,7 +54,7 @@ export const GemstoneBanner = () => {
 
               <h1>Design Your Own Gemstone Ring</h1>
               <span>
-                Lorem Ipsum is simply dummy text of the printing and industry.
+              From Classic to Colorful: Design a Gemstone Ring That's Truly You.
               </span>
               <div className="btn-bar">
                 <Link
