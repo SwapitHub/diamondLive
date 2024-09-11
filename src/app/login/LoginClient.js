@@ -392,7 +392,7 @@ export const LoginSignup = () => {
           );
 
           if (response.status === 200) {
-            toast.success(response.data?.msg, {
+            toast.success(response?.data?.msg, {
               position: "top-right",
             });
           } else {
@@ -404,7 +404,7 @@ export const LoginSignup = () => {
         }
       }
     } catch (error) {
-      toast.error(error.response.data.msg[0], {
+      toast.error(error.response?.data.msg[0], {
         position: "top-right",
       });
       console.error("Error:", error);
