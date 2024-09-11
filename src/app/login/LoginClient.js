@@ -369,7 +369,6 @@ export const LoginSignup = () => {
         email: document.getElementById("create-email").value,
         password: document.getElementById("create-pass").value,
         c_password: document.getElementById("create-cpass").value,
-        newsletter: document.querySelector('input[name="newsletter"]').checked,
       };
       if (
         formData.first_name != "" &&

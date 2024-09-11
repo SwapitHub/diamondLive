@@ -4,7 +4,7 @@ const fetchMetawishlist = async () => {
   let wishlistServer = [];
   try {
     const response = await fetch(
-      `${process.env.BASE_URL}/cms-metadata?route=wishlist`
+      `${process.env.BASE_URL}/cms-metadata?route=search`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
