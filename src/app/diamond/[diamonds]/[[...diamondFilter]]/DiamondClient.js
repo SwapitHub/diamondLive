@@ -18,9 +18,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 
-const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
+const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
   const router = useRouter();
-  var  productSlug  = diamondsFilter;
   const searchParams = useSearchParams();
   const font_style = searchParams.get("font_style");
   const textEngraving = searchParams.get("textEngraving");
@@ -98,7 +97,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
 
     if (!productSlug) {
       history.push(
-        `/engagement-rings/start-with-a-diamond${
+        `/diamond/start-with-a-diamond${
           newType === "lab_grown" ? "/lab_grown" : ""
         }${location.search}`
       );

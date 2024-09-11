@@ -30,7 +30,7 @@ export const Tabbing = ({
             </div>
           ) : type === "ring-detail" || type === "diamond-ring" ? (
             <div className="one-choose-setting first-btn">
-              <Link href="/engagement-rings/start-with-a-diamond/">
+              <Link href="/diamond/start-with-a-diamond/">
                 1. Choose Diamonds
               </Link>
             </div>

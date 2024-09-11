@@ -10365,7 +10365,7 @@ section.testimonial-rings .comment-sec p {
 	max-width: 320px;
 }
 .popular-grid-wrapper .imgg-sec img {
-  height: 100%; max-height: 90px;
+  height: 100%; max-height: 150px;
 }
 
 .ready-ship-banner {
@@ -14689,10 +14689,16 @@ section.add-matching-wedding-band .love-right-content h4 {
 .Shop-Engagement-Ring-Settings .column-width {
   width: 100% !important;
 }
-
+.shop-by-color-slider-section  .popular-grid-wrapper .imgg-sec img {
+   max-height: 90px;
+}
 .shop-by-color-slider-section .popular-grid-wrapper .imgg-sec {
   height: 160px;
 }
+.error-image {
+  display: none;
+}
+
 @media (min-width: 2250px) {
   .bridalSets,
   .bridalSets-2 {

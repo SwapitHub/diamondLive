@@ -45,7 +45,7 @@ export const ContinueShoping = () => {
         </Link>
       </div>
       <div className="category-tiles-box">
-        <Link href="/engagement-rings/start-with-a-gemstone">
+        <Link href="/gemstone/start-with-a-gemstone">
           <div className="wisher-imager">
             <img  width="auto"  height="auto"  
               src={`${imgAssetsUrl}/public/images/home/Gemstone-Rings.jpg`}
@@ -62,7 +62,7 @@ export const ContinueShoping = () => {
         </Link>
       </div>
       <div className="category-tiles-box">
-        <Link href="/engagement-rings/start-with-a-setting?bridal-sets=true">
+        <Link href="/engagement-rings/start-with-a-setting?bridalSets=true">
           <div className="wisher-imager">
             <img  width="auto"  height="auto"  
               src={`${imgAssetsUrl}/frontend/images/chain.jpg`}

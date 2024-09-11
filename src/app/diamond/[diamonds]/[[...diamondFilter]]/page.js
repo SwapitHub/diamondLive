@@ -1,12 +1,14 @@
 import ChooseDiamondsShape from "./DiamondClient";
 
 async function fetchDataFromAPI(diamond, diamondFilter) {
-  
-  const menu =  diamondFilter=="lab_grown" ? "diamond" : "engagement-rings"; 
-const subcategory = diamondFilter=="lab_grown" ?  "diamond/start-with-a-diamond/lab_grown" : "start-with-a-diamond" ; 
-const response = await fetch(
+  const menu = diamondFilter == "lab_grown" ? "diamond" : "engagement-rings";
+  const subcategory =
+    diamondFilter == "lab_grown"
+      ? "diamond/start-with-a-diamond/lab_grown"
+      : "start-with-a-diamond";
+  const response = await fetch(
     `${process.env.BASE_URL}/check?menu=${menu}&subcategory=${subcategory}`
-);
+  );
 
   const data = await response.json();
 
@@ -62,16 +64,17 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function DetailRingPage({ params}) {
-  
+export default async function DetailRingPage({ params }) {
   const { diamonds, diamondFilter } = params;
   const data = await fetchDataFromAPI(diamonds, diamondFilter);
 
-  
-
   return (
     <div>
-      <ChooseDiamondsShape  diamonds={diamonds}  diamondsFilter={diamondFilter ? diamondFilter[0] : diamondFilter} />
+      <ChooseDiamondsShape
+        diamonds={diamonds}
+        diamondsFilter={diamondFilter ? diamondFilter[0] : diamondFilter}
+        productSlug={diamondFilter?.length > 1 && diamondFilter[0]}
+      />
     </div>
   );
 }

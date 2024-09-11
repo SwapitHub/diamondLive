@@ -33,6 +33,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useData } from "../../context/DataContext";
 import { Tabbing } from "../../_componentStatic/Tabbing";
+import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
+import { productList } from "../../../../store/actions/productActions";
 
 
 const SelectDiamond = ({diamondDetails, productSlug}) => {
@@ -208,7 +210,7 @@ const SelectDiamond = ({diamondDetails, productSlug}) => {
       diamond_type: diamond_origin === "lab_grown" ? diamond_origin : "natural",
       uniqueId: uuidv4(),
     };
-    dispatch(addToWishList(newItem));
+    dispatch(addToWishlist(newItem));
 
     const formData = {
       user_id: user_id,

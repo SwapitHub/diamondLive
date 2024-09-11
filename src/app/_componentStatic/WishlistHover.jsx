@@ -385,7 +385,7 @@ export const WishlistHover = () => {
                               {item.product_type == "ring" &&
                                 (item.ring_size !== null ? (
                                   <Link
-                                    href={`/engagement-rings/start-with-a-diamond/${
+                                    href={`/diamond/start-with-a-diamond/${
                                       item.ring?.slug
                                     }${
                                       item?.ring_type == "lab_grown"
@@ -459,7 +459,7 @@ export const WishlistHover = () => {
                                     {item.product_type == "ring" ? (
                                       item.ring_size !== null ? (
                                         <Link
-                                          href={`/engagement-rings/start-with-a-diamond/${
+                                          href={`/diamond/start-with-a-diamond/${
                                             item.ring?.slug
                                           }${
                                             item?.ring_type == "lab_grown"
@@ -594,7 +594,7 @@ export const WishlistHover = () => {
                                   {item.product_type == "ring" ? (
                                     item.ring_size !== null ? (
                                       <Link
-                                        href={`/engagement-rings/start-with-a-diamond/${
+                                        href={`/diamond/start-with-a-diamond/${
                                           item.ring?.slug
                                         }${
                                           item?.ring_type == "lab_grown"
@@ -1453,7 +1453,7 @@ export const WishlistHover = () => {
                                     <div className="whislist-button-purple">
                                       {item.ring_size ? (
                                         <Link
-                                          href={`/engagement-rings/start-with-a-diamond/${
+                                          href={`/diamond/start-with-a-diamond/${
                                             item.item?.slug
                                           }${
                                             item?.ring_type == "lab_grown"

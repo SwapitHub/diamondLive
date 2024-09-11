@@ -1,11 +1,9 @@
 'use client';
-import React, { useContext, useEffect } from "react";
-import secureLocalStorage from "react-secure-storage";
-import { UserContext } from "../context/UserContext";
-import { useData } from "../context/DataContext";
 import Link from "next/link";
-import Header from "../_componentStatic/Header";
-import { Footer } from "../_componentStatic/Footer";
+import { useContext, useEffect } from "react";
+import secureLocalStorage from "react-secure-storage";
+import { useData } from "../context/DataContext";
+import { UserContext } from "../context/UserContext";
 
 const Help = () => {
   const { imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
@@ -27,7 +25,8 @@ const Help = () => {
     font,
     engraving,
   } = helpData;
-
+  console.log(helpData);
+  
   useEffect(() => {
     const data = JSON.parse(secureLocalStorage.getItem("helpData"));
 
@@ -176,7 +175,7 @@ const Help = () => {
                       )}
                     </ul>
                   </Link>
-                  {helpData == null && (
+                  {helpData && (
                     <Link href="/">
                       <ul>
                         <li>

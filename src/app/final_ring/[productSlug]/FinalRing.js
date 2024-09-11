@@ -580,7 +580,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
                     ringName={"1. Choose Rings"}
                     ringLink={"/engagement-rings/start-with-a-setting"}
                     diamondName={"2. Choose Diamonds"}
-                    diamondLink={"/engagement-rings/start-with-a-diamond/"}
+                    diamondLink={"/diamond/start-with-a-diamond/"}
                     type="ring-final"
                   />
                 </div>

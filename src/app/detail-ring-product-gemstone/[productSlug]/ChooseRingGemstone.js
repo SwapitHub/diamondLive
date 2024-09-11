@@ -722,12 +722,12 @@ export default function ChooseRingGemstone({ringDetail, gemstoneDetail, listColo
             {/* ====================create your ring start */}
             {/* ====================create your ring start */}
           {stock_num !== null ? (
-            <Tabbing stock_num={stock_num} type="ring-gemstone"   ringName={`2. Choose Rings`} ringLink={`/engagement-rings/start-with-a-setting`} diamondName={` 1. Choose Diamonds`}  diamondLink={`/engagement-rings/start-with-a-diamond/`} gemStoneName={`1. Choose Gemstones`} gemStoneLink={`/gemstones/start-with-a-gemstone`}/>
+            <Tabbing stock_num={stock_num} type="ring-gemstone"   ringName={`2. Choose Rings`} ringLink={`/engagement-rings/start-with-a-setting`} diamondName={` 1. Choose Diamonds`}  diamondLink={`/diamond/start-with-a-diamond/`} gemStoneName={`1. Choose Gemstones`} gemStoneLink={`/gemstones/start-with-a-gemstone`}/>
           ) : (
             <>
               <div className="main-arrow-heading">
                 {/* ====================create your ring start */}
-                <Tabbing  type="ring"  ringName={`1. Choose Setting`} ringLink={`javascript:void(0)`} diamondName={` 2. Choose Diamonds`}  diamondLink={`/engagement-rings/start-with-a-diamond/`}/>
+                <Tabbing  type="ring"  ringName={`1. Choose Setting`} ringLink={`javascript:void(0)`} diamondName={` 2. Choose Diamonds`}  diamondLink={`/diamond/start-with-a-diamond/`}/>
               </div>
             </>
           )}
@@ -4211,7 +4211,7 @@ ${changeClick === rose ? "active" : ""}
                       <Link
                         href={`${
                           selectedOption
-                            ? `/engagement-rings/start-with-a-diamond/${
+                            ? `/diamond/start-with-a-diamond/${
                                 diamondTypeClick == "lab_grown"
                                   ? "lab_grown"
                                   : ""

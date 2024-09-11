@@ -992,7 +992,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
               ringName={`2. Choose Rings`}
               ringLink={`javascript:void(0)`}
               diamondName={` 1. Choose Diamonds`}
-              diamondLink={`/engagement-rings/start-with-a-diamond/`}
+              diamondLink={`/diamond/start-with-a-diamond/`}
               gemStoneName={`1. Choose Gemstones`}
               gemStoneLink={`/gemstones/start-with-a-gemstone`}
             />
@@ -1013,7 +1013,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                 ringName={`1. Choose Setting`}
                 ringLink={`javascript:void(0)`}
                 diamondName={` 2. Choose Diamonds`}
-                diamondLink={`/engagement-rings/start-with-a-diamond/`}
+                diamondLink={`/diamond/start-with-a-diamond/`}
               />
             </>
           )}

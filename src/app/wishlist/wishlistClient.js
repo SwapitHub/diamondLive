@@ -99,7 +99,7 @@ const WishList = ({wishlistServer}) => {
   useEffect(() => {
     axios
       .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
+        `${baseUrl}/csrf-token`
       )
       .then((res) => {
         setShapeData(res.data.csrf_token);
@@ -133,7 +133,7 @@ const WishList = ({wishlistServer}) => {
     axios
       .get(`${baseUrl}/remove_wishlist_item/${removeWishList}`)
       .then((res) => {
-        dispatch(productListt());
+        dispatch(productList());
       })
       .catch((error) => {
         console.log("CSRF Token API Error:", error);
@@ -617,7 +617,7 @@ const WishList = ({wishlistServer}) => {
                                     {item.product_type === "ring" ? (
                                       item.ring_size !== null ? (
                                         <Link
-                                          href={`/engagement-rings/start-with-a-diamond/${
+                                          href={`/diamond/start-with-a-diamond/${
                                             item.ring?.slug
                                           }${
                                             item?.ring_type == "lab_grown"
@@ -1500,7 +1500,7 @@ const WishList = ({wishlistServer}) => {
                                   {item.product_type === "ring" ? (
                                     item.ring_size !== null ? (
                                       <Link
-                                        href={`/engagement-rings/start-with-a-diamond/${
+                                        href={`/diamond/start-with-a-diamond/${
                                           item.ring?.slug
                                         }${
                                           item?.ring_type == "lab_grown"
@@ -2504,7 +2504,7 @@ const WishList = ({wishlistServer}) => {
                                 {item.product_type === "ring" ? (
                                   item.ring_size ? (
                                     <Link
-                                      href={`/engagement-rings/start-with-a-diamond/${
+                                      href={`/diamond/start-with-a-diamond/${
                                         item.item?.slug
                                       }${
                                         item?.diamond_original == "lab_grown"
@@ -3085,7 +3085,7 @@ const WishList = ({wishlistServer}) => {
                                 {item.product_type === "ring" ? (
                                   item.ring_size ? (
                                     <Link
-                                      href={`/engagement-rings/start-with-a-diamond/${
+                                      href={`/diamond/start-with-a-diamond/${
                                         item.item?.slug
                                       }${
                                         item?.diamond_original == "lab_grown"

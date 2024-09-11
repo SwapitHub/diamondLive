@@ -887,7 +887,7 @@ const CartPage = ({ cart }) => {
                                               multiple places in your Shopping
                                               Cart. Please remove one of the
                                               items or{" "}
-                                              <Link href="/engagement-rings/start-with-a-diamond">
+                                              <Link href="/diamond/start-with-a-diamond">
                                                 choose a new diamond
                                               </Link>{" "}
                                               before submitting your order.
@@ -1100,7 +1100,7 @@ const CartPage = ({ cart }) => {
                                             multiple places in your Shopping
                                             Cart. Please remove one of the items
                                             or{" "}
-                                            <Link href="/engagement-rings/start-with-a-diamond">
+                                            <Link href="/diamond/start-with-a-diamond">
                                               choose a new diamond
                                             </Link>{" "}
                                             before submitting your order.
@@ -2410,7 +2410,7 @@ const CartPage = ({ cart }) => {
                                           This unique diamond exists in multiple
                                           places in your Shopping Cart. Please
                                           remove one of the items or{" "}
-                                          <Link href="/engagement-rings/start-with-a-diamond">
+                                          <Link href="/diamond/start-with-a-diamond">
                                             choose a new diamond
                                           </Link>{" "}
                                           before submitting your order.
@@ -2525,7 +2525,7 @@ const CartPage = ({ cart }) => {
                                           This unique diamond exists in multiple
                                           places in your Shopping Cart. Please
                                           remove one of the items or{" "}
-                                          <Link href="/engagement-rings/start-with-a-diamond">
+                                          <Link href="/diamond/start-with-a-diamond">
                                             choose a new diamond
                                           </Link>{" "}
                                           before submitting your order.
@@ -2825,7 +2825,7 @@ const CartPage = ({ cart }) => {
                                         This unique diamond exists in multiple
                                         places in your Shopping Cart. Please
                                         remove one of the items or{" "}
-                                        <Link href="/engagement-rings/start-with-a-diamond">
+                                        <Link href="/diamond/start-with-a-diamond">
                                           choose a new diamond
                                         </Link>{" "}
                                         before submitting your order.
