@@ -28,8 +28,11 @@ export const LoginSignup = () => {
     }
   }
 
-  // const previousPath = location.state?.from || '';
-  // console.log(previousPath);
+  const [previousPath, setPreviousPath] = useState()  
+  useEffect(() => {
+    const path = localStorage.getItem('previousPath') || '/';
+    setPreviousPath(path);
+  }, []);
   
   const handleValidationsSignIn = (event) => {
     event.preventDefault();
@@ -188,8 +191,9 @@ export const LoginSignup = () => {
             });
 
             setTimeout(() => {
-              // router.push(previousPath==="" ? "/accounts" : "/cart");
-              router.push('/accounts')
+              router.push(previousPath==="/cart" ? "/cart" : "/accounts");
+              // router.push('/accounts')
+              localStorage.removeItem('previousPath');
             }, 3000);
 
             wishlistData.forEach((item) => {

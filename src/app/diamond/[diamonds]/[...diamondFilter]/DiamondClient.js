@@ -12,39 +12,36 @@ import "slick-carousel/slick/slick.css";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { IoClose } from "react-icons/io5";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 
 const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
-  const queryParams = new URLSearchParams();
-  const font_style = queryParams.get("font_style");
-  const textEngraving = queryParams.get("textEngraving");
   const router = useRouter();
-
-  var { productSlug } = useParams();
-
-  const productColor = queryParams.get("color");
+  var  productSlug  = diamondsFilter;
+  const searchParams = useSearchParams();
+  const font_style = searchParams.get("font_style");
+  const textEngraving = searchParams.get("textEngraving");
+  const productColor = searchParams.get("color");
   const [menuShapeName, setMenuShapeName] = useState();
+  const listColor = searchParams.get("color");
+  const diamond_original = searchParams.get("diamond_original");
+  const center_stone = searchParams.get("center_stone");
+  const ring_size = searchParams.get("ring_size");
+  const diamondColor = searchParams.get("diamonds");
+  const history = useRouter();
+  const dispatch = useDispatch();
+  const compareData = useSelector((state) => state.compareData);
+  const pageSize = 30;
+
 
   useEffect(()=>{
     if(diamonds === 'shape'){
       setMenuShapeName(diamondsFilter)
     }
   },[])
-
-  const listColor = queryParams.get("color");
-  const diamond_original = queryParams.get("diamond_original");
-  const center_stone = queryParams.get("center_stone");
-  const ring_size = queryParams.get("ring_size");
-  const diamondColor = queryParams.get("diamonds");
-  const history = useRouter();
-  const dispatch = useDispatch();
-  const compareData = useSelector((state) => state.compareData);
-  const pageSize = 30;
-
   let shapeSlider = "";
   if (menuShapeName) {
     shapeSlider = `&shapes[]=${
@@ -91,9 +88,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
   const initialType = lastPathSegment === "lab_grown" ? "lab_grown" : "natural";
   const [type, setType] = useState(initialType);
 
-  const [newDiamondType, setNewDiamondType] = useState(
-    diamond_original || initialType
-  );
+  const [newDiamondType, setNewDiamondType] = useState(diamond_original || initialType);
 
   
   const handleTypeChange = (newType) => {
@@ -113,7 +108,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
   useEffect(() => {
     const newPathSegments = location.pathname.split("/");
     const newLastPathSegment = newPathSegments[newPathSegments.length - 1];
-    const newType = newLastPathSegment === "lab_grown" ? "lab_grown" : "";
+    const newType = newLastPathSegment === "lab_grown" ? "lab_grown" : "natural";
     setNewDiamondType(newType);
     setType(newType);
   }, [location.pathname]);

@@ -1430,7 +1430,7 @@ line-height: normal;
 .Setting-Carat > a:hover,
 .Diamond-Original > a:hover,
 .Diamond-Original > a.active {
-  border: 2px solid #734e90;
+  border: 2px solid #734e90  !important;
 }
 
 .Setting-Carat {
@@ -10998,7 +10998,7 @@ a.nature-active {
   font-weight: 800;
 }
 .choose-diamonds .Diamond-Original > a:hover {
-  border: 4.4px solid #734e90;
+  border: 4.4px solid #734e90 !important;
 }
 .header-icons .search-icon > input.search-open {
   width: 200px;

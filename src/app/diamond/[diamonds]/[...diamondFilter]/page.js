@@ -66,12 +66,12 @@ export default async function DetailRingPage({ params }) {
   const { diamonds, diamondFilter } = params;
   const data = await fetchDataFromAPI(diamonds, diamondFilter);
 
-  console.log(data);
+  console.log(params);
   
 
   return (
     <div>
-      <ChooseDiamondsShape diamonds={diamonds} diamondsFilter={diamondFilter ? diamondFilter[0] : diamondFilter} />
+      <ChooseDiamondsShape diamonds={diamonds}  diamondsFilter={diamondFilter ? diamondFilter[0] : diamondFilter} />
     </div>
   );
 }

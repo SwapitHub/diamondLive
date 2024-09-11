@@ -338,20 +338,14 @@ const CartPage = ({ cart }) => {
   }, []);
 
   // ============ meta tag  =======================//
-  //   const currentUrl = window.location.href;
-  //   const pathSegments = location.pathname
-  //     .split("/")
-  //     .filter((segment) => segment);
-  //   const mainCategory = pathSegments[0] || "";
-
+  
   const handleClickCheckOut = () => {
     
     if (user_id) {
       navigate.push("/check_out");
     } else {
-      navigate.push("/login", {
-        state: { from: window.location.pathname }, 
-      });
+      localStorage.setItem("previousPath", window.location.pathname);
+      navigate.push("/login");
       toast.info("Please log in to proceed to checkout.", {
         position: "top-right",
         className: "foo-bar",
@@ -361,10 +355,7 @@ const CartPage = ({ cart }) => {
 
   return (
     <>
-      {/* <MetaTagCategoryPage
-        mainCategory={mainCategory}
-        currentUrl={currentUrl}
-      /> */}
+      
       {userId ? (
         <div className="shoping-car-page data-base-cart">
           <div className="container">

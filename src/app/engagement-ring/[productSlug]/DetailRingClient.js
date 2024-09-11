@@ -1,7 +1,5 @@
 "use client";
 import { DropHint } from "@/app/_componentStatic/DropHint";
-import { Footer } from "@/app/_componentStatic/Footer";
-import Header from "@/app/_componentStatic/Header";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import NewsLetter from "@/app/_componentStatic/NewsLetter";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
@@ -12,7 +10,7 @@ import axios from "axios";
 import debounce from "lodash.debounce";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiDownArrow, BiSolidPhoneCall, BiUpArrow } from "react-icons/bi";
 import { CiHeart } from "react-icons/ci";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -25,7 +23,6 @@ import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import Slider from "react-slick";
 import { toast } from "react-toastify";
@@ -33,6 +30,8 @@ import Popup from "reactjs-popup";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
+import { productList } from "../../../../store/actions/productActions";
+import { addToWishlist } from "../../../../store/actions/wishlistAction";
 
 const DetailRingProduct = ({ ringDetail }) => {
   
@@ -170,7 +169,7 @@ const DetailRingProduct = ({ ringDetail }) => {
         ring_size,
         img_sku,
       };
-      dispatch(addToWishList(newItem));
+      dispatch(addToWishlist(newItem));
 
       // Construct URL for API call
       const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${img_sku}&ring_price=${ring_price}&ring_type=${diamondTypeClick}${
@@ -4090,7 +4089,52 @@ ${changeClick === rose ? "active" : ""}
                       </div>
                     )}
 
-                    {stock_num ? null : (
+                    
+
+                    <div class="bold detail-price Engraving">
+                      <span> Engraving : </span>{" "}
+                      <input type="text" onChange={onchangeEngraving} />
+                    </div>
+                    <div class="bold detail-price Engraving">
+                      <span> Fonts : </span>{" "}
+                      <div className="font-select">
+                        <Select
+                          defaultValue={selectedFontStyleOption}
+                          onChange={handleSelectFontStyle}
+                          options={fontStyleOptions}
+                          placeholder="Select font Style"
+                        />
+                      </div>
+                    </div>
+                    <div className="bold select-custom-size-side">
+                      <span>
+                        {" "}
+                        <div onClick={() => togglePopup()}>
+                          <span>
+                            <IoInformationCircleOutline />
+                          </span>
+                          {ringSize && (
+                            <div>
+                              <RingSizeChart setRingSize={setRingSize} />
+                            </div>
+                          )}
+                        </div>{" "}
+                        Size :{" "}
+                      </span>{" "}
+                      <Select
+                        defaultValue={selectedOption}
+                        onChange={handleSelectSize}
+                        options={options}
+                        placeholder="Select Size"
+                      />
+                    </div>
+                    <p
+                      id="error-message"
+                      className="error"
+                      style={{ color: "red" }}
+                    ></p>
+
+{stock_num ? null : (
                       <div className="Diamond-Original-main  Setting-Carat Variation center-N/A ">
                         <div class="Diamond-Original-main  Centerstone">
                           <span class="bold full-width">
@@ -4177,50 +4221,7 @@ ${changeClick === rose ? "active" : ""}
                         </div>
                       </div>
                     )}
-
-                    <div class="bold detail-price Engraving">
-                      <span> Engraving : </span>{" "}
-                      <input type="text" onChange={onchangeEngraving} />
-                    </div>
-                    <div class="bold detail-price Engraving">
-                      <span> Fonts : </span>{" "}
-                      <div className="font-select">
-                        <Select
-                          defaultValue={selectedFontStyleOption}
-                          onChange={handleSelectFontStyle}
-                          options={fontStyleOptions}
-                          placeholder="Select font Style"
-                        />
-                      </div>
-                    </div>
-                    <div className="bold select-custom-size-side">
-                      <span>
-                        {" "}
-                        <div onClick={() => togglePopup()}>
-                          <span>
-                            <IoInformationCircleOutline />
-                          </span>
-                          {ringSize && (
-                            <div>
-                              <RingSizeChart setRingSize={setRingSize} />
-                            </div>
-                          )}
-                        </div>{" "}
-                        Size :{" "}
-                      </span>{" "}
-                      <Select
-                        defaultValue={selectedOption}
-                        onChange={handleSelectSize}
-                        options={options}
-                        placeholder="Select Size"
-                      />
-                    </div>
-                    <p
-                      id="error-message"
-                      className="error"
-                      style={{ color: "red" }}
-                    ></p>
-
+                    
                     {filterData.product?.white_gold_price > 0 ||
                     filterData.product?.rose_gold_price > 0 ||
                     filterData.product?.yellow > 0 ||
@@ -4262,7 +4263,7 @@ ${changeClick === rose ? "active" : ""}
                           <Link
                             href={`${
                               selectedOption
-                                ? `/engagement-rings/start-with-a-diamond/${
+                                ? `/diamond/start-with-a-diamond/${
                                     filterData.product?.slug
                                   }${
                                     diamondTypeClick == "lab_grown"

@@ -25,6 +25,7 @@ import Link from "next/link";
 import { DropHint } from "../_componentStatic/DropHint";
 import Image from "next/image";
 import { addToCart } from "../../../store/actions/cartActions";
+import { productListCart } from "../../../store/actions/productActions";
 
 export default function GemstonesDetail({ gemstone }) {
   console.log(gemstone);
