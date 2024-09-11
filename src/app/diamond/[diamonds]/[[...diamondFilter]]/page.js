@@ -1,10 +1,9 @@
 import ChooseDiamondsShape from "./DiamondClient";
 
 async function fetchDataFromAPI(diamond, diamondFilter) {
-  console.log(diamondFilter[0]);
   
-  const menu =  diamondFilter[0]=="lab_grown" ? "diamond" : "engagement-rings"; 
-const subcategory = diamondFilter[0]=="lab_grown" ?  "diamond/start-with-a-diamond/lab_grown" : "start-with-a-diamond" ; 
+  const menu =  diamondFilter=="lab_grown" ? "diamond" : "engagement-rings"; 
+const subcategory = diamondFilter=="lab_grown" ?  "diamond/start-with-a-diamond/lab_grown" : "start-with-a-diamond" ; 
 const response = await fetch(
     `${process.env.BASE_URL}/check?menu=${menu}&subcategory=${subcategory}`
 );

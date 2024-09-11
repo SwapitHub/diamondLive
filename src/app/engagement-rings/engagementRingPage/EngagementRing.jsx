@@ -57,12 +57,7 @@ export const EngagementRing = () => {
     const currentUrl = window.location.href;
     return (
         <>
-       {/* <HeaderMetaTag
-        mainCategory={mainCategory}
-        subCategory={subCategory}
-        image="https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/36274429/1701007RubyCushion1_17ct_3932_77c52f06-f67b-4338-8cd9-abcd817c178c.jpg"
-        currentUrl={currentUrl}
-      /> */}
+       
             <EngagementBanner />
             <ShopDiamondShape shapeData={shapeData} />
             <OwnEngagementRing covetedProducts={covetedProducts}/>

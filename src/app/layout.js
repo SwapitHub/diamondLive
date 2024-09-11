@@ -20,12 +20,11 @@ async function fetchDataFromAPI() {
 
 export async function generateMetadata() {
   const data = await fetchDataFromAPI();
-console.log(data);
 
   return {
    
     icons: {
-      icon: `${data.favicon}`
+      icon: `${data.data.favicon}`
     },
   };
 }
