@@ -13,6 +13,8 @@ export const WeddingPopular = ({ covetedWeddingBands }) => {
             </div>
             <div className="inner-polular-eng">
               {covetedWeddingBands.map((item, index) => {
+                console.log(item);
+                
                 return (
                   <div className="popular-grid-wrapper" key={index}>
                     <Link

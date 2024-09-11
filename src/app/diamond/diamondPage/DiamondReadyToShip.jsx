@@ -16,8 +16,8 @@ export const DiamondReadyToShip = () => {
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             Lorem Ipsum has been the industry's standard dummy text ever since..</p>
                         <div className="btn-bar">
-                            <Link href="/engagement-rings/start-with-a-diamond" className="btn-custom">Start with a Natural Diamond</Link>
-                            <Link href="/engagement-rings/start-with-a-diamond/lab_grown" className="btn-custom bg-trans">Start with a Lab Diamond</Link>
+                            <Link href="/diamond/start-with-a-diamond" className="btn-custom">Start with a Natural Diamond</Link>
+                            <Link href="/diamond/start-with-a-diamond/lab_grown" className="btn-custom bg-trans">Start with a Lab Diamond</Link>
                         </div>
                     </div>
                     <div className="banner-img">

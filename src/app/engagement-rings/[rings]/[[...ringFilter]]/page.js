@@ -1,9 +1,9 @@
 import StartWithASetting from "./RingListPageClient";
 
 
-async function fetchDataFromAPI(ring, ringFilter) {
+async function fetchDataFromAPI(ring, ringFilter,bridalSets) {
   
-  const response = await fetch(`${process.env.BASE_URL}/check?menu=engagement-rings&subcategory=${ringFilter ? ringFilter : ring}`);
+  const response = await fetch(`${process.env.BASE_URL}/check?menu=engagement-rings&subcategory=${bridalSets ? "engagement-rings/start-with-bridal-set?bridal-sets=true": (ringFilter ? ringFilter : ring)}`);
   const data = await response.json();
   
   return data;
@@ -57,11 +57,11 @@ export async function generateMetadata({params}) {
 }
 
 export default async function DetailRingPage({searchParams, params}) {
-  const {bridalsets} = searchParams
+  const {bridalSets} = searchParams
   const {rings, ringFilter} = params;
-  const data = await fetchDataFromAPI(rings, ringFilter);
+  const data = await fetchDataFromAPI(rings, ringFilter,bridalSets);
   
-  console.log(bridalsets);
+ 
   
 
   return (

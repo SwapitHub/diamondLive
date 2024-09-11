@@ -34,7 +34,8 @@ import {
 // import { Tabbing } from "../reusable_components/Tabbing";
 
 const StartWithASetting = ({ rings, ringFilter }) => {
-
+  console.log(rings, ringFilter);
+  
   const searchParams = useSearchParams();
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
   const [removeWishList, setRemoveWishList] = useState();
@@ -56,14 +57,18 @@ const StartWithASetting = ({ rings, ringFilter }) => {
 
   let menuShapeName, menuShopStyle;
   const [trellisRing, setTrellisRing] = useState();
+  const [metalColorName, setMetalColorName] = useState("White");
 
+  
   useEffect(() => {
     if (rings === "shape") {
       menuShapeName = ringFilter;
       
     } else if (rings === "style") {
       menuShopStyle = ringFilter;
-    } else {
+    } else if(rings === 'metal'){
+      setMetalColorName(ringFilter)
+    }else{
       setTrellisRing(rings)
     }
   }, []);
@@ -89,7 +94,6 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   const platinum = "platinum";
 
   const [filterRoseData, setFilterRoseData] = useState([]);
-  const [metalColorName, setMetalColorName] = useState("White");
   const [newPrevData, setNewPrevData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);

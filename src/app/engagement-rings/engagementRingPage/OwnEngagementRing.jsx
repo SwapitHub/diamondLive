@@ -25,7 +25,7 @@ export const OwnEngagementRing = ({ covetedProducts }) => {
               </Link>
             </div>
             <div className="grid-wrapper-bar">
-              <Link href="/engagement-rings/start-with-a-diamond">
+              <Link href="/diamond/start-with-a-diamond">
                 <div className="img-bar">
                   <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring2.png`} alt="diamonds" />
                 </div>
@@ -35,7 +35,7 @@ export const OwnEngagementRing = ({ covetedProducts }) => {
               </Link>
             </div>
             <div className="grid-wrapper-bar">
-              <Link href="/engagement-rings/start-with-a-diamond/lab_grown">
+              <Link href="/diamond/start-with-a-diamond/lab_grown">
                 <div className="img-bar">
                   <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring3.png`} alt="lab-diamonds" />
                 </div>
@@ -45,7 +45,7 @@ export const OwnEngagementRing = ({ covetedProducts }) => {
               </Link>
             </div>
             <div className="grid-wrapper-bar">
-              <Link href="/engagement-rings/start-with-a-gemstone">
+              <Link href="/gemstone/start-with-a-gemstone">
                 <div className="img-bar">
                   <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring4.png`} alt="gemstones" />
                 </div>

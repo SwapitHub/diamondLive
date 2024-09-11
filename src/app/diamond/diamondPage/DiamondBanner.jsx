@@ -14,8 +14,8 @@ export const DiamondBanner = () => {
     <>
       <div className="banner-main engment-banner-sec diamond">
         <div className="bg-bannerr inner-banner-img">
-          <LazyLoadImage  width="auto"  height="auto"   className="desktop" src={`${imgAssetsUrl}/frontend/images/dmddgrp.jpg`} alt="diamond"  />
-          <LazyLoadImage  width="auto"  height="auto"   className="mobile"  src={`${imgAssetsUrl}/frontend/images/diamond-banner.jpg`} alt="diamond" loading="lazy" />
+          <LazyLoadImage  width="auto"  height="auto"   className="desktop" src={`${imgAssetsUrl}/frontend/images/diamond-desktop-banner.jpg`} alt="diamond"  />
+          <LazyLoadImage  width="auto"  height="auto"   className="mobile"  src={`${imgAssetsUrl}/frontend/images/diamond-mobile-banner.jpg`} alt="diamond" loading="lazy" />
 
         </div>
         <div className="container min-ht">
@@ -45,13 +45,13 @@ export const DiamondBanner = () => {
               <div className="btn-bar">
                 <Link
                   className="button"
-                  href="/engagement-rings/start-with-a-diamond"
+                  href="/diamond/start-with-a-diamond"
                 >
                   Shop Natural Diamonds
                 </Link>
                 <Link
                   className="button bg-trans"
-                  href="/engagement-rings/start-with-a-diamond/lab_grown"
+                  href="/diamond/start-with-a-diamond/lab_grown"
                 >
                   Shop Lab Diamonds
                 </Link>

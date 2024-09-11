@@ -38,8 +38,8 @@ useMemo(() => {
       <ShopDiamondShape shapeData={shapeData} />
       <DiamondReadyToShip />
       {/* <DiamondCommitment /> */}
-      <DiamondSets />
-      <DiamondReviews />
+      {/* <DiamondSets />
+      <DiamondReviews /> */}
       <DiamondEdu />
       <DiamondFaq />
     </>

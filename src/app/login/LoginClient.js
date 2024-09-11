@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
-import { validateEmail, validatePass } from "../_componentStatic/ValidationFunctions";
+import { validateEmail, validateName, validatePass } from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
 export const LoginSignup = () => {
   const router = useRouter();

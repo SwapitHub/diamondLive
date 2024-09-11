@@ -1,14 +1,11 @@
 "use client"
+import { UserContext } from "@/app/context/UserContext";
 import axios from "axios";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { GemstoneBanner } from "./GemstoneBanner";
 import { GemstoneByStyle } from "./GemstoneByStyle";
-import { GemstoneEducation } from "./GemstoneEducation";
 import { GemstoneFaq } from "./GemstoneFaq";
-import { GemstoneOwnEngagementRing } from "./GemstoneOwnEngagementRing";
-import { GemstoneSets } from "./GemstoneSets";
 import { GemstoneShopByShape } from "./GemstoneShopByShape";
-import { UserContext } from "@/app/context/UserContext";
 
 
 export const GemstoneBands = () => {
@@ -90,10 +87,10 @@ export const GemstoneBands = () => {
       <GemstoneBanner />
       <GemstoneShopByShape />
       <GemstoneByStyle gemstoneBands={gemstoneBands} />
-      <GemstoneSets />
+      {/* <GemstoneSets />
       <GemstoneOwnEngagementRing />
-      {/* <GemstoneReviews /> */}
-      <GemstoneEducation birthStone={birthStone} gemstoneMeaning={gemstoneMeaning} sapphireBuying={sapphireBuying} diamondGuide={diamondGuide}/>
+      <GemstoneReviews />
+      <GemstoneEducation birthStone={birthStone} gemstoneMeaning={gemstoneMeaning} sapphireBuying={sapphireBuying} diamondGuide={diamondGuide}/> */}
       <GemstoneFaq />
     </>
   );

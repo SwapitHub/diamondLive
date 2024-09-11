@@ -59,7 +59,7 @@ export const GemstoneBanner = () => {
               <div className="btn-bar">
                 <Link
                   className="button"
-                  href="/gemstones/gemstone-shop-all"
+                  href="/gemstone/gemstone-shop-all"
                 >
                   Start With a Gemstone
                 </Link>
