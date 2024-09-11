@@ -56,10 +56,12 @@ export async function generateMetadata({params}) {
   };
 }
 
-export default async function DetailRingPage({params}) {
+export default async function DetailRingPage({searchParams, params}) {
+  const {bridalsets} = searchParams
   const {rings, ringFilter} = params;
   const data = await fetchDataFromAPI(rings, ringFilter);
   
+  console.log(bridalsets);
   
 
   return (

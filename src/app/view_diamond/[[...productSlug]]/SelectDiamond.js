@@ -17,25 +17,25 @@ import { useParams } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import Popup from "reactjs-popup";
 import { v4 as uuidv4 } from "uuid";
-import { UserContext } from "../context/UserContext";
-import { DropHint } from "../_componentStatic/DropHint";
-import PricePopup from "../_componentStatic/popups/PricePopup";
-import MeasPopup from "../_componentStatic/popups/MeasPopup";
-import TablePopup from "../_componentStatic/popups/TablePopup";
-import DepthPopup from "../_componentStatic/popups/DepthPopup";
-import SymmetryPopup from "../_componentStatic/popups/SymmetryPopup";
-import PolishPopup from "../_componentStatic/popups/PolishPopup";
-import GirdlePopup from "../_componentStatic/popups/GirdlePopup";
-import CuletPopup from "../_componentStatic/popups/CuletPopup";
-import FlourePopup from "../_componentStatic/popups/FlourePopup";
-import ShapePopup from "../_componentStatic/popups/ShapePopup";
+import { UserContext } from "../../context/UserContext";
+import { DropHint } from "../../_componentStatic/DropHint";
+import PricePopup from "../../_componentStatic/popups/PricePopup";
+import MeasPopup from "../../_componentStatic/popups/MeasPopup";
+import TablePopup from "../../_componentStatic/popups/TablePopup";
+import DepthPopup from "../../_componentStatic/popups/DepthPopup";
+import SymmetryPopup from "../../_componentStatic/popups/SymmetryPopup";
+import PolishPopup from "../../_componentStatic/popups/PolishPopup";
+import GirdlePopup from "../../_componentStatic/popups/GirdlePopup";
+import CuletPopup from "../../_componentStatic/popups/CuletPopup";
+import FlourePopup from "../../_componentStatic/popups/FlourePopup";
+import ShapePopup from "../../_componentStatic/popups/ShapePopup";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useData } from "../context/DataContext";
-import { Tabbing } from "../_componentStatic/Tabbing";
+import { useData } from "../../context/DataContext";
+import { Tabbing } from "../../_componentStatic/Tabbing";
 
 
-const SelectDiamond = ({diamondDetails}) => {
+const SelectDiamond = ({diamondDetails, productSlug}) => {
   const [banner, setBanner] = useState({});
   const [open, setOpen] = useState(false);
   const [measOpen, setMeasOpen] = useState(false);
@@ -58,7 +58,7 @@ const SelectDiamond = ({diamondDetails}) => {
   const stock_num = queryParams.get("stock_num");
   const diamond_origin = queryParams.get("diamond_origin");
   const diamond_original = queryParams.get("diamond_original");
-  const { productSlug } = useParams();
+
   const productColor = queryParams.get("color");
   const ring_size = queryParams.get("ring_size");
   const textEngraving = queryParams.get("textEngraving");

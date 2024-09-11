@@ -80,6 +80,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
 
   // const [menuShapeNames, setMenuShapeNames] = useState(menuShapeName);
   const [labGrownDetails, setLabGrownDetails] = useState();
+  
   const [activeResult, setActiveResult] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -838,10 +839,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
         console.error("Error:", error);
       });
   }, [
-    filterData.product?.sku,
-    listColor,
-    filterData.product?.metalColor,
-    diamond_original,
+    filterData
   ]);
   useEffect(() => {
     if (center_stone) {
@@ -1883,7 +1881,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
                             <div class="slect-dimond">
                               {productSlug ? (
                                 <Link
-                                  href={`/final_ring/${filterData.product?.slug}/?color=${productColor}&stock_num=${item.stock_num}&diamond_original=${labGrownDetails?.diamond_type}&diamond_origin=${newDiamondType}&ring_size=${ring_size}&font_style=${font_style}&textEngraving=${textEngraving}`}
+                                  href={`/final_ring/${filterData.product?.slug}/?color=${productColor}&stock_num=${item.stock_num}&diamond_original=${labGrownDetails?.diamond_type}&diamond_origin=${newDiamondType}&ring_size=${ring_size}${font_style ? `&font_style=${font_style}`:""}${textEngraving ? `&textEngraving=${textEngraving}`:""}`}
                                 >
                                   select diamond
                                 </Link>
@@ -2096,7 +2094,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter }) => {
                                     item?.type === "lab_grown_diamond"
                                       ? `&diamond_origin=lab_grown`
                                       : ""
-                                  }&font_style=${font_style}&textEngraving=${textEngraving}`}
+                                  }${font_style ? `&font_style=${font_style}`:""}${textEngraving ? `&textEngraving=${textEngraving}`:""}`}
                                 >
                                   select diamond
                                 </Link>
