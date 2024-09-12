@@ -2,10 +2,10 @@
 
 "use client"; // Ensure this file is a client component
 
-import {  HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 const RouterProvider = ({ children }) => {
-  return <HashRouter>{children}</HashRouter>;
+  return <BrowserRouter>{children}</BrowserRouter>;
 };
 
 export default RouterProvider;
