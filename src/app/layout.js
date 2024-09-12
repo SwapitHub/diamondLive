@@ -34,15 +34,17 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={styles.customFont}>
      
-      <ToastWrapper>
+     
        
         <UserProvider>
           <DataProvider>
             <ReduxProvider>
               <Header/>
       <RouterProvider>
-
+      <ToastWrapper>
               {children}
+        </ToastWrapper>
+
         </RouterProvider>
 
               <script
@@ -64,7 +66,6 @@ export default function RootLayout({ children }) {
             </ReduxProvider>
           </DataProvider>
         </UserProvider>
-        </ToastWrapper>
         
       </body>
     </html>

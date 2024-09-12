@@ -40,7 +40,7 @@ import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
 import { useRouter } from "next/navigation";
 import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
 
-export const WeddingBandsDetail = ({productSlug}) => {
+export const WeddingBandsDetail = ({bandDetail,productSlug}) => {
   const router = useRouter(); // Call userouter at the top level of the component
   const [urlColor, setUrlColor] = useState("");
   const queryParams = new URLSearchParams(location.search);
@@ -281,18 +281,11 @@ export const WeddingBandsDetail = ({productSlug}) => {
     }
   }, [open]);
 
-  useMemo(() => {
+  const debouncedFetchProductPrice = debounce(() => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${
-          filterData.product?.sku
-        }&metalType=${
-          listColor === "platinum" ? "Platinum" : "18kt"
-        }&metalColor=${urlColor}&diamond_type=${
-          diamond_original ? diamond_original : diamondTypeClick
-        }`
+        `${baseUrl}/get_product_price?product_sku=${filterData.product?.sku}&metalType=${listColor === "platinum" ? "Platinum" : "18kt"}&metalColor=${urlColor}&diamond_type=${diamond_original ? diamond_original : diamondTypeClick}`
       )
-
       .then((response) => {
         if (response.status === 200) {
           setDiamondTypeByDefault(response.data.data);
@@ -302,18 +295,17 @@ export const WeddingBandsDetail = ({productSlug}) => {
           console.error("Error Status:", response.status);
         }
       })
-
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [
-    filterData.product?.sku,
-    listColor,
-    filterData.product?.metalColor,
-    diamond_original,
-    productSlug,
-    urlColor,
-  ]);
+  }, 1500); // Debounce delay in milliseconds
+
+  useEffect(() => {
+    debouncedFetchProductPrice();
+    return () => {
+      debouncedFetchProductPrice.cancel();
+    };
+  }, [urlColor]);
 
   useMemo(() => {
     const fetchData = () => {
@@ -339,27 +331,10 @@ export const WeddingBandsDetail = ({productSlug}) => {
   }, [removeWishList]);
 
   useMemo(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/product/${productSlug}`);
-
-        const product = response.data.data;
-        const imgUrl = product.internal_sku;
-
-        // Update state with both product and imgUrl
-        setFilterData({
-          product: product,
-          imgUrl: imgUrl,
-        });
-
-        const similarProductsData = JSON.parse(product.similar_products);
-        setSimilarProducts(similarProductsData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    setFilterData({
+      product: bandDetail.data,
+      imgUrl: bandDetail.data.internal_sku
+    })
   }, [productSlug]);
 
   // Diamond api

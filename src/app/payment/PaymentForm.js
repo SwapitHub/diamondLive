@@ -26,12 +26,9 @@ const PaymentForm = () => {
   // const {addressId} = useParams();
 
   
-  const searchParams = useSearchParams();
 
   const {addressId, totalPrice, shipValue } = location.state || {};
-console.log(addressId);
-const data = searchParams.get('key'); 
-console.log(data);
+
   const cartData = useSelector((state) => state.cartData);
   const cartDetails = useSelector((state) => state.productDataCart);
 //   const { addressId, totalPrice, shipValue } = location.state || {};

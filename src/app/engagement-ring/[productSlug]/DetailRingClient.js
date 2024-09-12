@@ -259,18 +259,11 @@ const DetailRingProduct = ({ ringDetail }) => {
     }
   }, [open]);
 
-  useEffect(() => {
+  const debouncedFetchProductPrice = debounce(() => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${
-          filterData.product?.sku
-        }&metalType=${
-          listColor === "platinum" ? "Platinum" : "18kt"
-        }&metalColor=${urlColor}&diamond_type=${
-          diamond_original ? diamond_original : diamondTypeClick
-        }`
+        `${baseUrl}/get_product_price?product_sku=${filterData.product?.sku}&metalType=${listColor === "platinum" ? "Platinum" : "18kt"}&metalColor=${urlColor}&diamond_type=${diamond_original ? diamond_original : diamondTypeClick}`
       )
-
       .then((response) => {
         if (response.status === 200) {
           setDiamondTypeByDefault(response.data.data);
@@ -280,11 +273,17 @@ const DetailRingProduct = ({ ringDetail }) => {
           console.error("Error Status:", response.status);
         }
       })
-
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [filterData]);
+  }, 1500); // Debounce delay in milliseconds
+
+  useEffect(() => {
+    debouncedFetchProductPrice();
+    return () => {
+      debouncedFetchProductPrice.cancel();
+    };
+  }, [urlColor]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -309,9 +308,33 @@ const DetailRingProduct = ({ ringDetail }) => {
     return () => debouncedFetchData.cancel(); // Cleanup
   }, [removeWishList]);
 
-  
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       try {
+  //         const response = await axios.get(`${baseUrl}/product/${secondPathSegment}`);
 
-  
+  //         const product = response.data.data;
+  //         const imgUrl = product.internal_sku;
+
+  //         // Update state with both product and imgUrl
+  //         setFilterData({
+  //           product: product,
+  //           imgUrl: imgUrl,
+  //         });
+
+  //         const similarProductsData = JSON.parse(product.similar_products);
+  //         setSimilarProducts(similarProductsData);
+  //         console.log(`${baseUrl}/product/${secondPathSegment}`);
+  //       } catch (error) {
+  //         console.error("Error fetching data:", error);
+  //       }
+  //     };
+
+  //     fetchData();
+  //   }, [secondPathSegment]);
+
+  // Diamond api
+
   useEffect(() => {
     const fetchData = async () => {
       const url = `https://apiservices.vdbapp.com//v2/diamonds?type=${
@@ -396,7 +419,12 @@ const DetailRingProduct = ({ ringDetail }) => {
       .then((response) => {
         if (response.status === 200) {
           setDiamondTypeColor(response.data.data);
-         
+          // onChangeClickNature(
+          //   productSku,
+          //   ProductMetalColor,
+          //   productType,
+          //   diamond_type
+          // );
         } else {
           console.error("Error Status:", response.status);
         }
@@ -697,9 +725,9 @@ const DetailRingProduct = ({ ringDetail }) => {
     e.target.onerror = null;
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
   };
-  
   return (
-    <>  
+    <>
+   
    
 
       <div
@@ -716,7 +744,7 @@ const DetailRingProduct = ({ ringDetail }) => {
                 ringName={"2. Choose Rings"}
                 ringLink={"/engagement-rings/start-with-a-setting"}
                 diamondName={"1. Choose Diamonds"}
-                diamondLink={"/engagement-rings/start-with-a-diamond/"}
+                diamondLink={"/diamond/start-with-a-diamond/"}
                 type="ring-detail"
               />
             ) : (
@@ -728,7 +756,7 @@ const DetailRingProduct = ({ ringDetail }) => {
                     ringName={"1. Choose Rings"}
                     ringLink={"/engagement-rings/start-with-a-setting"}
                     diamondName={"2. Choose Diamonds"}
-                    diamondLink={"/engagement-rings/start-with-a-diamond/"}
+                    diamondLink={"/diamond/start-with-a-diamond/"}
                     type="ring-detail"
                   />
                 </div>
@@ -4150,7 +4178,7 @@ ${changeClick === rose ? "active" : ""}
                               onClick={() => handleCenterStoneFull()}
                               href={`${
                                 selectedOption
-                                  ? `/engagement-rings/start-with-a-diamond/${
+                                  ? `/diamond/start-with-a-diamond/${
                                       filterData.product?.slug
                                     }${
                                       diamondTypeClick == "lab_grown"

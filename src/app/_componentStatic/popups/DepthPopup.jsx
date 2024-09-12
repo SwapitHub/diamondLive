@@ -1,7 +1,7 @@
 import { UserContext } from "@/app/context/UserContext";
+import Link from "next/link";
 import React, { useContext, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
 
 
 const DepthPopup = ({ setDepthOpen }) => {
@@ -30,7 +30,7 @@ const DepthPopup = ({ setDepthOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Depth</h3>
-              <Link to="javascript:void(0);" onClick={() => setDepthOpen(false)}>
+              <Link href="javascript:void(0);" onClick={() => setDepthOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

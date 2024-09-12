@@ -1,7 +1,7 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
-import Slider from "react-slider";
+;
 
 const SymmetryPopup = ({ setSymmetryOpen }) => {
 
@@ -28,7 +28,7 @@ const SymmetryPopup = ({ setSymmetryOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Symmetry</h3>
-              <Link to="javascript:void(0);" onClick={() => setSymmetryOpen(false)}>
+              <Link href="javascript:void(0);" onClick={() => setSymmetryOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

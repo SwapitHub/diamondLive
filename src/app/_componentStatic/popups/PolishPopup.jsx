@@ -1,7 +1,7 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
-import Slider from "react-slider";
+
 
 const PolishPopup = ({ setPolishOpen }) => {
 
@@ -29,7 +29,7 @@ const PolishPopup = ({ setPolishOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Polish</h3>
-              <Link to="javascript:void(0);" onClick={() => setPolishOpen(false)}>
+              <Link href="javascript:void(0);" onClick={() => setPolishOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

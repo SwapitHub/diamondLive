@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
 import secureLocalStorage from "react-secure-storage";
@@ -26,7 +26,7 @@ const Help = () => {
     engraving,
   } = helpData;
   console.log(helpData);
-  
+
   useEffect(() => {
     const data = JSON.parse(secureLocalStorage.getItem("helpData"));
 
@@ -58,7 +58,6 @@ const Help = () => {
   };
   return (
     <>
-   
       <section className="request-help-main">
         <div className="container">
           <div className="request-helped-cnt">
@@ -85,7 +84,13 @@ const Help = () => {
                   <Link
                     href={
                       filterData && diamond?.gem_type == null && diamond_origin
-                        ? `/final_ring/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}&diamond_original=${diamond_original}&diamond_origin=${diamond_origin}&ring_size=${ring_size}&font_style=${font}&textEngraving=${engraving}`
+                        ? `/final_ring/${
+                            filterData?.product?.slug
+                          }?color=${listColor}&stock_num=${
+                            diamond?.stock_num
+                          }&diamond_original=${diamond_original}&diamond_origin=${diamond_origin}&ring_size=${ring_size}${
+                            font ? `&font_style=${font}` : ""
+                          }${engraving ? `&textEngraving=${engraving}` : ""}`
                         : filterData &&
                           !diamond?.gem_type != null &&
                           diamond_origin
@@ -175,7 +180,7 @@ const Help = () => {
                       )}
                     </ul>
                   </Link>
-                  {helpData && (
+                  {Object.keys(helpData).length === 0 && (
                     <Link href="/">
                       <ul>
                         <li>
@@ -201,11 +206,11 @@ const Help = () => {
                           diamond_origin
                         ? `/final_ring_gemstone/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}&diamond_original=${diamond_origin}&ring_size=${ring_size}`
                         : !filterData && diamond?.gem_type == null
-                        ?  `/view_diamond?stock_num=${diamond?.stock_num}${
-                          diamond?.lab_grown === true
-                            ? "&diamond_origin=lab_grown"
-                            : ""
-                        }`
+                        ? `/view_diamond?stock_num=${diamond?.stock_num}${
+                            diamond?.lab_grown === true
+                              ? "&diamond_origin=lab_grown"
+                              : ""
+                          }`
                         : !filterData && diamond?.gem_type != null
                         ? `/gemstones-detail/?stock_num=${diamond?.stock_num}`
                         : filterData && diamond?.gem_type == null
@@ -241,7 +246,6 @@ const Help = () => {
           </div>
         </div>
       </section>
-      
     </>
   );
 };

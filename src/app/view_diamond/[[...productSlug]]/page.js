@@ -106,11 +106,11 @@ const DiamondPage = async ({ searchParams, params }) => {
   const {productSlug} = params
   const diamondMeta = await fetchMeta();
 
-  const diamondDetails = await fetchDiamondDetail(diamond_origin, stock_num);
+  const diamondDesciption = await fetchDiamondDetail(diamond_origin, stock_num);
 
   return (
     <>
-      <SelectDiamond diamondDetails={diamondDetails.response.body.diamonds} productSlug={productSlug ? productSlug : null}/>
+      <SelectDiamond diamondDesciption={diamondDesciption.response.body.diamonds} productSlug={productSlug ? productSlug : null}/>
     </>
   );
 };
