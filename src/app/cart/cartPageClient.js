@@ -1980,11 +1980,10 @@ const CartPage = ({ cart }) => {
               </div>
             ) : (
               <div className="shopping-card-main-wrap empty-cart">
+                
                 <h1>Your Shopping Bag Is Empty</h1>
-                {/* <ContinueShoping /> */}
               </div>
             )}
-            {/* <CartPageJewellery /> */}
           </div>
         </div>
       ) : (

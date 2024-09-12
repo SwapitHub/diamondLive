@@ -32,6 +32,7 @@ import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
 import { productList } from "../../../../store/actions/productActions";
 import { addToWishlist } from "../../../../store/actions/wishlistAction";
+import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
 
 const DetailRingProduct = ({ ringDetail }) => {
   

@@ -32,6 +32,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
 import { productList } from "../../../../store/actions/productActions";
+import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
 
 export default function ChooseRingGemstone({
   ringDetail,
