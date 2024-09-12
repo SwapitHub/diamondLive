@@ -10,12 +10,9 @@ import { UserContext } from "../context/UserContext";
 import { productListCart } from "../../../store/actions/productActions";
 import Link from "next/link";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
-import { useLocation } from "react-router-dom";
 
 const PaymentForm = () => {
   const router = useRouter();
-  const location = useLocation();
-
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
@@ -27,9 +24,9 @@ const PaymentForm = () => {
 
   
   const searchParams = useSearchParams();
-
-  const {addressId, totalPrice, shipValue } = location.state || {};
-console.log(addressId);
+  const addressId = searchParams.get('addressId');
+  const totalPrice = searchParams.get('totalPrice');
+  const shipValue = searchParams.get('shipValue');
 
   const cartData = useSelector((state) => state.cartData);
   const cartDetails = useSelector((state) => state.productDataCart);
@@ -286,14 +283,13 @@ console.log(addressId);
   };
   // ============ meta tag  =======================//
 
-
   const handleError = (e) => {
     e.target.onerror = null;
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
   };
   return (
     <>
-      {cartDetails.length > 0 ? (
+      {cartDetails.length > 0 && addressId? (
         <>
           <div className="payment-form">
             <div className="container">
