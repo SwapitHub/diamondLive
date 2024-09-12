@@ -52,7 +52,6 @@ export const WishlistHover = () => {
 
   const userId = secureLocalStorage.getItem("formData");
 
-  const [tocaken, setTocaken] = useState();
   const [removeWishList, setRemoveWishList] = useState();
   const wishlistData = useSelector((state) => state.wishlistData);
   const wishListDataBase = useSelector((state) => state.productDataWishlist);
@@ -66,7 +65,7 @@ export const WishlistHover = () => {
         );
         dispatch(productList());
       } catch (error) {
-        console.log("CSRF Token API Error:", error);
+        console.log("remove_wishlist_item API Error:", error);
       }
     };
   }, []);
@@ -129,14 +128,7 @@ export const WishlistHover = () => {
 
     axios
       .get(
-        API_URl,
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": tocaken,
-          },
-        }
+        API_URl       
       )
       .then((response) => {
         if (response.status === 200) {
@@ -156,27 +148,7 @@ export const WishlistHover = () => {
       });
   };
 
-  const fetchCsrfToken = useMemo(() => {
-    return async () => {
-      try {
-        const response = await axios.get(
-          "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-        );
-        return response.data.csrf_token;
-      } catch (error) {
-        console.log("CSRF Token API Error:", error);
-        return null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    fetchCsrfToken().then((token) => {
-      if (token) {
-        setTocaken(token);
-      }
-    });
-  }, [fetchCsrfToken]);
+ 
 
   const handleWishDataRemove = (wish_list_id, ring_id) => {
     setRemoveWishList(wish_list_id);

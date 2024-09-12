@@ -163,14 +163,7 @@ export const LoginSignup = () => {
 
               axios
                 .get(
-                  URL,
-
-                  {
-                    headers: {
-                      "Content-Type": "application/json",
-                      "X-CSRF-TOKEN": shapeData,
-                    },
-                  }
+                  URL
                 )
                 .then((response) => {
                   if (response.status === 200) {
@@ -312,12 +305,7 @@ export const LoginSignup = () => {
             `;
 
               axios
-                .get(wishListURL, {
-                  headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": shapeData,
-                  },
-                })
+                .get(wishListURL)
                 .then((response) => {
                   if (response.status === 200) {
                    
@@ -380,14 +368,7 @@ export const LoginSignup = () => {
         if (formData.password === formData.c_password) {
           const response = await axios.post(
             `${baseUrl}/user-registration`,
-            formData,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": shapeData,
-                // Add other headers if needed
-              },
-            }
+            formData
           );
 
           if (response.status === 200) {
@@ -408,39 +389,14 @@ export const LoginSignup = () => {
       });
       console.error("Error:", error);
     }
-    // sighup form code end here
-
-    // ========================================
-
-    // history.push("/");
+   
   };
 
-  const [shapeData, setShapeData] = useState([]);
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
 
-  // The rest of your component code...
 
-  // The rest of your component code...
-   // ============ meta tag  =======================//
-  //  const currentUrl = window.location.href;
-  //  const pathSegments = location.pathname
-  //    .split("/")
-  //    .filter((segment) => segment);
-  //  const mainCategory = pathSegments[0] || "";
+
   return (
     <>
-     {/* <MetaTagCategoryPage mainCategory={mainCategory}  currentUrl={currentUrl}/> */}
    
       <div className="my-accout-section">
         <div className="container container-1290-list-pages">

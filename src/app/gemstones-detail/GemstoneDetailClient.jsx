@@ -25,7 +25,8 @@ import Link from "next/link";
 import { DropHint } from "../_componentStatic/DropHint";
 import Image from "next/image";
 import { addToCart } from "../../../store/actions/cartActions";
-import { productListCart } from "../../../store/actions/productActions";
+import { productList, productListCart } from "../../../store/actions/productActions";
+import { addToWishlist } from "../../../store/actions/wishlistAction";
 
 export default function GemstonesDetail({ gemstone }) {
   console.log(gemstone);
@@ -85,7 +86,7 @@ export default function GemstonesDetail({ gemstone }) {
     gemstone_stock
   ) => {
     const newItem = { item, product_type: product_type, uniqueId: uuidv4() };
-    dispatch(addToWishList(newItem));
+    dispatch(addToWishlist(newItem));
 
     const formData = {
       user_id: user_id,
@@ -97,12 +98,7 @@ export default function GemstonesDetail({ gemstone }) {
 
     const urlNew = `${baseUrl}/add_to_wishlist?user_id=${formData.user_id}&product_type=${formData.product_type}&gemstone_price=${formData.gemstone_price}&gemstone_id=${formData.gemstone_id}&gemstone_stock_no=${formData.gemstone_stock_no}`;
     axios
-      .get(urlNew, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": tokenData,
-        },
-      })
+      .get(urlNew)
       .then((response) => {
         if (response.status === 200) {
           dispatch(productList());
@@ -125,7 +121,7 @@ export default function GemstonesDetail({ gemstone }) {
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 

@@ -802,12 +802,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
           setLoading(true);
           const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${ring_price}&ring_id=${ring_id}&ring_color=${ring_color}&product_type=${product_type}&img_sku=${imgSku}&ring_type=natural`;
           // Make API call
-          const response = await axios.get(apiUrl, {
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRF-TOKEN": tokenData,
-            },
-          });
+          const response = await axios.get(apiUrl);
 
           if (response.status === 200) {
             dispatch(productList());
@@ -836,19 +831,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
     }
   };
 
-  const [tokenData, setTokenData] = useState();
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setTokenData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+
   // =======remove to card
   useMemo(() => {
     setLoading(true);
@@ -862,7 +845,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 

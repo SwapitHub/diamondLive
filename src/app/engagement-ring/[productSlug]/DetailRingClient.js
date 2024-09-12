@@ -296,7 +296,7 @@ const DetailRingProduct = ({ ringDetail }) => {
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 
@@ -309,33 +309,9 @@ const DetailRingProduct = ({ ringDetail }) => {
     return () => debouncedFetchData.cancel(); // Cleanup
   }, [removeWishList]);
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await axios.get(`${baseUrl}/product/${secondPathSegment}`);
+  
 
-  //         const product = response.data.data;
-  //         const imgUrl = product.internal_sku;
-
-  //         // Update state with both product and imgUrl
-  //         setFilterData({
-  //           product: product,
-  //           imgUrl: imgUrl,
-  //         });
-
-  //         const similarProductsData = JSON.parse(product.similar_products);
-  //         setSimilarProducts(similarProductsData);
-  //         console.log(`${baseUrl}/product/${secondPathSegment}`);
-  //       } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //       }
-  //     };
-
-  //     fetchData();
-  //   }, [secondPathSegment]);
-
-  // Diamond api
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const url = `https://apiservices.vdbapp.com//v2/diamonds?type=${
@@ -420,12 +396,7 @@ const DetailRingProduct = ({ ringDetail }) => {
       .then((response) => {
         if (response.status === 200) {
           setDiamondTypeColor(response.data.data);
-          // onChangeClickNature(
-          //   productSku,
-          //   ProductMetalColor,
-          //   productType,
-          //   diamond_type
-          // );
+         
         } else {
           console.error("Error Status:", response.status);
         }
@@ -726,9 +697,9 @@ const DetailRingProduct = ({ ringDetail }) => {
     e.target.onerror = null;
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
   };
+  
   return (
-    <>
-   
+    <>  
    
 
       <div

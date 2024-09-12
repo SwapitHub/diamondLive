@@ -291,7 +291,7 @@ export default function ChooseRingGemstone({ringDetail, gemstoneDetail, listColo
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 

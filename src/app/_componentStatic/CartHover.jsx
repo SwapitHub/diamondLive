@@ -68,7 +68,6 @@ export const CartHover = () => {
   }, []);
 
   const [removeCart, setRemoveCart] = useState(null);
-  const [shapeData, setShapeData] = useState();
   const cartDetails = useSelector((state) => state.productDataCart);
 
   // =============
@@ -112,22 +111,11 @@ export const CartHover = () => {
         dispatch(productListCart());
       })
       .catch((error) => {
-        console.log("CSRF Token API Error:", error);
+        console.log("cartItemAPI Error:", error);
       });
   }, [removeCart]);
   // ==================
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+
   const userId = secureLocalStorage.getItem("formData");
 
   const handleError = (e) => {

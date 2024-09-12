@@ -257,19 +257,7 @@ const SelectDiamond = ({diamondDetails, productSlug}) => {
       });
   }, []);
 
-  const [tokenData, setTokenData] = useState();
-  useMemo(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setTokenData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+ 
 
   useMemo(() => {
     const fetchData = () => {
@@ -280,7 +268,7 @@ const SelectDiamond = ({diamondDetails, productSlug}) => {
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 

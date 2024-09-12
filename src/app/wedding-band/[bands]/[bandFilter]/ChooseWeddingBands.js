@@ -603,12 +603,7 @@ const ChooseWeddingBands = ({ weddingBands }) => {
           setLoading(true);
           const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${ring_price}&ring_id=${ring_id}&ring_color=${ring_color}&product_type=${product_type}&img_sku=${imgSku}&ring_type=natural`;
           // Make API call
-          const response = await axios.get(apiUrl, {
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRF-TOKEN": tokenData,
-            },
-          });
+          const response = await axios.get(apiUrl);
 
           if (response.status === 200) {
             dispatch(productList());
@@ -650,7 +645,7 @@ const ChooseWeddingBands = ({ weddingBands }) => {
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 

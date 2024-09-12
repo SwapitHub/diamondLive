@@ -47,11 +47,8 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
   const diamond_original = queryParams.get("diamond_original");
   const [labGrownDetails, setLabGrownDetails] = useState();
 
-  const [orderShow, setOrderShow] = useState({});
-  const [toggle, setToggle] = useState({});
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [shapeData, setShapeData] = useState([]);
   const [removeWishList, setRemoveWishList] = useState();
 
   const diamondData = Object.assign({}, ...data);
@@ -66,56 +63,13 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
    setData(gemstoneDataServer)
   }, []);
 
-  const toggleOrderShow = (index) => {
-    setToggle((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
-  };
 
-  const orderShowToggle = (index) => {
-    setOrderShow((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
-  };
-  const options = [
-    { value: "Less than 3", label: "Less than 3" },
-    { value: "3", label: "3" },
-    { value: "3 1/2", label: "3 1/2" },
-    { value: "4", label: "4" },
-    { value: "4 1/2", label: "4 1/2" },
-    { value: "5", label: "5" },
-    { value: "5 1/2", label: "5 1/2" },
-    { value: "6", label: "6" },
-    { value: "6 1/2", label: "6 1/2" },
-    { value: "7", label: "7" },
-    { value: "7 1/2", label: "7 1/2" },
-    { value: "8", label: "8" },
-    { value: "8 1/2", label: "8 1/2" },
-    { value: "9", label: "9" },
-    { value: "9 1/2", label: "9 1/2" },
-    { value: "10", label: "10" },
-    { value: "10 1/2", label: "10 1/2" },
-    { value: "11", label: "11" },
-    { value: "11 1/2", label: "11 /12" },
-    { value: "12", label: "12" },
-    { value: "Greater than 12", label: "Greater than 12" },
-  ];
 
-  const sortOptions = [
-    { value: "Highest Rating", label: "Highest Rating" },
-    { value: "Lowest Rating", label: "Lowest Rating" },
-    { value: "Newest", label: "Newest" },
-    { value: "Oldest", label: "Oldest" },
-    { value: "Most Helpful", label: "Least Helpful" },
-    { value: "Least Helpful", label: "Least Helpful" },
-  ];
+
 
   // ===============ring details Api==============
 
   const [filterData, setFilterData] = useState([]);
-  const [similarProducts, setSimilarProducts] = useState([]);
 
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
@@ -198,14 +152,7 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
 
     axios
       .get(
-        newAPI,
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": shapeData,
-          },
-        }
+        newAPI
       )
       .then((response) => {
         if (response.status === 200) {
@@ -221,18 +168,7 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
       });
   };
 
-  useMemo(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+
 
   // ===========
   const [ringPrice, setRingPrice] = useState({});
@@ -268,7 +204,7 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 
@@ -368,14 +304,7 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
 
     axios
       .get(
-        gem_URL,
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": shapeData,
-          },
-        }
+        gem_URL
       )
       .then((response) => {
         if (response.status === 200) {

@@ -430,12 +430,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
 
     const urlNew = `${baseUrl}/add_to_wishlist?user_id=${formData.user_id}&product_type=${formData.product_type}&gemstone_price=${formData.gemstone_price}&gemstone_id=${formData.gemstone_id}&gemstone_stock_no=${formData.gemstone_stock_no}`;
     axios
-      .get(urlNew, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": tokenData,
-        },
-      })
+      .get(urlNew)
       .then((response) => {
         if (response.status === 200) {
           dispatch(productList());
@@ -449,28 +444,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
       });
   };
 
-  const [tokenData, setTokenData] = useState();
-  const fetchCsrfToken = useMemo(() => {
-    return async () => {
-      try {
-        const response = await axios.get(
-          "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-        );
-        return response.data.csrf_token;
-      } catch (error) {
-        console.log("CSRF Token API Error:", error);
-        return null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    fetchCsrfToken().then((token) => {
-      if (token) {
-        setTokenData(token);
-      }
-    });
-  }, [fetchCsrfToken]);
+  
 
   useMemo(() => {
     const removeWishlist = async () => {
@@ -480,7 +454,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
         );
         dispatch(productList());
       } catch (error) {
-        console.log("CSRF Token API Error:", error);
+        console.log("remove_wishlist_item API Error:", error);
       }
     };
 

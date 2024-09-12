@@ -11,7 +11,6 @@ import Link from "next/link";
 export const Account = () => {
   const { baseUrl } = useContext(UserContext);
   const router = useRouter();
-  const [shapeData, setShapeData] = useState([]);
   const cartData = useSelector((state) => state.cartData);
 
   const wishlistData = useSelector((state) => state.wishlistData);
@@ -307,18 +306,7 @@ export const Account = () => {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+ 
   return (
     <>
       <div id="user-log" className="login">

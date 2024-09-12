@@ -184,7 +184,7 @@ const CartPage = ({ cart }) => {
         dispatch(productListCart());
       })
       .catch((error) => {
-        console.log("CSRF Token API Error:", error);
+        console.log("remove-cartitem API Error:", error);
       });
   }, [removeCartItem]);
   // ==================
@@ -251,7 +251,7 @@ const CartPage = ({ cart }) => {
           dispatch(productListCart());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove-cartitem API Error:", error);
         });
     });
   };
@@ -278,12 +278,7 @@ const CartPage = ({ cart }) => {
     setDisableButton(true);
     try {
       const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&gemstone_price=${gemstone_price}&gemstone_id=${gemstone_id}&gemstone_stock_no=${gemstone_stock_no}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${img_sku}&ring_price=${ring_price}&diamond_id=${diamond_id}&diamond_price=${diamond_price}&ring_type=${ring_type}&ring_size=${ring_size}&diamond_type=${diamond_type}&diamond_stock_no=${diamond_stock_no}&engraving=${textEngraving}&font=${font_style}`;
-      const response = await axios.get(apiUrl, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": shapeData,
-        },
-      });
+      const response = await axios.get(apiUrl);
 
       if (response.status === 200) {
         dispatch(productList());

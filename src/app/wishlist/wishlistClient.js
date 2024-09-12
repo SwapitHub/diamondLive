@@ -27,7 +27,6 @@ const WishList = ({wishlistServer}) => {
   const diamond = "diamond";
   const matchingSet = "matching_set";
   const [activeWishList, setActiveWishList] = useState(all);
-  const [shapeData, setShapeData] = useState();
   const [removeWishList, setRemoveWishList] = useState();
   const [newsLetterEmail, setNewsletterEmail] = useState([]);
   const [newsLetterResult, setNewsLetterResult] = useState("");
@@ -95,19 +94,7 @@ const WishList = ({wishlistServer}) => {
   // =======================
   const userId = secureLocalStorage.getItem("formData");
 
-  // ========================end
-  useEffect(() => {
-    axios
-      .get(
-        `${baseUrl}/csrf-token`
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+  
   // =============
 
   //   =======
@@ -136,7 +123,7 @@ const WishList = ({wishlistServer}) => {
         dispatch(productList());
       })
       .catch((error) => {
-        console.log("CSRF Token API Error:", error);
+        console.log("remove_wishlist_item API Error:", error);
       });
   }, [removeWishList]);
   // ==================
@@ -205,14 +192,7 @@ const WishList = ({wishlistServer}) => {
 
     axios
       .get(
-        API_URl,
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": shapeData,
-          },
-        }
+        API_URl
       )
       .then((response) => {
         if (response.status === 200) {

@@ -33,7 +33,6 @@ const PaymentForm = () => {
 
   // cartDetails.length < 0 &&
   const user_id = secureLocalStorage.getItem("formData");
-  const [shapeData, setShapeData] = useState([]);
 
   const [loader, setLoader] = useState(true);
   useEffect(() => {
@@ -43,18 +42,7 @@ const PaymentForm = () => {
 
     return () => clearTimeout(timeout);
   }, []);
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+  
   // =============
   const [metalColor, setMetalColor] = useState([]);
   useEffect(() => {

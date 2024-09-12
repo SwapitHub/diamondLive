@@ -17,11 +17,9 @@ const SuccessPayment = ({order_id}) => {
 
 
   const [removeWishList, setRemoveWishList] = useState();
-  const [shapeData, setShapeData] = useState([]);
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
   const cartData = useSelector((state) => state.cartData);
   const cartDetails = useSelector((state) => state.cartReducer);
-  const wishListDataBase = useSelector((state) => state.wishlistReducer);
   const [orderId, setOrderId] = useState();
   const [metalColor, setMetalColor] = useState([]);
 
@@ -31,7 +29,7 @@ const SuccessPayment = ({order_id}) => {
       .get(`${baseUrl}/remove-cartitem/${removeWishList}`)
       .then((res) => {})
       .catch((error) => {
-        console.log("CSRF Token API Error:", error);
+        console.log("remove-cartitem API Error:", error);
       });
   }, [removeWishList]);
   // ==================
@@ -42,14 +40,7 @@ const SuccessPayment = ({order_id}) => {
       try {
         if (userId) {
           const response = await axios.get(
-            `${baseUrl}/getcart-items?user_id=${userId}`,
-
-            {
-              headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": shapeData,
-              },
-            }
+            `${baseUrl}/getcart-items?user_id=${userId}`
           );
 
           if (response.status === 200) {
@@ -67,31 +58,7 @@ const SuccessPayment = ({order_id}) => {
 
     fetchData();
   }, [setCartDetails, cartData]);
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
-  // ========================end
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+  
   // =============
   // =============
   useEffect(() => {

@@ -59,15 +59,7 @@ export const CheckOutPage = () => {
 
     axios
       .get(
-        URL,
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": shapeData,
-            // Add other headers if needed
-          },
-        }
+        URL
       )
 
       .then((response) => {
@@ -256,19 +248,7 @@ export const CheckOutPage = () => {
       );
     }
   };
-  const [shapeData, setShapeData] = useState([]);
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+  
   // =============
   const [metalColor, setMetalColor] = useState([]);
   useEffect(() => {

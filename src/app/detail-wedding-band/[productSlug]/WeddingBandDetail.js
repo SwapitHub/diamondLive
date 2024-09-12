@@ -27,10 +27,7 @@ import Popup from "reactjs-popup";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { UserContext } from "@/app/context/UserContext";
 import { addToCart } from "../../../../store/actions/cartActions";
-import {
-  addToWishlist,
-  removeToWishlist,
-} from "../../../../store/actions/wishlistAction";
+
 import {
   productList,
   productListCart,
@@ -41,6 +38,7 @@ import { DropHint } from "@/app/_componentStatic/DropHint";
 import { useData } from "@/app/context/DataContext";
 import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
 import { useRouter } from "next/navigation";
+import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
 
 export const WeddingBandsDetail = ({productSlug}) => {
   const router = useRouter(); // Call userouter at the top level of the component
@@ -195,12 +193,7 @@ export const WeddingBandsDetail = ({productSlug}) => {
     }${formData.font_style ? `&font=${formData.font_style}` : ""}`;
 
     axios
-      .get(URL_2, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": shapeData,
-        },
-      })
+      .get(URL_2)
       .then((response) => {
         if (response.status === 200) {
           dispatch(productListCart());
@@ -261,71 +254,13 @@ export const WeddingBandsDetail = ({productSlug}) => {
       console.error("Error:", error);
     }
   };
-  const handleWishlistBand = async (
-    ring_price,
-    ring_id,
-    ring_data,
-    ring_img,
-    ring_color,
-    userId,
-    product_type,
-    ring_type
-  ) => {
-    try {
-      const newItem = {
-        ring_price,
-        ring_id,
-        ring: ring_data,
-        ring_img,
-        ring_color,
-        userId,
-        product_type,
-        ring_type,
-        uniqueId: uuidv4(),
-      };
-      dispatch(addToWishList(newItem));
 
-      // setToggledProducts((prevState) => ({
-      //   ...prevState,
-      //   [item?.id]: true,
-      // }));
-      // setLocalWishlist([...localWishlist, newItem]);
-
-      // Construct URL for API call
-      const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${ring_img}&ring_price=${ring_price}&ring_type=${ring_type}`;
-      // Make API call
-      const response = await axios.get(apiUrl, {
-        // headers: {
-        //   "Content-Type": "application/json",
-        //   "X-CSRF-TOKEN": shapeData,
-        // },
-      });
-
-      if (response.status === 200) {
-        // setWishListId(response.data.data);
-        dispatch(productList());
-      } else {
-        console.error(
-          "Error adding item to wishlist. Status:",
-          response.status
-        );
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
   function handleWishlistRemove(belowItem) {
     wishlist.map((item) => {
       if (belowItem?.id === item.ring?.id || belowItem.id === item.ring_id) {
         dispatch(removeToWishlist(item));
-        // setToggledProducts((prevState) => ({
-        //   ...prevState,
-        //   [belowItem?.id]: false,
-        // }));
-        // const updatedWishlist = localWishlist.filter(
-        //   (wishlistItem) => wishlistItem.item?.id !== belowItem?.id
-        // );
-        // setLocalWishlist(updatedWishlist);
+
+        
       }
     });
 
@@ -390,7 +325,7 @@ export const WeddingBandsDetail = ({productSlug}) => {
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 

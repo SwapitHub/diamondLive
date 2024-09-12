@@ -55,7 +55,6 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
   const [toggle, setToggle] = useState({});
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [shapeData, setShapeData] = useState([]);
   const [metalColorShow, setMetalColorShow] = useState("white");
   console.log(data);
 
@@ -239,12 +238,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
     }${font_style ? `&font=${font_style}` : ""}`;
 
     axios
-      .get(URL_2, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": shapeData,
-        },
-      })
+      .get(URL_2)
       .then((response) => {
         if (response.status === 200) {
           dispatch(productListCart());
@@ -257,18 +251,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
       });
   };
 
-  useMemo(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setShapeData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+
 
   // ===========
   const [ringPrice, setRingPrice] = useState({});
@@ -374,14 +357,9 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
           type_diamond == "lab_grown" ? "Lab_grown_Diamond" : "Diamond"
         }${textEngraving ? `&engraving=${textEngraving}` : ""}${
           font_style ? `&font=${font_style}` : ""
-        }`,
+        }`
 
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": tokenData,
-          },
-        }
+        
       )
       .then((response) => {
         if (response.status === 200) {
@@ -396,19 +374,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
       });
   };
 
-  const [tokenData, setTokenData] = useState();
-  useMemo(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setTokenData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+
 
   useMemo(() => {
     const fetchData = () => {
@@ -420,7 +386,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 
