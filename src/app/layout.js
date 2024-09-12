@@ -8,6 +8,7 @@ import Header from "./_componentStatic/Header";
 import { Footer } from "./_componentStatic/Footer";
 import ToastWrapper from "@/ToastWrapper";
 import styles from './page.module.css';
+import RouterProvider from "./component/RouterProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -32,6 +33,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={styles.customFont}>
+      <RouterProvider>
+     
       <ToastWrapper>
        
         <UserProvider>
@@ -59,6 +62,8 @@ export default function RootLayout({ children }) {
           </DataProvider>
         </UserProvider>
         </ToastWrapper>
+        </RouterProvider>
+        
       </body>
     </html>
   );

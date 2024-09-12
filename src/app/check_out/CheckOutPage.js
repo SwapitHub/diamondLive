@@ -18,10 +18,13 @@ import secureLocalStorage from "react-secure-storage";
 import { UserContext } from "../context/UserContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useNavigate } from "react-router-dom";
 
 export const CheckOutPage = () => {
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
   const router = useRouter();
+  const navigate = useNavigate();
+
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
@@ -66,19 +69,11 @@ export const CheckOutPage = () => {
         if (response.status === 200) {
           addressId.push(response.data.data?.id);
           const indexString = addressId.join(",");
-          const dataToPass = {
-            addressId: indexString,
-            totalPrice:
-              userAccountData === "new jersey" ? Math.round(totalPrice) : "0",
-            shipValue: shipValue ? 50 : 0,
-          };
-        //   router.push({
-        //     pathname: '/payment',
-        //     query: {data: JSON.stringify("hello")},
-        //   });
+          const dataToPass = {addressId:indexString,  totalPrice: userAccountData==="new jersey" ? Math.round(totalPrice) : "0",  shipValue: shipValue ? 50 : 0 };
 
-          //   router.push(`/payment`, { state: dataToPass });
-          router.push(`/payment?addressId=${dataToPass.addressId}&totalPrice=${dataToPass.totalPrice}&shipValue=${dataToPass.shipValue}`);
+          
+          navigate(`/payment`, { state: dataToPass });
+          window.location.reload();
         } else {
           console.error("Error Status:", response.status);
         }
