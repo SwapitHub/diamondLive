@@ -30,7 +30,7 @@ export const LoginSignup = () => {
 
   const [previousPath, setPreviousPath] = useState()  
   useEffect(() => {
-    const path = localStorage.getItem('previousPath') || '/';
+    const path = secureLocalStorage.getItem('previousPath') || '/';
     setPreviousPath(path);
   }, []);
   
@@ -183,11 +183,12 @@ export const LoginSignup = () => {
               position: "top-right",
             });
 
-            setTimeout(() => {
+            
               router.push(previousPath==="/cart" ? "/cart" : "/accounts");
-              // router.push('/accounts')
-              localStorage.removeItem('previousPath');
-            }, 3000);
+              setTimeout(()=>{
+                secureLocalStorage.removeItem('previousPath');
+              },3000)
+            
 
             wishlistData.forEach((item) => {
               var wishListURL = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${

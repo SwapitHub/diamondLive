@@ -1,17 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
-// import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { removeToCart, setCartDetails } from "../../redux/action";
 import axios from "axios";
-// import { productListCart } from "../../redux/productAction";
 import { toast } from "react-toastify";
-// import { UserContext } from "../../App";
-import secureLocalStorage from "react-secure-storage";
-import { UserContext } from "../context/UserContext";
-import { removeFromCart } from "../../../store/actions/cartActions";
 import Link from "next/link";
+import secureLocalStorage from "react-secure-storage";
+import { removeFromCart } from "../../../store/actions/cartActions";
 import { productListCart } from "../../../store/actions/productActions";
+import { UserContext } from "../context/UserContext";
 
 export const CartHover = () => {
   const white = "18k-white-gold";
@@ -99,7 +95,7 @@ export const CartHover = () => {
           item?.ring_id) ===
         (ring_id || parseInt(gem_id) || parseInt(diamond_id) || matching_set_id)
       ) {
-        dispatch(removeToCart(item));
+        dispatch(removeFromCart(item));
       }
     });
   };

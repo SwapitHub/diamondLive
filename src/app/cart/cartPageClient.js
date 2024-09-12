@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { v4 as uuidv4 } from "uuid";
 import {
+ 
   productList,
   productListCart,
 } from "../../../store/actions/productActions";
@@ -339,7 +340,7 @@ const CartPage = ({ cart }) => {
     if (user_id) {
       navigate.push("/check_out");
     } else {
-      localStorage.setItem("previousPath", window.location.pathname);
+      secureLocalStorage.setItem("previousPath", window.location.pathname);
       navigate.push("/login");
       toast.info("Please log in to proceed to checkout.", {
         position: "top-right",
@@ -361,6 +362,7 @@ const CartPage = ({ cart }) => {
                     <p><LoaderSpinner/></p>
                   ) : (
                     cartDetails?.map((item, index) => {
+                      dispatch(productList())
                       const selectedMetalColor = metalColor.find(
                         (colorItem) => colorItem.slug === item?.active_color
                       );
