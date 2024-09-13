@@ -53,7 +53,7 @@ export default async function RingDetailPage({ params }) {
     {console.log(ringDetail)
     }
     <p>{ringDetail.data.description}</p>
-<p>jkfhdjkfhjkfhdkjf</p>
+<p>jkfhdjkfhjkfhdkjf ser singh</p>
       <DetailRingProduct ringDetail={ringDetail} />
       
     </>
