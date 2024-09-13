@@ -11,12 +11,12 @@ const LoveBrilliance = ({home}) => {
           style={{ backgroundImage: `url(https://assets.rocksama.com/frontend/images/love-ring-back.png)` }}
         >
           <div className="love-left-image desktop">
-            <LazyLoadImage src={home.section5?.image_desktop} alt="brilliance" effect="blur" width="auto"  height="auto"  />
+            <LazyLoadImage src={home.section5?.image_desktop} alt="brilliance"  width="auto"  height="auto"  />
           </div>
           <div className="love-left-image mobile"
           style={{ backgroundImage: `url(https://assets.rocksama.com/frontend/images/love-ring-back.png)` }}
           >
-            <LazyLoadImage src={home.section5?.image_desktop} alt="brilliance" effect="blur" width="auto"  height="auto"  />
+            <LazyLoadImage src={home.section5?.image_desktop} alt="brilliance"  width="auto"  height="auto"  />
           </div>
 
           <div className="love-right-content">
