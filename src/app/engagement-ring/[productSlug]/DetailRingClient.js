@@ -729,6 +729,7 @@ const DetailRingProduct = ({ ringDetail }) => {
   return (
     <>
    
+<p>jkfhdjkfhjkfhdkjf ser singh</p>
    
 
       <div
