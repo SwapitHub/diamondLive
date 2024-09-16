@@ -1,5 +1,3 @@
-"use client"
-
 import { ADD_TO_COMPARE, REMOVE_FROM_COMPARE } from '../constants';
 
 export const addToCompare = (data) => {

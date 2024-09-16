@@ -1,15 +1,14 @@
-import ToastWrapper from "@/ToastWrapper";
 import { Inter } from "next/font/google";
-import 'react-toastify/dist/ReactToastify.css';
-import { Footer } from "./_componentStatic/Footer";
-import Header from "./_componentStatic/Header";
-import RouterProvider from "./component/RouterProvider";
-import { DataProvider } from "./context/DataContext";
 import { UserProvider } from "./context/UserContext";
-import styles from './page.module.css';
 import ReduxProvider from "./reduxProvider";
+import { DataProvider } from "./context/DataContext";
 import "./style/style.css";
-import { ShopDiamondShape } from "./component/homePages/ShopDiamondShape";
+import 'react-toastify/dist/ReactToastify.css';
+import Header from "./_componentStatic/Header";
+import { Footer } from "./_componentStatic/Footer";
+import ToastWrapper from "@/ToastWrapper";
+import styles from './page.module.css';
+import RouterProvider from "./component/RouterProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -36,9 +35,9 @@ export default function RootLayout({ children }) {
       <body className={styles.customFont}>
      
      
+       
         <UserProvider>
           <DataProvider>
-        {/* <BannersPage/> */}
             <ReduxProvider>
               <Header/>
       <RouterProvider>
@@ -65,7 +64,6 @@ export default function RootLayout({ children }) {
               ></script>
               <Footer/>
             </ReduxProvider>
-
           </DataProvider>
         </UserProvider>
         

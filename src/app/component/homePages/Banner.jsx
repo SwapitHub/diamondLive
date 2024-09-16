@@ -5,7 +5,6 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import Slider from "react-slick";
 
 export const Banner = ({ homeContext }) => {
-  
   const settings = {
     dots: true,
     infinite: true,
@@ -20,12 +19,11 @@ export const Banner = ({ homeContext }) => {
       <section className="banner-section">
         <div className="container">
           <div className="common-row banner">
-            
             <Slider {...settings}>
-              {homeContext.data?.map((item) => {                
+              {homeContext.map((item) => {
+                
                 return (
                   <>
-                 
                     <div className="banner-img-slider">
                       <div className="banner-ring-text-btn">
                         <h1>{item?.title}</h1>

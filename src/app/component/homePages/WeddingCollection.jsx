@@ -16,7 +16,7 @@ export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollect
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(engagementRings.data?.description),
+                      __html: DOMPurify.sanitize(engagementRings?.description),
                     }}
                   ></div>
                 </div>
@@ -30,7 +30,7 @@ export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollect
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(weddingJewelry.data?.description),
+                      __html: DOMPurify.sanitize(weddingJewelry?.description),
                     }}
                   ></div>
                 </div>
@@ -44,7 +44,7 @@ export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollect
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(weddingCollection.data?.description),
+                      __html: DOMPurify.sanitize(weddingCollection?.description),
                     }}
                   ></div>
                 </div>

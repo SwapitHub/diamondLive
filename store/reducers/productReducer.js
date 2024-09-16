@@ -1,5 +1,3 @@
-"use client"
-
 import { SET_PRODUCT_LIST } from '../constants';
 
 const productDataWishlist = (state = [], action) => {

@@ -1,5 +1,3 @@
-"use client"
-
 import { PRODUCT_LIST, PRODUCT_LIST_CART } from '../constants';
 
 export const productList = () => {

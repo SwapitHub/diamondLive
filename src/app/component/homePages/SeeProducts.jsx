@@ -10,30 +10,30 @@ export const SeeProducts = ({anniversaryRings,diamondPendants,tennisBracelets,di
       <div className="container">
         <div className="common-row see-products">
           <div className="see-products-img">
-            <Link href={`${anniversaryRings.data?.url}`} className="See-Products">
+            <Link href={`${anniversaryRings?.url}`} className="See-Products">
               <span>Trellis Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(anniversaryRings.data?.description),
+                __html: DOMPurify.sanitize(anniversaryRings?.description),
               }}
             ></div>
           </div>
           <div className="see-products-img">
-            <Link href={`${diamondPendants.data?.url}`} className="See-Products">
+            <Link href={`${diamondPendants?.url}`} className="See-Products">
               <span>Vintage Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
 
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(diamondPendants.data?.description),
+                __html: DOMPurify.sanitize(diamondPendants?.description),
               }}
             ></div>
           </div>
           <div className="see-products-img">
-            <Link href={`${tennisBracelets.data?.url}`} className="See-Products">
+            <Link href={`${tennisBracelets?.url}`} className="See-Products">
               <span>
               Eternity Rings
               </span>
@@ -42,19 +42,19 @@ export const SeeProducts = ({anniversaryRings,diamondPendants,tennisBracelets,di
 
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(tennisBracelets.data?.description),
+                __html: DOMPurify.sanitize(tennisBracelets?.description),
               }}
             ></div>
           </div>
           <div className="see-products-img">
-            <Link href={`${diamondStuds.data?.url}`} className="See-Products">
+            <Link href={`${diamondStuds?.url}`} className="See-Products">
               <span>Nature Inspired Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
 
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(diamondStuds.data?.description),
+                __html: DOMPurify.sanitize(diamondStuds?.description),
               }}
             ></div>
           </div>

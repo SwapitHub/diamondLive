@@ -1,5 +1,3 @@
-"use client"
-
 import { put, takeEvery } from 'redux-saga/effects';
 import { PRODUCT_LIST_CART, SET_CART_LIST } from '../constants';
 import secureLocalStorage from 'react-secure-storage';
