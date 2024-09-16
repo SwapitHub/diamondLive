@@ -8,7 +8,6 @@ import Header from "./_componentStatic/Header";
 import { Footer } from "./_componentStatic/Footer";
 import ToastWrapper from "@/ToastWrapper";
 import styles from './page.module.css';
-import RouterProvider from "./component/RouterProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -33,20 +32,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={styles.customFont}>
-     
-     
+      <ToastWrapper>
        
         <UserProvider>
           <DataProvider>
+            
             <ReduxProvider>
               <Header/>
-      <RouterProvider>
-      <ToastWrapper>
               {children}
-        </ToastWrapper>
-
-        </RouterProvider>
-
               <script
                 type="text/javascript"
                 id="hs-script-loader"
@@ -66,7 +59,7 @@ export default function RootLayout({ children }) {
             </ReduxProvider>
           </DataProvider>
         </UserProvider>
-        
+        </ToastWrapper>
       </body>
     </html>
   );

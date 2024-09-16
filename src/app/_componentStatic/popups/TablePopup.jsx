@@ -1,7 +1,7 @@
 import { UserContext } from "@/app/context/UserContext";
-import Link from "next/link";
 import React, { useContext, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const TablePopup = ({ setTableOpen }) => {
   const {imgAssetsUrl} = useContext(UserContext)
@@ -30,7 +30,7 @@ const TablePopup = ({ setTableOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Table</h3>
-              <Link href="javascript:void(0);" onClick={() => setTableOpen(false)}>
+              <Link to="javascript:void(0);" onClick={() => setTableOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

@@ -48,11 +48,10 @@ export default async function RingDetailPage({ params }) {
  const {productSlug} = params
 
   const ringDetail = await fetchDetailMeta(productSlug);
+
   return (
     <>
-    
       <DetailRingProduct ringDetail={ringDetail} />
-      
     </>
   );
 }

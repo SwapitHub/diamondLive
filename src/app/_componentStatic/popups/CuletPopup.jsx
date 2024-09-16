@@ -1,6 +1,7 @@
-import Link from "next/link";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
+import Slider from "react-slider";
 
 const CuletPopup = ({ setCuletOpen }) => {
   useEffect(() => {
@@ -27,7 +28,7 @@ const CuletPopup = ({ setCuletOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Culet</h3>
-              <Link href="javascript:void(0);" onClick={() => setCuletOpen(false)}>
+              <Link to="javascript:void(0);" onClick={() => setCuletOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
 import Slider from "react-slider";
-import Link from "next/link";
-import { UserContext } from "@/app/context/UserContext";
+import { UserContext } from "../../../App";
 
 const CutPopup = ({ setCutOpen }) => {
   const [carat, setCarat] = useState(0);
@@ -35,7 +35,7 @@ const CutPopup = ({ setCutOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Cut</h3>
-              <Link href="javascript:void(0);" onClick={() => setCutOpen(false)}>
+              <Link to="javascript:void(0);" onClick={() => setCutOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

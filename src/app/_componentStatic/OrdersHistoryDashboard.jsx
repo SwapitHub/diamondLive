@@ -599,8 +599,8 @@ export const OrdersHistoryDashboard = ({ showOrderId, setShowOrderId }) => {
                             <div className="order-items-right">
                               <div className="fore2" data-title=""></div>
                               <div className="fore3"></div>
-                              <div className="fore4 hidden-xs">Subtotal:</div>
-                              <div className="hidden-xs">
+                              <div className="fore4 hidden-xs">Item Total:</div>
+                              <div className="fore5 hidden-xs">
                                 $
                                 {Math.round(
                                   orderId?.order_details?.total_amount
@@ -610,32 +610,33 @@ export const OrdersHistoryDashboard = ({ showOrderId, setShowOrderId }) => {
                             <div className="order-items-right">
                               <div className="fore2" data-title=""></div>
                               <div className="fore3"></div>
-                              <div className="fore4 hidden-xs">Shipping Fees:</div>
-                              <div className="hidden-xs">$
-                                {Math.round(
-                                  orderId?.order_details?.shipping
-                                )}</div>
+                              <div className="fore4 hidden-xs">Tax:</div>
+                              <div className="fore5 hidden-xs">$0.00</div>
                             </div>
                             <div className="order-items-right">
                               <div className="fore2" data-title=""></div>
                               <div className="fore3"></div>
                               <div className="fore4 hidden-xs">
-                              Sales TAX est:
+                                FedEx Shipping:
                               </div>
-                              <div className="hidden-xs">$
-                                {Math.round(
-                                  orderId?.order_details?.tax
-                                )}</div>
+                              <div className="fore5 hidden-xs">Free</div>
                             </div>
-                            
                             <div className="order-items-right">
                               <div className="fore2" data-title=""></div>
                               <div className="fore3"></div>
-                              <div className="fore5 hidden-xs">Total:</div>
+                              <div className="fore4 hidden-xs">
+                                Payment Amount:
+                              </div>
+                              <div className="fore5 hidden-xs">$0.00</div>
+                            </div>
+                            <div className="order-items-right">
+                              <div className="fore2" data-title=""></div>
+                              <div className="fore3"></div>
+                              <div className="fore4 hidden-xs">Price:</div>
                               <div className="fore5 hidden-xs">
                                 $
                                 {Math.round(
-                                  orderId?.order_details?.payment_amount
+                                  orderId?.order_details?.total_amount
                                 )}
                               </div>
                             </div>

@@ -9,11 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { toast } from "react-toastify";
 import { removeFromCart } from "../../../store/actions/cartActions";
+import { productList, productListCart } from "../../../store/actions/productActions";
 import { removeToWishlist } from "../../../store/actions/wishlistAction";
+import { UserContext } from "../context/UserContext";
+import Header from "../_componentStatic/Header";
+import { Footer } from "../_componentStatic/Footer";
 import { OrdersHistoryDashboard } from "../_componentStatic/OrdersHistoryDashboard";
 import { SettingPreferences } from "../_componentStatic/SettingPreferences";
-import { UserContext } from "../context/UserContext";
-import { productList, productListCart } from "../../../store/actions/productActions";
 export const MyAccountDashboard = () => {
   const { baseUrl, toggle, setToggle ,imgBaseUrl} = useContext(UserContext);
   const router = useRouter();

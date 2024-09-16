@@ -184,11 +184,15 @@ export const LoginSignup = () => {
             });
 
             
-              router.push(previousPath==="/cart" ? "/cart" : "/accounts");
-              setTimeout(()=>{
+            router.push(previousPath === "/cart" ? "/cart" : "/accounts").then(() => {
+              
+              setTimeout(() => {
                 secureLocalStorage.removeItem('previousPath');
-              },3000)
+
+              }, 2000);
+            })
             
+            // window.location.reload();
 
             wishlistData.forEach((item) => {
               var wishListURL = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${

@@ -1,6 +1,7 @@
-import Link from "next/link";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
+import Slider from "react-slider";
 
 const GirdlePopup = ({ setGirdleOpen }) => {
 
@@ -28,7 +29,7 @@ const GirdlePopup = ({ setGirdleOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Girdle</h3>
-              <Link href="javascript:void(0);" onClick={() => setGirdleOpen(false)}>
+              <Link to="javascript:void(0);" onClick={() => setGirdleOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

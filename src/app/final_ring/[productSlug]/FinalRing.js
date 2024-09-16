@@ -152,10 +152,12 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
   useMemo(() => {
     setFilterData({
       product: ringData.data,
-      imgUrl: ringData.data.internal_sku,
-    });
+      imgUrl: ringData.data.internal_sku
+    })
   }, [productSlug]);
   // ring api details Api end
+
+  
 
   // =======================
   const userId = secureLocalStorage.getItem("formData");
@@ -248,6 +250,8 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
         console.error("Error:", error);
       });
   };
+
+
 
   // ===========
   const [ringPrice, setRingPrice] = useState({});
@@ -354,6 +358,8 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
         }${textEngraving ? `&engraving=${textEngraving}` : ""}${
           font_style ? `&font=${font_style}` : ""
         }`
+
+        
       )
       .then((response) => {
         if (response.status === 200) {
@@ -367,6 +373,8 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
         console.error("Error:", error);
       });
   };
+
+
 
   useMemo(() => {
     const fetchData = () => {
@@ -433,7 +441,13 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
     return () => {
       debouncedApiCall.cancel();
     };
-  }, [metalColorShow]);
+  }, [
+    baseUrl,
+    filterData.product?.sku,
+    metalColorShow,
+    diamond_original,
+    listColor,
+  ]);
 
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();

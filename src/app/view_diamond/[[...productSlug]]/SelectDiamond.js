@@ -35,13 +35,9 @@ import { useData } from "../../context/DataContext";
 import { Tabbing } from "../../_componentStatic/Tabbing";
 import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
 import { productList } from "../../../../store/actions/productActions";
-import CaratPopup from "@/app/_componentStatic/popups/CaratPopup";
-import CutPopup from "@/app/_componentStatic/popups/CutPopup";
-import ColorPopup from "@/app/_componentStatic/popups/ColorPopup";
-import ClarityPopup from "@/app/_componentStatic/popups/ClarityPopup";
 
 
-const SelectDiamond = ({diamondDesciption, productSlug}) => {
+const SelectDiamond = ({diamondDetails, productSlug}) => {
   const [banner, setBanner] = useState({});
   const [open, setOpen] = useState(false);
   const [measOpen, setMeasOpen] = useState(false);
@@ -58,7 +54,6 @@ const SelectDiamond = ({diamondDesciption, productSlug}) => {
   const [shapeOpen, setShapeOpen] = useState(false);
   const [priceOpen, setPriceOpen] = useState(false);
   const [clarityOpen, setClarityOpen] = useState(false);
-  const [diamondDetails, setDiamondDetails] = useState([])
   const [newData, setNewData] = useState([]);
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
   const queryParams = new URLSearchParams(location.search);
@@ -79,7 +74,7 @@ const SelectDiamond = ({diamondDesciption, productSlug}) => {
 
   const [removeWishList, setRemoveWishList] = useState();
   useMemo(() => {
-    setNewData(diamondDesciption)
+    setNewData(diamondDetails)
   }, []);
   
   

@@ -1,7 +1,7 @@
 import { UserContext } from "@/app/context/UserContext";
-import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const ShapePopup = ({ setShapeOpen }) => {
   const { imgAssetsUrl } = useContext(UserContext);
@@ -31,7 +31,7 @@ const ShapePopup = ({ setShapeOpen }) => {
             <div className="close-popup-icon">
               <h3 className="modal-title">Shape</h3>
               <Link
-                href="javascript:void(0);"
+                to="javascript:void(0);"
                 onClick={() => setShapeOpen(false)}
               >
                 Close <IoMdClose />

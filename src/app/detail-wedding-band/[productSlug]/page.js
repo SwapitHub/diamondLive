@@ -47,7 +47,7 @@ export default async function bandDetailPage({ params }) {
  const {productSlug} = params
 
   const bandDetail = await fetchDetailMeta(productSlug);
-  
+
   return (
     <>
       <WeddingBandsDetail bandDetail={bandDetail} productSlug={productSlug}/>

@@ -1,7 +1,7 @@
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-
+import { Link } from "react-router-dom";
+import Slider from "react-slider";
 
 const MeasPopup = ({ setMeasOpen }) => {
 
@@ -29,7 +29,7 @@ const MeasPopup = ({ setMeasOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Measurement</h3>
-              <Link href="javascript:void(0);" onClick={() => setMeasOpen(false)}>
+              <Link to="javascript:void(0);" onClick={() => setMeasOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>
