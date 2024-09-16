@@ -1,3 +1,5 @@
+"use client"
+
 import { SET_CART_LIST } from '../constants';
 
 const productDataCart = (state = [], action) => {

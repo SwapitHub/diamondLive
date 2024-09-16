@@ -1,3 +1,5 @@
+"use client"
+
 import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from '../constants';
 
 const wishlistData = (state = [], action) => {

@@ -38,7 +38,7 @@ export const ShopDiamondCotegory = ({shopStyle}) => {
                 
               ]}
             >
-              {shopStyle.map((item) => {
+              {shopStyle.data?.map((item) => {
                 return (
                   <div class="column-width" key={item?.id}>
                     <Link href={`/engagement-rings/style/${item.slug}`}>
@@ -57,7 +57,7 @@ export const ShopDiamondCotegory = ({shopStyle}) => {
           <div className="slider-flex-category mobile">
           
            
-              {shopStyle.map((item) => {
+              {shopStyle.data?.map((item) => {
                 return (
                   <div class="column-width" key={item?.id}>
                     <Link href={`/engagement-rings/start-with-a-setting?style=${item.slug}`}>

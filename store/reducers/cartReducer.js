@@ -1,3 +1,5 @@
+"use client"
+
 import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_COUNT, REMOVE_CART_COUNT } from '../constants';
 
 const cartData = (state = [], action) => {

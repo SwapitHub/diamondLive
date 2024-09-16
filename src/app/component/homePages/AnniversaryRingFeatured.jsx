@@ -15,27 +15,27 @@ export const AnniversaryRingFeatured = ({home}) => {
           <div className="ring-grid-sec">
             <div className="grid-wrapper-bar">
               <div className="img-bar">
-                <LazyLoadImage src={home.section6?.image1} alt={home.section6?.image1_alt} width="auto"  height="auto"  />
+                <LazyLoadImage src={home.data.section6?.image1} alt={home.data.section6?.image1_alt} width="auto"  height="auto"  />
               </div>
               <div className="contant-bar">
-                <h3>{home.section6?.heading1}</h3>
+                <h3>{home.data.section6?.heading1}</h3>
                 <p>
-                {home.section6?.description1}
+                {home.data.section6?.description1}
                 </p>
-                <Link href={`${home.section6?.btn_link}`}>{home.section6?.btn_name}</Link>
+                <Link href={`${home.data.section6?.btn_link}`}>{home.data.section6?.btn_name}</Link>
               </div>
             </div>
             <div className="grid-wrapper-bar">
               <div className="img-bar">
-                <LazyLoadImage src={home.section6?.image2} alt={home.section6?.image2_alt} width="auto"  height="auto"  />
+                <LazyLoadImage src={home.data.section6?.image2} alt={home.data.section6?.image2_alt} width="auto"  height="auto"  />
               </div>
               <div className="contant-bar">
-                <h3>{home.section6?.heading2}</h3>
+                <h3>{home.data.section6?.heading2}</h3>
                 <p>
-                {home.section6?.description2}
+                {home.data.section6?.description2}
 
                 </p>
-                <Link href={`${home.section6?.btn_link2}`}>{home.section6?.btn_name}</Link>
+                <Link href={`${home.data.section6?.btn_link2}`}>{home.data.section6?.btn_name}</Link>
               </div>
             </div>
           </div>

@@ -1,7 +1,9 @@
+"use client"
+import React, { useState } from "react";
 import Link from "next/link";
 
 export const ShopDiamondShape = ({shapeData, icon}) => {
-  
+  const [data, setData]= useState(shapeData)
   return (
     <>
       <div className="ShopDiamondShape">
@@ -15,7 +17,7 @@ export const ShopDiamondShape = ({shapeData, icon}) => {
               
               return (
                
-                  <div className="ShopDiamondShape-img-text" key={i}>                  
+                  <div className="ShopDiamondShape-img-text" key={i}>
                     <Link href={`/diamond/shape/${shapeItem.shape}`}>
                       <div className="own-ring-white">
                       <img src={shapeItem.icon} alt={shapeItem.shape}  width="auto"  height="auto"  />

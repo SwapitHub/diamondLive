@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
   const [showSuggestionHeader, setShowSuggestionHeader] = useState(false);
   const [loadingCart, setLoadingCart] = useState(false);
   const [toggle, setToggle] = useState(1);
-
+  
   const baseUrl = "https://api.rocksama.com/api/v1";
   const imgBaseUrl = "https://assets.rocksama.com/products/images";
   const imgAssetsUrl = "https://assets.rocksama.com";

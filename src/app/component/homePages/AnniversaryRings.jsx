@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
 export const AnniversaryRings = ({home}) => {
-  console.log(home);
 
   
   return (
@@ -16,7 +15,7 @@ export const AnniversaryRings = ({home}) => {
 
           <div className="flex-container">
             <div className="flex">
-              {home?.shopbycategory?.map((item,i) => {
+              {home.data?.shopbycategory?.map((item,i) => {
                 
                 return (
                  

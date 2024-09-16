@@ -59,6 +59,7 @@ export default async function DetailRingPage() {
   
   return (
     <div>
+      
       <Home data={data} />
     </div>
   );

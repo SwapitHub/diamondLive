@@ -4,10 +4,8 @@ import { createContext, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-
-
-import HomePage from "./component/homePages/home/page";
 import LoaderSpinner from "./_componentStatic/LoaderSpinner";
+import HomePageData from "./component/homePages/home/page";
 export const UserContext = createContext(null);
 
 export default function Home() {
@@ -43,7 +41,7 @@ export default function Home() {
           <>
             
               <ScrollToTopOnNavigate />
-              <HomePage />
+            <HomePageData/>
           </>
         )}
         <ToastContainer

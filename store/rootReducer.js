@@ -1,3 +1,5 @@
+"use client"
+
 import { combineReducers } from 'redux';
 import cartData from './reducers/cartReducer';
 import wishlistData from './reducers/wishlistReducer';
