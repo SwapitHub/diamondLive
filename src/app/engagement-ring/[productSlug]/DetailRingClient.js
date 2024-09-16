@@ -727,10 +727,7 @@ const DetailRingProduct = ({ ringDetail }) => {
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
   };
   return (
-    <>
-   
-<p>jkfhdjkfhjkfhdkjf ser singh</p>
-   
+    <>     
 
       <div
         className={`details-page container ${
