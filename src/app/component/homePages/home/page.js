@@ -229,7 +229,7 @@ export default async function HomePageData() {
         {/* <pre>{JSON.stringify(homeDetail.data, null, 2)}</pre> */}
         <div className="home-page">
         <Banner homeContext={homeContext}/>
-        <ShopDiamondShape shapeData={shapeData.data} />
+        {/* <ShopDiamondShape shapeData={shapeData.data} />
         <SeeProducts anniversaryRings={anniversaryRings.data} diamondPendants={diamondPendants.data} tennisBracelets={tennisBracelets.data} diamondStuds={diamondStuds.data}/>
         <ShopDiamondCotegory shopStyle={shopStyle.data}/>
         <BridalJewellery home={homeAllSections}/>
@@ -241,7 +241,7 @@ export default async function HomePageData() {
 
         <LoveBrilliance home={homeAllSections}/>
         
-        <AnniversaryRingFeatured home={homeAllSections}/>
+        <AnniversaryRingFeatured home={homeAllSections}/> */}
       </div>
       </>
     );
