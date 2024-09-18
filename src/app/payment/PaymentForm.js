@@ -19,7 +19,6 @@ const PaymentForm = () => {
   const platinum = "platinum";
   const dispatch = useDispatch();
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
-  const queryParams = new URLSearchParams(location.search);
   // const {addressId} = useParams();
 
   const searchParams = useSearchParams();

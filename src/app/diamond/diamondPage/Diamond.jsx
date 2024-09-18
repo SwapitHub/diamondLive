@@ -4,6 +4,11 @@ import { DiamondBanner } from "./DiamondBanner";
 import { DiamondEdu } from "./DiamondEdu";
 import { DiamondFaq } from "./DiamondFaq";
 import { DiamondReadyToShip } from "./DiamondReadyToShip";
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+
+const window = new JSDOM('').window;
+const purify = DOMPurify(window);
 
 const diamondShape = async () => {
   let diamond = [];

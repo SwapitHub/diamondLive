@@ -2,7 +2,6 @@ import DOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 import ContactUs from './fetchFooter';
 
-// Server-side DOMPurify setup
 const window = new JSDOM('').window;
 const purify = DOMPurify(window);
 

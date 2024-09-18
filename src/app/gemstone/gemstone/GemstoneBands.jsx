@@ -2,6 +2,11 @@ import { GemstoneBanner } from "./GemstoneBanner";
 import { GemstoneByStyle } from "./GemstoneByStyle";
 import { GemstoneFaq } from "./GemstoneFaq";
 import { GemstoneShopByShape } from "./GemstoneShopByShape";
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+
+const window = new JSDOM('').window;
+const purify = DOMPurify(window);
 
 const gemstone = async () => {
   let diamond = [];
