@@ -41,16 +41,17 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
   const pathname = usePathname();
+  const router = useRouter()
 
   const [pathSegments, setPathSegments] = useState([]);
   const [queryParams, setQueryParams] = useState({});
   useEffect(() => {
     if (pathname) {
-      const segments = router.pathname.split("/").filter((segment) => segment);
+      const segments = pathname.split("/").filter((segment) => segment);
       setPathSegments(segments);
     }
-    setQueryParams(useSearchParams());
-  }, [router.pathname]);
+    setQueryParams(searchParams);
+  }, [pathname]);
 
   const mainCategory = pathSegments[0] || "";
   const subCategory = pathSegments;
@@ -171,7 +172,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   }, [localBridalData]);
 
   const getBridalSet = () => {
-    const searchParams = useSearchParams();
+    const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("bridal-sets");
     const newSearchString = searchParams.toString();
     const newURL = `/engagement-rings/start-with-a-setting${
@@ -471,7 +472,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
       setMetalId(metaColorId);
     }
     setMetalColorName(MetalColorName);
-    const searchParams = useSearchParams();
+    const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("metal");
     const newSearchString = searchParams.toString();
     const newURL = `${"/engagement-rings/start-with-a-setting"}${
@@ -922,10 +923,8 @@ const StartWithASetting = ({ rings, ringFilter }) => {
     secureLocalStorage.removeItem("clickedShape");
   };
 
-  const bridalSetSearch = useSearchParams();
-  var newSubCategory = pathname.substring(1);
 
-  var newJoinBridalSet = newSubCategory.concat(bridalSetSearch);
+
 
   return (
     <>
