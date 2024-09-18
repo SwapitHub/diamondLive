@@ -161,7 +161,7 @@ export const Account = () => {
 
             setTimeout(() => {
               router.push("/accounts");
-              window.location.reload(true);
+              // window.location.reload(true);
             }, 3000);
 
             wishlistData.forEach((item) => {

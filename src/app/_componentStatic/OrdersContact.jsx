@@ -107,7 +107,6 @@ export const OrdersContact = ({ profileData }) => {
             });
             setTimeout(() => {
               router.push("/login");
-              // window.location.reload(true);
             }, 3000);
 
             secureLocalStorage.clear();

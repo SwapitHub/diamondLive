@@ -23,7 +23,7 @@ import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { productList } from "../../../../../store/actions/productActions";
 import {
@@ -40,16 +40,16 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
-  const router = useRouter();
+  const pathname = usePathname();
 
   const [pathSegments, setPathSegments] = useState([]);
   const [queryParams, setQueryParams] = useState({});
   useEffect(() => {
-    if (router.pathname) {
+    if (pathname) {
       const segments = router.pathname.split("/").filter((segment) => segment);
       setPathSegments(segments);
     }
-    setQueryParams(new URLSearchParams(window.location.search));
+    setQueryParams(useSearchParams());
   }, [router.pathname]);
 
   const mainCategory = pathSegments[0] || "";
@@ -171,7 +171,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   }, [localBridalData]);
 
   const getBridalSet = () => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const searchParams = useSearchParams();
     searchParams.delete("bridal-sets");
     const newSearchString = searchParams.toString();
     const newURL = `/engagement-rings/start-with-a-setting${
@@ -471,7 +471,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
       setMetalId(metaColorId);
     }
     setMetalColorName(MetalColorName);
-    const searchParams = new URLSearchParams(window.location.search);
+    const searchParams = useSearchParams();
     searchParams.delete("metal");
     const newSearchString = searchParams.toString();
     const newURL = `${"/engagement-rings/start-with-a-setting"}${
@@ -922,9 +922,8 @@ const StartWithASetting = ({ rings, ringFilter }) => {
     secureLocalStorage.removeItem("clickedShape");
   };
 
-  const bridalSetSearch = window.location.search;
-  const currentUrl = window.location.href;
-  var newSubCategory = location.pathname.substring(1);
+  const bridalSetSearch = useSearchParams();
+  var newSubCategory = pathname.substring(1);
 
   var newJoinBridalSet = newSubCategory.concat(bridalSetSearch);
 

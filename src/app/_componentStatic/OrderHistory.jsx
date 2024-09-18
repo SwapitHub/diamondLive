@@ -26,7 +26,6 @@ export const OrderHistory = ({setFormData}) => {
     });
     setTimeout(() => {
       router.push("/login");
-      // window.location.reload(true)
     }, 3000);
 
     secureLocalStorage.clear();

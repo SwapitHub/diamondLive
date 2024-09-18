@@ -286,849 +286,852 @@ const PaymentForm = () => {
   };
   return (
     <>
-      {cartDetails.length > 0 && addressId? (
-        <>
-          <div className="payment-form">
-            <div className="container">
-              <div className="checkout">
-                <div className="checkout-left">
-                  <form>
-                    <div className="form-control">
-                      <label htmlFor="cardNumber">Card Number</label>
-                      <input
-                        className="zipcode-number"
-                        type="tel"
-                        pattern="\d*"
-                        min="0"
-                        max="9999999999"
-                        maxLength="16"
-                        name="cardNumber"
-                        id="cardNumber"
-                        value={cardNum}
-                        onChange={handleChange_cardNumber}
-                      />
-                      {cardNumError && (
-                        <div className="error">{cardNumError}</div>
-                      )}
-                    </div>
-                    <div className="form-control">
-                      <label htmlFor="expiryDate">Expiry Date (MM/YY)</label>
-                      <input
-                        type="text"
-                        id="inputExpDate"
-                        placeholder="MM / YY"
-                        maxLength={9}
-                        value={expiryDate}
-                        onChange={handleChange_exp_date}
-                      />
-                      {error && <div className="error">{error}</div>}
-                    </div>
-                    <div className="form-control">
-                      <label htmlFor="cvv">CVV</label>
-                      <input
-                        className="zipcode-number"
-                        type="tel"
-                        pattern="\d*"
-                        min="0"
-                        max="9999"
-                        maxLength="4"
-                        name="cvv"
-                        id="cvv"
-                        value={cvv}
-                        onChange={handleChange_cvv}
-                      />
-                      {cvvError && <div className="error">{cvvError}</div>}
-                    </div>
-                    <div className="form-control">
-                      <label htmlFor="zip">ZIP Code</label>
-                      <input
-                        className="zipcode-number"
-                        type="text"
-                        pattern="\d*"
-                        min="0"
-                        max="9999999999"
-                        maxLength="10"
-                        name="zipCode"
-                        id="zipCode"
-                        value={zipCode}
-                        onChange={handleChange_zip_code}
-                      />
-                      {zipCodeError && (
-                        <div className="error">{zipCodeError}</div>
-                      )}
-                    </div>
-                    <div className="Return-to-Shipping">
-                      {/* <div className="move-cart">
-                  <Link href="/check_out">
-                    <MdKeyboardArrowLeft />
-                    Return To Shopping Bag
-                  </Link>
-                </div> */}
-                      <div className="continue-payment">
-                        <Link
-                          href="javascript:void(0)"
-                          // href={orderId!=undefined &&`/success?order_id=${orderId}`}
-                          // disabled={loader}
-                          onClick={(event) => {
-                            if (
-                              document.getElementById("cardNumber").value ===
-                                "" ||
-                              document.getElementById("inputExpDate").value ===
-                                "" ||
-                              document.getElementById("cvv").value === "" ||
-                              document.getElementById("zipCode").value === ""
-                            ) {
-                              handleSubmit();
-                            } else {
-                              handleOrderProduct();
-                            }
-                          }}
-                        >
-                          Continue To Order
-                        </Link>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div className="checkout-right">
-                  {user_id ? (
-                    <div className="checkout-right-scroll">
-                      <h3>Order Summary</h3>
-                      {loader ? (
-                        <LoaderSpinner />
-                      ) : (
-                        cartDetails?.map((item) => {
-                          const selectedMetalColor = metalColor.find(
-                            (colorItem) =>
-                              colorItem?.slug === item?.active_color
-                          );
-                          return (
-                            <>
-                              {cartDetails?.length > 0 ? (
-                                <div className="order-summary">
-                                  {item.gemstone_id &&
-                                  item.ring?.id == null &&
-                                  item?.diamond_id == null ? (
-                                    item.gemstone?.map((gemstoneItem) => {
-                                      return (
-                                        <>
-                                          <div className="main-cart-inner">
-                                            <div className="cart-left-pic">
-                                              <img
-                                                width="auto"
-                                                height="auto"
-                                                onError={handleError}
-                                                src={gemstoneItem?.image_url}
-                                                alt={gemstoneItem?.shape}
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="product-info-inner cart-middle-discription">
-                                            <div className="cart-middle-discription-text">
-                                              <span>
-                                                {gemstoneItem?.short_title}
-                                              </span>
-                                            </div>
-
-                                            <div className="cart-right-price">
-                                              <p>
-                                                $
-                                                {Math.round(
-                                                  gemstoneItem?.total_sales_price
-                                                )}
-                                              </p>
-                                            </div>
-                                          </div>
-                                        </>
-                                      );
-                                    })
-                                  ) : item.ring?.id &&
-                                    (item?.diamond_id || item?.gemstone_id) ? (
-                                    <>
-                                      <div className="main-cart-inner">
-                                        <div className="cart-left-pic">
-                                          <Link href="javascript:void(0);">
-                                            <ul className="product-list">
-                                              <li
-                                                className={
-                                                  item.active_color === white
-                                                    ? "active"
-                                                    : "displayed"
-                                                }
-                                              >
-                                                <img
-                                                  width="auto"
-                                                  height="auto"
-                                                  onError={handleError}
-                                                  src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.jpg`}
-                                                  alt={item.ring?.name}
-                                                  className="img-responsive center-block"
-                                                />
-                                              </li>
-                                              <li
-                                                className={
-                                                  item.active_color === yellow
-                                                    ? "active"
-                                                    : "displayed"
-                                                }
-                                              >
-                                                <img
-                                                  width="auto"
-                                                  height="auto"
-                                                  onError={handleError}
-                                                  src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.alt.jpg`}
-                                                  alt={item.ring?.name}
-                                                  className="img-responsive center-block"
-                                                />
-                                              </li>
-                                              <li
-                                                className={
-                                                  item.active_color === rose
-                                                    ? "active"
-                                                    : "displayed"
-                                                }
-                                              >
-                                                <img
-                                                  width="auto"
-                                                  height="auto"
-                                                  onError={handleError}
-                                                  src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.alt1.jpg`}
-                                                  alt={item.ring?.name}
-                                                  className="img-responsive center-block"
-                                                />
-                                              </li>
-                                              <li
-                                                className={
-                                                  item.active_color === platinum
-                                                    ? "active"
-                                                    : "displayed"
-                                                }
-                                              >
-                                                <img
-                                                  width="auto"
-                                                  height="auto"
-                                                  onError={handleError}
-                                                  src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.jpg`}
-                                                  alt={item.ring?.name}
-                                                  className="img-responsive center-block"
-                                                />
-                                              </li>
-                                            </ul>
-                                          </Link>
-                                          {item.diamond_id
-                                            ? item.diamond
-                                                ?.slice(0, 1)
-                                                .map((diamondItem) => {
-                                                  return (
-                                                    <>
-                                                      <div className="cart-left-pic">
-                                                        <img
-                                                          width="auto"
-                                                          height="auto"
-                                                          onError={handleError}
-                                                          src={
-                                                            diamondItem?.image_url
-                                                          }
-                                                          alt={
-                                                            diamondItem?.name
-                                                          }
-                                                        />
-                                                      </div>
-                                                    </>
-                                                  );
-                                                })
-                                            : item.gemstone?.map(
-                                                (gemstoneItem) => {
-                                                  return (
-                                                    <>
-                                                      <div className="cart-left-pic">
-                                                        <img
-                                                          width="auto"
-                                                          height="auto"
-                                                          onError={handleError}
-                                                          src={
-                                                            gemstoneItem?.image_url
-                                                          }
-                                                          alt={
-                                                            gemstoneItem?.shape
-                                                          }
-                                                        />
-                                                      </div>
-                                                    </>
-                                                  );
-                                                }
-                                              )}
-                                        </div>
-                                      </div>
-                                      <div className="product-info cart-middle-discription">
-                                        <div className="product-info-inner">
-                                          <div className="cart-middle-discription-text">
-                                            <div>
-                                              {selectedMetalColor && (
-                                                <h2>
-                                                  <Link
-                                                    href="javascript:void(0);"
-                                                    className="td-n2"
-                                                  >
-                                                    {selectedMetalColor.value}{" "}
-                                                    {item.ring?.name}
-                                                    <div className="ring-size">
-                                                      <span>Ring Size : </span>{" "}
-                                                      <span>
-                                                        {item?.ring_size}
-                                                      </span>
-                                                    </div>
-                                                  </Link>
-                                                </h2>
-                                              )}
-                                            </div>
-                                          </div>
-                                          <div className="cart-right-price">
-                                            <span
-                                              style={{ whiteSpace: "nowrap" }}
-                                              id="prodcut_price_17566554"
-                                            >
-                                              ${Math.round(item?.ring_price)}
-                                            </span>
-                                          </div>
-                                        </div>
-
-                                        <div className="ring-size-cart-checkout">
-                                          {item.diamond_id
-                                            ? item.diamond
-                                                ?.slice(0, 1)
-                                                .map((diamondItem) => {
-                                                  return (
-                                                    <>
-                                                      <div className="checkout-name-description">
-                                                        <div className="cart-middle-discription-text">
-                                                          <h2>
-                                                            <Link
-                                                              href="javascript:void(0);"
-                                                              className="td-n2"
-                                                            >
-                                                              {
-                                                                diamondItem?.size
-                                                              }{" "}
-                                                              Carat{" "}
-                                                              {
-                                                                diamondItem?.shape
-                                                              }{" "}
-                                                              Diamond{" "}
-                                                              {diamondItem?.cut}{" "}
-                                                              {diamondItem?.cut &&
-                                                                `${diamondItem?.cut} Cut,`}{" "}
-                                                              {
-                                                                diamondItem?.color
-                                                              }{" "}
-                                                              Color,{" "}
-                                                              {
-                                                                diamondItem?.clarity
-                                                              }{" "}
-                                                              Clarity
-                                                            </Link>
-                                                          </h2>
-                                                        </div>
-                                                        <div className="cart-right-price">
-                                                          <p>
-                                                            $
-                                                            {Math.round(
-                                                              diamondItem?.total_sales_price
-                                                            )}
-                                                          </p>
-                                                        </div>
-                                                      </div>
-                                                    </>
-                                                  );
-                                                })
-                                            : item.gemstone?.map(
-                                                (gemstoneItem) => {
-                                                  return (
-                                                    <>
-                                                      <div className="checkout-name-description">
-                                                        <div className="cart-middle-discription-text">
-                                                          <h2>
-                                                            <Link
-                                                              href="javascript:void(0);"
-                                                              className="td-n2"
-                                                            >
-                                                              {
-                                                                gemstoneItem?.short_title
-                                                              }
-                                                            </Link>
-                                                          </h2>
-                                                          <div className="cart-right-price">
-                                                            <p>
-                                                              $
-                                                              {Math.round(
-                                                                gemstoneItem?.total_sales_price
-                                                              )}
-                                                            </p>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                    </>
-                                                  );
-                                                }
-                                              )}
-                                        </div>
-                                      </div>
-                                    </>
-                                  ) : item.ring_id &&
-                                    item.diamond_id === null &&
-                                    item.gemstone_id === null ? (
-                                    <>
-                                      <div className="main-cart-inner">
-                                        <div className="cart-left-pic">
-                                          <ul className="">
-                                            <li
-                                              className={
-                                                item.active_color === white
-                                                  ? "active"
-                                                  : "displayed"
-                                              }
-                                            >
-                                              <img
-                                                width="auto"
-                                                height="auto"
-                                                onError={handleError}
-                                                src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
-                                                alt={item.ring?.name}
-                                                className="img-responsive center-block"
-                                              />
-                                            </li>
-                                            <li
-                                              className={
-                                                item.active_color === yellow
-                                                  ? "active"
-                                                  : "displayed"
-                                              }
-                                            >
-                                              <img
-                                                width="auto"
-                                                height="auto"
-                                                onError={handleError}
-                                                src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
-                                                alt={item.ring?.name}
-                                                className="img-responsive center-block"
-                                              />
-                                            </li>
-                                            <li
-                                              className={
-                                                item.active_color === rose
-                                                  ? "active"
-                                                  : "displayed"
-                                              }
-                                            >
-                                              <img
-                                                width="auto"
-                                                height="auto"
-                                                onError={handleError}
-                                                src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
-                                                alt={item.ring?.name}
-                                                className="img-responsive center-block"
-                                              />
-                                            </li>
-                                            <li
-                                              className={
-                                                item.active_color === platinum
-                                                  ? "active"
-                                                  : "displayed"
-                                              }
-                                            >
-                                              <img
-                                                width="auto"
-                                                height="auto"
-                                                onError={handleError}
-                                                src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
-                                                alt={item.ring?.name}
-                                                className="img-responsive center-block"
-                                              />
-                                            </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                      <div className="product-info-inner cart-middle-discription">
-                                        <div className="cart-middle-discription-text">
-                                          <span>{item.ring?.name}</span>
-                                        </div>
-                                        <div className="cart-right-price">
-                                          <p>${Math.round(item.ring_price)}</p>
-                                        </div>
-                                      </div>
-                                    </>
-                                  ) : (
-                                    item.diamond?.map((diamondItem) => {
-                                      return (
-                                        <>
-                                          <div className="main-cart-inner">
-                                            <div className="cart-left-pic">
-                                              <img
-                                                width="auto"
-                                                height="auto"
-                                                onError={handleError}
-                                                src={diamondItem?.image_url}
-                                                alt={diamondItem.name}
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="product-info-inner cart-middle-discription">
-                                            <div className="cart-middle-discription-text">
-                                              <span>
-                                                {diamondItem?.size} Carat{" "}
-                                                {diamondItem?.shape} Diamond
-                                              </span>
-                                            </div>
-                                            <div className="cart-right-price">
-                                              <p>
-                                                $
-                                                {Math.round(
-                                                  diamondItem?.total_sales_price
-                                                )}
-                                              </p>
-                                            </div>
-                                          </div>
-                                        </>
-                                      );
-                                    })
-                                  )}
-                                </div>
-                              ) : null}
-                            </>
-                          );
-                        })
-                      )}
-                    </div>
-                  ) : (
-                    <div className="checkout-right-scroll">
-                      <h3>Order Summary</h3>
-                      {cartData?.map((item) => {
-                        const selectedMetalColor = metalColor.find(
-                          (colorItem) => colorItem.value === item.ring_color
-                        );
-                        return (
-                          <>
-                            <div className="order-summary">
-                              {item.gemstoneSingle || item.item ? (
-                                <>
-                                  <div className="main-cart-inner">
-                                    <div className="cart-left-pic">
-                                      <img
-                                        width="auto"
-                                        height="auto"
-                                        onError={handleError}
-                                        src={
-                                          item.gemstoneSingle?.image_url
-                                            ? item.gemstoneSingle?.image_url
-                                            : item.item?.image_url
-                                        }
-                                        alt={
-                                          item.gemstoneSingle?.shape
-                                            ? item.gemstoneSingle?.shape
-                                            : item.item?.name
-                                        }
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="product-info-inner cart-middle-discription">
-                                    <div className="cart-middle-discription-text">
-                                      <span>
-                                        {item.gemstoneSingle?.short_title
-                                          ? item.gemstoneSingle?.short_title
-                                          : item.item?.short_title}
-                                      </span>
-                                    </div>
-                                    <div className="cart-right-price">
-                                      <p>
-                                        $
-                                        {Math.round(
-                                          item.gemstoneSingle?.total_sales_price
-                                            ? item.gemstoneSingle
-                                                ?.total_sales_price
-                                            : item.item?.total_sales_price
-                                        )}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </>
-                              ) : item.ring_data ? (
-                                <>
-                                  <div className="main-cart-inner">
-                                    <div className="cart-left-pic">
-                                      <Link href="javascript:void(0);">
-                                        <ul className="product-list">
-                                          <li
-                                            className={
-                                              item.ring_color === white
-                                                ? "active"
-                                                : "displayed"
-                                            }
-                                          >
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
-                                              alt={item.ring_data?.name}
-                                              className="img-responsive center-block"
-                                            />
-                                          </li>
-                                          <li
-                                            className={
-                                              item.ring_color === yellow
-                                                ? "active"
-                                                : "displayed"
-                                            }
-                                          >
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt.jpg`}
-                                              alt={item.ring_data?.name}
-                                              className="img-responsive center-block"
-                                            />
-                                          </li>
-                                          <li
-                                            className={
-                                              item.ring_color === rose
-                                                ? "active"
-                                                : "displayed"
-                                            }
-                                          >
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt1.jpg`}
-                                              alt={item.ring_data?.name}
-                                              className="img-responsive center-block"
-                                            />
-                                          </li>
-                                          <li
-                                            className={
-                                              item.ring_color === platinum
-                                                ? "active"
-                                                : "displayed"
-                                            }
-                                          >
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
-                                              alt={item.ring_data?.name}
-                                              className="img-responsive center-block"
-                                            />
-                                          </li>
-                                        </ul>
-                                      </Link>
-
-                                      {item.diamondItem ? (
-                                        <div className="cart-left-pic">
-                                          <img
-                                            width="auto"
-                                            height="auto"
-                                            onError={handleError}
-                                            src={item.diamondItem?.image_url}
-                                            alt={item.diamondItem?.name}
-                                          />
-                                        </div>
-                                      ) : (
-                                        <div className="cart-left-pic">
-                                          <img
-                                            width="auto"
-                                            height="auto"
-                                            onError={handleError}
-                                            src={item.gemstone?.image_url}
-                                            alt={item.gemstone?.shape}
-                                          />
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className="product-info cart-middle-discription">
-                                    <div className="product-info-inner">
-                                      <div className="cart-middle-discription-text">
-                                        <div>
-                                          {selectedMetalColor && (
-                                            <h2>
-                                              <Link
-                                                href="javascript:void(0);"
-                                                className="td-n2"
-                                              >
-                                                {selectedMetalColor.value}{" "}
-                                                {item.ring_data?.name} (1/2{" "}
-                                                <span
-                                                  style={{
-                                                    textTransform: "lowercase",
-                                                  }}
-                                                >
-                                                  ct. tw.
-                                                </span>
-                                                )
-                                              </Link>
-                                            </h2>
-                                          )}
-                                        </div>
-                                      </div>
-                                      <div className="cart-right-price">
-                                        <span
-                                          style={{ whiteSpace: "nowrap" }}
-                                          id="prodcut_price_17566554"
-                                        >
-                                          ${Math.round(item.ringPrice)}
-                                        </span>
-                                      </div>
-                                    </div>
-
-                                    <div className="ring-size-cart-checkout">
-                                      {item.diamondItem ? (
-                                        <>
-                                          {" "}
-                                          <div className="checkout-name-description">
-                                            <div className="checkout-left-des">
-                                              <p>
-                                                <Link href="javascript:void(0);">
-                                                  {item.diamondItem?.size} Carat{" "}
-                                                  {item.diamondItem?.shape}{" "}
-                                                  Diamond
-                                                </Link>
-                                              </p>
-                                              <p className="small-text">
-                                                {item.diamondItem?.cut &&
-                                                  `${item.diamondItem?.cut}Cut,`}{" "}
-                                                {item.diamondItem?.color} Color,{" "}
-                                                {item.diamondItem?.clarity}{" "}
-                                                Clarity
-                                              </p>
-                                              <p className="small-text">
-                                                5587475AB
-                                              </p>
-                                            </div>
-                                            <div className="cart-right-price">
-                                              <p>
-                                                $
-                                                {Math.round(
-                                                  item.diamondItem
-                                                    ?.total_sales_price
-                                                )}
-                                              </p>
-                                            </div>
-                                          </div>
-                                        </>
-                                      ) : (
-                                        <div className="checkout-name-description">
-                                          <div className="cart-left-pic">
-                                            <p>
-                                              <Link href="javascript:void(0);">
-                                                {item.gemstone?.short_title}
-                                              </Link>
-                                            </p>
-                                          </div>
-                                          <div className="checkout-right-price">
-                                            <p>
-                                              $
-                                              {Math.round(
-                                                item.gemstone?.total_sales_price
-                                              )}
-                                            </p>
-                                          </div>
-                                        </div>
-                                      )}
-                                      {item.diamond ? (
-                                        <div className="available-list">
-                                          <p>
-                                            Only {item.diamondItem?.available}{" "}
-                                            Available
-                                          </p>
-                                        </div>
-                                      ) : null}
-                                    </div>
-                                  </div>
-                                </>
-                              ) : (
-                                <>
-                                  <div className="main-cart-inner">
-                                    <div className="cart-left-pic">
-                                      <img
-                                        width="auto"
-                                        height="auto"
-                                        onError={handleError}
-                                        src={item.diamonds?.image_url}
-                                        alt={item.diamonds?.name}
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="product-info-inner cart-middle-discription">
-                                    <div className="cart-middle-discription-text">
-                                      <span>
-                                        {item.diamonds?.size} Carat{" "}
-                                        {item.diamonds?.shape} Diamond
-                                      </span>
-                                    </div>
-                                    <div className="cart-right-price">
-                                      <p>
-                                        $
-                                        {Math.round(
-                                          item.diamonds?.total_sales_price
-                                        )}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </>
-                              )}
-                            </div>
-                          </>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* {cartData.slice(0, 1).map} */}
-                  <div className="table-count">
-                    <div className="row">
-                      <div className="subtotal">Subtotal</div>
-                      <div className="price-right">
-                        ${Math.round(calculateTotalPriceLogin())}
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="subtotal">Shipping Fees.</div>
-                      <div className="price-right">${shipValue}</div>
-                    </div>
-                    <div className="row">
-                      <div className="subtotals">
-                        <Link href="javascript:void(0);">
-                          Sales TAX est {totalPrice > 0 && `(6.625%)`}
-                        </Link>
-                      </div>
-                      <div className="price-right">${totalPrice}</div>
-                    </div>
-
-                    <div className="row total">
-                      <div className="subtotal">
-                        <b>Total</b>
-                      </div>
-                      <div className="price-right">
-                        <b>
-                          $
-                          {totalPrice > 0
-                            ? Math.round(textPrice)
-                            : Math.round(shipAddedPrice)}
-                        </b>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        router.push("/cart")
-      )}
+    <h1>paymnet page</h1>
     </>
+    // <>
+    //   {cartDetails.length > 0 && addressId? (
+    //     <>
+    //       <div className="payment-form">
+    //         <div className="container">
+    //           <div className="checkout">
+    //             <div className="checkout-left">
+    //               <form>
+    //                 <div className="form-control">
+    //                   <label htmlFor="cardNumber">Card Number</label>
+    //                   <input
+    //                     className="zipcode-number"
+    //                     type="tel"
+    //                     pattern="\d*"
+    //                     min="0"
+    //                     max="9999999999"
+    //                     maxLength="16"
+    //                     name="cardNumber"
+    //                     id="cardNumber"
+    //                     value={cardNum}
+    //                     onChange={handleChange_cardNumber}
+    //                   />
+    //                   {cardNumError && (
+    //                     <div className="error">{cardNumError}</div>
+    //                   )}
+    //                 </div>
+    //                 <div className="form-control">
+    //                   <label htmlFor="expiryDate">Expiry Date (MM/YY)</label>
+    //                   <input
+    //                     type="text"
+    //                     id="inputExpDate"
+    //                     placeholder="MM / YY"
+    //                     maxLength={9}
+    //                     value={expiryDate}
+    //                     onChange={handleChange_exp_date}
+    //                   />
+    //                   {error && <div className="error">{error}</div>}
+    //                 </div>
+    //                 <div className="form-control">
+    //                   <label htmlFor="cvv">CVV</label>
+    //                   <input
+    //                     className="zipcode-number"
+    //                     type="tel"
+    //                     pattern="\d*"
+    //                     min="0"
+    //                     max="9999"
+    //                     maxLength="4"
+    //                     name="cvv"
+    //                     id="cvv"
+    //                     value={cvv}
+    //                     onChange={handleChange_cvv}
+    //                   />
+    //                   {cvvError && <div className="error">{cvvError}</div>}
+    //                 </div>
+    //                 <div className="form-control">
+    //                   <label htmlFor="zip">ZIP Code</label>
+    //                   <input
+    //                     className="zipcode-number"
+    //                     type="text"
+    //                     pattern="\d*"
+    //                     min="0"
+    //                     max="9999999999"
+    //                     maxLength="10"
+    //                     name="zipCode"
+    //                     id="zipCode"
+    //                     value={zipCode}
+    //                     onChange={handleChange_zip_code}
+    //                   />
+    //                   {zipCodeError && (
+    //                     <div className="error">{zipCodeError}</div>
+    //                   )}
+    //                 </div>
+    //                 <div className="Return-to-Shipping">
+    //                   {/* <div className="move-cart">
+    //               <Link href="/check_out">
+    //                 <MdKeyboardArrowLeft />
+    //                 Return To Shopping Bag
+    //               </Link>
+    //             </div> */}
+    //                   <div className="continue-payment">
+    //                     <Link
+    //                       href="javascript:void(0)"
+    //                       // href={orderId!=undefined &&`/success?order_id=${orderId}`}
+    //                       // disabled={loader}
+    //                       onClick={(event) => {
+    //                         if (
+    //                           document.getElementById("cardNumber").value ===
+    //                             "" ||
+    //                           document.getElementById("inputExpDate").value ===
+    //                             "" ||
+    //                           document.getElementById("cvv").value === "" ||
+    //                           document.getElementById("zipCode").value === ""
+    //                         ) {
+    //                           handleSubmit();
+    //                         } else {
+    //                           handleOrderProduct();
+    //                         }
+    //                       }}
+    //                     >
+    //                       Continue To Order
+    //                     </Link>
+    //                   </div>
+    //                 </div>
+    //               </form>
+    //             </div>
+    //             <div className="checkout-right">
+    //               {user_id ? (
+    //                 <div className="checkout-right-scroll">
+    //                   <h3>Order Summary</h3>
+    //                   {loader ? (
+    //                     <LoaderSpinner />
+    //                   ) : (
+    //                     cartDetails?.map((item) => {
+    //                       const selectedMetalColor = metalColor.find(
+    //                         (colorItem) =>
+    //                           colorItem?.slug === item?.active_color
+    //                       );
+    //                       return (
+    //                         <>
+    //                           {cartDetails?.length > 0 ? (
+    //                             <div className="order-summary">
+    //                               {item.gemstone_id &&
+    //                               item.ring?.id == null &&
+    //                               item?.diamond_id == null ? (
+    //                                 item.gemstone?.map((gemstoneItem) => {
+    //                                   return (
+    //                                     <>
+    //                                       <div className="main-cart-inner">
+    //                                         <div className="cart-left-pic">
+    //                                           <img
+    //                                             width="auto"
+    //                                             height="auto"
+    //                                             onError={handleError}
+    //                                             src={gemstoneItem?.image_url}
+    //                                             alt={gemstoneItem?.shape}
+    //                                           />
+    //                                         </div>
+    //                                       </div>
+    //                                       <div className="product-info-inner cart-middle-discription">
+    //                                         <div className="cart-middle-discription-text">
+    //                                           <span>
+    //                                             {gemstoneItem?.short_title}
+    //                                           </span>
+    //                                         </div>
+
+    //                                         <div className="cart-right-price">
+    //                                           <p>
+    //                                             $
+    //                                             {Math.round(
+    //                                               gemstoneItem?.total_sales_price
+    //                                             )}
+    //                                           </p>
+    //                                         </div>
+    //                                       </div>
+    //                                     </>
+    //                                   );
+    //                                 })
+    //                               ) : item.ring?.id &&
+    //                                 (item?.diamond_id || item?.gemstone_id) ? (
+    //                                 <>
+    //                                   <div className="main-cart-inner">
+    //                                     <div className="cart-left-pic">
+    //                                       <Link href="javascript:void(0);">
+    //                                         <ul className="product-list">
+    //                                           <li
+    //                                             className={
+    //                                               item.active_color === white
+    //                                                 ? "active"
+    //                                                 : "displayed"
+    //                                             }
+    //                                           >
+    //                                             <img
+    //                                               width="auto"
+    //                                               height="auto"
+    //                                               onError={handleError}
+    //                                               src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.jpg`}
+    //                                               alt={item.ring?.name}
+    //                                               className="img-responsive center-block"
+    //                                             />
+    //                                           </li>
+    //                                           <li
+    //                                             className={
+    //                                               item.active_color === yellow
+    //                                                 ? "active"
+    //                                                 : "displayed"
+    //                                             }
+    //                                           >
+    //                                             <img
+    //                                               width="auto"
+    //                                               height="auto"
+    //                                               onError={handleError}
+    //                                               src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.alt.jpg`}
+    //                                               alt={item.ring?.name}
+    //                                               className="img-responsive center-block"
+    //                                             />
+    //                                           </li>
+    //                                           <li
+    //                                             className={
+    //                                               item.active_color === rose
+    //                                                 ? "active"
+    //                                                 : "displayed"
+    //                                             }
+    //                                           >
+    //                                             <img
+    //                                               width="auto"
+    //                                               height="auto"
+    //                                               onError={handleError}
+    //                                               src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.alt1.jpg`}
+    //                                               alt={item.ring?.name}
+    //                                               className="img-responsive center-block"
+    //                                             />
+    //                                           </li>
+    //                                           <li
+    //                                             className={
+    //                                               item.active_color === platinum
+    //                                                 ? "active"
+    //                                                 : "displayed"
+    //                                             }
+    //                                           >
+    //                                             <img
+    //                                               width="auto"
+    //                                               height="auto"
+    //                                               onError={handleError}
+    //                                               src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.jpg`}
+    //                                               alt={item.ring?.name}
+    //                                               className="img-responsive center-block"
+    //                                             />
+    //                                           </li>
+    //                                         </ul>
+    //                                       </Link>
+    //                                       {item.diamond_id
+    //                                         ? item.diamond
+    //                                             ?.slice(0, 1)
+    //                                             .map((diamondItem) => {
+    //                                               return (
+    //                                                 <>
+    //                                                   <div className="cart-left-pic">
+    //                                                     <img
+    //                                                       width="auto"
+    //                                                       height="auto"
+    //                                                       onError={handleError}
+    //                                                       src={
+    //                                                         diamondItem?.image_url
+    //                                                       }
+    //                                                       alt={
+    //                                                         diamondItem?.name
+    //                                                       }
+    //                                                     />
+    //                                                   </div>
+    //                                                 </>
+    //                                               );
+    //                                             })
+    //                                         : item.gemstone?.map(
+    //                                             (gemstoneItem) => {
+    //                                               return (
+    //                                                 <>
+    //                                                   <div className="cart-left-pic">
+    //                                                     <img
+    //                                                       width="auto"
+    //                                                       height="auto"
+    //                                                       onError={handleError}
+    //                                                       src={
+    //                                                         gemstoneItem?.image_url
+    //                                                       }
+    //                                                       alt={
+    //                                                         gemstoneItem?.shape
+    //                                                       }
+    //                                                     />
+    //                                                   </div>
+    //                                                 </>
+    //                                               );
+    //                                             }
+    //                                           )}
+    //                                     </div>
+    //                                   </div>
+    //                                   <div className="product-info cart-middle-discription">
+    //                                     <div className="product-info-inner">
+    //                                       <div className="cart-middle-discription-text">
+    //                                         <div>
+    //                                           {selectedMetalColor && (
+    //                                             <h2>
+    //                                               <Link
+    //                                                 href="javascript:void(0);"
+    //                                                 className="td-n2"
+    //                                               >
+    //                                                 {selectedMetalColor.value}{" "}
+    //                                                 {item.ring?.name}
+    //                                                 <div className="ring-size">
+    //                                                   <span>Ring Size : </span>{" "}
+    //                                                   <span>
+    //                                                     {item?.ring_size}
+    //                                                   </span>
+    //                                                 </div>
+    //                                               </Link>
+    //                                             </h2>
+    //                                           )}
+    //                                         </div>
+    //                                       </div>
+    //                                       <div className="cart-right-price">
+    //                                         <span
+    //                                           style={{ whiteSpace: "nowrap" }}
+    //                                           id="prodcut_price_17566554"
+    //                                         >
+    //                                           ${Math.round(item?.ring_price)}
+    //                                         </span>
+    //                                       </div>
+    //                                     </div>
+
+    //                                     <div className="ring-size-cart-checkout">
+    //                                       {item.diamond_id
+    //                                         ? item.diamond
+    //                                             ?.slice(0, 1)
+    //                                             .map((diamondItem) => {
+    //                                               return (
+    //                                                 <>
+    //                                                   <div className="checkout-name-description">
+    //                                                     <div className="cart-middle-discription-text">
+    //                                                       <h2>
+    //                                                         <Link
+    //                                                           href="javascript:void(0);"
+    //                                                           className="td-n2"
+    //                                                         >
+    //                                                           {
+    //                                                             diamondItem?.size
+    //                                                           }{" "}
+    //                                                           Carat{" "}
+    //                                                           {
+    //                                                             diamondItem?.shape
+    //                                                           }{" "}
+    //                                                           Diamond{" "}
+    //                                                           {diamondItem?.cut}{" "}
+    //                                                           {diamondItem?.cut &&
+    //                                                             `${diamondItem?.cut} Cut,`}{" "}
+    //                                                           {
+    //                                                             diamondItem?.color
+    //                                                           }{" "}
+    //                                                           Color,{" "}
+    //                                                           {
+    //                                                             diamondItem?.clarity
+    //                                                           }{" "}
+    //                                                           Clarity
+    //                                                         </Link>
+    //                                                       </h2>
+    //                                                     </div>
+    //                                                     <div className="cart-right-price">
+    //                                                       <p>
+    //                                                         $
+    //                                                         {Math.round(
+    //                                                           diamondItem?.total_sales_price
+    //                                                         )}
+    //                                                       </p>
+    //                                                     </div>
+    //                                                   </div>
+    //                                                 </>
+    //                                               );
+    //                                             })
+    //                                         : item.gemstone?.map(
+    //                                             (gemstoneItem) => {
+    //                                               return (
+    //                                                 <>
+    //                                                   <div className="checkout-name-description">
+    //                                                     <div className="cart-middle-discription-text">
+    //                                                       <h2>
+    //                                                         <Link
+    //                                                           href="javascript:void(0);"
+    //                                                           className="td-n2"
+    //                                                         >
+    //                                                           {
+    //                                                             gemstoneItem?.short_title
+    //                                                           }
+    //                                                         </Link>
+    //                                                       </h2>
+    //                                                       <div className="cart-right-price">
+    //                                                         <p>
+    //                                                           $
+    //                                                           {Math.round(
+    //                                                             gemstoneItem?.total_sales_price
+    //                                                           )}
+    //                                                         </p>
+    //                                                       </div>
+    //                                                     </div>
+    //                                                   </div>
+    //                                                 </>
+    //                                               );
+    //                                             }
+    //                                           )}
+    //                                     </div>
+    //                                   </div>
+    //                                 </>
+    //                               ) : item.ring_id &&
+    //                                 item.diamond_id === null &&
+    //                                 item.gemstone_id === null ? (
+    //                                 <>
+    //                                   <div className="main-cart-inner">
+    //                                     <div className="cart-left-pic">
+    //                                       <ul className="">
+    //                                         <li
+    //                                           className={
+    //                                             item.active_color === white
+    //                                               ? "active"
+    //                                               : "displayed"
+    //                                           }
+    //                                         >
+    //                                           <img
+    //                                             width="auto"
+    //                                             height="auto"
+    //                                             onError={handleError}
+    //                                             src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+    //                                             alt={item.ring?.name}
+    //                                             className="img-responsive center-block"
+    //                                           />
+    //                                         </li>
+    //                                         <li
+    //                                           className={
+    //                                             item.active_color === yellow
+    //                                               ? "active"
+    //                                               : "displayed"
+    //                                           }
+    //                                         >
+    //                                           <img
+    //                                             width="auto"
+    //                                             height="auto"
+    //                                             onError={handleError}
+    //                                             src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+    //                                             alt={item.ring?.name}
+    //                                             className="img-responsive center-block"
+    //                                           />
+    //                                         </li>
+    //                                         <li
+    //                                           className={
+    //                                             item.active_color === rose
+    //                                               ? "active"
+    //                                               : "displayed"
+    //                                           }
+    //                                         >
+    //                                           <img
+    //                                             width="auto"
+    //                                             height="auto"
+    //                                             onError={handleError}
+    //                                             src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+    //                                             alt={item.ring?.name}
+    //                                             className="img-responsive center-block"
+    //                                           />
+    //                                         </li>
+    //                                         <li
+    //                                           className={
+    //                                             item.active_color === platinum
+    //                                               ? "active"
+    //                                               : "displayed"
+    //                                           }
+    //                                         >
+    //                                           <img
+    //                                             width="auto"
+    //                                             height="auto"
+    //                                             onError={handleError}
+    //                                             src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+    //                                             alt={item.ring?.name}
+    //                                             className="img-responsive center-block"
+    //                                           />
+    //                                         </li>
+    //                                       </ul>
+    //                                     </div>
+    //                                   </div>
+    //                                   <div className="product-info-inner cart-middle-discription">
+    //                                     <div className="cart-middle-discription-text">
+    //                                       <span>{item.ring?.name}</span>
+    //                                     </div>
+    //                                     <div className="cart-right-price">
+    //                                       <p>${Math.round(item.ring_price)}</p>
+    //                                     </div>
+    //                                   </div>
+    //                                 </>
+    //                               ) : (
+    //                                 item.diamond?.map((diamondItem) => {
+    //                                   return (
+    //                                     <>
+    //                                       <div className="main-cart-inner">
+    //                                         <div className="cart-left-pic">
+    //                                           <img
+    //                                             width="auto"
+    //                                             height="auto"
+    //                                             onError={handleError}
+    //                                             src={diamondItem?.image_url}
+    //                                             alt={diamondItem.name}
+    //                                           />
+    //                                         </div>
+    //                                       </div>
+    //                                       <div className="product-info-inner cart-middle-discription">
+    //                                         <div className="cart-middle-discription-text">
+    //                                           <span>
+    //                                             {diamondItem?.size} Carat{" "}
+    //                                             {diamondItem?.shape} Diamond
+    //                                           </span>
+    //                                         </div>
+    //                                         <div className="cart-right-price">
+    //                                           <p>
+    //                                             $
+    //                                             {Math.round(
+    //                                               diamondItem?.total_sales_price
+    //                                             )}
+    //                                           </p>
+    //                                         </div>
+    //                                       </div>
+    //                                     </>
+    //                                   );
+    //                                 })
+    //                               )}
+    //                             </div>
+    //                           ) : null}
+    //                         </>
+    //                       );
+    //                     })
+    //                   )}
+    //                 </div>
+    //               ) : (
+    //                 <div className="checkout-right-scroll">
+    //                   <h3>Order Summary</h3>
+    //                   {cartData?.map((item) => {
+    //                     const selectedMetalColor = metalColor.find(
+    //                       (colorItem) => colorItem.value === item.ring_color
+    //                     );
+    //                     return (
+    //                       <>
+    //                         <div className="order-summary">
+    //                           {item.gemstoneSingle || item.item ? (
+    //                             <>
+    //                               <div className="main-cart-inner">
+    //                                 <div className="cart-left-pic">
+    //                                   <img
+    //                                     width="auto"
+    //                                     height="auto"
+    //                                     onError={handleError}
+    //                                     src={
+    //                                       item.gemstoneSingle?.image_url
+    //                                         ? item.gemstoneSingle?.image_url
+    //                                         : item.item?.image_url
+    //                                     }
+    //                                     alt={
+    //                                       item.gemstoneSingle?.shape
+    //                                         ? item.gemstoneSingle?.shape
+    //                                         : item.item?.name
+    //                                     }
+    //                                   />
+    //                                 </div>
+    //                               </div>
+    //                               <div className="product-info-inner cart-middle-discription">
+    //                                 <div className="cart-middle-discription-text">
+    //                                   <span>
+    //                                     {item.gemstoneSingle?.short_title
+    //                                       ? item.gemstoneSingle?.short_title
+    //                                       : item.item?.short_title}
+    //                                   </span>
+    //                                 </div>
+    //                                 <div className="cart-right-price">
+    //                                   <p>
+    //                                     $
+    //                                     {Math.round(
+    //                                       item.gemstoneSingle?.total_sales_price
+    //                                         ? item.gemstoneSingle
+    //                                             ?.total_sales_price
+    //                                         : item.item?.total_sales_price
+    //                                     )}
+    //                                   </p>
+    //                                 </div>
+    //                               </div>
+    //                             </>
+    //                           ) : item.ring_data ? (
+    //                             <>
+    //                               <div className="main-cart-inner">
+    //                                 <div className="cart-left-pic">
+    //                                   <Link href="javascript:void(0);">
+    //                                     <ul className="product-list">
+    //                                       <li
+    //                                         className={
+    //                                           item.ring_color === white
+    //                                             ? "active"
+    //                                             : "displayed"
+    //                                         }
+    //                                       >
+    //                                         <img
+    //                                           width="auto"
+    //                                           height="auto"
+    //                                           onError={handleError}
+    //                                           src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
+    //                                           alt={item.ring_data?.name}
+    //                                           className="img-responsive center-block"
+    //                                         />
+    //                                       </li>
+    //                                       <li
+    //                                         className={
+    //                                           item.ring_color === yellow
+    //                                             ? "active"
+    //                                             : "displayed"
+    //                                         }
+    //                                       >
+    //                                         <img
+    //                                           width="auto"
+    //                                           height="auto"
+    //                                           onError={handleError}
+    //                                           src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt.jpg`}
+    //                                           alt={item.ring_data?.name}
+    //                                           className="img-responsive center-block"
+    //                                         />
+    //                                       </li>
+    //                                       <li
+    //                                         className={
+    //                                           item.ring_color === rose
+    //                                             ? "active"
+    //                                             : "displayed"
+    //                                         }
+    //                                       >
+    //                                         <img
+    //                                           width="auto"
+    //                                           height="auto"
+    //                                           onError={handleError}
+    //                                           src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt1.jpg`}
+    //                                           alt={item.ring_data?.name}
+    //                                           className="img-responsive center-block"
+    //                                         />
+    //                                       </li>
+    //                                       <li
+    //                                         className={
+    //                                           item.ring_color === platinum
+    //                                             ? "active"
+    //                                             : "displayed"
+    //                                         }
+    //                                       >
+    //                                         <img
+    //                                           width="auto"
+    //                                           height="auto"
+    //                                           onError={handleError}
+    //                                           src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
+    //                                           alt={item.ring_data?.name}
+    //                                           className="img-responsive center-block"
+    //                                         />
+    //                                       </li>
+    //                                     </ul>
+    //                                   </Link>
+
+    //                                   {item.diamondItem ? (
+    //                                     <div className="cart-left-pic">
+    //                                       <img
+    //                                         width="auto"
+    //                                         height="auto"
+    //                                         onError={handleError}
+    //                                         src={item.diamondItem?.image_url}
+    //                                         alt={item.diamondItem?.name}
+    //                                       />
+    //                                     </div>
+    //                                   ) : (
+    //                                     <div className="cart-left-pic">
+    //                                       <img
+    //                                         width="auto"
+    //                                         height="auto"
+    //                                         onError={handleError}
+    //                                         src={item.gemstone?.image_url}
+    //                                         alt={item.gemstone?.shape}
+    //                                       />
+    //                                     </div>
+    //                                   )}
+    //                                 </div>
+    //                               </div>
+    //                               <div className="product-info cart-middle-discription">
+    //                                 <div className="product-info-inner">
+    //                                   <div className="cart-middle-discription-text">
+    //                                     <div>
+    //                                       {selectedMetalColor && (
+    //                                         <h2>
+    //                                           <Link
+    //                                             href="javascript:void(0);"
+    //                                             className="td-n2"
+    //                                           >
+    //                                             {selectedMetalColor.value}{" "}
+    //                                             {item.ring_data?.name} (1/2{" "}
+    //                                             <span
+    //                                               style={{
+    //                                                 textTransform: "lowercase",
+    //                                               }}
+    //                                             >
+    //                                               ct. tw.
+    //                                             </span>
+    //                                             )
+    //                                           </Link>
+    //                                         </h2>
+    //                                       )}
+    //                                     </div>
+    //                                   </div>
+    //                                   <div className="cart-right-price">
+    //                                     <span
+    //                                       style={{ whiteSpace: "nowrap" }}
+    //                                       id="prodcut_price_17566554"
+    //                                     >
+    //                                       ${Math.round(item.ringPrice)}
+    //                                     </span>
+    //                                   </div>
+    //                                 </div>
+
+    //                                 <div className="ring-size-cart-checkout">
+    //                                   {item.diamondItem ? (
+    //                                     <>
+    //                                       {" "}
+    //                                       <div className="checkout-name-description">
+    //                                         <div className="checkout-left-des">
+    //                                           <p>
+    //                                             <Link href="javascript:void(0);">
+    //                                               {item.diamondItem?.size} Carat{" "}
+    //                                               {item.diamondItem?.shape}{" "}
+    //                                               Diamond
+    //                                             </Link>
+    //                                           </p>
+    //                                           <p className="small-text">
+    //                                             {item.diamondItem?.cut &&
+    //                                               `${item.diamondItem?.cut}Cut,`}{" "}
+    //                                             {item.diamondItem?.color} Color,{" "}
+    //                                             {item.diamondItem?.clarity}{" "}
+    //                                             Clarity
+    //                                           </p>
+    //                                           <p className="small-text">
+    //                                             5587475AB
+    //                                           </p>
+    //                                         </div>
+    //                                         <div className="cart-right-price">
+    //                                           <p>
+    //                                             $
+    //                                             {Math.round(
+    //                                               item.diamondItem
+    //                                                 ?.total_sales_price
+    //                                             )}
+    //                                           </p>
+    //                                         </div>
+    //                                       </div>
+    //                                     </>
+    //                                   ) : (
+    //                                     <div className="checkout-name-description">
+    //                                       <div className="cart-left-pic">
+    //                                         <p>
+    //                                           <Link href="javascript:void(0);">
+    //                                             {item.gemstone?.short_title}
+    //                                           </Link>
+    //                                         </p>
+    //                                       </div>
+    //                                       <div className="checkout-right-price">
+    //                                         <p>
+    //                                           $
+    //                                           {Math.round(
+    //                                             item.gemstone?.total_sales_price
+    //                                           )}
+    //                                         </p>
+    //                                       </div>
+    //                                     </div>
+    //                                   )}
+    //                                   {item.diamond ? (
+    //                                     <div className="available-list">
+    //                                       <p>
+    //                                         Only {item.diamondItem?.available}{" "}
+    //                                         Available
+    //                                       </p>
+    //                                     </div>
+    //                                   ) : null}
+    //                                 </div>
+    //                               </div>
+    //                             </>
+    //                           ) : (
+    //                             <>
+    //                               <div className="main-cart-inner">
+    //                                 <div className="cart-left-pic">
+    //                                   <img
+    //                                     width="auto"
+    //                                     height="auto"
+    //                                     onError={handleError}
+    //                                     src={item.diamonds?.image_url}
+    //                                     alt={item.diamonds?.name}
+    //                                   />
+    //                                 </div>
+    //                               </div>
+    //                               <div className="product-info-inner cart-middle-discription">
+    //                                 <div className="cart-middle-discription-text">
+    //                                   <span>
+    //                                     {item.diamonds?.size} Carat{" "}
+    //                                     {item.diamonds?.shape} Diamond
+    //                                   </span>
+    //                                 </div>
+    //                                 <div className="cart-right-price">
+    //                                   <p>
+    //                                     $
+    //                                     {Math.round(
+    //                                       item.diamonds?.total_sales_price
+    //                                     )}
+    //                                   </p>
+    //                                 </div>
+    //                               </div>
+    //                             </>
+    //                           )}
+    //                         </div>
+    //                       </>
+    //                     );
+    //                   })}
+    //                 </div>
+    //               )}
+
+    //               {/* {cartData.slice(0, 1).map} */}
+    //               <div className="table-count">
+    //                 <div className="row">
+    //                   <div className="subtotal">Subtotal</div>
+    //                   <div className="price-right">
+    //                     ${Math.round(calculateTotalPriceLogin())}
+    //                   </div>
+    //                 </div>
+    //                 <div className="row">
+    //                   <div className="subtotal">Shipping Fees.</div>
+    //                   <div className="price-right">${shipValue}</div>
+    //                 </div>
+    //                 <div className="row">
+    //                   <div className="subtotals">
+    //                     <Link href="javascript:void(0);">
+    //                       Sales TAX est {totalPrice > 0 && `(6.625%)`}
+    //                     </Link>
+    //                   </div>
+    //                   <div className="price-right">${totalPrice}</div>
+    //                 </div>
+
+    //                 <div className="row total">
+    //                   <div className="subtotal">
+    //                     <b>Total</b>
+    //                   </div>
+    //                   <div className="price-right">
+    //                     <b>
+    //                       $
+    //                       {totalPrice > 0
+    //                         ? Math.round(textPrice)
+    //                         : Math.round(shipAddedPrice)}
+    //                     </b>
+    //                   </div>
+    //                 </div>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </>
+    //   ) : (
+    //     router.push("/cart")
+    //   )}
+    // </>
   );
 };
 export default PaymentForm;
