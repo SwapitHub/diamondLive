@@ -203,7 +203,7 @@ const fetchDiamond = async () => {
         throw new Error("Network response was not ok");
       }
       weddingCollection = await response.json();
-      engagementRings.data.description = purify.sanitize(engagementRings.data?.description);
+      weddingCollection.data.description = purify.sanitize(weddingCollection.data?.description);
 
     } catch (error) {
       console.error("Error fetching data:", error);
