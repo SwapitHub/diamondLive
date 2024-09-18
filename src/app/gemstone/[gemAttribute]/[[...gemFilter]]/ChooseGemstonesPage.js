@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoMdHeart } from "react-icons/io";
@@ -24,7 +24,7 @@ import {
 } from "../../../../../store/actions/wishlistAction";
 
 export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
-  const gemSlug = new URLSearchParams(location.search);
+  const gemSlug = useSearchParams();
   let gemColor;
   let gemStyle;
   let gemShape;
@@ -41,12 +41,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
 
   const gemstoneColor = gemSlug.get("gemstones");
 
-  // const pathSegmentsMeta = location.pathname
-  //   .split("/")
-  //   .filter((segment) => segment);
-  // const mainCategory = pathSegmentsMeta[0] || "";
-  // const subCategory = pathSegmentsMeta[1] || "";
-  // const currentUrl = window.location.href;
+
 
   const history = useRouter();
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
@@ -142,7 +137,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
       updatedShapeDataSlider = shapeDataSlider.filter(
         (item) => item !== styleItem
       );
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = useSearchParams();
       searchParams.delete("shape");
       const newSearchString = searchParams.toString();
       const newURL = `${"/gemstones/start-with-a-gemstone"}${
@@ -192,7 +187,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
       updatedStyleDataSlider = menuStyleNames.filter(
         (item) => item !== styleItem
       );
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = useSearchParams();
       searchParams.delete("style");
       const newSearchString = searchParams.toString();
       const newURL = `${"/gemstones/start-with-a-gemstone"}${
@@ -226,7 +221,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
 
     if (colorDataSlider.includes(color)) {
       updatedColorDataSlider = colorDataSlider.filter((item) => item !== color);
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = useSearchParams();
       searchParams.delete("color");
       const newSearchString = searchParams.toString();
       const newURL = `${"/gemstones/start-with-a-gemstone"}${
@@ -518,7 +513,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
       );
       // if (menuStyleNames?.includes(gemStyle)) {
 
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = useSearchParams();
       searchParams.delete("style");
       const newSearchString = searchParams.toString();
       const newURL = `${"/gemstones/start-with-a-gemstone"}${
@@ -547,7 +542,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
           JSON.stringify(updatedStyles)
         );
 
-        const searchParams = new URLSearchParams(location.search);
+        const searchParams = useSearchParams();
         searchParams.delete("shape");
         const newSearchString = searchParams.toString();
         const newURL = `${"/gemstones/start-with-a-gemstone"}${
@@ -574,7 +569,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
         JSON.stringify(updatedColor)
       );
 
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = useSearchParams();
       searchParams.delete("color");
       const newSearchString = searchParams.toString();
       const newURL = `${"/gemstones/start-with-a-gemstone"}${
@@ -593,7 +588,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
     secureLocalStorage.removeItem("styleDataSlider");
     secureLocalStorage.removeItem("colorDataSlider");
     secureLocalStorage.removeItem("shapeDataSlider");
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = useSearchParams();
     searchParams.delete("style");
     searchParams.delete("shape");
     searchParams.delete("color");
@@ -617,7 +612,6 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
     beforeLoginWishlistIds.push(item.diamond?.id || item.item?.id);
   });
 
-  // const newSubCategory = location.pathname.substring(1);
 
   const handleError = (e) => {
     e.target.onerror = null;

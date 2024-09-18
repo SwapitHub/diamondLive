@@ -1,13 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
 
-import HomePage from "./component/homePages/home/page";
 import LoaderSpinner from "./_componentStatic/LoaderSpinner";
+import HomePage from "./component/homePages/home/page";
 export const UserContext = createContext(null);
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
   }, []);
 
   const ScrollToTopOnNavigate = () => {
-    const location = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
       // Scroll to top after a delay
@@ -30,7 +30,7 @@ export default function Home() {
         window.scrollTo(0, 0);
       }, 50);
       return () => clearTimeout(timeout);
-    }, [location.pathname]);
+    }, [pathname]);
 
     return null;
   };

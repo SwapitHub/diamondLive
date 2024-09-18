@@ -645,7 +645,6 @@ const DetailRingProduct = ({ filterData, shapeData, diamondData}) => {
       parentDiv.style.display = "none";
     }
   };
-  // const currentUrl = window.location.href;
 
   const handleError = (e) => {
     e.target.onerror = null;

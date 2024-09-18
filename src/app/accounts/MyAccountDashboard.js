@@ -39,7 +39,6 @@ export const MyAccountDashboard = () => {
     });
     setTimeout(() => {
       router.push("/login");
-      // window.location.reload(true);
     }, 3000);
 
     secureLocalStorage.clear();
@@ -67,12 +66,7 @@ export const MyAccountDashboard = () => {
       });
   }, [cartData, wishlistData, user_id]);
   // ============ meta tag  =======================//
-//   const location = useLocation();
-//   const currentUrl = window.location.href;
-//   const pathSegments = location.pathname
-//     .split("/")
-//     .filter((segment) => segment);
-//   const mainCategory = pathSegments[0] || "";
+
 
   return (
     <>

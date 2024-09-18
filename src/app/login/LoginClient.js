@@ -192,7 +192,6 @@ export const LoginSignup = () => {
               }, 2000);
             })
             
-            // window.location.reload();
 
             wishlistData.forEach((item) => {
               var wishListURL = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${

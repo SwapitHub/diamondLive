@@ -434,7 +434,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
       .catch((error) => {
         console.error("Error:", error);
       });
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = useSearchParams()
     searchParams.set("color", colorName);
     searchParams.delete("diamond_original");
     const newSearchString = searchParams.toString();
@@ -541,7 +541,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
 
   // variant start here
   const handleVariation = (variantSlug) => {
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = useSearchParams()
 
     const newSearchString = searchParams.toString();
 
@@ -559,7 +559,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
   useEffect(() => {
     const totalCaratWeight = secureLocalStorage.getItem("totalCaratWeight");
     if (totalCaratWeight) {
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = useSearchParams()
 
       const newSearchString = searchParams.toString();
 

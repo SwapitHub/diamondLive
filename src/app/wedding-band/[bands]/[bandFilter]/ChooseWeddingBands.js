@@ -5,7 +5,7 @@ import axios from "axios";
 import $ from "jquery";
 import debounce from "lodash.debounce";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoMdHeart } from "react-icons/io";
@@ -32,7 +32,7 @@ const ChooseWeddingBands = ({ weddingBands }) => {
   const getLocalStoreShape = secureLocalStorage.getItem("clickedShape");
   const getLocalMetaColorIds = secureLocalStorage.getItem("metaColorIds");
 
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = useSearchParams();
   const menuShapeName = queryParams.get("shape");
   const menuShopStyle = queryParams.get("style");
   const menuMetal = queryParams.get("metal");
@@ -96,7 +96,7 @@ const ChooseWeddingBands = ({ weddingBands }) => {
 
   const getBridalSet = () => {
     setLocalBridalData((prevState) => !prevState);
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = useSearchParams();
     searchParams.delete("bridal-sets");
     const newSearchString = searchParams.toString();
     const newURL = `${"/engagement-rings/start-with-a-setting"}${
@@ -279,7 +279,7 @@ const ChooseWeddingBands = ({ weddingBands }) => {
     const clickedShape = getLocalStoreShape;
 
     if (menuShapeName) {
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = useSearchParams();
       searchParams.delete("shape");
       const newSearchString = searchParams.toString();
       const newURL = `${"/engagement-rings/settings"}${
@@ -328,7 +328,7 @@ const ChooseWeddingBands = ({ weddingBands }) => {
 
   const ShopStyle = (shopStyleId) => {
     if (menuShopStyle === shopStyleId) {
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = useSearchParams();
       searchParams.delete("style");
       const newSearchString = searchParams.toString();
       const newURL = `${"/engagement-rings/settings"}${
@@ -699,17 +699,6 @@ const ChooseWeddingBands = ({ weddingBands }) => {
     beforeLoginWishlistIds.push(item.item?.id);
   });
 
-  //   const currentUrl = window.location.href;
-  //   const pathSegmentsMeta = location.pathname
-  //     .split("/")
-  //     .filter((segment) => segment);
-  //   const mainCategory = pathSegmentsMeta[0] || "";
-  //   const subCategory = pathSegmentsMeta[1] || "";
-
-  //   const bridalSetSearch = location.search;
-  //   var newSubCategory = location.pathname.substring(1);
-
-  //   var newJoinBridalSet = newSubCategory.concat(bridalSetSearch);
 
   const handleError = (e) => {
     e.target.onerror = null;

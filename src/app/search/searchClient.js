@@ -470,12 +470,7 @@ const SearchPage = () => {
 
     // ============ meta tag  =======================//
 
-    // const currentUrl = window.location.href;
-    // const location = useLocation()
-    // const pathSegments = location.pathname
-    //   .split("/")
-    //   .filter((segment) => segment);
-    // const mainCategory = pathSegments[0] || "";
+
 
 
     const handleError =(e)=>{

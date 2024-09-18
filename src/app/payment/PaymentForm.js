@@ -28,7 +28,6 @@ const PaymentForm = () => {
 
   const cartData = useSelector((state) => state.cartData);
   const cartDetails = useSelector((state) => state.productDataCart);
-//   const { addressId, totalPrice, shipValue } = location.state || {};
 
   // cartDetails.length < 0 &&
   const user_id = secureLocalStorage.getItem("formData");

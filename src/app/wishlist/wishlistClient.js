@@ -253,12 +253,7 @@ const WishList = ({wishlistServer}) => {
     : wishlist.filter((item) => item.product_type === "matching_set").length;
 
   // ============ meta tag  =======================//
-//   const location = useLocation();
-//   const currentUrl = window.location.href;
-//   const pathSegments = location.pathname
-//     .split("/")
-//     .filter((segment) => segment);
-//   const mainCategory = pathSegments[0] || "";
+
 
   return (
     <>

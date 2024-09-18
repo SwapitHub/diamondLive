@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 import GooglePayButton from "@google-pay/button-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FaExclamationCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
@@ -30,7 +30,7 @@ const CartPage = ({ cart }) => {
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
   const platinum = "platinum";
-  //   const location = useLocation();
+    const pathname = usePathname();
   const navigate = useRouter();
 
   const [down, setDown] = useState(false);
@@ -340,7 +340,7 @@ const CartPage = ({ cart }) => {
     if (user_id) {
       navigate.push("/check_out");
     } else {
-      secureLocalStorage.setItem("previousPath", window.location.pathname);
+      secureLocalStorage.setItem("previousPath", pathname);
       navigate.push("/login");
       toast.info("Please log in to proceed to checkout.", {
         position: "top-right",

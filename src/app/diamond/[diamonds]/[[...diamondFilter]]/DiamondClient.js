@@ -12,14 +12,14 @@ import "slick-carousel/slick/slick.css";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IoClose } from "react-icons/io5";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 
 const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
-  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const font_style = searchParams.get("font_style");
   const textEngraving = searchParams.get("textEngraving");
@@ -83,7 +83,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
   const [activeResult, setActiveResult] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const pathSegments = location.pathname.split("/");
+  const pathSegments = pathname.split("/");
   const lastPathSegment = pathSegments[pathSegments.length - 1];
   const initialType = lastPathSegment === "lab_grown" ? "lab_grown" : "natural";
   const [type, setType] = useState(initialType);
@@ -99,19 +99,19 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
       history.push(
         `/diamond/start-with-a-diamond${
           newType === "lab_grown" ? "/lab_grown" : ""
-        }${location.search}`
+        }${searchParams}`
       );
     }
   };
 
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
   useEffect(() => {
-    const newPathSegments = location.pathname.split("/");
+    const newPathSegments = pathname.split("/");
     const newLastPathSegment = newPathSegments[newPathSegments.length - 1];
     const newType = newLastPathSegment === "lab_grown" ? "lab_grown" : "natural";
     setNewDiamondType(newType);
     setType(newType);
-  }, [location.pathname]);
+  }, [pathname]);
 
   const [checked, setChecked] = useState(false);
   const [checkedSecond, setCheckedSecond] = useState(false);
@@ -266,7 +266,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
     secureLocalStorage.removeItem("cutRange");
   };
   const handleResetAll = () => {
-    const searchParams = new URLSearchParams(location.search);
+  
     if (menuShapeName) {
       setMenuShapeName("");
     }
@@ -854,16 +854,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
   const filter_button = () => {
     setFilterbutton(!filterbutton);
   };
-  const pathSegmentsMeta = location.pathname
-    .split("/")
-    .filter((segment) => segment);
-  const mainCategory = pathSegmentsMeta[0] || "";
-  const subCategory = pathSegmentsMeta[1] || "";
-  const lastCategory = pathSegmentsMeta[2] || "";
-
-  const currentUrl = window.location.href;
-
-  const newSubCategory = location.pathname.substring(1);
+ 
 
   const [loadedIframes, setLoadedIframes] = useState({});
 
