@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import PaymentForm from "./PaymentForm";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
+import PaymentForm from "./PaymentForm";
 
 const fetchPaymentServer = async () => {
   let payment = [];
