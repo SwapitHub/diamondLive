@@ -2,8 +2,9 @@
 import React from "react";
 import Link from "next/link";
 
-export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollection}) => {
+export const WeddingCollection = ({engagementRingMain,weddingJewelry,weddingCollection}) => {
   
+    console.log(engagementRingMain);
     
   return (
     <section className="own-engagment gemstone WeddingCollection">
@@ -12,11 +13,11 @@ export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollect
           <div className="heading-sec"></div>
           <div className="ring-grid-sec">
             <div className="grid-wrapper-bar">
-              <Link href={`${engagementRings?.url}`}>
+              <Link href={`${engagementRingMain?.url}`}>
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: engagementRings?.description
+                      __html: engagementRingMain?.description
                     }}
                   ></div>
                 </div>

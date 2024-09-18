@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import PaymentForm from "./PaymentForm";
+import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 
 const fetchPaymentServer = async () => {
   let payment = [];
@@ -65,7 +67,9 @@ const PaymentServer = async () => {
   const payment = await fetchPaymentServer();
   return (
     <>
+    <Suspense fallback={<LoaderSpinner/>}>
       <PaymentForm payment={payment} />
+    </Suspense>
     </>
   );
 };

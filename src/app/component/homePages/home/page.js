@@ -219,7 +219,7 @@ export default async function HomePageData() {
   const diamondStuds = await fetchDiamondStuds();
   const shopStyle = await fetchShopStyle();
   const homeAllSections = await fetchHomeAllSections();
-  const engagementRings = await fetchEngagementRings();
+  const engagementRingMain = await fetchEngagementRings();
   const weddingJewelry = await fetchWeddingJewelry();
   const weddingCollection = await fetchWeddingCollection();
  
@@ -235,7 +235,7 @@ export default async function HomePageData() {
         <BridalJewellery home={homeAllSections}/>
         <AnniversaryRings home={homeAllSections.data}/>
         <CelebarteLove home={homeAllSections}/>
-        <WeddingCollection engagementRings={engagementRings.data} weddingJewelry={weddingJewelry.data} weddingCollection={weddingCollection.data}/>
+        <WeddingCollection engagementRingMain={engagementRingMain.data} weddingJewelry={weddingJewelry.data} weddingCollection={weddingCollection.data}/>
 
         <EngagementBridal home={homeAllSections}/>
 
