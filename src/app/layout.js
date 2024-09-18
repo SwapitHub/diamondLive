@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
           <DataProvider>
             
             <ReduxProvider>
-              {/* <HeaderServer/> */}
+              <HeaderServer/>
               {children}
               <script
                 type="text/javascript"
@@ -55,7 +55,7 @@ export default function RootLayout({ children }) {
                 defer
                 src="//js.hs-scripts.com/45427602.js"
               ></script>
-              {/* <FooterServer/> */}
+              <FooterServer/>
             </ReduxProvider>
           </DataProvider>
         </UserProvider>
