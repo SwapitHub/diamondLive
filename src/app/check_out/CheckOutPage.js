@@ -326,7 +326,7 @@ export const CheckOutPage = () => {
                 <h3>Shipping information</h3>
 
                 <div className="checkout">
-                  <div className="checkout-left">
+                  {/* <div className="checkout-left">
                     <form action="">
                       <div className="group-fields two-fields">
                         <div className="inputs">
@@ -427,7 +427,6 @@ export const CheckOutPage = () => {
                           <select
                             name=""
                             id="selectCity"
-                            // value={userAccountData?.address?.shipping_address?.country}
                             onChange={(e) => {
                               validateAddress(
                                 e.target.value,
@@ -668,7 +667,6 @@ export const CheckOutPage = () => {
                                 <select
                                   name=""
                                   id="billingselectCity"
-                                  // value={userAccountData?.address?.billing_address?.country}
 
                                   onChange={(e) => {
                                     validateAddress(
@@ -873,10 +871,10 @@ export const CheckOutPage = () => {
                         </div>
                       </div>
                     </form>
-                  </div>
+                  </div> */}
 
                   <div className="checkout-right">
-                    {user_id ? (
+                    {/* {user_id ? (
                       <div className="checkout-right-scroll">
                         <h3>Order Summary</h3>
                         {cartDetails?.map((item) => {
@@ -1549,10 +1547,10 @@ export const CheckOutPage = () => {
                           );
                         })}
                       </div>
-                    )}
+                    )} */}
 
                     {/* {cartData.slice(0, 1).map} */}
-                    <div className="table-count">
+                    {/* <div className="table-count">
                       <div className="row">
                         <div className="subtotal">Subtotal</div>
                         <div className="price-right">
@@ -1591,7 +1589,7 @@ export const CheckOutPage = () => {
                           </b>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

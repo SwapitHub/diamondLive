@@ -1,30 +1,11 @@
 "use client"
-import { UserContext } from "@/app/context/UserContext";
-import axios from "axios";
 import Link from "next/link";
-import { useContext, useMemo, useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
-export const GemstoneShopByShape = () => {
-  const [gemstoneFilterData, setGemstoneFilterData] = useState([]);
-  const {baseUrl} = useContext(UserContext)
-  // =========shape api
-  useMemo(() => {
-    axios
-      .get(
-        `${baseUrl}/gemstone-attributes`
-      )
-      .then((res) => {
-        setGemstoneFilterData(res.data.data);
-      })
-      .catch(() => {
-        console.log("shape API error gemstone");
-      });
-  }, []);
-
+export const GemstoneShopByShape = ({gemstoneFilterData}) => {
+  
   const gemstonesStyleSliderDesktop = {
     dots: false,
     infinite: true,
@@ -99,7 +80,7 @@ export const GemstoneShopByShape = () => {
                       >
                         <div className="gemstone-slider-main">
                           <div className="gemstone-diamond-img">
-                          <LazyLoadImage src={item.image} alt={item.name}  width="auto"  height="auto"  />
+                          <img src={item.image} alt={item.name}  width="auto"  height="auto"  />
                           </div>
                           <span className="color-name">{item.name}</span>
                         </div>

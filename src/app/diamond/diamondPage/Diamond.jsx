@@ -1,42 +1,61 @@
-"use client"
-import { UserContext } from '@/app/context/UserContext';
-import axios from 'axios';
-import { useContext, useMemo, useState } from 'react';
-import { DiamondBanner } from './DiamondBanner';
-import { DiamondEdu } from './DiamondEdu';
-import { DiamondFaq } from './DiamondFaq';
-import { DiamondReadyToShip } from './DiamondReadyToShip';
-import { DiamondReviews } from './DiamondReviews';
-import { DiamondSets } from './DiamondSets';
-import { ShopDiamondShape } from '@/app/component/homePages/ShopDiamondShape';
 
+import { ShopDiamondShape } from "@/app/component/homePages/ShopDiamondShape";
+import { DiamondBanner } from "./DiamondBanner";
+import { DiamondEdu } from "./DiamondEdu";
+import { DiamondFaq } from "./DiamondFaq";
+import { DiamondReadyToShip } from "./DiamondReadyToShip";
 
-export const DiamondPageMain = () => {
-  const { baseUrl } = useContext(UserContext);
-  const [shapeData, setShapeData] = useState([]);
- 
-useMemo(() => {
-    axios
-      .get(`${baseUrl}/diamondshape`)
-      .then((res) => {
-        setShapeData(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
+const diamondShape = async () => {
+  let diamond = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/diamondshape`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    diamond = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return diamond;
+};
+
+const faqs = async () => {
+  let style = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/faq`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    style = await response.json();
+    if (Array.isArray(style.data)) {
+      style.data.forEach(item => {
+        
+        item.answer = purify.sanitize(item.answer);
+       
       });
-  }, []);
-  const currentUrl = window.location.href;
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return style;
+};
+
+const DiamondPageMain = async () => {
+  const shape = await diamondShape();
+  const faq = await faqs();
+
   return (
     <>
-  
       <DiamondBanner />
-      <ShopDiamondShape shapeData={shapeData} />
+      <ShopDiamondShape shapeData={shape.data} />
       <DiamondReadyToShip />
       {/* <DiamondCommitment /> */}
       {/* <DiamondSets />
       <DiamondReviews /> */}
       <DiamondEdu />
-      <DiamondFaq />
+      <DiamondFaq shapeData={faq.data}/>
     </>
-  )
-}
+  );
+};
+
+export default DiamondPageMain;

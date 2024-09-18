@@ -11,7 +11,7 @@ import { UserContext } from "../context/UserContext";
 import { SearchSuggestion } from "../_componentStatic/SearchSuggestion";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 import Link from "next/link";
-import Header from "../_componentStatic/Header";
+import Header from "../_componentStatic/Header/Header";
 import { Footer } from "../_componentStatic/Footer";
 
 const SearchPage = () => {

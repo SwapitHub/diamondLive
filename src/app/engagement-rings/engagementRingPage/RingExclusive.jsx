@@ -1,6 +1,5 @@
 "use client"
 import React, { useContext } from 'react'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Link from 'next/link'
 import { UserContext } from '@/app/context/UserContext'
 
@@ -19,7 +18,7 @@ export const RingExclusive = () => {
                         <div className="popular-grid-wrapper">
                             <Link href="/engagement-rings/metal/White">
                                 <div className="imgg-sec">
-                                    <LazyLoadImage width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/White-gold-ring.png`} alt="white-rings" />
+                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/White-gold-ring.png`} alt="white-rings" />
                                 </div>
                                 <div className="text-con">
                                     <p>White Gold Rings</p>
@@ -29,7 +28,7 @@ export const RingExclusive = () => {
                         <div className="popular-grid-wrapper">
                             <Link href="/engagement-rings/metal/Yellow">
                                 <div className="imgg-sec">
-                                    <LazyLoadImage width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Yellow-gold.png`} alt="yellow-rings" />
+                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Yellow-gold.png`} alt="yellow-rings" />
                                 </div>
                                 <div className="text-con">
                                     <p>Yellow Gold Rings</p>
@@ -39,7 +38,7 @@ export const RingExclusive = () => {
                         <div className="popular-grid-wrapper">
                             <Link href="/engagement-rings/metal/Pink">
                                 <div className="imgg-sec">
-                                    <LazyLoadImage width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Rose-gold.png`} alt="rose-rings" />
+                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Rose-gold.png`} alt="rose-rings" />
                                 </div>
                                 <div className="text-con">
                                     <p>Rose Gold Rings</p>
@@ -49,7 +48,7 @@ export const RingExclusive = () => {
                         <div className="popular-grid-wrapper">
                             <Link href="/engagement-rings/metal/Platinum">
                                 <div className="imgg-sec">
-                                    <LazyLoadImage width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/platinumring.png`} alt="platinum-rings" />
+                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/platinumring.png`} alt="platinum-rings" />
                                 </div>
                                 <div className="text-con">
                                     <p>Platinum Rings</p>
@@ -59,7 +58,7 @@ export const RingExclusive = () => {
                         <div className="popular-grid-wrapper">
                             <Link href="/engagement-rings/start-with-a-setting?bridal-sets=true">
                                 <div className="imgg-sec">
-                                    <LazyLoadImage width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Bridal-set-ring.png`} alt="bridal-rings" />
+                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Bridal-set-ring.png`} alt="bridal-rings" />
                                 </div>
                                 <div className="text-con">
                                     <p>Bridal Set Ring</p>

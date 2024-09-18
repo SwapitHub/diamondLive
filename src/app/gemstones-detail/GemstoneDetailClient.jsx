@@ -26,7 +26,7 @@ import { DropHint } from "../_componentStatic/DropHint";
 import Image from "next/image";
 import { addToCart } from "../../../store/actions/cartActions";
 import { productList, productListCart } from "../../../store/actions/productActions";
-import { addToWishlist } from "../../../store/actions/wishlistAction";
+import { addToWishlist, removeToWishlist } from "../../../store/actions/wishlistAction";
 
 export default function GemstonesDetail({ gemstone }) {
   console.log(gemstone);
@@ -240,7 +240,6 @@ export default function GemstonesDetail({ gemstone }) {
           <div className="sticky-right-column">
             <div className="sticky-inner-main">
               {data.map((item) => {
-                const currentUrl = window.location.href;
 
                 return (
                   <>

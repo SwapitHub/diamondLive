@@ -1,6 +1,5 @@
 "use client"
 import React, { useContext } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import Link from "next/link";
 import { UserContext } from "@/app/context/UserContext";
 
@@ -17,7 +16,7 @@ export const RingEducation = () => {
             <div className="grid-wrapper-bar">
               <Link href="/diamond-buying-guide">
                 <div className="img-bar">
-                  <LazyLoadImage width="auto"  height="auto"  
+                  <img width="auto"  height="auto"  
                     src={`${imgAssetsUrl}/frontend/images/educt3.png`}
                     alt="diamond-buying-guide"
                     
@@ -33,7 +32,7 @@ export const RingEducation = () => {
             <div className="grid-wrapper-bar">
               <Link href="/lab-grown-diamonds">
                 <div className="img-bar">
-                  <LazyLoadImage width="auto"  height="auto"  
+                  <img width="auto"  height="auto"  
                    src={`${imgAssetsUrl}/frontend/images/ring3.png`}
                     alt="lab-grown-diamonds"
                     
@@ -49,7 +48,7 @@ export const RingEducation = () => {
             <div className="grid-wrapper-bar">
               <Link href="/jewellery-care">
                 <div className="img-bar">
-                  <LazyLoadImage width="auto"  height="auto"  
+                  <img width="auto"  height="auto"  
                     src={`${imgAssetsUrl}/frontend/images/educt1.png`}
                     alt="jewellery-care"
                     
@@ -65,7 +64,7 @@ export const RingEducation = () => {
             <div className="grid-wrapper-bar">
               <Link href="/ring-sizer">
                 <div className="img-bar">
-                  <LazyLoadImage width="auto"  height="auto"  
+                  <img width="auto"  height="auto"  
                     src={`${imgAssetsUrl}/frontend/images/educt4.png`}
                     alt="ring-sizer"
                     

@@ -1,45 +1,38 @@
 "use client";
-import DOMPurify from "dompurify";
 import $ from "jquery";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
-import Head from "next/head";
 
-const ContactUs = ({ posts }) => {
-  const [FooterData, setFooterData] = useState([]);
+const ContactUs = ({ FooterData }) => {
+  
   const [loader, setLoader] = useState(false);
   const metaDescriptionLimit = 160;
-
-  let router = useRouter();
+  const pathname  = usePathname();
+  // Handle jQuery accordion
   useEffect(() => {
-    setFooterData(posts.data);
-  }, [posts]);
-  $(document).ready(function () {
-    // Hide all accordion item bodies initially
-    $(".accordion-item-body").hide();
+    $(document).ready(function () {
+      $(".accordion-item-body").hide();
+      $(".accordion-item-header:first")
+        .addClass("active")
+        .next(".accordion-item-body")
+        .slideDown();
 
-    // Trigger a click event on the first accordion item header to open it by default
-    $(".accordion-item-header:first")
-      .addClass("active")
-      .next(".accordion-item-body")
-      .slideDown();
-
-    // Toggle accordion item on click
-    $(".accordion-item-header").click(function () {
-      $(this).toggleClass("active");
-      $(this).next(".accordion-item-body").slideToggle();
+      $(".accordion-item-header").click(function () {
+        $(this).toggleClass("active");
+        $(this).next(".accordion-item-body").slideToggle();
+      });
     });
-  });
+  }, []);
 
+  // Truncate description function
   const truncateMetaDescription = (description) => {
-    if (description.length > metaDescriptionLimit) {
-      return description.substring(0, metaDescriptionLimit) + "...";
-    }
-    return description;
+    return description.length > metaDescriptionLimit
+      ? description.substring(0, metaDescriptionLimit) + "..."
+      : description;
   };
-  const currentUrl = window.location.href;
 
+  // Handle HubSpot form embedding
   useEffect(() => {
     setTimeout(() => {
       const script = document.createElement("script");
@@ -56,10 +49,12 @@ const ContactUs = ({ posts }) => {
         }
       };
     }, 1000);
-  }, [location.pathname]);
+  }, [pathname]);
+
   return (
     <>
       <div className="container">
+        
         <div className="footer-all-pages-display">
           {loader ? (
             <LoaderSpinner />
@@ -70,14 +65,14 @@ const ContactUs = ({ posts }) => {
                   {item.pages.map((innerItem) => {
                     return (
                       <>
-                        {location.pathname == "/" + innerItem.slug ? (
+                        {pathname  == `/${innerItem.slug}` ? (
                           <>
                             <div
                               className={
                                 item.name === "BRAND" ? innerItem?.slug : ""
                               }
                               dangerouslySetInnerHTML={{
-                                __html: DOMPurify.sanitize(innerItem.content),
+                                __html: (innerItem.content)
                               }}
                             ></div>
                             

@@ -33,16 +33,7 @@ import { v4 as uuidv4 } from "uuid";
 import { productList } from "../../../../store/actions/productActions";
 import { addToWishlist } from "../../../../store/actions/wishlistAction";
 
-const DetailRingProduct = ({ ringDetail }) => {
-  
-  
-  const [filterData, setFilterData] = useState([]);
-  useEffect(() => {
-    setFilterData({
-      product: ringDetail.data,
-      imgUrl: ringDetail.data.internal_sku,
-    });
-  }, [ringDetail]);
+const DetailRingProduct = ({ filterData, shapeData, diamondData}) => {
   
   const history = useRouter(); // Call useHistory at the top level of the component
   const [urlColor, setUrlColor] = useState("");
@@ -94,7 +85,6 @@ const DetailRingProduct = ({ ringDetail }) => {
   const [selected_2, setSelected_2] = useState(null);
   const [selected_3, setSelected_3] = useState(null);
   const [getPrice, setGetPrice] = useState();
-  const [diamondData, setDiamondData] = useState([]);
   const [variantSlug, setVariantSlug] = useState();
   const [removeWishList, setRemoveWishList] = useState();
   const [shapeItemId, setShapeItemId] = useState();
@@ -309,72 +299,7 @@ const DetailRingProduct = ({ ringDetail }) => {
     return () => debouncedFetchData.cancel(); // Cleanup
   }, [removeWishList]);
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await axios.get(`${baseUrl}/product/${secondPathSegment}`);
-
-  //         const product = response.data.data;
-  //         const imgUrl = product.internal_sku;
-
-  //         // Update state with both product and imgUrl
-  //         setFilterData({
-  //           product: product,
-  //           imgUrl: imgUrl,
-  //         });
-
-  //         const similarProductsData = JSON.parse(product.similar_products);
-  //         setSimilarProducts(similarProductsData);
-  //         console.log(`${baseUrl}/product/${secondPathSegment}`);
-  //       } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //       }
-  //     };
-
-  //     fetchData();
-  //   }, [secondPathSegment]);
-
-  // Diamond api
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = `https://apiservices.vdbapp.com//v2/diamonds?type=${
-        diamond_origin == "lab_grown" ? "Lab_grown_Diamond" : "Diamond"
-      }&stock_num=${stock_num ? stock_num : ""}`;
-
-      const params = {
-        stock_item_type: "Diamond",
-        status: "pending",
-      };
-
-      const headers = {
-        Authorization:
-          "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-      };
-
-      try {
-        const response = await axios.get(url, { params, headers });
-        setDiamondData(response.data.response.body.diamonds);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [stock_num]);
-
   // diamond shape
-  const [shapeData, setShapeData] = useState(null);
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/diamondshape`)
-      .then((res) => {
-        setShapeData(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
 
   const DetailsRecommended = {
     dots: false,
@@ -745,7 +670,7 @@ const DetailRingProduct = ({ ringDetail }) => {
                 ringName={"2. Choose Rings"}
                 ringLink={"/engagement-rings/start-with-a-setting"}
                 diamondName={"1. Choose Diamonds"}
-                diamondLink={"/engagement-rings/start-with-a-diamond/"}
+                diamondLink={"/diamond/start-with-a-diamond/"}
                 type="ring-detail"
               />
             ) : (
@@ -757,7 +682,7 @@ const DetailRingProduct = ({ ringDetail }) => {
                     ringName={"1. Choose Rings"}
                     ringLink={"/engagement-rings/start-with-a-setting"}
                     diamondName={"2. Choose Diamonds"}
-                    diamondLink={"/engagement-rings/start-with-a-diamond/"}
+                    diamondLink={"/diamond/start-with-a-diamond/"}
                     type="ring-detail"
                   />
                 </div>
@@ -4179,7 +4104,7 @@ ${changeClick === rose ? "active" : ""}
                               onClick={() => handleCenterStoneFull()}
                               href={`${
                                 selectedOption
-                                  ? `/engagement-rings/start-with-a-diamond/${
+                                  ? `/diamond/start-with-a-diamond/${
                                       filterData.product?.slug
                                     }${
                                       diamondTypeClick == "lab_grown"

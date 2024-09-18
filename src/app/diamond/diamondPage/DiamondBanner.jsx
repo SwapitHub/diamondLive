@@ -3,7 +3,6 @@ import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
 import { useContext } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const DiamondBanner = () => {
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
@@ -14,8 +13,8 @@ export const DiamondBanner = () => {
     <>
       <div className="banner-main engment-banner-sec diamond">
         <div className="bg-bannerr inner-banner-img">
-          <LazyLoadImage  width="auto"  height="auto"   className="desktop" src={`${imgAssetsUrl}/frontend/images/diamond-desktop-banner.jpg`} alt="diamond"  />
-          <LazyLoadImage  width="auto"  height="auto"   className="mobile"  src={`${imgAssetsUrl}/frontend/images/diamond-mobile-banner.jpg`} alt="diamond" loading="lazy" />
+          <img  width="auto"  height="auto"   className="desktop" src={`${imgAssetsUrl}/frontend/images/diamond-desktop-banner.jpg`} alt="diamond"  />
+          <img  width="auto"  height="auto"   className="mobile"  src={`${imgAssetsUrl}/frontend/images/diamond-mobile-banner.jpg`} alt="diamond" loading="lazy" />
 
         </div>
         <div className="container min-ht">

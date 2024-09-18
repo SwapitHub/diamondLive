@@ -1,9 +1,8 @@
 "use client"
 import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const WeddingBanner = () => {
   const {imgAssetsUrl} = useContext(UserContext)
@@ -11,8 +10,8 @@ export const WeddingBanner = () => {
     <>
       <div className="banner-main engment-banner-sec wedding-banner">
         <div className="inner-banner-img">
-          <LazyLoadImage className="desktop" src={`${imgAssetsUrl}/frontend/images/weddingbanner33.jpg`} alt="wedding-banner"  width="auto"  height="auto"  />
-          <LazyLoadImage className="mobile"  src={`${imgAssetsUrl}/frontend/images/wedding-band-mob.jpg`} alt="wedding-banner2"  width="auto"  height="auto"  />
+          <img className="desktop" src={`${imgAssetsUrl}/frontend/images/weddingbanner33.jpg`} alt="wedding-banner"  width="auto"  height="auto"  />
+          <img className="mobile"  src={`${imgAssetsUrl}/frontend/images/wedding-band-mob.jpg`} alt="wedding-banner2"  width="auto"  height="auto"  />
         </div>
         <div className="container min-ht">
           <div className=" banner flex min-ht">

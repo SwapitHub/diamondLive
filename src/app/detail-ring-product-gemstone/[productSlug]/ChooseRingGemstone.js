@@ -31,15 +31,16 @@ import Popup from "reactjs-popup";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
+import { removeToWishlist } from "../../../../store/actions/wishlistAction";
 
 
-export default function ChooseRingGemstone({ringDetail, gemstoneDetail, listColor}) {
-  const url = window.location.href;
+export default function ChooseRingGemstone({filterData, diamondData, listColor, shapeData}) {
+ 
 
   const history = useRouter(); // Call useHistory at the top level of the component
   const [urlColor, setUrlColor] = useState("");
   var {productSlug} = useParams(); 
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = useSearchParams();
   const stock_num = queryParams.get("stock_num");
   const diamond_original = queryParams.get("diamond_original");
   
@@ -72,7 +73,6 @@ export default function ChooseRingGemstone({ringDetail, gemstoneDetail, listColo
 
   const user_id = secureLocalStorage.getItem("formData");
   const [open, setOpen] = useState(false);
-  const [filterData, setFilterData] = useState([]);
   const [changeOver, setChangeOver] = useState(null);
   const [changeClick, setChangeClick] = useState(listColor);
   const [shapeProduct, setShapeProduct] = useState();
@@ -80,7 +80,6 @@ export default function ChooseRingGemstone({ringDetail, gemstoneDetail, listColo
   const [selected_2, setSelected_2] = useState(null);
   const [selected_3, setSelected_3] = useState(null);
   const [getPrice, setGetPrice] = useState();
-  const [diamondData, setDiamondData] = useState([]);
   const [variantSlug, setVariantSlug] = useState();
   const [removeWishList, setRemoveWishList] = useState();
   const [shapeItemId, setShapeItemId] = useState();
@@ -302,34 +301,7 @@ export default function ChooseRingGemstone({ringDetail, gemstoneDetail, listColo
     }
 
     return () => debouncedFetchData.cancel(); // Cleanup
-  }, [removeWishList]);
-
-  useMemo(() => {
-    setFilterData({
-      product: ringDetail.data,
-      imgUrl: ringDetail.data.internal_sku,
-    });
-  }, [ringDetail]);
-
-
-  // Gemstone api
-
-  useMemo(() => {
-    setDiamondData(gemstoneDetail)
-  }, [gemstoneDetail]);
-
-  // diamond shape
-  const [shapeData, setShapeData] = useState(null);
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/diamondshape`)
-      .then((res) => {
-        setShapeData(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
+  }, [removeWishList])
 
 
   const DetailsRecommended = {
@@ -682,7 +654,6 @@ export default function ChooseRingGemstone({ringDetail, gemstoneDetail, listColo
       prevItem === iconVideoColor ? undefined : iconVideoColor
     );
   }, [thumbnailItem, shapeProduct]);
-  const currentUrl = window.location.href;
 
   const handleImgError = (event) => {
     const parentDiv = event.target.parentNode;

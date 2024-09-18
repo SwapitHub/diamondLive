@@ -1,8 +1,7 @@
 "use client"
-import React, { useContext } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import Link from "next/link";
 import { UserContext } from "@/app/context/UserContext";
+import Link from "next/link";
+import { useContext } from "react";
 
 export const OwnEngagementRing = ({ covetedProducts }) => {
   const {imgAssetsUrl} = useContext(UserContext)
@@ -17,7 +16,7 @@ export const OwnEngagementRing = ({ covetedProducts }) => {
             <div className="grid-wrapper-bar">
               <Link href="/engagement-rings/start-with-a-setting">
                 <div className="img-bar">
-                  <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring1.png`} alt="engagement-ring" />
+                  <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring1.png`} alt="engagement-ring" />
                 </div>
                 <div className="contant-bar">
                   <h5>Start with a Setting</h5>
@@ -27,7 +26,7 @@ export const OwnEngagementRing = ({ covetedProducts }) => {
             <div className="grid-wrapper-bar">
               <Link href="/diamond/start-with-a-diamond">
                 <div className="img-bar">
-                  <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring2.png`} alt="diamonds" />
+                  <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring2.png`} alt="diamonds" />
                 </div>
                 <div className="contant-bar">
                   <h5>Start with a Natural Diamond</h5>
@@ -37,7 +36,7 @@ export const OwnEngagementRing = ({ covetedProducts }) => {
             <div className="grid-wrapper-bar">
               <Link href="/diamond/start-with-a-diamond/lab_grown">
                 <div className="img-bar">
-                  <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring3.png`} alt="lab-diamonds" />
+                  <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring3.png`} alt="lab-diamonds" />
                 </div>
                 <div className="contant-bar">
                   <h5>Start with a Lab Diamond</h5>
@@ -47,7 +46,7 @@ export const OwnEngagementRing = ({ covetedProducts }) => {
             <div className="grid-wrapper-bar">
               <Link href="/gemstone/start-with-a-gemstone">
                 <div className="img-bar">
-                  <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring4.png`} alt="gemstones" />
+                  <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/ring4.png`} alt="gemstones" />
                 </div>
                 <div className="contant-bar">
                   <h5>Start with a Gemstone</h5>
@@ -68,7 +67,7 @@ export const OwnEngagementRing = ({ covetedProducts }) => {
                 <div className="popular-grid-wrapper" key={item.slug}>
                   <Link href={`/engagement-ring/${item?.slug}?color=18k-white-gold`}>
                     <div className="imgg-sec">
-                      <LazyLoadImage  width="auto"  height="auto"   src={item?.default_image_url} alt={item?.name} />
+                      <img  width="auto"  height="auto"   src={item?.default_image_url} alt={item?.name} />
                     </div>
                     <div className="text-con">
                       <p>{item?.name}</p>

@@ -37,13 +37,13 @@ import Link from "next/link";
 import { DropHint } from "@/app/_componentStatic/DropHint";
 import { useData } from "@/app/context/DataContext";
 import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
 
-export const WeddingBandsDetail = ({productSlug}) => {
+export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
   const router = useRouter(); // Call userouter at the top level of the component
   const [urlColor, setUrlColor] = useState("");
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = useSearchParams();
   const listColor = queryParams.get("color");
   const stock_num = queryParams.get("stock_num");
   const diamond_origin = queryParams.get("diamond_origin");
@@ -51,7 +51,6 @@ export const WeddingBandsDetail = ({productSlug}) => {
 
   // find url area
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
-  const url = window.location.href;
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
@@ -72,7 +71,6 @@ export const WeddingBandsDetail = ({productSlug}) => {
 
   const user_id = secureLocalStorage.getItem("formData");
   const [open, setOpen] = useState(false);
-  const [filterData, setFilterData] = useState([]);
   const [changeOver, setChangeOver] = useState(null);
   const [changeClick, setChangeClick] = useState(listColor);
   const [shapeProduct, setShapeProduct] = useState();
@@ -307,11 +305,6 @@ export const WeddingBandsDetail = ({productSlug}) => {
         console.error("Error:", error);
       });
   }, [
-    filterData.product?.sku,
-    listColor,
-    filterData.product?.metalColor,
-    diamond_original,
-    productSlug,
     urlColor,
   ]);
 
@@ -337,72 +330,6 @@ export const WeddingBandsDetail = ({productSlug}) => {
 
     return () => debouncedFetchData.cancel(); // Cleanup
   }, [removeWishList]);
-
-  useMemo(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/product/${productSlug}`);
-
-        const product = response.data.data;
-        const imgUrl = product.internal_sku;
-
-        // Update state with both product and imgUrl
-        setFilterData({
-          product: product,
-          imgUrl: imgUrl,
-        });
-
-        const similarProductsData = JSON.parse(product.similar_products);
-        setSimilarProducts(similarProductsData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [productSlug]);
-
-  // Diamond api
-
-  useMemo(() => {
-    const fetchData = async () => {
-      const url = `https://apiservices.vdbapp.com//v2/diamonds?type=${
-        diamond_origin == "lab_grown" ? "Lab_grown_Diamond" : "Diamond"
-      }&stock_num=${stock_num ? stock_num : ""}`;
-
-      const params = {
-        stock_item_type: "Diamond",
-        status: "pending",
-      };
-
-      const headers = {
-        Authorization:
-          "Token token=iltz_Ie1tN0qm-ANqF7X6SRjwyhmMtzZsmqvyWOZ83I, api_key=_eTAh9su9_0cnehpDpqM9xA",
-      };
-
-      try {
-        const response = await axios.get(url, { params, headers });
-        setDiamondData(response.data.response.body.diamonds);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // diamond shape
-  const [shapeData, setShapeData] = useState(null);
-  useMemo(() => {
-    axios
-      .get(`${baseUrl}/diamondshape`)
-      .then((res) => {
-        setShapeData(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
 
   const settings = {
     dots: false,
@@ -781,7 +708,6 @@ export const WeddingBandsDetail = ({productSlug}) => {
       parentDiv.style.display = "none";
     }
   };
-  const currentUrl = window.location.href;
   const handleError = (e) => {
     e.target.onerror = null;
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;

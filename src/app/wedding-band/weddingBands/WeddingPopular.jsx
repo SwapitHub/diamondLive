@@ -1,6 +1,4 @@
 import Link from "next/link";
-import React from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const WeddingPopular = ({ covetedWeddingBands }) => {
   return (
@@ -13,7 +11,6 @@ export const WeddingPopular = ({ covetedWeddingBands }) => {
             </div>
             <div className="inner-polular-eng">
               {covetedWeddingBands.map((item, index) => {
-                console.log(item);
                 
                 return (
                   <div className="popular-grid-wrapper" key={index}>
@@ -21,7 +18,7 @@ export const WeddingPopular = ({ covetedWeddingBands }) => {
                       href={`/detail-wedding-band/${item?.slug}?color=18k-white-gold`}
                     >
                       <div className="imgg-sec">
-                        <LazyLoadImage src={item.default_image_url} alt={item.name}  width="auto"  height="auto"  />
+                        <img src={item.default_image_url} alt={item.name}  width="auto"  height="auto"  />
                       </div>
                       <div className="text-con">
                         <p>{item.name}</p>

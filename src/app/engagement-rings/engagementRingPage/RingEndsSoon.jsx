@@ -1,7 +1,6 @@
 "use client"
 import { UserContext } from "@/app/context/UserContext";
 import { useContext } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 
 export const RingEndsSoon = () => {
@@ -14,8 +13,8 @@ export const RingEndsSoon = () => {
         <div className="container">
           <div className="flex">
             <div className="endsSoon-img">
-              <LazyLoadImage width="auto"  height="auto"   className="desktop" src={`${imgAssetsUrl}/frontend/images/offerEng.jpg`} alt="endSoon" />
-              <LazyLoadImage width="auto"  height="auto"   className="mobile"  src={`${imgAssetsUrl}/frontend/images/ring-1-mob.jpg`} alt="endSoon" />
+              <img width="auto"  height="auto"   className="desktop" src={`${imgAssetsUrl}/frontend/images/offerEng.jpg`} alt="endSoon" />
+              <img width="auto"  height="auto"   className="mobile"  src={`${imgAssetsUrl}/frontend/images/ring-1-mob.jpg`} alt="endSoon" />
 
              
             </div>

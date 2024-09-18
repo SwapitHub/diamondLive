@@ -3,7 +3,6 @@ import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
 import { useContext } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const GemstoneBanner = () => {
 
@@ -15,7 +14,7 @@ export const GemstoneBanner = () => {
       <div className="banner-main engment-banner-sec gemstone-banner">
         <div className="bg-bannerr inner-banner-img">
           <div className="desktop">
-            <LazyLoadImage
+            <img
               className="desktop"
               src={`${imgAssetsUrl}/frontend/images/gembanner.jpg`}
               alt="banner"

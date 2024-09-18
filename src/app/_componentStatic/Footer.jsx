@@ -5,9 +5,9 @@ import Link from "next/link";
 import { FooterMobile } from "./FooterMobile";
 import NewsLetter from "./NewsLetter";
 import { UserContext } from "../context/UserContext";
-export const Footer = () => {
+
+export const Footer = ({ftrIcon, FooterData}) => {
   const [selected, setSelected] = useState(null);
- const {baseUrl} = useContext(UserContext)
   const toggle = (i) => {
     if (selected === i) {
       setSelected(null);
@@ -17,33 +17,8 @@ export const Footer = () => {
   };
 
   // icon url
-  const [ftrIcon, setFtrIcon] = useState([]);
-  useEffect(() => {
-    axios
-      .get(
-        `${baseUrl}/siteinfo`
-      )
-      .then((res) => {
-        setFtrIcon(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
 
-  const [FooterData, setFooterData] = useState([]);
-  const ftrRef = useRef(null);
 
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/footer-pages`)
-      .then((res) => {
-        setFooterData(res.data.data);
-      })
-      .catch(() => {
-        console.log('API error');
-      });
-  }, []);
 
   return (
     <>
@@ -54,7 +29,7 @@ export const Footer = () => {
               <div className="ftr-contact flex">
                 {Array.isArray(FooterData) &&
                   FooterData.map((item) => (
-                    <ul className="ftr-contact-ul" key={item.id} ref={ftrRef}>
+                    <ul className="ftr-contact-ul" key={item.id} >
                       <h4>
                         <Link href="#">{item.name}</Link>
                       </h4>

@@ -17,6 +17,22 @@ const fetchDetailMeta = async (productSlug) => {
   return bandDetail;
 };
 
+const fetchShapeData = async () => {
+  let shape = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/diamondshape`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    shape = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return shape;
+};
+
 export async function generateMetadata({ params }) {
   const {productSlug} = params
 
@@ -47,10 +63,16 @@ export default async function bandDetailPage({ params }) {
  const {productSlug} = params
 
   const bandDetail = await fetchDetailMeta(productSlug);
+  const shape = await fetchShapeData();
+  
+  const filterData={
+    product: bandDetail.data,
+    imgUrl: bandDetail.data.internal_sku,
+  }
 
   return (
     <>
-      <WeddingBandsDetail bandDetail={bandDetail} productSlug={productSlug}/>
+      <WeddingBandsDetail productSlug={productSlug} filterData={filterData} shapeData={shape.data}/>
     </>
   );
 }

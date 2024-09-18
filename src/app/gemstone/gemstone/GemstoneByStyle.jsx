@@ -1,7 +1,5 @@
 "use client"
 import Link from "next/link";
-import React from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -62,7 +60,7 @@ export const GemstoneByStyle = ({ gemstoneBands }) => {
                     <div className="popular-grid-wrapper" key={i}>
                       <Link href={`/gemstone/color/${item.name}`}>
                         <div className="imgg-sec">
-                          <LazyLoadImage src={item.image} alt={item.name}  width="auto"  height="auto"  />
+                          <img src={item.image} alt={item.name}  width="auto"  height="auto"  />
                         </div>
                         <div className="text-icon">
                           <p>{item.name}</p>

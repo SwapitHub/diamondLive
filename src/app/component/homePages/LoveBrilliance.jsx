@@ -1,6 +1,4 @@
 import Link from "next/link";
-import React, { useContext } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const LoveBrilliance = ({home}) => {
   return (
@@ -11,23 +9,23 @@ const LoveBrilliance = ({home}) => {
           style={{ backgroundImage: `url(https://assets.rocksama.com/frontend/images/love-ring-back.png)` }}
         >
           <div className="love-left-image desktop">
-            <LazyLoadImage src={home.section5?.image_desktop} alt="brilliance" effect="blur" width="auto"  height="auto"  />
+            <img src={home.data.section5?.image_desktop} alt="brilliance"  width="auto"  height="auto"  />
           </div>
           <div className="love-left-image mobile"
           style={{ backgroundImage: `url(https://assets.rocksama.com/frontend/images/love-ring-back.png)` }}
           >
-            <LazyLoadImage src={home.section5?.image_desktop} alt="brilliance" effect="blur" width="auto"  height="auto"  />
+            <img src={home.data.section5?.image_desktop} alt="brilliance"  width="auto"  height="auto"  />
           </div>
 
           <div className="love-right-content">
-            <h4>{home.section5?.subheading}</h4>
-            <h3>{home.section5?.heading}</h3>
+            <h4>{home.data.section5?.subheading}</h4>
+            <h3>{home.data.section5?.heading}</h3>
             <p>
-            {home.section5?.description}
+            {home.data.section5?.description}
             </p>
 
-            <Link class="btn explore" href={`${home.section5?.link}`}>
-            {home.section5?.btn_name}
+            <Link class="btn explore" href={`${home.data.section5?.link}`}>
+            {home.data.section5?.btn_name}
             </Link>
           </div>
         </div>

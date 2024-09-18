@@ -89,11 +89,14 @@ const gemstonePage = async ({searchParams, params}) => {
   const gemstoneData = await fetchGemstoneData(stock_num);
   const ringData = await fetchRingDetail(productSlug);
   
-  
+  const filterData={
+    product: ringData.data,
+    imgUrl: ringData.data.internal_sku
+  }
   
   return (
     <>
-      <FinalGemstone gemstoneDataServer={gemstoneData.response.body.gemstones} ringData={ringData}/>
+      <FinalGemstone data={gemstoneData.response.body.gemstones} filterData={filterData}/>
     </>
   );
 };

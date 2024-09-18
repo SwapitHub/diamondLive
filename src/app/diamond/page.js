@@ -1,4 +1,4 @@
-import { DiamondPageMain } from "./diamondPage/Diamond";
+import DiamondPageMain from "./diamondPage/Diamond";
 
 const fetchMeta = async () => {
   let gemstone = [];

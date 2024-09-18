@@ -30,14 +30,14 @@ import CuletPopup from "../../_componentStatic/popups/CuletPopup";
 import FlourePopup from "../../_componentStatic/popups/FlourePopup";
 import ShapePopup from "../../_componentStatic/popups/ShapePopup";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useData } from "../../context/DataContext";
 import { Tabbing } from "../../_componentStatic/Tabbing";
 import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
 import { productList } from "../../../../store/actions/productActions";
 
 
-const SelectDiamond = ({diamondDetails, productSlug}) => {
+const SelectDiamond = ({diamondDetails, productSlug, filterData}) => {
   const [banner, setBanner] = useState({});
   const [open, setOpen] = useState(false);
   const [measOpen, setMeasOpen] = useState(false);
@@ -56,7 +56,8 @@ const SelectDiamond = ({diamondDetails, productSlug}) => {
   const [clarityOpen, setClarityOpen] = useState(false);
   const [newData, setNewData] = useState([]);
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
-  const queryParams = new URLSearchParams(location.search);
+
+  const queryParams = useSearchParams();
   const stock_num = queryParams.get("stock_num");
   const diamond_origin = queryParams.get("diamond_origin");
   const diamond_original = queryParams.get("diamond_original");
@@ -81,37 +82,8 @@ const SelectDiamond = ({diamondDetails, productSlug}) => {
 
   // ===============ring details Api==============
 
-  const [filterData, setFilterData] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
 
-  useMemo(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/product/${productSlug}`);
-
-        const product = response.data.data;
-        const imgUrl = product.default_image_url
-          .split("/")
-          .slice(-1)
-          .join()
-          .split(".")
-          .shift();
-
-        // Update state with both product and imgUrl
-        setFilterData({
-          product: product,
-          imgUrl: imgUrl,
-        });
-
-        const similarProductsData = JSON.parse(product.similar_products);
-        setSimilarProducts(similarProductsData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [productSlug]);
   // ring api details Api end
   const toggleDiamond = (index) => {
     setDiamondDetails((prevState) => ({
@@ -319,11 +291,6 @@ const SelectDiamond = ({diamondDetails, productSlug}) => {
   });
 
   // ============ meta tag  =======================//
-  const currentUrl = window.location.href;
-  const pathSegments = location.pathname
-    .split("/")
-    .filter((segment) => segment);
-  const mainCategory = pathSegments[0] || "";
 
   const [loadedIframes, setLoadedIframes] = useState({});
 

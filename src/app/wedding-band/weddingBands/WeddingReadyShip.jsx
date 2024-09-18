@@ -1,8 +1,7 @@
 "use client"
 import { UserContext } from '@/app/context/UserContext'
 import Link from 'next/link'
-import React, { useContext } from 'react'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { useContext } from 'react'
 
 export const WeddingReadyShip = () => {
     const {imgAssetsUrl} = useContext(UserContext)
@@ -14,11 +13,11 @@ export const WeddingReadyShip = () => {
                     >
                          <div className='Bespoke-banner'>
                             <div className='desktop'>
-                        <LazyLoadImage  src={`${imgAssetsUrl}/frontend/images/readyBands.jpg`} alt="wedding-ship"  width="auto"  height="auto"  />
+                        <img  src={`${imgAssetsUrl}/frontend/images/readyBands.jpg`} alt="wedding-ship"  width="auto"  height="auto"  />
                             </div>
                             <div className='mobile'>
 
-                        <LazyLoadImage   src={`${imgAssetsUrl}/frontend/images/band-mob.jpg`} alt="wedding-ship"  width="auto"  height="auto"  />
+                        <img   src={`${imgAssetsUrl}/frontend/images/band-mob.jpg`} alt="wedding-ship"  width="auto"  height="auto"  />
                             </div>
 
                     </div>

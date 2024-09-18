@@ -12,7 +12,7 @@ import { removeFromCart } from "../../../store/actions/cartActions";
 import { productList, productListCart } from "../../../store/actions/productActions";
 import { removeToWishlist } from "../../../store/actions/wishlistAction";
 import { UserContext } from "../context/UserContext";
-import Header from "../_componentStatic/Header";
+import Header from "../_componentStatic/Header/Header";
 import { Footer } from "../_componentStatic/Footer";
 import { OrdersHistoryDashboard } from "../_componentStatic/OrdersHistoryDashboard";
 import { SettingPreferences } from "../_componentStatic/SettingPreferences";

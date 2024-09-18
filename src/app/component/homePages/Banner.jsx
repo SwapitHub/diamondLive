@@ -1,7 +1,5 @@
 "use client";
 import Link from "next/link";
-import React from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import Slider from "react-slick";
 
 export const Banner = ({ homeContext }) => {
@@ -20,7 +18,7 @@ export const Banner = ({ homeContext }) => {
         <div className="container">
           <div className="common-row banner">
             <Slider {...settings}>
-              {homeContext.map((item) => {
+              {homeContext.data.map((item) => {
                 
                 return (
                   <>
@@ -34,7 +32,7 @@ export const Banner = ({ homeContext }) => {
                           </Link>
                         </div>
                       </div>
-                      <LazyLoadImage
+                      <img
                         src={item?.banner}
                         alt={item?.btn_name}
                         width="auto"

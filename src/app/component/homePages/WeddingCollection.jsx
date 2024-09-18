@@ -1,5 +1,5 @@
+"use client"
 import React from "react";
-import DOMPurify from "dompurify";
 import Link from "next/link";
 
 export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollection}) => {
@@ -16,7 +16,7 @@ export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollect
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(engagementRings?.description),
+                      __html: engagementRings?.description
                     }}
                   ></div>
                 </div>
@@ -30,7 +30,7 @@ export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollect
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(weddingJewelry?.description),
+                      __html: weddingJewelry?.description
                     }}
                   ></div>
                 </div>
@@ -44,7 +44,7 @@ export const WeddingCollection = ({engagementRings,weddingJewelry,weddingCollect
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(weddingCollection?.description),
+                      __html: weddingCollection?.description
                     }}
                   ></div>
                 </div>

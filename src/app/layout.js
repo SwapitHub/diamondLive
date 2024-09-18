@@ -1,13 +1,13 @@
-import { Inter } from "next/font/google";
-import { UserProvider } from "./context/UserContext";
-import ReduxProvider from "./reduxProvider";
-import { DataProvider } from "./context/DataContext";
-import "./style/style.css";
-import 'react-toastify/dist/ReactToastify.css';
-import Header from "./_componentStatic/Header";
-import { Footer } from "./_componentStatic/Footer";
 import ToastWrapper from "@/ToastWrapper";
+import { Inter } from "next/font/google";
+import 'react-toastify/dist/ReactToastify.css';
+import FooterServer from "./_componentStatic/FooterServer";
+import HeaderServer from "./_componentStatic/Header/page";
+import { DataProvider } from "./context/DataContext";
+import { UserProvider } from "./context/UserContext";
 import styles from './page.module.css';
+import ReduxProvider from "./reduxProvider";
+import "./style/style.css";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
           <DataProvider>
             
             <ReduxProvider>
-              <Header/>
+              <HeaderServer/>
               {children}
               <script
                 type="text/javascript"
@@ -55,7 +55,7 @@ export default function RootLayout({ children }) {
                 defer
                 src="//js.hs-scripts.com/45427602.js"
               ></script>
-              <Footer/>
+              <FooterServer/>
             </ReduxProvider>
           </DataProvider>
         </UserProvider>

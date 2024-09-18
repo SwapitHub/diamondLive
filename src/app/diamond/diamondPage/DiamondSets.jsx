@@ -4,7 +4,6 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import Link from "next/link";
 import { useContext, useMemo, useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const DiamondSets = () => {
     const [bridalSet, setBridalSet] = useState([])
@@ -50,7 +49,7 @@ export const DiamondSets = () => {
                                 </div>
                             </div>
                             <div className="bridalSets-img">
-                                <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/dmgsetwet.png`} alt="ring_promotion_banner_desktop_2"  />
+                                <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/dmgsetwet.png`} alt="ring_promotion_banner_desktop_2"  />
                             </div>
                            
                         </div>
@@ -69,7 +68,7 @@ export const DiamondSets = () => {
                                 </div>
                             </div>
                             <div className="bridalSets-img">
-                                <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/diamondSet2.png`} alt="ring_promotion_banner_desktop_2" />
+                                <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/diamondSet2.png`} alt="ring_promotion_banner_desktop_2" />
                             </div>
                             
                         </div>

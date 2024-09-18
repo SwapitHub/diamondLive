@@ -15,8 +15,8 @@ export const EngagementBanner = () => {
       <div className="banner-main engment-banner-sec" >
 
       <div className="inner-banner-img">
-        <LazyLoadImage className="desktop" src={`${imgAssetsUrl}/frontend/images/Layer 45.png`} alt="engagement-rings"  width="auto"  height="auto" />
-        <LazyLoadImage className="mobile" src={`${imgAssetsUrl}/frontend/images/eing-mob.jpg`} alt="engagement-rings"  width="auto"  height="auto" />
+        <img className="desktop" src={`${imgAssetsUrl}/frontend/images/Layer 45.png`} alt="engagement-rings"  width="auto"  height="auto" />
+        <img className="mobile" src={`${imgAssetsUrl}/frontend/images/eing-mob.jpg`} alt="engagement-rings"  width="auto"  height="auto" />
       </div>
         <div className="container min-ht">
           <div className=" banner flex min-ht">

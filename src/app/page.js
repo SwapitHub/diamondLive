@@ -1,4 +1,4 @@
-import Home from "./PageStatic";
+import HomePageData from "./component/homePages/home/page";
 
 
 async function fetchDataFromAPI() {
@@ -59,8 +59,8 @@ export default async function DetailRingPage() {
   
   return (
     <div>
-      
-      <Home data={data} />
+      <HomePageData/>
+      {/* <Home data={data} /> */}
     </div>
   );
 }

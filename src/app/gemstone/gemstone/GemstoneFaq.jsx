@@ -1,11 +1,8 @@
 "use client";
-import axios from "axios";
-import { React, useState, useEffect, useContext, useMemo } from "react";
-import { BiUpArrow, BiDownArrow } from "react-icons/bi";
-import DOMPurify from "dompurify";
-import { UserContext } from "@/app/context/UserContext";
+import { useState } from "react";
+import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 
-export const GemstoneFaq = () => {
+export const GemstoneFaq = ({faqData}) => {
   const [selected, setSelected] = useState(null);
   const toggle = (i) => {
     if (selected === i) {
@@ -14,19 +11,7 @@ export const GemstoneFaq = () => {
 
     setSelected(i);
   };
-  const { baseUrl } = useContext(UserContext);
-  // diamond shape
-  const [faqData, setfaqData] = useState([]);
-  useMemo(() => {
-    axios
-      .get(`${baseUrl}/gemstone-faq`)
-      .then((res) => {
-        setfaqData(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
+ 
   return (
     <section className="Accordian-main Accordian wedding-page" id="Accordian">
       <div className="container">
@@ -49,7 +34,7 @@ export const GemstoneFaq = () => {
                     <div
                       key={faqItem.id}
                       dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(faqItem.answer),
+                        __html: faqItem.answer,
                       }}
                     ></div>
                   </div>

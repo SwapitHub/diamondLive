@@ -1,8 +1,7 @@
 "use client"
 import { UserContext } from '@/app/context/UserContext'
 import Link from 'next/link'
-import React, { useContext } from 'react'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { useContext } from 'react'
 
 export const DiamondReadyToShip = () => {
     const {imgAssetsUrl} = useContext(UserContext)
@@ -21,7 +20,7 @@ export const DiamondReadyToShip = () => {
                         </div>
                     </div>
                     <div className="banner-img">
-                        <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/diamondringer.png`} alt="banner-img"/>
+                        <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/diamondringer.png`} alt="banner-img"/>
                     </div>
                 </div>
             </div>

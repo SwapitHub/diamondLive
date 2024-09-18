@@ -1,11 +1,9 @@
 "use client"
 import Link from "next/link";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
 export const AnniversaryRings = ({home}) => {
-  console.log(home);
 
   
   return (
@@ -16,14 +14,14 @@ export const AnniversaryRings = ({home}) => {
 
           <div className="flex-container">
             <div className="flex">
-              {home?.shopbycategory?.map((item,i) => {
+              {home.shopbycategory?.map((item,i) => {
                 
                 return (
                  
                     <div className="column-width" key={i}>
                       <Link href={item.link}>
                         <div className="ShopCategory-img">
-                          <LazyLoadImage
+                          <img
                             src={item?.image}
                             alt={item?.title}
                             width="auto"  height="auto"  

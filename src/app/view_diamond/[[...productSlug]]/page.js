@@ -42,6 +42,22 @@ const fetchDiamondDetail = async (diamond_origin, stock_num) => {
   return diamond;
 };
 
+const fetchDetailMeta = async (productSlug) => {
+  let ringDetail = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/product/${productSlug}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    ringDetail = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return ringDetail;
+};
+
 export async function generateMetadata({ searchParams }) {
   const { diamond_origin, stock_num } = searchParams;
   
@@ -105,12 +121,16 @@ const DiamondPage = async ({ searchParams, params }) => {
   const { diamond_origin, stock_num } = searchParams;
   const {productSlug} = params
   const diamondMeta = await fetchMeta();
-
+  const ringDetail = await fetchDetailMeta(productSlug);
   const diamondDetails = await fetchDiamondDetail(diamond_origin, stock_num);
 
+  const filterData = {
+    product: ringDetail.data,
+    imgUrl: ringDetail.data.internal_sku,
+  };
   return (
     <>
-      <SelectDiamond diamondDetails={diamondDetails.response.body.diamonds} productSlug={productSlug ? productSlug : null}/>
+      <SelectDiamond diamondDetails={diamondDetails.response.body.diamonds} productSlug={productSlug ? productSlug : null} filterData={filterData}/>
     </>
   );
 };

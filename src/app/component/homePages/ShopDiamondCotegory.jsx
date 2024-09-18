@@ -1,6 +1,5 @@
+"use client"
 import Link from "next/link";
-import React, { useContext } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -38,12 +37,12 @@ export const ShopDiamondCotegory = ({shopStyle}) => {
                 
               ]}
             >
-              {shopStyle.map((item) => {
+              {shopStyle?.map((item) => {
                 return (
                   <div class="column-width" key={item?.id}>
                     <Link href={`/engagement-rings/style/${item.slug}`}>
                       <div className="ShopCategory-img">
-                        <LazyLoadImage src={item.image} alt={item.name}  width="auto"  height="auto"  />
+                        <img src={item.image} alt={item.name}  width="auto"  height="auto"  />
                       </div>
                       <h4>{item.name}</h4>
                     </Link>
@@ -57,12 +56,12 @@ export const ShopDiamondCotegory = ({shopStyle}) => {
           <div className="slider-flex-category mobile">
           
            
-              {shopStyle.map((item) => {
+              {shopStyle?.map((item) => {
                 return (
                   <div class="column-width" key={item?.id}>
                     <Link href={`/engagement-rings/start-with-a-setting?style=${item.slug}`}>
                       <div className="ShopCategory-img">
-                        <LazyLoadImage src={item.image} alt={item.name}  width="auto"  height="auto"  />
+                        <img src={item.image} alt={item.name}  width="auto"  height="auto"  />
                       </div>
                       <h4>{item.name}</h4>
                     </Link>

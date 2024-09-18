@@ -1,12 +1,9 @@
 
-"ise client"
-import { UserContext } from "@/app/context/UserContext";
-import axios from "axios";
-import DOMPurify from "dompurify";
-import { useContext, useMemo, useState } from "react";
+"use client"
+import { useState } from "react";
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 
-export const DiamondFaq = () => {
+export const DiamondFaq = ({shapeData}) => {
     const [selected, setSelected] = useState(null);
     const toggle = (i) => {
         if (selected === i) {
@@ -15,22 +12,7 @@ export const DiamondFaq = () => {
 
         setSelected(i)
     }
-    const {baseUrl} = useContext(UserContext)
-
-    // diamond shape
-    const [shapeData, setShapeData] = useState([]);
-    useMemo(() => {
-        axios
-            .get(
-                `${baseUrl}/faq`
-            )
-            .then((res) => {
-                setShapeData(res.data.data);
-            })
-            .catch(() => {
-                console.log("API error");
-            });
-    }, []);
+    
     return (
         <section className="Accordian-main Accordian wedding-page" id="Accordian">
             <div className="container">
@@ -53,7 +35,7 @@ export const DiamondFaq = () => {
                                         <div
                                             key={faqItem.id}
                                             dangerouslySetInnerHTML={{
-                                                __html: DOMPurify.sanitize(faqItem.answer),
+                                                __html: faqItem.answer,
                                             }}
                                         ></div>
                                     </div>

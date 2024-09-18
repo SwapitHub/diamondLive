@@ -1,7 +1,6 @@
 "use client"
 import { UserContext } from '@/app/context/UserContext'
-import React, { useContext } from 'react'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { useContext } from 'react'
 
 export const WeddingEndsSoon = () => {
     const {imgAssetsUrl} = useContext(UserContext)
@@ -11,8 +10,8 @@ export const WeddingEndsSoon = () => {
                 <div className="container">
                     <div className="flex">
                         <div className="endsSoon-img">
-                            <LazyLoadImage className='desktop' src={`${imgAssetsUrl}/frontend/images/endRings.png`} alt="endSoon"  width="auto"  height="auto"  />
-                            <LazyLoadImage className='mobile'  src={`${imgAssetsUrl}/frontend/images/off-banner-mob.jpg`} alt="endSoon" loading="lazy"  width="auto"  height="auto"  />
+                            <img className='desktop' src={`${imgAssetsUrl}/frontend/images/endRings.png`} alt="endSoon"  width="auto"  height="auto"  />
+                            <img className='mobile'  src={`${imgAssetsUrl}/frontend/images/off-banner-mob.jpg`} alt="endSoon" loading="lazy"  width="auto"  height="auto"  />
 
                         </div>
                         <div className="endsSoon-text ends-soon-txt">

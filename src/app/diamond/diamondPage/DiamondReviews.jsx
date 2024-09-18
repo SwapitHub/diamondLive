@@ -1,7 +1,6 @@
 "use client"
 import { UserContext } from '@/app/context/UserContext'
-import React, { useContext } from 'react'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { useContext } from 'react'
 
 export const DiamondReviews = () => {
     const {imgAssetsUrl} = useContext(UserContext)
@@ -19,7 +18,7 @@ export const DiamondReviews = () => {
                             <div className="testy-bar">
                                 <div className="top-img-name-bar">
                                     <div className="imgg">
-                                        <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/client1.png`} alt="client-img" />
+                                        <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/client1.png`} alt="client-img" />
                                     </div>
                                     <div className="client-name">
                                         <p> Kaitie</p>
@@ -34,7 +33,7 @@ export const DiamondReviews = () => {
                             <div className="testy-bar">
                                 <div className="top-img-name-bar">
                                     <div className="imgg">
-                                        <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/client1.png`} alt="client-img" />
+                                        <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/client1.png`} alt="client-img" />
                                     </div>
                                     <div className="client-name">
                                         <p> Kaitie</p>
@@ -49,7 +48,7 @@ export const DiamondReviews = () => {
                             <div className="testy-bar">
                                 <div className="top-img-name-bar">
                                     <div className="imgg">
-                                        <LazyLoadImage  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/client1.png`} alt="client-img" />
+                                        <img  width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/client1.png`} alt="client-img" />
                                     </div>
                                     <div className="client-name">
                                         <p> Kaitie</p>

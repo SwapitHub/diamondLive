@@ -22,12 +22,13 @@ import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { useData } from "@/app/context/DataContext";
 import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { addToCart } from "../../../../store/actions/cartActions";
 import { addToWishlist } from "../../../../store/actions/wishlistAction";
+import { productList } from "../../../../store/actions/productActions";
 
-export default function FinalGemstone({gemstoneDataServer, ringData}){
+export default function FinalGemstone({data, filterData}){
   const productType = "ring_gemstone";
   const { baseUrl,imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
 
@@ -35,7 +36,7 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
 
   const dispatch = useDispatch();
 
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = useSearchParams();
   const textEngraving = queryParams.get("textEngraving");
   const font_style = queryParams.get("font_style");
   var {productSlug} = useParams();
@@ -48,7 +49,6 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
   const [labGrownDetails, setLabGrownDetails] = useState();
 
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState([]);
   const [removeWishList, setRemoveWishList] = useState();
 
   const diamondData = Object.assign({}, ...data);
@@ -59,28 +59,15 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
       document.body.classList.remove("popup-open");
     }
   }, [open]);
-  useMemo(() => {
-   setData(gemstoneDataServer)
-  }, []);
-
-
-
 
 
   // ===============ring details Api==============
 
-  const [filterData, setFilterData] = useState([]);
 
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
   const platinum = "platinum";
-  useMemo(() => {
-    setFilterData({
-      product: ringData.data,
-      imgUrl: ringData.data.internal_sku
-    })
-  }, [productSlug])
   // ring api details Api end
 
   // =======================
@@ -429,12 +416,6 @@ export default function FinalGemstone({gemstoneDataServer, ringData}){
     document.body.classList.toggle("email-popup-open", ringSize);
   };
 
-  // ============ meta tag  =======================//
-  const currentUrl = window.location.href;
-  const pathSegments = location.pathname
-    .split("/")
-    .filter((segment) => segment);
-  const mainCategory = pathSegments[0] || "";
 
   //Date
   const currentDate = new Date();

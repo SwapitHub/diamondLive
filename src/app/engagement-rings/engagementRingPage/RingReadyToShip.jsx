@@ -1,6 +1,5 @@
 "use client"
 import React, { useContext } from 'react'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Link from 'next/link'
 import { UserContext } from '@/app/context/UserContext'
 
@@ -15,8 +14,8 @@ export const RingReadyToShip = () => {
                
                 >
                     <div className='Bespoke-banner'>
-                        <LazyLoadImage width="auto"  height="auto"   className='desktop' src={`${imgAssetsUrl}/frontend/images/readyRing.jpg`} alt="banner"  />
-                        <LazyLoadImage width="auto"  height="auto"   className='mobile'  src={`${imgAssetsUrl}/frontend/images/beskope-mob.jpg`} alt="banner" />
+                        <img width="auto"  height="auto"   className='desktop' src={`${imgAssetsUrl}/frontend/images/readyRing.jpg`} alt="banner"  />
+                        <img width="auto"  height="auto"   className='mobile'  src={`${imgAssetsUrl}/frontend/images/beskope-mob.jpg`} alt="banner" />
 
                     </div>
                     <div className="banner-content">

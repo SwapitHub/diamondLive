@@ -28,7 +28,7 @@ import {
 import { useData } from "@/app/context/DataContext";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { UserContext } from "@/app/context/UserContext";
 import { DropHint } from "@/app/_componentStatic/DropHint";
 
@@ -36,7 +36,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
   const wishListDataBase = useSelector((state) => state.productDataWishlist);
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = useSearchParams();
   const { productSlug } = useParams();
 
   const productColor = queryParams.get("color");
@@ -522,11 +522,6 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
   }, [ringSize]);
 
   // ============ meta tag  =======================//
-  const currentUrl = window.location.href;
-  const pathSegments = location.pathname
-    .split("/")
-    .filter((segment) => segment);
-  const mainCategory = pathSegments[0] || "";
 
   const handleError = (e) => {
     e.target.onerror = null;

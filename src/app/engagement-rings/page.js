@@ -1,4 +1,4 @@
-import { EngagementRing } from "./engagementRingPage/EngagementRing";
+import  EngagementRing  from "./engagementRingPage/EngagementRing";
 
 const fetchMeta = async () => {
   let gemstone = [];
