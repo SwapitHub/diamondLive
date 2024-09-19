@@ -2,6 +2,7 @@
 import axios from "axios";
 import debounce from "lodash.debounce";
 import Link from "next/link";
+import $  from "jquery"
 import { useContext, useEffect, useMemo, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -11,7 +12,6 @@ import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 import { SearchSuggestion } from "../_componentStatic/SearchSuggestion";
 import { UserContext } from "../context/UserContext";
 import dynamic from "next/dynamic";
-const $=dynamic(()=>import('jquery'),{ssr:false})
 const SearchPage = () => {
   const {
     searching,
@@ -96,6 +96,7 @@ const SearchPage = () => {
     });
   }
 
+  if (typeof window !== "undefined") {
   $(document).ready(function () {
   $(".resultdata > div.all-pages-data").each(function (i, odiv) {
     $(".dropdown-content .ss__list > .filter-ss-column > input").on("click", function () {
@@ -172,10 +173,11 @@ const SearchPage = () => {
       });
   });
   });
-
+  }
   // ================
 
   // ==================== hover effect
+  if (typeof window !== "undefined") {
   $(document).ready(function () {
     $(".resultdata > div.all-pages-data").each(function (i, odiv) {
       $(odiv)
@@ -221,7 +223,7 @@ const SearchPage = () => {
         });
     });
   });
-
+  }
   // ======================metal three color rose yellow white end =============================
 
   // suggestion Api
