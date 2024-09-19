@@ -96,6 +96,7 @@ const SearchPage = () => {
     });
   }
 
+  $(document).ready(function () {
   $(".resultdata > div.all-pages-data").each(function (i, odiv) {
     $(".dropdown-content .ss__list > .filter-ss-column > input").on("click", function () {
       var idMetal = $(this).attr("id");
@@ -169,6 +170,7 @@ const SearchPage = () => {
 
         priceElement.addClass("price-active");
       });
+  });
   });
 
   // ================
