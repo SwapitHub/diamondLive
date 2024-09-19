@@ -19,7 +19,6 @@ import {
 } from "../../../store/actions/productActions";
 import { addToWishlist } from "../../../store/actions/wishlistAction";
 import { ChooseYourImpact } from "../_componentStatic/ChooseYourImpact";
-import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 import { UserContext } from "../context/UserContext";
 
 const CartPage = ({ cart, cartDetails }) => {
@@ -357,7 +356,7 @@ const CartPage = ({ cart, cartDetails }) => {
                 <div className="shoping-card">
                   { (
                     cartDetails?.map((item, index) => {
-                      dispatch(productList())
+                      
                       const selectedMetalColor = metalColor.find(
                         (colorItem) => colorItem.slug === item?.active_color
                       );
