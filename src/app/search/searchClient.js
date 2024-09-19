@@ -1,18 +1,16 @@
 "use client";
 import axios from "axios";
-import React, { useContext, useEffect, useMemo, useState } from "react";
 import $ from "jquery";
-import Select from "react-select";
 import debounce from "lodash.debounce";
+import Link from "next/link";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import secureLocalStorage from "react-secure-storage";
-import { UserContext } from "../context/UserContext";
-import { SearchSuggestion } from "../_componentStatic/SearchSuggestion";
+import Select from "react-select";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
-import Link from "next/link";
-import Header from "../_componentStatic/Header/Header";
-import { Footer } from "../_componentStatic/Footer";
+import { SearchSuggestion } from "../_componentStatic/SearchSuggestion";
+import { UserContext } from "../context/UserContext";
 
 const SearchPage = () => {
   const {

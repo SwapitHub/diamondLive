@@ -1,9 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
 import { validateEmail } from "../_componentStatic/ValidationFunctions";
-import Header from "../_componentStatic/Header/Header";
-import { Footer } from "../_componentStatic/Footer";
 
 const ForgetPass = () => {
   function handleValidation() {
