@@ -7,30 +7,28 @@ import { toast } from "react-toastify";
 
 import GooglePayButton from "@google-pay/button-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FaExclamationCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { v4 as uuidv4 } from "uuid";
+import { removeFromCart } from "../../../store/actions/cartActions";
 import {
- 
   productList,
   productListCart,
 } from "../../../store/actions/productActions";
 import { addToWishlist } from "../../../store/actions/wishlistAction";
 import { ChooseYourImpact } from "../_componentStatic/ChooseYourImpact";
-import { UserContext } from "../context/UserContext";
-import { removeFromCart } from "../../../store/actions/cartActions";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
+import { UserContext } from "../context/UserContext";
 
-const CartPage = ({ cart }) => {
+const CartPage = ({ cart, cartDetails }) => {
 
   const dispatch = useDispatch();
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
   const platinum = "platinum";
-    const pathname = usePathname();
   const navigate = useRouter();
 
   const [down, setDown] = useState(false);
@@ -43,7 +41,6 @@ const CartPage = ({ cart }) => {
   const [plans, setPlans] = useState(1);
   const handleChange = (event) => setMessage(event.target.value);
   const cartData = useSelector((state) => state.cartData);
-  const cartDetails = useSelector((state) => state.productDataCart);
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
   const user_id = secureLocalStorage.getItem("formData");
   const now = new Date();
@@ -340,7 +337,7 @@ const CartPage = ({ cart }) => {
     if (user_id) {
       navigate.push("/check_out");
     } else {
-      secureLocalStorage.setItem("previousPath", pathname);
+      secureLocalStorage.setItem("previousPath", window.location.pathname);
       navigate.push("/login");
       toast.info("Please log in to proceed to checkout.", {
         position: "top-right",
@@ -352,15 +349,13 @@ const CartPage = ({ cart }) => {
   return (
     <>
       
-      {userId ? (
+      {cartDetails ? (
         <div className="shoping-car-page data-base-cart">
           <div className="container">
             {cartDetails.length > 0 ? (
               <div className="shoping-card-main-wrap">
                 <div className="shoping-card">
-                  {loader ? (
-                    <p><LoaderSpinner/></p>
-                  ) : (
+                  { (
                     cartDetails?.map((item, index) => {
                       dispatch(productList())
                       const selectedMetalColor = metalColor.find(

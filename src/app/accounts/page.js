@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { MyAccountDashboard } from "./MyAccountDashboard";
 
 const fetchAccount = async () => {
@@ -16,10 +17,24 @@ const fetchAccount = async () => {
   return account;
 };
 
+const fetchUserData = async (user_id) => {
+  let account = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/user-account?user_id=${user_id}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    account = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return account;
+};
+
 export async function generateMetadata() {
   const data = await fetchAccount();
-  console.log(data);
-  
 
  if (data) {
     const metadata = {
@@ -65,9 +80,16 @@ export async function generateMetadata() {
 }
 const accountPageServer = async () => {
   const account = await fetchAccount();
+
+  const cookieStore = cookies();
+
+  const userId = cookieStore.get('userIdCookies')
+
+  const profileData = await fetchUserData(userId.value)
+  
   return (
     <>
-      <MyAccountDashboard account={account} />
+      <MyAccountDashboard  profileData={profileData}/>
     </>
   );
 };

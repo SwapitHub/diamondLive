@@ -1,98 +1,21 @@
 'use client'
-import axios from "axios";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import secureLocalStorage from "react-secure-storage";
-import Link from "next/link";
-import { UserContext } from "@/app/context/UserContext";
-import { setCartDetails } from "../../../../store/actions/cartActions";
-import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { ContinueShoping } from "@/app/_componentStatic/ContinueShopping";
+import { UserContext } from "@/app/context/UserContext";
+import Link from "next/link";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import secureLocalStorage from "react-secure-storage";
 
 
-const SuccessPayment = ({order_id}) => {
+const SuccessPayment = ({orderId, order_id}) => {
   const pdfRef = useRef();
 
-  const dispatch = useDispatch();
-
-
-  const [removeWishList, setRemoveWishList] = useState();
-  const { baseUrl, imgAssetsUrl } = useContext(UserContext);
-  const cartData = useSelector((state) => state.cartData);
+  const { imgAssetsUrl } = useContext(UserContext);
   const cartDetails = useSelector((state) => state.cartReducer);
-  const [orderId, setOrderId] = useState();
-  const [metalColor, setMetalColor] = useState([]);
 
-  // =======remove to card
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/remove-cartitem/${removeWishList}`)
-      .then((res) => {})
-      .catch((error) => {
-        console.log("remove-cartitem API Error:", error);
-      });
-  }, [removeWishList]);
   // ==================
   // =======================
   const userId = secureLocalStorage.getItem("formData");
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (userId) {
-          const response = await axios.get(
-            `${baseUrl}/getcart-items?user_id=${userId}`
-          );
-
-          if (response.status === 200) {
-            dispatch(setCartDetails(response.data));
-          } else {
-            console.error("Error Status:", response.status);
-          }
-        } else {
-          console.log(null);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    fetchData();
-  }, [setCartDetails, cartData]);
-  
-  // =============
-  // =============
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/metalcolor`)
-      .then((res) => {
-        setMetalColor(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
-
-  const [loader, setLoader] = useState(true);
-  useEffect(() => {
-    // Simulate loading delay
-    const timeout = setTimeout(() => {
-      setLoader(false);
-    }, 2000);
-
-    // Cleanup timeout
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/order-detail?order_id=${order_id}`)
-      .then((res) => {
-        setOrderId(res.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
 
   const printReceipt = async (sectionId) => {
     const printContents = document.getElementById(sectionId).innerHTML;
@@ -136,23 +59,7 @@ const SuccessPayment = ({order_id}) => {
     jsonObject[index.toString()] = value;
   });
 
-  const jsonString = JSON.stringify(jsonObject);
 
-  let jsonStringNew = JSON.parse(jsonString);
-
-  const itemIdsArray = Object.values(jsonStringNew);
-
-  // =============
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/metalcolor`)
-      .then((res) => {
-        setMetalColor(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
   const [displayMessage, setDisplayMessage] = useState(false);
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -177,7 +84,7 @@ const SuccessPayment = ({order_id}) => {
   return (
     <>
       
-      {userId ? (
+      {orderId ? (
         <>
           <div id="print-section" style={{ display: "none" }}>
             <table
@@ -1528,9 +1435,7 @@ const SuccessPayment = ({order_id}) => {
                     </p>
                   </div>
                   <hr />
-                  {loader ? (
-                    <LoaderSpinner />
-                  ) : (
+                  {(
                     <div className="shipping-address-payment">
                       <div className="shipping-address-left">
                         <h2>Shipping Address</h2>
@@ -1560,9 +1465,7 @@ const SuccessPayment = ({order_id}) => {
                       location.
                     </p>
                   </div>
-                  {loader ? (
-                    <LoaderSpinner />
-                  ) : (
+                  {(
                     orderId?.data?.length > 0 &&
                     orderId?.data?.map((item) => {
                       let ring_details;

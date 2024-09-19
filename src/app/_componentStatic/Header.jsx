@@ -6,172 +6,288 @@ import { AiOutlineHeart, AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
 import { BiDownArrow, BiPhoneCall, BiUpArrow } from "react-icons/bi";
 import { BsBag, BsFillBellFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-
+import Link from "next/link";
 import { TiArrowLeftThick } from "react-icons/ti";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { UserContext } from "../context/UserContext";
+import { Account } from "./Account";
+import { CartHover } from "./CartHover";
+import { OrderHistory } from "./OrderHistory";
+import { SearchSuggestion } from "./SearchSuggestion";
+import { WishlistHover } from "./WishlistHover";
 import secureLocalStorage from "react-secure-storage";
-import Link from "next/link";
-import { UserContext } from "@/app/context/UserContext";
-export const Header = ({navData, profileData,siteInfo}) => {
-  // const [active, setActive] = useState(false);
-  // const [selected, setSelected] = useState(null);
-  // const {
-  //   searching,
-  //   setSearching,
-  //   setShowSuggestion,
-  //   setShowSuggestionHeader,
-  //   showSuggestionHeader,
-  //   baseUrl,
-  //   imgAssetsUrl,
-  // } = useContext(UserContext);
-  const userId = secureLocalStorage.getItem("formData");
+import { usePathname } from "next/navigation";
 
-  // secureLocalStorage.setItem("searchedItem", JSON.stringify(searching));
-  // const ToggleClass = () => {
-  //   setActive(!active);
-  // };
+const Header = ({ navData, siteInfo }) => {
+  const [active, setActive] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const pathname = usePathname();
+  const {
+    searching,
+    setSearching,
+    setShowSuggestion,
+    setShowSuggestionHeader,
+    showSuggestionHeader,
+    baseUrl,
+    imgAssetsUrl,
+  } = useContext(UserContext);
 
-  // useEffect(() => {
-  //   if (active) {
-  //     document.body.classList.add("navbar-popup-open");
-  //   } else {
-  //     document.body.classList.remove("navbar-popup-open");
-  //   }
-  // }, [active]);
+  useEffect(() => {
+    secureLocalStorage.setItem("searchedItem", JSON.stringify(searching));
+  }, [searching]);
+  const ToggleClass = () => {
+    setActive(!active);
+  };
 
-  // const cartDetails = useSelector((state) => state.productDataCart);
-  // const wishListDataBase = useSelector((state) => state.productDataWishlist);
+  useEffect(() => {
+    if (active) {
+      document.body.classList.add("navbar-popup-open");
+    } else {
+      document.body.classList.remove("navbar-popup-open");
+    }
+  }, [active]);
 
-  // const toggle = (id) => {
-  //   setSelected(selected === id ? null : id);
-  // };
+  const cartDetails = useSelector((state) => state.productDataCart);
+  const wishListDataBase = useSelector((state) => state.productDataWishlist);
 
-  // const result = useSelector((state) => state.cartData);
-  // const wishlist = useSelector((state) => state.wishlistData);
-  // const dispatch = useDispatch();
+  const toggle = (id) => {
+    setSelected(selected === id ? null : id);
+  };
 
-  // // ======
-  // // navbar
-  // const [searchData, setSearchData] = useState([]);
+  const result = useSelector((state) => state.cartData);
+  const wishlist = useSelector((state) => state.wishlistData);
+  const dispatch = useDispatch();
 
- 
+  // ======
+  // navbar
+  const [searchData, setSearchData] = useState([]);
 
   // suggestion Api
-  // const [suggestion, setSuggestion] = useState();
-  // const [suggestionData, setSuggestionData] = useState([]);
+  const [suggestion, setSuggestion] = useState();
+  const [suggestionData, setSuggestionData] = useState([]);
 
-  // const handleSuggestion = (value) => {
-  //   setSuggestion(value);
-  // };
-  // useMemo(() => {
-  //   const delayedSuggestion = debounce(() => {
-  //     axios
-  //       .get(`${baseUrl}/search-suggestion?q=${suggestion}`)
-  //       .then((res) => {
-  //         setSuggestionData(res.data.data);
-  //       })
-  //       .catch(() => {
-  //         console.log("API error");
-  //       });
-  //   }, 500); 
+  const handleSuggestion = (value) => {
+    setSuggestion(value);
+  };
+  useMemo(() => {
+    const delayedSuggestion = debounce(() => {
+      axios
+        .get(`${baseUrl}/search-suggestion?q=${suggestion}`)
+        .then((res) => {
+          setSuggestionData(res.data.data);
+        })
+        .catch(() => {
+          console.log("API error");
+        });
+    }, 500); // Adjust the debounce delay according to your preference
 
-  //   delayedSuggestion();
+    delayedSuggestion(); // Initial call to avoid empty suggestion on component mount
 
-  //   return delayedSuggestion.cancel; // Cleanup function
-  // }, [suggestion]);
+    return delayedSuggestion.cancel; // Cleanup function
+  }, [suggestion]);
   //search api
-  // const [searchValue, setSearchValue] = useState("");
-  // function handleSearch(value) {
-  //   setShowSuggestionHeader(true);
+  const [searchValue, setSearchValue] = useState("");
+  function handleSearch(value) {
+    setShowSuggestionHeader(true);
 
-  //   setSearchValue(value);
-  //   setSearching(value);
+    setSearchValue(value);
+    setSearching(value);
 
-  //   if (value.length < 1) {
-  //     setShowSuggestionHeader(false);
-  //   } else {
-  //     setShowSuggestionHeader(true);
-  //   }
-  // }
-  // useMemo(() => {
-  //   const delayedSearch = debounce(() => {
-  //     axios
-  //       .get(`${baseUrl}/search?q=${searching}`)
-  //       .then((res) => {
-  //         setSearchData(res.data.data);
-  //       })
-  //       .catch(() => {
-  //         console.log("API error");
-  //       });
-  //   }, 500); // Adjust the debounce delay according to your preference
+    if (value.length < 1) {
+      setShowSuggestionHeader(false);
+    } else {
+      setShowSuggestionHeader(true);
+    }
+  }
+  useMemo(() => {
+    const delayedSearch = debounce(() => {
+      axios
+        .get(`${baseUrl}/search?q=${searching}`)
+        .then((res) => {
+          setSearchData(res.data.data);
+        })
+        .catch(() => {
+          console.log("API error");
+        });
+    }, 500); // Adjust the debounce delay according to your preference
 
-  //   delayedSearch(); // Initial call to avoid empty search on component mount
+    delayedSearch(); // Initial call to avoid empty search on component mount
 
-  //   return delayedSearch.cancel; // Cleanup function
-  // }, [searchValue, searching]);
+    return delayedSearch.cancel; // Cleanup function
+  }, [searchValue, searching]);
   // search end here
 
-  // const [hovered, setHovered] = useState(false);
-  // const [wishHovered, setWishHovered] = useState(false);
-  // const [bag, setBag] = useState(false);
-  // function handleWish() {
-  //   setWishHovered(true);
-  //   setShowSuggestionHeader(false);
-  //   setActive(false);
-  // }
-  // function handleMouse() {
-  //   setHovered(true);
-  //   setShowSuggestionHeader(false);
-  //   setActive(false);
-  // }
-  // function handleBag() {
-  //   setBag(true);
-  //   setShowSuggestionHeader(false);
-  //   setActive(false);
-  // }
-  // // =========
-  // const updateSearchValue = (value) => {
-  //   setSearchValue(value);
-  // };
+  const [hovered, setHovered] = useState(false);
+  const [wishHovered, setWishHovered] = useState(false);
+  const [bag, setBag] = useState(false);
+  function handleWish() {
+    setWishHovered(true);
+    setShowSuggestionHeader(false);
+    setActive(false);
+  }
+  function handleMouse() {
+    setHovered(true);
+    setShowSuggestionHeader(false);
+    setActive(false);
+  }
+  function handleBag() {
+    setBag(true);
+    setShowSuggestionHeader(false);
+    setActive(false);
+  }
+  // =========
+  const updateSearchValue = (value) => {
+    setSearchValue(value);
+  };
 
-  // const userId = secureLocalStorage.getItem("formData");
-  // const [profileData, setProfileData] = useState();
+  const userId = secureLocalStorage.getItem("formData");
+  const [profileData, setProfileData] = useState();
 
-  // useMemo(() => {
-  //   axios
-  //     .get(`${baseUrl}/user-account?user_id=${userId}`)
-  //     .then((res) => {
-  //       setProfileData(res.data);
-  //     })
-  //     .catch(() => {
-  //       console.log("profile API is not working");
-  //     });
-  // }, []);
+  useMemo(() => {
+    axios
+      .get(`${baseUrl}/user-account?user_id=${userId}`)
+      .then((res) => {
+        setProfileData(res.data);
+      })
+      .catch(() => {
+        console.log("profile API is not working");
+      });
+  }, []);
 
-  // useEffect(() => {
-  //   setActive(false);
-  // }, [window.location.pathname]);
-
-  // const [siteInfo, setSiteInfo] = useState();
-  // useEffect(() => {
-  //   axios
-  //     .get(`${baseUrl}/siteinfo`)
-  //     .then((res) => {
-  //       setSiteInfo(res.data.data);
-  //     })
-  //     .catch(() => {
-  //       console.log("profile API is not working");
-  //     });
-  // }, []);
-
-  
+  useEffect(() => {
+    setActive(false);
+  }, [pathname]);
 
   return (
     <>
       {/* {siteInfo && siteInfo.favicon && <Favicon url={siteInfo?.favicon} />} */}
-      <header className="header">
+      <div className="header">
         <div className="container">
-          
+          <div
+            className={`header-top ${
+              pathname == "/check_out" || pathname == "/payment" ? "active" : ""
+            } ${pathname == "/success" ? "success-active" : ""}`}
+          >
+            <div className="header-contact-us ">
+              <Link href="/contact-us">
+                Contact Us
+                <span>
+                  <img
+                    width="auto"
+                    height="auto"
+                    src={`${imgAssetsUrl}/frontend/images/call.png`}
+                    alt="call"
+                  />
+                </span>
+              </Link>
+            </div>
+
+            <div className="header-logo">
+              <Link href="/">
+                <LazyLoadImage
+                  width="auto"
+                  height="auto"
+                  src={siteInfo?.logo}
+                  alt="samaLogo"
+                />
+              </Link>
+            </div>
+
+            <div className="header-icons">
+              <div className="bell-icon">
+                <Link href="javascript:void(0);">
+                  <BsFillBellFill />
+                  <span>01</span>
+                </Link>
+              </div>
+              <div className="search-icon">
+                <Link href="javascript:void(0);" onClick={ToggleClass}>
+                  <AiOutlineSearch />
+                </Link>
+                <input
+                  className={active ? "search-open" : "search-close"}
+                  type="text"
+                  placeholder="Search Product"
+                  onClick={() => {
+                    setShowSuggestion(false);
+                  }}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  onKeyUp={(e) => handleSuggestion(e.target.value)}
+                  value={searching}
+                />
+                <div
+                  className="show-suggestion-page"
+                  onMouseLeave={() => setShowSuggestionHeader(false)}
+                >
+                  {showSuggestionHeader && (
+                    <SearchSuggestion
+                      suggestionData={suggestionData}
+                      suggestion={suggestion}
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="bag-icon" onMouseOver={handleBag}>
+                <div
+                  className={`bag-msgheader ${
+                    (userId && cartDetails?.length > 0) ||
+                    (!userId && result.length > 0)
+                      ? ""
+                      : "bag-active"
+                  } `}
+                >
+                  {userId && cartDetails?.length > 0 ? (
+                    <span className="msg-box">{cartDetails?.length}</span>
+                  ) : !userId && result.length > 0 ? (
+                    <span className="msg-box">{result?.length}</span>
+                  ) : null}
+
+                  <Link href={"/cart"}>
+                    <BsBag />
+                  </Link>
+                </div>
+                <CartHover />
+              </div>
+
+              <div className="header-heart-icon" onMouseOver={handleWish}>
+                <div
+                  className={`whishlist-msg ${
+                    (userId && wishListDataBase.length > 0) ||
+                    (!userId && wishlist.length > 0)
+                      ? ""
+                      : "bag-active"
+                  }`}
+                >
+                  {userId && wishListDataBase.length > 0 ? (
+                    <span className="msg-box">{wishListDataBase?.length}</span>
+                  ) : !userId && wishlist.length > 0 ? (
+                    <span className="msg-box">{wishlist?.length}</span>
+                  ) : null}
+
+                  <Link href={"/wishlist"}>
+                    <AiOutlineHeart />
+                  </Link>
+                </div>
+                <WishlistHover />
+              </div>
+              <div className="user-icon" onMouseOver={handleMouse}>
+                <Link href={userId ? "/accounts" : "/login"}>
+                  <span className="use-name-login">
+                    {userId &&
+                      `${
+                        profileData?.userdata?.first_name
+                          ? `Hi, ${profileData?.userdata?.first_name}`
+                          : ""
+                      }`}
+                  </span>
+                  <AiOutlineUser />
+                </Link>
+
+                {hovered && userId ? <OrderHistory /> : <Account />}
+              </div>
+            </div>
+          </div>
+
           <nav className="nav">
             <ul>
               {navData.map((res) => {
@@ -240,7 +356,7 @@ export const Header = ({navData, profileData,siteInfo}) => {
           </nav>
           {/* ===============================================header mobile device start ===================================================== */}
 
-          {/* <div
+          <div
             className={
               active ? "mobile-nav-main nav-mobile" : "res-nav-main nav-mobile"
             }
@@ -480,8 +596,7 @@ export const Header = ({navData, profileData,siteInfo}) => {
                 </Link>
               </div>
               <div className="header-heart-icon" onMouseOver={handleWish}>
-                <Link
-                  href="javascript:void(0)"
+                <div
                   className={`whishlist-msg ${
                     (userId && wishListDataBase.length > 0) ||
                     (!userId && wishlist.length > 0)
@@ -492,7 +607,7 @@ export const Header = ({navData, profileData,siteInfo}) => {
                   <Link href={"/wishlist"}>
                     <AiOutlineHeart />
                   </Link>
-                </Link>
+                </div>
                 <WishlistHover />
               </div>
               <div className="user-icon" onMouseOver={handleMouse}>
@@ -522,10 +637,10 @@ export const Header = ({navData, profileData,siteInfo}) => {
                 </Link>
               </div>
             </div>
-          </div> */}
+          </div>
           {/* =============================================== header mobile device start ===================================================== */}
         </div>
-      </header>
+      </div>
     </>
   );
 };

@@ -18,8 +18,10 @@ import secureLocalStorage from "react-secure-storage";
 import { UserContext } from "../context/UserContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
-export const CheckOutPage = () => {
+export const CheckOutPage = ({cartDetails}) => {
+  
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
   const router = useRouter();
   const white = "18k-white-gold";
@@ -27,8 +29,6 @@ export const CheckOutPage = () => {
   const rose = "18k-rose-gold";
   const platinum = "platinum";
 
-  const cartData = useSelector((state) => state.cartData);
-  const cartDetails = useSelector((state) => state.productDataCart);
   const user_id = secureLocalStorage.getItem("formData");
 
   const [checked, setChecked] = useState(true);
@@ -66,19 +66,23 @@ export const CheckOutPage = () => {
         if (response.status === 200) {
           addressId.push(response.data.data?.id);
           const indexString = addressId.join(",");
-          const dataToPass = {
-            addressId: indexString,
-            totalPrice:
-              userAccountData === "new jersey" ? Math.round(totalPrice) : "0",
-            shipValue: shipValue ? 50 : 0,
-          };
+          const dataToPass = {addressId:indexString,  totalPrice: userAccountData==="new jersey" ? Math.round(totalPrice) : "0",  shipValue: shipValue ? 50 : 0 };
+          
+          const serializedData = JSON.stringify(dataToPass);
+
+         
         //   router.push({
         //     pathname: '/payment',
         //     query: {data: JSON.stringify("hello")},
         //   });
 
           //   router.push(`/payment`, { state: dataToPass });
-          router.push(`/payment?addressId=${dataToPass.addressId}&totalPrice=${dataToPass.totalPrice}&shipValue=${dataToPass.shipValue}`);
+          router.push('/payment');
+          Cookies.set('userAccountDataShip', serializedData,{
+            expires: 3650, 
+            secure: true,  
+            sameSite: 'Strict'
+          }) 
         } else {
           console.error("Error Status:", response.status);
         }
@@ -876,7 +880,7 @@ export const CheckOutPage = () => {
                   </div>
 
                   <div className="checkout-right">
-                    {user_id ? (
+                    {cartDetails ? (
                       <div className="checkout-right-scroll">
                         <h3>Order Summary</h3>
                         {cartDetails?.map((item) => {
@@ -1267,289 +1271,7 @@ export const CheckOutPage = () => {
                           );
                         })}
                       </div>
-                    ) : (
-                      <div className="checkout-right-scroll">
-                        <h3>Order Summary</h3>
-                        {cartData?.map((item) => {
-                          const selectedMetalColor = metalColor.find(
-                            (colorItem) => colorItem.value === item.ring_color
-                          );
-                          return (
-                            <>
-                              <div className="order-summary">
-                                {item.gemstoneSingle || item.item ? (
-                                  <>
-                                    <div className="main-cart-inner">
-                                      <div className="cart-left-pic">
-                                        <img
-                                          width="auto"
-                                          height="auto"
-                                          onError={handleError}
-                                          src={
-                                            item.gemstoneSingle?.image_url
-                                              ? item.gemstoneSingle?.image_url
-                                              : item.item?.image_url
-                                          }
-                                          alt={
-                                            item.gemstoneSingle?.shape
-                                              ? item.gemstoneSingle?.shape
-                                              : item.item?.name
-                                          }
-                                        />
-                                      </div>
-                                    </div>
-
-                                    <div className="product-info-inner cart-middle-discription">
-                                      <div className="cart-middle-discription-text">
-                                        <span>
-                                          {item.gemstoneSingle?.short_title
-                                            ? item.gemstoneSingle?.short_title
-                                            : item.item?.short_title}
-                                        </span>
-                                        <span>
-                                          {item.gemstoneSingle?.stock_num
-                                            ? item.gemstoneSingle?.stock_num
-                                            : item.item?.stock_num}
-                                        </span>
-                                      </div>
-                                      <div className="cart-right-price">
-                                        <p>
-                                          $
-                                          {Math.round(
-                                            item.gemstoneSingle
-                                              ?.total_sales_price
-                                              ? item.gemstoneSingle
-                                                  ?.total_sales_price
-                                              : item.item?.total_sales_price
-                                          )}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </>
-                                ) : item.ring_data ? (
-                                  <>
-                                    <div className="main-cart-inner">
-                                      <div className="cart-left-pic">
-                                        <ul className="product-list">
-                                          <li
-                                            className={
-                                              item.ring_color === white
-                                                ? "active"
-                                                : "displayed"
-                                            }
-                                          >
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
-                                              alt={item?.name}
-                                              className="img-responsive center-block"
-                                            />
-                                          </li>
-                                          <li
-                                            className={
-                                              item.ring_color === yellow
-                                                ? "active"
-                                                : "displayed"
-                                            }
-                                          >
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt.jpg`}
-                                              alt={item?.name}
-                                              className="img-responsive center-block"
-                                            />
-                                          </li>
-                                          <li
-                                            className={
-                                              item.ring_color === rose
-                                                ? "active"
-                                                : "displayed"
-                                            }
-                                          >
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt1.jpg`}
-                                              alt={item?.name}
-                                              className="img-responsive center-block"
-                                            />
-                                          </li>
-                                          <li
-                                            className={
-                                              item.ring_color === platinum
-                                                ? "active"
-                                                : "displayed"
-                                            }
-                                          >
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
-                                              alt={item?.name}
-                                              className="img-responsive center-block"
-                                            />
-                                          </li>
-                                        </ul>
-
-                                        {item.diamondItem ? (
-                                          <div className="cart-left-pic">
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={item.diamondItem?.image_url}
-                                              alt={item.diamondItem?.name}
-                                            />
-                                          </div>
-                                        ) : (
-                                          <div className="cart-left-pic">
-                                            <img
-                                              width="auto"
-                                              height="auto"
-                                              onError={handleError}
-                                              src={item.gemstone?.image_url}
-                                              alt={item.gemstone?.shape}
-                                            />
-                                          </div>
-                                        )}
-                                      </div>
-                                    </div>
-                                    <div className="product-info cart-middle-discription">
-                                      <div className="product-info-inner">
-                                        <div className="cart-middle-discription-text">
-                                          <div>
-                                            {selectedMetalColor && (
-                                              <h2>
-                                                {selectedMetalColor.value}{" "}
-                                                {item.ring_data?.name} (1/2{" "}
-                                                <span
-                                                  style={{
-                                                    textTransform: "lowercase",
-                                                  }}
-                                                >
-                                                  ct. tw.
-                                                </span>
-                                                )
-                                              </h2>
-                                            )}
-                                          </div>
-                                        </div>
-                                        <div className="cart-right-price">
-                                          <span
-                                            style={{ whiteSpace: "nowrap" }}
-                                            id="prodcut_price_17566554"
-                                          >
-                                            ${Math.round(item.ringPrice)}
-                                          </span>
-                                        </div>
-                                      </div>
-
-                                      <div className="ring-size-cart-checkout">
-                                        {item.diamondItem ? (
-                                          <>
-                                            {" "}
-                                            <div className="checkout-name-description">
-                                              <div className="checkout-left-des">
-                                                <p>
-                                                  {item.diamondItem?.size} Carat{" "}
-                                                  {item.diamondItem?.shape}{" "}
-                                                  Diamond{" "}
-                                                </p>
-                                                <p className="small-text">
-                                                  {item.diamondItem?.cut &&
-                                                    `${item.diamondItem?.cut}Cut,`}{" "}
-                                                  {item.diamondItem?.color}{" "}
-                                                  Color,{" "}
-                                                  {item.diamondItem?.clarity}{" "}
-                                                  Clarity
-                                                </p>
-                                                <p className="small-text">
-                                                  5587475AB
-                                                </p>
-                                              </div>
-                                              <div className="cart-right-price">
-                                                <p>
-                                                  $
-                                                  {Math.round(
-                                                    item.diamondItem
-                                                      ?.total_sales_price
-                                                  )}
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </>
-                                        ) : (
-                                          <div className="checkout-name-description">
-                                            <div className="cart-left-pic">
-                                              <p>
-                                                {item.gemstone?.short_title}
-                                              </p>
-                                            </div>
-                                            <div className="checkout-right-price">
-                                              <p>
-                                                $
-                                                {Math.round(
-                                                  item.gemstone
-                                                    ?.total_sales_price
-                                                )}
-                                              </p>
-                                            </div>
-                                          </div>
-                                        )}
-                                        {item.diamond ? (
-                                          <div className="available-list">
-                                            <p>
-                                              Only {item.diamondItem?.available}{" "}
-                                              Available
-                                            </p>
-                                          </div>
-                                        ) : null}
-                                      </div>
-                                    </div>
-                                  </>
-                                ) : (
-                                  <>
-                                    <div className="main-cart-inner">
-                                      <div className="cart-left-pic">
-                                        <img
-                                          width="auto"
-                                          height="auto"
-                                          onError={handleError}
-                                          src={item.diamonds?.image_url}
-                                          alt={item.diamonds?.name}
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="product-info-inner cart-middle-discription">
-                                      <div className="cart-middle-discription-text">
-                                        <span>
-                                          {item.diamonds?.size} Carat{" "}
-                                          {item.diamonds?.shape} Diamond
-                                        </span>
-                                      </div>
-                                      <div className="cart-right-price">
-                                        <p>
-                                          $
-                                          {Math.round(
-                                            item.diamonds?.total_sales_price
-                                          )}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            </>
-                          );
-                        })}
-                      </div>
-                    )}
+                    ) : null}
 
                     {/* {cartData.slice(0, 1).map} */}
                     <div className="table-count">

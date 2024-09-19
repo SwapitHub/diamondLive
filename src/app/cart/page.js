@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import CartPage from "./cartPageClient";
 
 const fetchMetaCart = async () => {
@@ -16,6 +17,22 @@ const fetchMetaCart = async () => {
   return cart;
 };
 
+const fetchCartData = async (userIdCookies) => {
+  let checkout = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/getcart-items?user_id=${userIdCookies}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    checkout = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return checkout;
+};
 export async function generateMetadata() {
   const data = await fetchMetaCart();
 
@@ -63,9 +80,12 @@ export async function generateMetadata() {
 }
 const CartPageServer = async () => {
   const cart = await fetchMetaCart();
+  const cookieStore = cookies();
+  const userId = cookieStore.get('userIdCookies')
+  const cartDetails = await fetchCartData(userId.value);
   return (
     <>
-      <CartPage cart={cart} />
+      <CartPage cart={cart} cartDetails={cartDetails}/>
     </>
   );
 };

@@ -1,12 +1,13 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
 import { validateCpass, validateEmail } from "./ValidationFunctions";
-import Link from "next/link";
 
 export const Account = () => {
   const { baseUrl } = useContext(UserContext);
@@ -37,6 +38,11 @@ export const Account = () => {
         .then((response) => {
           if (response.status === 200) {
             const user_id = response.data.data.user_id;
+            Cookies.set("userIdCookies", response.data.data.user_id, {
+              expires: 3650, 
+              secure: true,  
+              sameSite: 'Strict'
+            });
             secureLocalStorage.setItem(
               "formData",
               JSON.stringify(response.data.data.user_id)

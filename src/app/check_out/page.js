@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { CheckOutPage } from "./CheckOutPage";
 
 const fetchMetaCheckout = async () => {
@@ -16,6 +17,22 @@ const fetchMetaCheckout = async () => {
   return checkout;
 };
 
+const fetchCartData = async (userIdCookies) => {
+  let checkout = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/getcart-items?user_id=${userIdCookies}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    checkout = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return checkout;
+};
 export async function generateMetadata() {
   const data = await fetchMetaCheckout();
 
@@ -62,10 +79,15 @@ export async function generateMetadata() {
   };
 }
 const CheckOutServer = async () => {
+  const cookieStore = cookies();
+  const userId = cookieStore.get('userIdCookies')
+  const cartDetail = await fetchCartData(userId.value);
   const checkout = await fetchMetaCheckout();
+
+
   return (
     <>
-      <CheckOutPage checkout={checkout} />
+      <CheckOutPage checkout={checkout} cartDetails={cartDetail}/>
     </>
   );
 };

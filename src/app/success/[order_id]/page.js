@@ -61,12 +61,28 @@ export async function generateMetadata() {
     },
   };
 }
+const fetchUserData = async (order_id) => {
+  let account = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/order-detail?order_id=${order_id}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    account = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return account;
+};
 const SuccessServer = async ({params}) => {
   const {order_id} = params
   const success = await fetchSuccessServer();
+  const orderId = await fetchUserData(order_id)
   return (
     <>
-      <SuccessPayment success={success} order_id={order_id}/>
+      <SuccessPayment orderId={orderId} order_id={order_id}/>
     </>
   );
 };

@@ -1,23 +1,20 @@
 "use client";
-import axios from "axios";
 import { format } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { toast } from "react-toastify";
 import { removeFromCart } from "../../../store/actions/cartActions";
-import { productList, productListCart } from "../../../store/actions/productActions";
 import { removeToWishlist } from "../../../store/actions/wishlistAction";
-import { UserContext } from "../context/UserContext";
-import Header from "../_componentStatic/Header/Header";
-import { Footer } from "../_componentStatic/Footer";
 import { OrdersHistoryDashboard } from "../_componentStatic/OrdersHistoryDashboard";
 import { SettingPreferences } from "../_componentStatic/SettingPreferences";
-export const MyAccountDashboard = () => {
-  const { baseUrl, toggle, setToggle ,imgBaseUrl} = useContext(UserContext);
+import { UserContext } from "../context/UserContext";
+import Cookies from "js-cookie";
+export const MyAccountDashboard = ({profileData}) => {
+  const { toggle, setToggle ,imgBaseUrl} = useContext(UserContext);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -43,38 +40,18 @@ export const MyAccountDashboard = () => {
 
     secureLocalStorage.clear();
     secureLocalStorage.removeItem("persist:persist-store");
-
+    Cookies.remove('userIdCookies', {path: '/'})
     toast.success("Sign Out Successfully", {
       position: "top-right",
     });
   };
   const user_id = secureLocalStorage.getItem("formData");
-  const [profileData, setProfileData] = useState();
   const [showOrderId, setShowOrderId] = useState(null);
 
-  // =========
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/user-account?user_id=${user_id}`)
-      .then((res) => {
-        setProfileData(res.data);
-        dispatch(productList());
-        dispatch(productListCart());
-      })
-      .catch(() => {
-        console.log("profile API is not working");
-      });
-  }, [cartData, wishlistData, user_id]);
-  // ============ meta tag  =======================//
 
 
   return (
     <>
-  
-      {/* <MetaTagCategoryPage
-        mainCategory={mainCategory}
-        currentUrl={currentUrl}
-      /> */}
       <div class="account-page">
         <div class="container">
           <div class="account-inner">
@@ -82,7 +59,7 @@ export const MyAccountDashboard = () => {
               <div class="account-user-name">
                 <AiOutlineUser />
                 <span>
-                  {user_id &&
+                  {profileData &&
                     `${
                       profileData?.userdata?.first_name
                         ? `Hi, ${profileData?.userdata?.first_name}`
@@ -122,7 +99,7 @@ export const MyAccountDashboard = () => {
                   </Link>
                 </li>
                 <li class={toggle == 7 ? "activated" : ""}>
-                  <Link href="#" onClick={(event) => signOut(event)}>
+                  <Link href="javascript:void(0);" onClick={(event) => signOut(event)}>
                     Sign Out
                   </Link>
                 </li>

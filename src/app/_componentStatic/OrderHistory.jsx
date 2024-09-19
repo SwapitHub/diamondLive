@@ -7,6 +7,7 @@ import { removeFromCart } from "../../../store/actions/cartActions";
 import { UserContext } from "../context/UserContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 
 export const OrderHistory = ({setFormData}) => {
@@ -30,7 +31,7 @@ export const OrderHistory = ({setFormData}) => {
 
     secureLocalStorage.clear();
     secureLocalStorage.removeItem("persist:persist-store");
-
+    Cookies.remove('userIdCookies', {path: '/'})
     toast.success("Sign Out Successfully", {
       position: "top-right"
     });

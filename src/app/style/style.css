@@ -9706,13 +9706,13 @@ span.qty {
 
 /*================15-march-css-start-here==============*/
 
-a.bag-msgheader,
-a.whishlist-msg {
+div.bag-msgheader,
+div.whishlist-msg {
   position: relative;
 }
 
-a.bag-msgheader span.msg-box,
-a.whishlist-msg span.msg-box {
+div.bag-msgheader span.msg-box,
+div.whishlist-msg span.msg-box {
   background: #310f4c;
   width: 16px;
   height: 16px;

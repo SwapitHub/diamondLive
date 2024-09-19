@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import WishList from "./wishlistClient";
 
 const fetchMetawishlist = async () => {
@@ -15,6 +16,23 @@ const fetchMetawishlist = async () => {
   }
   return wishlistServer;
 };
+
+const fetchWishlistData = async (user_id) => {
+  let wishlistData = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/wishlist-items?user_id=${user_id}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    wishlistData = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return wishlistData;
+};
+
 
 export async function generateMetadata() {
   const data = await fetchMetawishlist();
@@ -63,9 +81,13 @@ export async function generateMetadata() {
 }
 const WishlistPageServer = async () => {
   const wishlistServer = await fetchMetawishlist();
+  const cookieStore = cookies();
+  const user_id = cookieStore.get('userIdCookies')
+  const wishlist = await fetchWishlistData(user_id.value);
+  
   return (
     <>
-      <WishList wishlistServer={wishlistServer} />
+      <WishList wishListDataBase={wishlist.data} />
     </>
   );
 };

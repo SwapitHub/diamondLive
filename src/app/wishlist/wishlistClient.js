@@ -5,8 +5,6 @@ import { VscChromeClose } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import { addToCart } from "../../../store/actions/cartActions";
-// import { MetaTagCategoryPage } from "../../seoTags/MetaTagCategoryPage";
-// import { ContinueShoping } from "../AllRings/reusable_components/ContinueShoping";
 import Link from "next/link";
 import { productList, productListCart } from "../../../store/actions/productActions";
 import { removeToWishlist } from "../../../store/actions/wishlistAction";
@@ -14,7 +12,7 @@ import { validateEmail } from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
 import { ContinueShoping } from "../_componentStatic/ContinueShopping";
 
-const WishList = ({wishlistServer}) => {
+const WishList = ({wishListDataBase}) => {
     
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
@@ -89,7 +87,6 @@ const WishList = ({wishlistServer}) => {
     dispatch(removeToWishlist(item));
   }
 
-  const wishListDataBase = useSelector((state) => state.productDataWishlist);
 
   // =======================
   const userId = secureLocalStorage.getItem("formData");
@@ -262,7 +259,7 @@ const WishList = ({wishlistServer}) => {
         currentUrl={currentUrl}
       /> */}
    
-      {userId ? (
+      {wishListDataBase ? (
         <section className="wishlist-main wishlist-data-base">
           <div className="container">
             <div className="breadcrums">

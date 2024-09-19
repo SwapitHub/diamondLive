@@ -7,8 +7,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
-import { validateEmail, validateName, validatePass } from "../_componentStatic/ValidationFunctions";
+import {
+  validateEmail,
+  validateName,
+  validatePass,
+} from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
+import Cookies from "js-cookie";
 export const LoginSignup = () => {
   const router = useRouter();
 
@@ -28,12 +33,12 @@ export const LoginSignup = () => {
     }
   }
 
-  const [previousPath, setPreviousPath] = useState()  
+  const [previousPath, setPreviousPath] = useState();
   useEffect(() => {
-    const path = secureLocalStorage.getItem('previousPath') || '/';
+    const path = secureLocalStorage.getItem("previousPath") || "/";
     setPreviousPath(path);
   }, []);
-  
+
   const handleValidationsSignIn = (event) => {
     event.preventDefault();
     const formData = {
@@ -60,11 +65,16 @@ export const LoginSignup = () => {
         .then((response) => {
           if (response.status === 200) {
             const user_id = response.data.data.user_id;
+            Cookies.set("userIdCookies", response.data.data.user_id, {
+              expires: 3650, 
+              secure: true,  
+              sameSite: 'Strict'
+            });
             secureLocalStorage.setItem(
               "formData",
               JSON.stringify(response.data.data.user_id)
             );
-            
+
             cartData.forEach((item) => {
               // ===========
               var URL = `${baseUrl}/cart?user_id=${user_id}
@@ -159,15 +169,14 @@ export const LoginSignup = () => {
                     item.diamond_type === "natural"
                   ? "&diamond_type=Diamond"
                   : `&diamond_type=`
-              }&engraving=${item.textEngraving ? item.textEngraving : null}&font=${item.font_style ? item.font_style : null}`;
+              }&engraving=${
+                item.textEngraving ? item.textEngraving : null
+              }&font=${item.font_style ? item.font_style : null}`;
 
               axios
-                .get(
-                  URL
-                )
+                .get(URL)
                 .then((response) => {
                   if (response.status === 200) {
-                    
                   } else {
                     console.error("Error Status:", response.status);
                   }
@@ -183,15 +192,13 @@ export const LoginSignup = () => {
               position: "top-right",
             });
 
-            
-            router.push(previousPath === "/cart" ? "/cart" : "/accounts").then(() => {
-              
-              setTimeout(() => {
-                secureLocalStorage.removeItem('previousPath');
-
-              }, 2000);
-            })
-            
+            router
+              .push(previousPath === "/cart" ? "/cart" : "/accounts")
+              .then(() => {
+                setTimeout(() => {
+                  secureLocalStorage.removeItem("previousPath");
+                }, 2000);
+              });
 
             wishlistData.forEach((item) => {
               var wishListURL = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${
@@ -312,7 +319,6 @@ export const LoginSignup = () => {
                 .get(wishListURL)
                 .then((response) => {
                   if (response.status === 200) {
-                   
                   } else {
                     console.error("Error Status:", response.status);
                   }
@@ -393,18 +399,12 @@ export const LoginSignup = () => {
       });
       console.error("Error:", error);
     }
-   
   };
-
-
-
 
   return (
     <>
-   
       <div className="my-accout-section">
         <div className="container container-1290-list-pages">
-          
           <div className="title">
             <h2>My Account</h2>
           </div>
@@ -525,7 +525,7 @@ export const LoginSignup = () => {
                   Passwords are case sensitive and must be at least 8 characters
                   long.
                 </p>
-               
+
                 <p className="pt-10">
                   <button
                     className="btn btn-success btn-lg btn-block"
@@ -536,8 +536,12 @@ export const LoginSignup = () => {
                   </button>
                 </p>
                 <p className="mt-30 fs-12">
-                SAMA needs the contact information you provide to us to contact you about our products and services. You may unsubscribe from these communications at any time. For information on how to unsubscribe, as well as our privacy practices and commitment to protecting your privacy, please review our
-                  
+                  SAMA needs the contact information you provide to us to
+                  contact you about our products and services. You may
+                  unsubscribe from these communications at any time. For
+                  information on how to unsubscribe, as well as our privacy
+                  practices and commitment to protecting your privacy, please
+                  review our
                   <Link className="td-u" href="/privacy-policy">
                     Privacy Policy
                   </Link>
@@ -548,7 +552,6 @@ export const LoginSignup = () => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };

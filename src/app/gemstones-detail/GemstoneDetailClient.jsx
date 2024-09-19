@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { CiHeart } from "react-icons/ci";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -14,22 +14,19 @@ import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
 import { v4 as uuidv4 } from "uuid";
 
-import InnerImageZoom from "react-inner-image-zoom";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import secureLocalStorage from "react-secure-storage";
-import { UserContext } from "../context/UserContext";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useData } from "../context/DataContext";
-import { Tabbing } from "../_componentStatic/Tabbing";
-import Link from "next/link";
-import { DropHint } from "../_componentStatic/DropHint";
-import Image from "next/image";
 import { addToCart } from "../../../store/actions/cartActions";
 import { productList, productListCart } from "../../../store/actions/productActions";
 import { addToWishlist, removeToWishlist } from "../../../store/actions/wishlistAction";
+import { DropHint } from "../_componentStatic/DropHint";
+import { Tabbing } from "../_componentStatic/Tabbing";
+import { useData } from "../context/DataContext";
+import { UserContext } from "../context/UserContext";
 
 export default function GemstonesDetail({ gemstone }) {
-  console.log(gemstone);
 
   const dispatch = useDispatch();
   const [diamondDetails, setDiamondDetails] = useState(false);

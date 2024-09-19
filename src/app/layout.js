@@ -2,12 +2,12 @@ import ToastWrapper from "@/ToastWrapper";
 import { Inter } from "next/font/google";
 import 'react-toastify/dist/ReactToastify.css';
 import FooterServer from "./_componentStatic/FooterServer";
-import HeaderServer from "./_componentStatic/Header/page";
 import { DataProvider } from "./context/DataContext";
 import { UserProvider } from "./context/UserContext";
 import styles from './page.module.css';
 import ReduxProvider from "./reduxProvider";
 import "./style/style.css";
+import HeaderServer from "./_componentStatic/HeaderServer";
 
 
 const inter = Inter({ subsets: ["latin"] });
