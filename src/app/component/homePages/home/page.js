@@ -235,7 +235,7 @@ export default async function HomePageData() {
         <BridalJewellery home={homeAllSections}/>
         <AnniversaryRings home={homeAllSections.data}/>
         <CelebarteLove home={homeAllSections}/>
-        {/* <WeddingCollection engagementRingMain={engagementRingMain.data} weddingJewelry={weddingJewelry.data} weddingCollection={weddingCollection.data}/> */}
+        <WeddingCollection engagementRingMain={engagementRingMain.data} weddingJewelry={weddingJewelry.data} weddingCollection={weddingCollection.data}/>
 
         <EngagementBridal home={homeAllSections}/>
 

@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { CiHeart } from "react-icons/ci";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -15,6 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
 import { v4 as uuidv4 } from "uuid";
 
+import { DropHint } from "@/app/_componentStatic/DropHint";
+import { Tabbing } from "@/app/_componentStatic/Tabbing";
+import { useData } from "@/app/context/DataContext";
+import { UserContext } from "@/app/context/UserContext";
+import Link from "next/link";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { addToCart } from "../../../../store/actions/cartActions";
 import {
@@ -25,12 +31,6 @@ import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../store/actions/wishlistAction";
-import { useData } from "@/app/context/DataContext";
-import { Tabbing } from "@/app/_componentStatic/Tabbing";
-import Link from "next/link";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { UserContext } from "@/app/context/UserContext";
-import { DropHint } from "@/app/_componentStatic/DropHint";
 
 const FinalRing = ({ diamondDataServer, ringData }) => {
   const [removeWishList, setRemoveWishList] = useState();
