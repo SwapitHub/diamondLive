@@ -21,7 +21,7 @@ import { addToWishlist } from "../../../store/actions/wishlistAction";
 import { ChooseYourImpact } from "../_componentStatic/ChooseYourImpact";
 import { UserContext } from "../context/UserContext";
 
-const CartPage = ({ cart, cartDetails }) => {
+const CartPage = ({ cart, cartDetails, metalColor }) => {
 
   const dispatch = useDispatch();
   const white = "18k-white-gold";
@@ -90,18 +90,7 @@ const CartPage = ({ cart, cartDetails }) => {
   };
 
   // =============
-  const [metalColor, setMetalColor] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/metalcolor`)
-      .then((res) => {
-        setMetalColor(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
 
   const removeProduct = (item) => {
     dispatch(removeFromCart(item));
@@ -193,16 +182,7 @@ const CartPage = ({ cart, cartDetails }) => {
 
   // =============
   // =============
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/metalcolor`)
-      .then((res) => {
-        setMetalColor(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
+ 
 
   const handleAllWishlist = () => {
     setDisableButton(true);

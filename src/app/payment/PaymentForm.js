@@ -12,7 +12,7 @@ import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 
-const PaymentForm = ({userAccountDataShip,cartDetails}) => {
+const PaymentForm = ({userAccountDataShip,cartDetails, metalColor}) => {
   const userParsedData = JSON.parse(userAccountDataShip);
   
   const addressId = userParsedData?.addressId;
@@ -42,18 +42,7 @@ const PaymentForm = ({userAccountDataShip,cartDetails}) => {
     return () => clearTimeout(timeout);
   }, []);
   
-  // =============
-  const [metalColor, setMetalColor] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/metalcolor`)
-      .then((res) => {
-        setMetalColor(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
+
 
   const calculateTotalPriceLogin = () => {
     let total = 0;

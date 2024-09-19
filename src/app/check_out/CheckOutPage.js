@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 
-export const CheckOutPage = ({cartDetails}) => {
+export const CheckOutPage = ({cartDetails, metalColor}) => {
   
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
   const router = useRouter();
@@ -254,17 +254,7 @@ export const CheckOutPage = ({cartDetails}) => {
   };
   
   // =============
-  const [metalColor, setMetalColor] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/metalcolor`)
-      .then((res) => {
-        setMetalColor(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
+
 
   const calculateTotalPriceLogin = () => {
     let total = 0;

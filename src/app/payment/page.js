@@ -33,6 +33,22 @@ const fetchCartData = async (userIdCookies) => {
   }
   return checkout;
 };
+const fetchMetalData = async () => {
+  let checkout = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/metalcolor`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    checkout = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return checkout;
+};
 export async function generateMetadata() {
   const data = await fetchPaymentServer();
 
@@ -80,6 +96,7 @@ export async function generateMetadata() {
 }
 const PaymentServer = async () => {
   const payment = await fetchPaymentServer();
+  const metalColor = await fetchMetalData();
   const cookieStore = cookies();
   const userId = cookieStore.get('userIdCookies')
   const cartDetails = await fetchCartData(userId.value);
@@ -87,7 +104,7 @@ const PaymentServer = async () => {
 
   return (
     <>
-      <PaymentForm payment={payment} cartDetails={cartDetails} userAccountDataShip={userAccountDataShip.value}/>
+      <PaymentForm payment={payment} cartDetails={cartDetails} userAccountDataShip={userAccountDataShip.value} metalColor={metalColor.data}/>
     </>
   );
 };
