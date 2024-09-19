@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import $ from "jquery";
 import debounce from "lodash.debounce";
 import Link from "next/link";
 import { useContext, useEffect, useMemo, useState } from "react";
@@ -11,7 +10,8 @@ import Select from "react-select";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 import { SearchSuggestion } from "../_componentStatic/SearchSuggestion";
 import { UserContext } from "../context/UserContext";
-
+import dynamic from "next/dynamic";
+const $=dynamic(()=>import('jquery'),{ssr:false})
 const SearchPage = () => {
   const {
     searching,
