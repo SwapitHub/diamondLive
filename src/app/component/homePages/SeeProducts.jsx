@@ -12,17 +12,16 @@ export const SeeProducts = ({
   return (
     <section className="see-products-main">
       <div className="container">
-        <div className="common-row see-products">
-          jjj
+        <div className="common-row see-products">          
           <div className="see-products-img">
             <Link href={anniversaryRings?.url} className="See-Products">
               <span>Trellis Rings</span>
-              {/* <span> See Products <MdOutlineKeyboardArrowRight /> </span> */}
+              <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
             <div
-              // dangerouslySetInnerHTML={{
-              //   __html: anniversaryRings?.description,
-              // }}
+              dangerouslySetInnerHTML={{
+                __html: anniversaryRings?.description,
+              }}
             ></div>
           </div>
           <div className="see-products-img">
@@ -31,9 +30,9 @@ export const SeeProducts = ({
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
             <div
-              // dangerouslySetInnerHTML={{
-              //   __html: diamondPendants?.description,
-              // }}
+              dangerouslySetInnerHTML={{
+                __html: diamondPendants?.description,
+              }}
             ></div>
           </div>
           <div className="see-products-img">
@@ -42,9 +41,9 @@ export const SeeProducts = ({
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
             <div
-              // dangerouslySetInnerHTML={{
-              //   __html: tennisBracelets?.description,
-              // }}
+              dangerouslySetInnerHTML={{
+                __html: tennisBracelets?.description,
+              }}
             ></div>
           </div>
           <div className="see-products-img">
@@ -53,9 +52,9 @@ export const SeeProducts = ({
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
             <div
-              // dangerouslySetInnerHTML={{
-              //   __html: diamondStuds?.description,
-              // }}
+              dangerouslySetInnerHTML={{
+                __html: diamondStuds?.description,
+              }}
             ></div>
           </div>
         </div>

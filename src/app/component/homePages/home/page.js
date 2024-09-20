@@ -230,7 +230,7 @@ export default async function HomePageData() {
         <div className="home-page">
         <Banner homeContext={homeContext}/>
         <ShopDiamondShape shapeData={shapeData.data} />
-        <SeeProducts anniversaryRings={anniversaryRings.data} diamondPendants={diamondPendants.data} tennisBracelets={tennisBracelets.data} diamondStuds={diamondStuds.data}/>
+        {/* <SeeProducts anniversaryRings={anniversaryRings.data} diamondPendants={diamondPendants.data} tennisBracelets={tennisBracelets.data} diamondStuds={diamondStuds.data}/> */}
         <ShopDiamondCotegory shopStyle={shopStyle.data}/>
         <BridalJewellery home={homeAllSections}/>
         <AnniversaryRings home={homeAllSections.data}/>
