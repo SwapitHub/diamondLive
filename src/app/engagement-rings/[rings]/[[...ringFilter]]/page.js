@@ -9,6 +9,75 @@ async function fetchDataFromAPI(ring, ringFilter,bridalSets) {
   return data;
 }
 
+
+const fetchMetalData = async () => {
+  let checkout = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/metalcolor`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    checkout = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return checkout;
+};
+
+const fetchDiamondShape = async () => {
+  let checkout = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/diamondshape`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    checkout = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return checkout;
+};
+
+const fetchProductStyle = async () => {
+  let checkout = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/product-style`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    checkout = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return checkout;
+};
+
+const fetchProductData = async () => {
+  let checkout = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/products?page="1"`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    checkout = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return checkout;
+};
+
 export async function generateMetadata({params, searchParams}) {
   const {bridalSets} = searchParams
   const {rings, ringFilter} = params;
@@ -57,17 +126,22 @@ export async function generateMetadata({params, searchParams}) {
   };
 }
 
+
 export default async function DetailRingPage({searchParams, params}) {
   const {bridalSets} = searchParams
   const {rings, ringFilter} = params;
   const data = await fetchDataFromAPI(rings, ringFilter,bridalSets);
   
+  const metalColor = await fetchMetalData();
+  const shapeData = await fetchDiamondShape();
+  const ShopByStyle = await fetchProductStyle();
+  const filterRoseData = await fetchProductData();
  
   
 
   return (
     <div>
-      <StartWithASetting rings={rings} ringFilter={ringFilter ? ringFilter[0] : null} />
+      <StartWithASetting rings={rings} ringFilter={ringFilter ? ringFilter[0] : null} metalColor={metalColor.data} shapeData={shapeData.data} ShopByStyle={ShopByStyle.data} filterRoseData={filterRoseData.data}/>
     </div>
   );
 }

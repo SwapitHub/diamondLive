@@ -124,7 +124,7 @@ export const FooterMobile = ({ FooterData, toggle, selected, ftrIcon }) => {
                   key={moFtrData.id}
                 >
                   <h4 className={selected === moFtrData.id ? "active" : ""}>
-                    <Link href="#">{moFtrData.name}</Link>
+                    <Link href="javascript:void(0);">{moFtrData.name}</Link>
                     <span>
                       {selected === moFtrData.id ? (
                         <svg
@@ -173,7 +173,7 @@ export const FooterMobile = ({ FooterData, toggle, selected, ftrIcon }) => {
                           key={innerFtrItem.id}
                         >
                           <li>
-                            <Link href={`${innerFtrItem.slug}`}>
+                            <Link href={`/${innerFtrItem.slug}`}>
                               {innerFtrItem.name}
                             </Link>
                           </li>

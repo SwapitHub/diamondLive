@@ -1,14 +1,52 @@
+import { cookies } from "next/headers";
 import { ChooseGemstonesPage } from "./ChooseGemstonesPage";
 
 async function fetchDataFromAPI(gemAttribute, gemFilter) {
   const response = await fetch(
     `${process.env.BASE_URL}/check?menu=gemstone&subcategory=start-with-a-gemstone`
   );
-  
+
   const data = await response.json();
 
   return data;
 }
+
+const fetchGemstoneAttributes = async () => {
+  let gemstone = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/gemstone-attributes`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    gemstone = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return gemstone;
+};
+const fetchGemstones = async (gemStyleFilter) => {
+  let gemstone = [];
+  try {
+    const headers = {
+      Authorization:
+        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
+    };
+    const response = await fetch(
+      `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&${gemStyleFilter ? gemStyleFilter : ""}`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    gemstone = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return gemstone;
+};
 
 export async function generateMetadata({ params }) {
   const { gemAttribute, gemFilter } = params;
@@ -62,16 +100,29 @@ export async function generateMetadata({ params }) {
 
 export default async function DetailRingPage({ params }) {
   const { gemAttribute, gemFilter } = params;
+  const cookieStore = cookies();
+  const gemStyle = cookieStore.get("gemShape");
+  const StyleFilterValue = gemStyle ? JSON.parse(gemStyle.value) : "";
+  const gemStyleFilter = StyleFilterValue
+    ? StyleFilterValue.map(
+        (style) =>
+          `&gem_type[]=${style.charAt(0).toUpperCase() + style.slice(1)}`
+      ).join("")
+    : "";
+  console.log(gemStyleFilter);
   const filterValue = Array.isArray(gemFilter) ? gemFilter[0] : gemFilter;
   const data = await fetchDataFromAPI(gemAttribute, filterValue);
-  
+  const gemstoneFilterData = await fetchGemstoneAttributes();
+  const gemstoneData = await fetchGemstones(gemStyleFilter);
 
   return (
     <div>
       <ChooseGemstonesPage
         gemAttribute={gemAttribute}
         gemFilter={filterValue}
-        gemData={data}
+        gemstoneFilterData={gemstoneFilterData.data}
+        data={gemstoneData.response.body.gemstones}
+        gemCount={gemstoneData.response.body}
       />
     </div>
   );

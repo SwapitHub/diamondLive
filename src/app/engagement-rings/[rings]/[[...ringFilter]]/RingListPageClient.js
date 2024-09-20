@@ -14,11 +14,6 @@ import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
-// import { ProductListFaq } from "../../../pages/home/ProductListFaq";
-// import { addToWishList, removeToWishlist } from "../../../redux/action";
-// import { productList } from "../../../redux/productAction";
-// import LoaderSpinner from "../../LoaderSpinner";
-
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
@@ -30,11 +25,9 @@ import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../../store/actions/wishlistAction";
-// import { HeaderMetaTag } from "../../../seoTags/MetaTagHeader";
-// import { Tabbing } from "../reusable_components/Tabbing";
 
-const StartWithASetting = ({ rings, ringFilter }) => {
-  console.log(rings, ringFilter);
+
+const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,filterRoseData }) => {
   
   const searchParams = useSearchParams();
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
@@ -94,16 +87,15 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   const rose = "18k-rose-gold";
   const platinum = "platinum";
 
-  const [filterRoseData, setFilterRoseData] = useState([]);
+  // const [filterRoseData, setFilterRoseData] = useState(filterRoseDatas);
   const [newPrevData, setNewPrevData] = useState([]);
+  const [shapeName, setShapeName]= useState()
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [metalColor, setMetalColor] = useState([]);
   const [changeName, setChangeName] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [activePage, setActivePage] = useState([]);
   const [activeColor, setActiveColor] = useState({});
-  const [shapeName, setShapeName] = useState([]);
   const [activeStyleIds, setActiveStyleIds] = useState([]);
   const [shapeBreadCamb, setShapeBreadCamb] = useState([]);
   const [selectedShopStyleIds, setSelectedShopStyleIds] = useState(() => {
@@ -114,7 +106,6 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   a.push(menuShopStyle);
   const mergedArray = [...activeStyleIds, ...a];
   const selectedShopStyleIdsString = mergedArray.join(",");
-  const [shapeData, setShapeData] = useState([]);
   const [metalId, setMetalId] = useState();
   const [priceShorting, setPriceShorting] = useState();
   const [metalColorUrl, setMetalColorUrl] = useState();
@@ -172,7 +163,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   }, [localBridalData]);
 
   const getBridalSet = () => {
-    const searchParams = new URLSearchParams(window.location.search);
+    // const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("bridal-sets");
     const newSearchString = searchParams.toString();
     const newURL = `/engagement-rings/start-with-a-setting${
@@ -242,107 +233,108 @@ const StartWithASetting = ({ rings, ringFilter }) => {
 
     fetchData();
   }, []);
+  
   // cont a = bredCramStyleFilter.
   // ===============  shop by price range==============
 
   // =============== shop by price range end==============
 
-  useMemo(() => {
-    const fetchData = () => {
-      setLoading(true);
+  // useMemo(() => {
+  //   const fetchData = () => {
+  //     setLoading(true);
 
-      const URLNEW = `${baseUrl}/products?page=${page}${
-        priceShorting
-          ? `&sortby=${priceShorting == undefined ? "" : priceShorting}`
-          : ""
-      }${
-        selectedShopStyleIdsString
-          ? `&ring_style=${selectedShopStyleIdsString}`
-          : ""
-      }${shapeName ? `&shape=${shapeName ? shapeName : ""}` : ""}${
-        localBridalData
-          ? `&bridal_sets=${localBridalData == null ? "" : localBridalData}`
-          : ""
-      }${
-        trellisRing
-          ? `&subcategory=${trellisRing == null ? "" : trellisRing}`
-          : ""
-      }`;
+  //     const URLNEW = `${baseUrl}/products?page=${page}${
+  //       priceShorting
+  //         ? `&sortby=${priceShorting == undefined ? "" : priceShorting}`
+  //         : ""
+  //     }${
+  //       selectedShopStyleIdsString
+  //         ? `&ring_style=${selectedShopStyleIdsString}`
+  //         : ""
+  //     }${shapeName ? `&shape=${shapeName ? shapeName : ""}` : ""}${
+  //       localBridalData
+  //         ? `&bridal_sets=${localBridalData == null ? "" : localBridalData}`
+  //         : ""
+  //     }${
+  //       trellisRing
+  //         ? `&subcategory=${trellisRing == null ? "" : trellisRing}`
+  //         : ""
+  //     }`;
       
-      axios
-        .get(URLNEW)
-        .then((res) => {
-          if (res.status === 200) {
-            setNewPrevData(res.data);
+  //     axios
+  //       .get(URLNEW)
+  //       .then((res) => {
+  //         if (res.status === 200) {
+  //           setNewPrevData(res.data);
 
-            const updatedProducts = res.data.data.map((product) => ({
-              id: product.id,
-              sku: product.sku,
-              name: product.product_browse_pg_name,
-              image: product.default_image_url,
-              images: product.default_image_url
-                .split("/")
-                .slice(-1)
-                .join()
-                .split(".")
-                .shift(),
-              slug: product.slug,
-              CenterShape: product.CenterShape,
-              multiCategory: product.multiCategory,
-              imageName: product.default_image_url
-                .split("/")
-                .slice(-1)
-                .join()
-                .split(".")
-                .shift(),
-              white_gold_price: product.white_gold_price,
-              yellow_gold_price: product.yellow_gold_price,
-              rose_gold_price: product.rose_gold_price,
-              platinum_price: product.platinum_price,
-            }));
+  //           const updatedProducts = res.data.data.map((product) => ({
+  //             id: product.id,
+  //             sku: product.sku,
+  //             name: product.product_browse_pg_name,
+  //             image: product.default_image_url,
+  //             images: product.default_image_url
+  //               .split("/")
+  //               .slice(-1)
+  //               .join()
+  //               .split(".")
+  //               .shift(),
+  //             slug: product.slug,
+  //             CenterShape: product.CenterShape,
+  //             multiCategory: product.multiCategory,
+  //             imageName: product.default_image_url
+  //               .split("/")
+  //               .slice(-1)
+  //               .join()
+  //               .split(".")
+  //               .shift(),
+  //             white_gold_price: product.white_gold_price,
+  //             yellow_gold_price: product.yellow_gold_price,
+  //             rose_gold_price: product.rose_gold_price,
+  //             platinum_price: product.platinum_price,
+  //           }));
 
-            if (page > 1) {
-              setFilterRoseData((prevData) => [
-                ...prevData,
-                ...updatedProducts,
-              ]);
-            } else {
-              setFilterRoseData(updatedProducts);
-            }
+  //           if (page > 1) {
+  //             setFilterRoseData((prevData) => [
+  //               ...prevData,
+  //               ...updatedProducts,
+  //             ]);
+  //           } else {
+  //             setFilterRoseData(updatedProducts);
+  //           }
 
-            setTimeout(() => {
-              setLoading(false);
-            }, 5500);
-          }
-        })
-        .catch(() => {
-          console.log("API error");
-          setLoading(false);
-        });
-    };
-    fetchData();
+  //           setTimeout(() => {
+  //             setLoading(false);
+  //           }, 5500);
+  //         }
+  //       })
+  //       .catch(() => {
+  //         console.log("API error");
+  //         setLoading(false);
+  //       });
+  //   };
+  //   fetchData();
 
-    window.addEventListener("beforeunload", (event) => {
-      fetchData();
-    });
+  //   // window.addEventListener("beforeunload", (event) => {
+  //   //   fetchData();
+  //   // });
 
-    window.addEventListener("unload", (event) => {
-      fetchData();
-    });
-    const timeoutColor = setTimeout(() => {
-      commonMetalColor(metalColorName || "White");
-    }, 1500);
+  //   // window.addEventListener("unload", (event) => {
+  //   //   fetchData();
+  //   // });
+  //   const timeoutColor = setTimeout(() => {
+  //     commonMetalColor(metalColorName || "White");
+  //   }, 1500);
 
-    return () => clearTimeout(timeoutColor);
-  }, [
-    page,
-    selectedShopStyleIdsString,
-    priceShorting,
-    localBridalData,
-    shapeName,
-    getLocalStoreMetal,
-    metalColorName,
-  ]);
+  //   return () => clearTimeout(timeoutColor);
+  // }, [
+  //   page,
+  //   selectedShopStyleIdsString,
+  //   priceShorting,
+  //   localBridalData,
+  //   shapeName,
+  //   getLocalStoreMetal,
+  //   metalColorName,
+  // ]);
 
   useEffect(() => {
     setPage(1);
@@ -381,23 +373,14 @@ const StartWithASetting = ({ rings, ringFilter }) => {
       }
     };
     if (page * 30 < newPrevData.product_count && !loading) {
-      window.addEventListener("scroll", handleInfiniteScroll);
+      // window.addEventListener("scroll", handleInfiniteScroll);
     }
-    return () => window.removeEventListener("scroll", handleInfiniteScroll);
+    // return () => window.removeEventListener("scroll", handleInfiniteScroll);
   }, [loading]);
 
   //  =====================scroll pagination end===================
   // ===========metal three color rose yellow white  =============================
-  useMemo(() => {
-    axios
-      .get(`${baseUrl}/metalcolor`)
-      .then((res) => {
-        setMetalColor(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
+
 
   const onChangeName = (value, id, slug) => {
     setChangeName({ value, id });
@@ -426,17 +409,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   };
 
   // =============== shop by shape start ==============
-  useMemo(() => {
-    axios
-      .get(`${baseUrl}/diamondshape`)
-      .then((res) => {
-        setShapeData(res.data.data);
-        setShapeName(menuShapeName);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, [menuShapeName]);
+
 
   const shapeOnclick = (shapeNameItem) => {
     const clickedShape = secureLocalStorage.getItem("clickedShape");
@@ -447,7 +420,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
 
       secureLocalStorage.removeItem("clickedShape");
       setShapeBreadCamb("");
-      setShapeName("");
+      // setShapeName("");
       setGetLocalStoreShape("");
     } else {
       searchParams.delete("shape");
@@ -456,7 +429,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
         newSearchString ? `?${newSearchString}` : ""
       }`;
       router.replace(newURL);
-      setShapeName(shapeNameItem);
+      // setShapeName(shapeNameItem);
 
       secureLocalStorage.setItem("clickedShape", shapeNameItem);
     }
@@ -472,7 +445,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
       setMetalId(metaColorId);
     }
     setMetalColorName(MetalColorName);
-    const searchParams = new URLSearchParams(window.location.search);
+    // const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("metal");
     const newSearchString = searchParams.toString();
     const newURL = `${"/engagement-rings/start-with-a-setting"}${
@@ -485,19 +458,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   // =============== shop by shape end ==============
 
   // =============== shop by  style ==============
-  const [ShopByStyle, setShopStyle] = useState([]);
-  useMemo(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/product-style`);
-        setShopStyle(response.data.data);
-      } catch (error) {
-        console.log("shop style api error:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+ 
 
   useEffect(() => {
     const storedSelectedShopStyleIds =
@@ -529,9 +490,9 @@ const StartWithASetting = ({ rings, ringFilter }) => {
     // const parsedColorData = storedColorData ? JSON.parse(storedColorData) : [];
 
     setActiveStyleIds(parsedStyleData);
-    setShapeName(storedShapeData);
+    // setShapeName(storedShapeData);
     // setColorDataSlider(parsedColorData);
-  }, [menuShopStyle, shapeName]);
+  }, [menuShopStyle]);
 
   const ShopStyle = (styleItem) => {
     let updatedStyleDataSlider = [...activeStyleIds];
@@ -564,7 +525,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
     
     commonMetalColor("White");
     setActiveStyleIds([]);
-    setShapeName();
+    // setShapeName();
     setMetalId();
     setMetalColorValue(white);
     setMetalColorName("White");
@@ -589,7 +550,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   // =============== shop by price range==============
 
   // ===============shop by price range end==============
-
+  if (typeof window !== "undefined") {
   function commonMetalColor(idMetal) {
     $(
       ".all-pages-data, .all-img1.common-img, .main-common-active.all-card-four-colors > div"
@@ -604,7 +565,9 @@ const StartWithASetting = ({ rings, ringFilter }) => {
       }
     });
   }
+  }
 
+  if (typeof window !== "undefined") {
   $(".resultdata > div.all-pages-data").each(function (i, odiv) {
     $(".shop-by-metal-color > .metal-all-color").on("click", function () {
       var idMetal = $(this).attr("id");
@@ -686,10 +649,11 @@ const StartWithASetting = ({ rings, ringFilter }) => {
         priceElement.addClass("price-active");
       });
   });
-
+  }
   // ================
 
   // ==================== hover effect
+  if (typeof window !== "undefined") {
   $(document).ready(function () {
     $(".resultdata > div.all-pages-data").each(function (i, odiv) {
       $(odiv)
@@ -735,7 +699,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
         });
     });
   });
-
+  }
   // ==================sort by price start
 
   const handlePriceChange = (selectedOption) => {
@@ -919,7 +883,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
   };
   const handleShapeRemove = () => {
     
-    setShapeName();
+    // setShapeName();
     secureLocalStorage.removeItem("clickedShape");
   };
 
@@ -1669,6 +1633,8 @@ const StartWithASetting = ({ rings, ringFilter }) => {
         <div className="resultdata setings-Page-img">
           {filterRoseData.length > 0 ? (
             filterRoseData.map((item, index) => (
+              
+              
               <div
                 key={index}
                 className="resultdata all-pages-data "
@@ -1676,6 +1642,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                   secureLocalStorage.removeItem("diamond_type_ring")
                 }
               >
+                
                 <div className="outerDiv" id={`items-${item.id}`}>
                   <Link
                     href={`${
@@ -1700,7 +1667,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                             height="auto"
                             effect="blur"
                             className="lazy-image"
-                            src={item.image}
+                            src={item.default_image_url}
                             alt={item.name}
                             onError={(e) => {
                               e.target.onerror = null;
@@ -1713,7 +1680,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                             width="auto"
                             height="auto"
                             effect="blur"
-                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.side.jpg`}
+                            src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.jpg`}
                             alt={item.name}
                             onError={(e) => {
                               e.target.onerror = null;
@@ -1737,7 +1704,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                             width="auto"
                             height="auto"
                             effect="blur"
-                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.alt.jpg`}
+                            src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.alt.jpg`}
                             alt={item.name}
                             onError={(e) => {
                               e.target.onerror = null;
@@ -1750,7 +1717,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                             width="auto"
                             height="auto"
                             effect="blur"
-                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.side.alt.jpg`}
+                            src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.alt.jpg`}
                             alt={item.name}
                             onError={(e) => {
                               e.target.onerror = null;
@@ -1766,7 +1733,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                             width="auto"
                             height="auto"
                             effect="blur"
-                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.alt1.jpg`}
+                            src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.alt1.jpg`}
                             alt={item.name}
                             onError={(e) => {
                               e.target.onerror = null;
@@ -1779,7 +1746,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                             width="auto"
                             height="auto"
                             effect="blur"
-                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.side.alt1.jpg`}
+                            src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.alt1.jpg`}
                             alt={item.name}
                             onError={(e) => {
                               e.target.onerror = null;
@@ -1794,7 +1761,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                             width="auto"
                             height="auto"
                             effect="blur"
-                            src={item.image}
+                            src={item.default_image_url}
                             alt={item.name}
                             onError={(e) => {
                               e.target.onerror = null;
@@ -1807,7 +1774,7 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                             width="auto"
                             height="auto"
                             effect="blur"
-                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.side.jpg`}
+                            src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.jpg`}
                             alt={item.name}
                             onError={(e) => {
                               e.target.onerror = null;
@@ -1841,8 +1808,8 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                                   item.id,
                                   white,
                                   item.white_gold_price,
-                                  item.imageName,
-                                  item.imageName
+                                  item.internal_sku,
+                                  item.internal_sku
                                 );
                               }}
                             />
@@ -1867,8 +1834,8 @@ const StartWithASetting = ({ rings, ringFilter }) => {
                                 item.id,
                                 white,
                                 item.white_gold_price,
-                                item.imageName,
-                                item.imageName
+                                item.internal_sku,
+                                item.internal_sku
                               );
                             }}
                           />

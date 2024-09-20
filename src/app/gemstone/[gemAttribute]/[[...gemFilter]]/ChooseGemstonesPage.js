@@ -22,8 +22,9 @@ import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../../store/actions/wishlistAction";
+import Cookies from "js-cookie";
 
-export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
+export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData, data, gemCount }) => {
   const gemSlug = useSearchParams();
   let gemColor;
   let gemStyle;
@@ -121,14 +122,11 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
   const [shapeDataSlider, setShapeDataSlider] = useState();
 
   const dispatch = useDispatch();
-  const [data, setData] = useState([]);
   const user_id = secureLocalStorage.getItem("formData");
   const gemstone = "gemstone";
 
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [gemCount, setGemCount] = useState([]);
-  const [gemstoneFilterData, setGemstoneFilterData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleShapeClick = (styleItem) => {
     let updatedShapeDataSlider = [...shapeDataSlider];
@@ -167,7 +165,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
   // Read from local storage on component mount
   const [gemStyles_uses, setGemStyles_uses] = useState("");
   useEffect(() => {
-    const storedStyleData = secureLocalStorage.getItem("styleDataSlider");
+    const storedStyleData = Cookies.get("gemShape");
     const storedShapeData = secureLocalStorage.getItem("shapeDataSlider");
     const storedColorData = secureLocalStorage.getItem("colorDataSlider");
 
@@ -181,30 +179,28 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
   }, [gemStyle, gemShape, gemColor]);
 
   const handelSettingStyle = (styleItem) => {
+        
     let updatedStyleDataSlider = [...menuStyleNames];
 
     if (menuStyleNames?.includes(styleItem)) {
       updatedStyleDataSlider = menuStyleNames.filter(
         (item) => item !== styleItem
       );
-      const searchParams = useSearchParams();
-      searchParams.delete("style");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/gemstones/start-with-a-gemstone"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      history.replace(newURL);
+      // const searchParams = useSearchParams();
+      // searchParams.delete("style");
+      // const newSearchString = searchParams.toString();
+      // const newURL = `${"/gemstones/start-with-a-gemstone"}${
+      //   newSearchString ? `?${newSearchString}` : ""
+      // }`;
+      // history.replace(newURL);
     } else {
       updatedStyleDataSlider = [...menuStyleNames, styleItem];
     }
 
-    // Update state
     setMenuStyleNames(updatedStyleDataSlider);
-
-    secureLocalStorage.setItem(
-      "styleDataSlider",
-      JSON.stringify(updatedStyleDataSlider)
-    );
+    Cookies.set('gemShape',  JSON.stringify(updatedStyleDataSlider));
+    
+    window.location.reload();
   };
 
   const newStyleSliderData = menuStyleNames
@@ -214,7 +210,6 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
     )
     .join("");
 
-  const [gemColor_uses, setGemColor_uses] = useState("");
 
   const handleColor = (color) => {
     let updatedColorDataSlider = [...colorDataSlider];
@@ -248,81 +243,74 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
     )
     .join("");
 
-  const fetchDataGem = useMemo(
-    () => async () => {
-      const url = `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&page_number=${page}${
-        gemStyleSlider ? gemStyleSlider : ""
-      }${newStyleSliderData ? newStyleSliderData : ""}${
-        newColorSliderData ? newColorSliderData : ""
-      }${gemColorSlider ? gemColorSlider : ""}${
-        newShapeSliderData ? newShapeSliderData : ""
-      }${gemShapeSlider ? gemShapeSlider : ""}`;
+  // const fetchDataGem = useMemo(
+  //   () => async () => {
+  //     const url = `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&page_number=${page}${
+  //       gemStyleSlider ? gemStyleSlider : ""
+  //     }${newStyleSliderData ? newStyleSliderData : ""}${
+  //       newColorSliderData ? newColorSliderData : ""
+  //     }${gemColorSlider ? gemColorSlider : ""}${
+  //       newShapeSliderData ? newShapeSliderData : ""
+  //     }${gemShapeSlider ? gemShapeSlider : ""}`;
 
-      const params = {
-        stock_item_type: "gemstones",
-        status: "pending",
-        page_number: page,
-        page_size: pageSize,
-      };
+  //     const params = {
+  //       stock_item_type: "gemstones",
+  //       status: "pending",
+  //       page_number: page,
+  //       page_size: pageSize,
+  //     };
 
-      const headers = {
-        Authorization:
-          "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-      };
+  //     const headers = {
+  //       Authorization:
+  //         "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
+  //     };
 
-      try {
-        setLoading(true);
-        const response = await axios.get(url, { params, headers });
-        if (response.status === 200) {
-          if (page === 1) {
-            setData(response.data.response.body.gemstones);
-          } else {
-            setData((prevData) => [
-              ...prevData,
-              ...response.data.response.body.gemstones,
-            ]);
-          }
-          setGemCount(response.data.response.body);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [
-      page,
-      gemStyleSlider,
-      newStyleSliderData,
-      gemColorSlider,
-      newColorSliderData,
-      gemShapeSlider,
-      newShapeSliderData,
-    ]
-  );
+  //     try {
+  //       setLoading(true);
+  //       const response = await axios.get(url, { params, headers });
+  //       if (response.status === 200) {
+  //         if (page === 1) {
+  //           setData(response.data.response.body.gemstones);
+  //         } else {
+  //           setData((prevData) => [
+  //             ...prevData,
+  //             ...response.data.response.body.gemstones,
+  //           ]);
+  //         }
+  //         setGemCount(response.data.response.body);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   },
+  //   [
+  //     page,
+  //     gemStyleSlider,
+  //     newStyleSliderData,
+  //     gemColorSlider,
+  //     newColorSliderData,
+  //     gemShapeSlider,
+  //     newShapeSliderData,
+  //   ]
+  // );
 
   // Call the memoized fetchData function inside useEffect
-  useMemo(() => {
-    fetchDataGem();
+  // useMemo(() => {
+  //   fetchDataGem();
+  // }, [fetchDataGem]);
 
-    window.addEventListener("beforeunload", (event) => {
-      fetchDataGem();
-    });
-
-    window.addEventListener("unload", (event) => {
-      fetchDataGem();
-    });
-  }, [fetchDataGem]);
-  useEffect(() => {
-    setPage(1);
-  }, [
-    gemStyleSlider,
-    newStyleSliderData,
-    gemColorSlider,
-    newColorSliderData,
-    gemShapeSlider,
-    newShapeSliderData,
-  ]);
+  // useEffect(() => {
+  //   setPage(1);
+  // }, [
+  //   gemStyleSlider,
+  //   newStyleSliderData,
+  //   gemColorSlider,
+  //   newColorSliderData,
+  //   gemShapeSlider,
+  //   newShapeSliderData,
+  // ]);
 
   // Scroll pagination start
   useEffect(() => {
@@ -481,24 +469,6 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
 
     return () => clearTimeout(timeout);
   }, []);
-
-  // =========shape api
-  const fetchGemstoneAttributes = useMemo(
-    () => async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/gemstone-attributes`);
-        setGemstoneFilterData(response.data.data);
-      } catch (error) {
-        console.log("shape API error gemstone");
-      }
-    },
-    [setGemstoneFilterData]
-  );
-
-  // Call the memoized function inside useEffect
-  useMemo(() => {
-    fetchGemstoneAttributes();
-  }, [fetchGemstoneAttributes]);
 
   const handleRemoveStyle = (slug) => {
     setMenuStyleNames((prevSelectedStyles) => {
@@ -683,33 +653,33 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
                 >
                   <SlickSlider
                     {...gemstonesStyleSliderDesktop}
-                    // responsive={[
-                    //   {
-                    //     breakpoint: 1198,
-                    //     settings: {
-                    //       slidesToShow: 5,
-                    //       slidesToScroll: 1,
-                    //       infinite: true,
-                    //     },
-                    //   },
+                    responsive={[
+                      {
+                        breakpoint: 1198,
+                        settings: {
+                          slidesToShow: 5,
+                          slidesToScroll: 1,
+                          infinite: true,
+                        },
+                      },
 
-                    //   {
-                    //     breakpoint: 768,
-                    //     settings: {
-                    //       slidesToShow: 4,
-                    //       slidesToScroll: 1,
-                    //       infinite: true,
-                    //     },
-                    //   },
-                    //   {
-                    //     breakpoint: 375,
-                    //     settings: {
-                    //       slidesToShow: 3,
-                    //       slidesToScroll: 1,
-                    //       infinite: true,
-                    //     },
-                    //   },
-                    // ]}
+                      {
+                        breakpoint: 768,
+                        settings: {
+                          slidesToShow: 4,
+                          slidesToScroll: 1,
+                          infinite: true,
+                        },
+                      },
+                      {
+                        breakpoint: 375,
+                        settings: {
+                          slidesToShow: 3,
+                          slidesToScroll: 1,
+                          infinite: true,
+                        },
+                      },
+                    ]}
                   >
                     {gemstoneFilterData.gemstones?.map((item) => {
                       return (
@@ -1175,9 +1145,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
               </div>
             )}
           </div>
-          {loader ? (
-            <LoaderSpinner />
-          ) : (
+          {(
             <div className="gemstone-inners">
               {data.map((item) => {
                 return (
@@ -1249,7 +1217,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter, gemData }) => {
                             </div>
                           </div>
                           <div className="gems-limit">
-                            <Link href="#">
+                            <Link href={`/gemstones-detail/?stock_num=${item.stock_num}`}>
                               <span> {item.short_title}</span>
                             </Link>
                             <span className="product-price">
