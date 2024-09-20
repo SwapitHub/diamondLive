@@ -85,7 +85,7 @@ const accountPageServer = async () => {
 
   const userId = cookieStore.get('userIdCookies')
 
-  const profileData = await fetchUserData(userId.value)
+  const profileData = await fetchUserData(userId?.value)
   
   return (
     <>

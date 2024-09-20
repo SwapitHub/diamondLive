@@ -62,11 +62,11 @@ export async function generateMetadata({ params }) {
 
   // Return metadata if needed
   return {
-    title: data.data?.name || "Default Title",
-    description: data.data?.description || "Default Description",
+    title: data.data?.meta_title || data.data?.name,
+    description: data.data?.meta_description || data.data?.description,
     openGraph: {
-      title: data.data?.name || "Default Title",
-      description: data.data?.description || "Default Description",
+      title: data.data?.meta_name || data.data?.name,
+      description: data.data?.meta_description || data.data?.description,
       url:
         data.data?.default_image_url ||
         "https://assets.rocksama.com/public/storage/images/1716284040_SAMA.png",

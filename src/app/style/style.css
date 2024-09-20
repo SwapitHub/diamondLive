@@ -8507,6 +8507,7 @@ section.gemstone-main .view {
 }
 .diamoond-gems {
   position: relative;
+  min-height: 220px;
 }
 .dia-gems {
   position: absolute;

@@ -24,12 +24,20 @@ import {
 } from "../../../../../store/actions/wishlistAction";
 import Cookies from "js-cookie";
 
-export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData, data, gemCount }) => {
+export const ChooseGemstonesPage = ({
+  gemAttribute,
+  gemFilter,
+  gemstoneFilterData,
+  data,
+  gemCount,
+}) => {
+  
   const gemSlug = useSearchParams();
   let gemColor;
   let gemStyle;
   let gemShape;
-
+  
+  const router = useRouter();
   useEffect(() => {
     if (gemAttribute === "style") {
       gemStyle = gemFilter;
@@ -40,9 +48,9 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
     }
   }, [gemAttribute]);
 
+
+
   const gemstoneColor = gemSlug.get("gemstones");
-
-
 
   const history = useRouter();
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
@@ -94,35 +102,44 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
   }
   useEffect(() => {
     if (gemStyle) {
-      secureLocalStorage.setItem(
-        "styleDataSlider",
-        JSON.stringify([capitalizeFirstLetter(gemStyle)])
+      Cookies.set(
+        "gemStyle",
+        JSON.stringify([capitalizeFirstLetter(gemStyle)]),
+        {
+          expires: 3650,
+          secure: true,
+          sameSite: "Strict",
+        }
       );
-      secureLocalStorage.removeItem("shapeDataSlider");
-      secureLocalStorage.removeItem("colorDataSlider");
     }
     if (gemShape) {
-      secureLocalStorage.setItem(
-        "shapeDataSlider",
-        JSON.stringify([capitalizeFirstLetter(gemShape)])
+      Cookies.set(
+        "gemShape",
+        JSON.stringify([capitalizeFirstLetter(gemShape)]),
+        {
+          expires: 3650,
+          secure: true,
+          sameSite: "Strict",
+        }
       );
-      secureLocalStorage.removeItem("styleDataSlider");
-      secureLocalStorage.removeItem("colorDataSlider");
     }
     if (gemColor) {
-      secureLocalStorage.setItem(
-        "colorDataSlider",
-        JSON.stringify([capitalizeFirstLetter(gemColor)])
+      Cookies.set(
+        "gemColor",
+        JSON.stringify([capitalizeFirstLetter(gemColor)]),
+        {
+          expires: 3650,
+          secure: true,
+          sameSite: "Strict",
+        }
       );
-      secureLocalStorage.removeItem("shapeDataSlider");
-      secureLocalStorage.removeItem("styleDataSlider");
     }
   }, [gemStyle, gemShape, gemColor]);
 
   const [shapeDataSlider, setShapeDataSlider] = useState();
 
   const dispatch = useDispatch();
-  const user_id = secureLocalStorage.getItem("formData");
+  const user_id = Cookies.get("formData");
   const gemstone = "gemstone";
 
   const [page, setPage] = useState(1);
@@ -135,13 +152,6 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
       updatedShapeDataSlider = shapeDataSlider.filter(
         (item) => item !== styleItem
       );
-      const searchParams = useSearchParams();
-      searchParams.delete("shape");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/gemstones/start-with-a-gemstone"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      history.replace(newURL);
     } else {
       updatedShapeDataSlider = [...shapeDataSlider, styleItem];
     }
@@ -150,10 +160,12 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
     setShapeDataSlider(updatedShapeDataSlider);
 
     // Save to local storage
-    secureLocalStorage.setItem(
-      "shapeDataSlider",
-      JSON.stringify(updatedShapeDataSlider)
-    );
+    Cookies.set("gemShape", JSON.stringify(updatedShapeDataSlider), {
+      expires: 3650,
+      secure: true,
+      sameSite: "Strict",
+    });
+    window.location.replace('/gemstone/start-with-a-gemstone')
   };
 
   const newShapeSliderData = shapeDataSlider
@@ -165,9 +177,9 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
   // Read from local storage on component mount
   const [gemStyles_uses, setGemStyles_uses] = useState("");
   useEffect(() => {
-    const storedStyleData = Cookies.get("gemShape");
-    const storedShapeData = secureLocalStorage.getItem("shapeDataSlider");
-    const storedColorData = secureLocalStorage.getItem("colorDataSlider");
+    const storedStyleData = Cookies.get("gemStyle");
+    const storedShapeData = Cookies.get("gemShape");
+    const storedColorData = Cookies.get("gemColor");
 
     const parsedStyleData = storedStyleData ? JSON.parse(storedStyleData) : [];
     const parsedShapeData = storedShapeData ? JSON.parse(storedShapeData) : [];
@@ -179,7 +191,6 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
   }, [gemStyle, gemShape, gemColor]);
 
   const handelSettingStyle = (styleItem) => {
-        
     let updatedStyleDataSlider = [...menuStyleNames];
 
     if (menuStyleNames?.includes(styleItem)) {
@@ -198,9 +209,13 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
     }
 
     setMenuStyleNames(updatedStyleDataSlider);
-    Cookies.set('gemShape',  JSON.stringify(updatedStyleDataSlider));
-    
-    window.location.reload();
+    Cookies.set("gemStyle", JSON.stringify(updatedStyleDataSlider), {
+      expires: 3650,
+      secure: true,
+      sameSite: "Strict",
+    });
+
+    window.location.replace('/gemstone/start-with-a-gemstone')
   };
 
   const newStyleSliderData = menuStyleNames
@@ -210,19 +225,11 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
     )
     .join("");
 
-
   const handleColor = (color) => {
     let updatedColorDataSlider = [...colorDataSlider];
 
     if (colorDataSlider.includes(color)) {
       updatedColorDataSlider = colorDataSlider.filter((item) => item !== color);
-      const searchParams = useSearchParams();
-      searchParams.delete("color");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/gemstones/start-with-a-gemstone"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      history.replace(newURL);
     } else {
       updatedColorDataSlider = [...colorDataSlider, color];
     }
@@ -231,10 +238,12 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
     setColorDataSlider(updatedColorDataSlider);
 
     // Save to local storage
-    secureLocalStorage.setItem(
-      "colorDataSlider",
-      JSON.stringify(updatedColorDataSlider)
-    );
+    Cookies.set("gemColor", JSON.stringify(updatedColorDataSlider), {
+      expires: 3650,
+      secure: true,
+      sameSite: "Strict",
+    });
+    window.location.replace('/gemstone/start-with-a-gemstone')
   };
 
   const newColorSliderData = colorDataSlider
@@ -427,8 +436,6 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
       });
   };
 
-  
-
   useMemo(() => {
     const removeWishlist = async () => {
       try {
@@ -477,20 +484,13 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
       );
 
       // Update secureLocalStorage with the new array
-      secureLocalStorage.setItem(
-        "styleDataSlider",
-        JSON.stringify(updatedStyles)
-      );
-      // if (menuStyleNames?.includes(gemStyle)) {
+      Cookies.set("gemStyle", JSON.stringify(updatedStyles), {
+        expires: 3650,
+        secure: true,
+        sameSite: "Strict",
+      });
+      window.location.replace('/gemstone/start-with-a-gemstone');
 
-      const searchParams = useSearchParams();
-      searchParams.delete("style");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/gemstones/start-with-a-gemstone"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      history.replace(newURL);
-      // }
       return updatedStyles;
     });
   };
@@ -502,30 +502,27 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
       );
 
       // Update secureLocalStorage with the new array
-      secureLocalStorage.setItem(
-        "shapeDataSlider",
-        JSON.stringify(updatedStyles)
-      );
-      if (shape == capitalizeFirstLetter(gemShape)) {
-        secureLocalStorage.setItem(
-          "shapeDataSlider",
-          JSON.stringify(updatedStyles)
-        );
+      Cookies.set("gemShape", JSON.stringify(updatedStyles), {
+        expires: 3650,
+        secure: true,
+        sameSite: "Strict",
+      });
 
-        const searchParams = useSearchParams();
-        searchParams.delete("shape");
-        const newSearchString = searchParams.toString();
-        const newURL = `${"/gemstones/start-with-a-gemstone"}${
-          newSearchString ? `?${newSearchString}` : ""
-        }`;
-        history.replace(newURL);
+      if (shape == capitalizeFirstLetter(gemShape)) {
+        Cookies.set("gemShape", JSON.stringify(updatedStyles), {
+          expires: 3650,
+          secure: true,
+          sameSite: "Strict",
+        });
       }
       return updatedStyles;
     });
+
     setShapeDataSlider((prevSelectedStyles) =>
       prevSelectedStyles.filter((selectedShape) => selectedShape !== shape)
     );
-    secureLocalStorage.removeItem("shapeDataSlider");
+    window.location.replace('/gemstone/start-with-a-gemstone')
+
   };
 
   const handleRemoveColor = (color) => {
@@ -534,19 +531,13 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
         (selectedStyle) => selectedStyle !== color
       );
       // Update secureLocalStorage with the new array
-      secureLocalStorage.setItem(
-        "colorDataSlider",
-        JSON.stringify(updatedColor)
-      );
+      Cookies.set("gemColor", JSON.stringify(updatedColor), {
+        expires: 3650,
+        secure: true,
+        sameSite: "Strict",
+      });
 
-      const searchParams = useSearchParams();
-      searchParams.delete("color");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/gemstones/start-with-a-gemstone"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      history.replace(newURL);
-
+      window.location.replace('/gemstone/start-with-a-gemstone')
       return updatedColor;
     });
   };
@@ -555,18 +546,11 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
     setMenuStyleNames([]);
     setColorDataSlider([]);
     setShapeDataSlider([]);
-    secureLocalStorage.removeItem("styleDataSlider");
-    secureLocalStorage.removeItem("colorDataSlider");
-    secureLocalStorage.removeItem("shapeDataSlider");
-    const searchParams = useSearchParams();
-    searchParams.delete("style");
-    searchParams.delete("shape");
-    searchParams.delete("color");
-    const newSearchString = searchParams.toString();
-    const newURL = `${"/gemstones/start-with-a-gemstone"}${
-      newSearchString ? `?${newSearchString}` : ""
-    }`;
-    history.replace(newURL);
+    Cookies.remove("gemStyle", { path: "/" });
+    Cookies.remove("gemShape", { path: "/" });
+    Cookies.remove("gemColor", { path: "/" });
+
+    window.location.replace('/gemstone/start-with-a-gemstone')
   };
   let wishlistIds = [];
   wishListDataBase.map((item) => {
@@ -581,7 +565,6 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
   wishlist.map((item) => {
     beforeLoginWishlistIds.push(item.diamond?.id || item.item?.id);
   });
-
 
   const handleError = (e) => {
     e.target.onerror = null;
@@ -1145,7 +1128,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
               </div>
             )}
           </div>
-          {(
+          {
             <div className="gemstone-inners">
               {data.map((item) => {
                 return (
@@ -1217,7 +1200,9 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
                             </div>
                           </div>
                           <div className="gems-limit">
-                            <Link href={`/gemstones-detail/?stock_num=${item.stock_num}`}>
+                            <Link
+                              href={`/gemstones-detail/?stock_num=${item.stock_num}`}
+                            >
                               <span> {item.short_title}</span>
                             </Link>
                             <span className="product-price">
@@ -1231,7 +1216,7 @@ export const ChooseGemstonesPage = ({ gemAttribute, gemFilter,gemstoneFilterData
                 );
               })}
             </div>
-          )}
+          }
           {loading && <LoaderSpinner />}
           {data.length < 1 && (
             <h2 className="center">{loading ? null : "Data Not Found"}</h2>

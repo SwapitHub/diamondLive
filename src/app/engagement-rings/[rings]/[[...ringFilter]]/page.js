@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import StartWithASetting from "./RingListPageClient";
 
 
@@ -61,17 +62,26 @@ const fetchProductStyle = async () => {
   return checkout;
 };
 
-const fetchProductData = async () => {
+const fetchProductData = async (PriceShorting, ring_style, shapeName) => {
   let checkout = [];
 
   try {
     const response = await fetch(
-      `${process.env.BASE_URL}/products?page="1"`
+      `${process.env.BASE_URL}/products?page="1"${
+        PriceShorting
+          ? `&sortby=${PriceShorting == undefined ? "" : PriceShorting}`
+          : ""
+      }${
+        ring_style
+                ? `&ring_style=${ring_style}`
+                : ""
+            }${shapeName ? `&shape=${shapeName ? shapeName : ""}` : ""}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     checkout = await response.json();
+    
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -128,20 +138,24 @@ export async function generateMetadata({params, searchParams}) {
 
 
 export default async function DetailRingPage({searchParams, params}) {
+  const cookieStore = cookies();
+  const PriceShorting = cookieStore.get("PriceShorting");
+  const ring_style = cookieStore.get("ring_style");
+  const shapeName = cookieStore.get("shapeName");
   const {bridalSets} = searchParams
   const {rings, ringFilter} = params;
-  const data = await fetchDataFromAPI(rings, ringFilter,bridalSets);
-  
+
+  const data = await fetchDataFromAPI(rings, ringFilter,bridalSets);  
   const metalColor = await fetchMetalData();
   const shapeData = await fetchDiamondShape();
   const ShopByStyle = await fetchProductStyle();
-  const filterRoseData = await fetchProductData();
- 
-  
+  const filterRoseData = await fetchProductData(PriceShorting?.value, ring_style?.value, shapeName?.value);
+  const product_count = filterRoseData.product_count
+
 
   return (
     <div>
-      <StartWithASetting rings={rings} ringFilter={ringFilter ? ringFilter[0] : null} metalColor={metalColor.data} shapeData={shapeData.data} ShopByStyle={ShopByStyle.data} filterRoseData={filterRoseData.data}/>
+      <StartWithASetting rings={rings} ringFilter={ringFilter ? ringFilter[0] : null} metalColor={metalColor.data} shapeData={shapeData.data} ShopByStyle={ShopByStyle.data} filterRoseData={filterRoseData.data} product_count={product_count}/>
     </div>
   );
 }

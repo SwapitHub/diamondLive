@@ -24,7 +24,11 @@ const fetchGemstoneAttributes = async () => {
   }
   return gemstone;
 };
-const fetchGemstones = async (gemStyleFilter) => {
+const fetchGemstones = async (
+  gemStyleFilter,
+  gemColorFilter,
+  gemShapeFilter
+) => {
   let gemstone = [];
   try {
     const headers = {
@@ -32,7 +36,11 @@ const fetchGemstones = async (gemStyleFilter) => {
         "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
     };
     const response = await fetch(
-      `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&${gemStyleFilter ? gemStyleFilter : ""}`,
+      `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&${
+        gemStyleFilter ? gemStyleFilter : ""
+      }${gemColorFilter ? gemColorFilter : ""}${
+        gemShapeFilter ? gemShapeFilter : ""
+      }`,
       {
         method: "GET",
         headers: headers,
@@ -101,19 +109,42 @@ export async function generateMetadata({ params }) {
 export default async function DetailRingPage({ params }) {
   const { gemAttribute, gemFilter } = params;
   const cookieStore = cookies();
-  const gemStyle = cookieStore.get("gemShape");
-  const StyleFilterValue = gemStyle ? JSON.parse(gemStyle.value) : "";
+  const gemStyle = cookieStore.get("gemStyle");
+  const gemShape = cookieStore.get("gemShape");
+  const gemColor = cookieStore.get("gemColor");
+  const StyleFilterValue = gemStyle ? JSON.parse(gemStyle?.value) : "";
   const gemStyleFilter = StyleFilterValue
     ? StyleFilterValue.map(
         (style) =>
           `&gem_type[]=${style.charAt(0).toUpperCase() + style.slice(1)}`
       ).join("")
     : "";
-  console.log(gemStyleFilter);
+  const colorFilterValue = gemColor ? JSON.parse(gemColor?.value) : "";
+  const gemColorFilter = colorFilterValue
+    ? colorFilterValue
+        .map(
+          (color) =>
+            `&color[]=${color.charAt(0).toUpperCase() + color.slice(1)}`
+        )
+        .join("")
+    : "";
+  const shapeFilterValue = gemShape ? JSON.parse(gemShape?.value) : "";
+  const gemShapeFilter = shapeFilterValue
+    ? shapeFilterValue
+        .map(
+          (shapes) =>
+            `&shapes[]=${shapes.charAt(0).toUpperCase() + shapes.slice(1)}`
+        )
+        .join("")
+    : "";
   const filterValue = Array.isArray(gemFilter) ? gemFilter[0] : gemFilter;
   const data = await fetchDataFromAPI(gemAttribute, filterValue);
   const gemstoneFilterData = await fetchGemstoneAttributes();
-  const gemstoneData = await fetchGemstones(gemStyleFilter);
+  const gemstoneData = await fetchGemstones(
+    gemStyleFilter,
+    gemColorFilter,
+    gemShapeFilter
+  );
 
   return (
     <div>
