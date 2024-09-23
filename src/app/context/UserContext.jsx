@@ -1,15 +1,17 @@
 "use client";
 import { createContext, useState, useContext } from 'react';
+import secureLocalStorage from 'react-secure-storage';
 
 // Create the context
 export const UserContext = createContext(null);
 
 // Create a provider component
 export const UserProvider = ({ children }) => {
+  const searchedValue = JSON.parse(secureLocalStorage.getItem('searchedItem'));
   const [cartDetails, setCartDetails] = useState();
   const [userId, setUserId] = useState();
   const [removeWishList, setRemoveWishList] = useState();
-  const [searching, setSearching] = useState("");
+  const [searching, setSearching] = useState(searchedValue || "");
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [showSuggestionHeader, setShowSuggestionHeader] = useState(false);
   const [loadingCart, setLoadingCart] = useState(false);

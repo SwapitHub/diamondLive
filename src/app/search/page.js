@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import SearchPage from "./searchClient";
 
 const fetchMetawishlist = async () => {
@@ -14,6 +15,82 @@ const fetchMetawishlist = async () => {
     console.error("Error fetching data:", error);
   }
   return wishlistServer;
+};
+
+const fetchSearchColor = async () => {
+  let search = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/metalcolor`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    search = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return search;
+};
+
+const fetchSearchDiamondShape = async () => {
+  let search = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/diamondshape`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    search = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return search;
+};
+
+const fetchSearchProductStyle = async () => {
+  let search = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/product-style`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    search = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return search;
+};
+
+const fetchSearchResults = async (
+  searching,
+  shapeFilter,
+  selectedStyles,
+  priceSorting,
+  page
+) => {
+  let search = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/search?q=${searching}&page=${page}${
+        shapeFilter?.length > 0
+          ? `&shape=${shapeFilter ? shapeFilter : ""}`
+          : ""
+      }${
+        selectedStyles?.length > 0
+          ? `&ring_style=${selectedStyles ? selectedStyles : ""}`
+          : ""
+      }${
+        priceSorting
+          ? `&sortby=${priceSorting == undefined ? "" : priceSorting}`
+          : ""
+      }`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    search = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return search;
 };
 
 export async function generateMetadata() {
@@ -61,11 +138,37 @@ export async function generateMetadata() {
     },
   };
 }
-const WishlistPageServer = async () => {
+const WishlistPageServer = async ({ searchParams }) => {
+  const { q, page } = searchParams;
+  const cookieStore = cookies();
+  const searchShape = cookieStore.get("searchShape");
+  const searchStyles = cookieStore.get("searchStyle");
+  const searchPrice = cookieStore.get("searchPrice");
+  const shapeFilter = searchShape ? JSON.parse(searchShape?.value) : "";
+  const styleFilter = searchStyles ? JSON.parse(searchStyles?.value) : "";
+  const priceFilter = searchPrice ? searchPrice?.value : "";
   const wishlistServer = await fetchMetawishlist();
+  const metalColor = await fetchSearchColor();
+  const shapeData = await fetchSearchDiamondShape();
+  const ShopByStyle = await fetchSearchProductStyle();
+  const searchData = await fetchSearchResults(
+    q ? q : "",
+    shapeFilter ? shapeFilter.join(",") : "",
+    styleFilter ? styleFilter.join(",") : "",
+    priceFilter ? priceFilter : "",
+    page
+  );
+
+  
   return (
     <>
-      <SearchPage wishlistServer={wishlistServer} />
+      <SearchPage
+        metalColor={metalColor.data}
+        shapeData={shapeData.data}
+        ShopByStyle={ShopByStyle.data}
+        searchData={searchData.data}
+        searchedProductCount={searchData}
+      />
     </>
   );
 };

@@ -62,7 +62,7 @@ const fetchDiamond = async () => {
       }
       anniversaryRings = await response.json();
   
-      anniversaryRings.data.description = purify.sanitize(anniversaryRings.data?.description);
+      // anniversaryRings.data.description = purify.sanitize(anniversaryRings.data?.description);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -79,7 +79,7 @@ const fetchDiamond = async () => {
         throw new Error("Network response was not ok");
       }
       diamondPendants = await response.json();
-      diamondPendants.data.description = purify.sanitize(diamondPendants.data?.description);
+      // diamondPendants.data.description = purify.sanitize(diamondPendants.data?.description);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -98,7 +98,7 @@ const fetchDiamond = async () => {
         throw new Error("Network response was not ok");
       }
       tennisBracelets = await response.json();
-      tennisBracelets.data.description = purify.sanitize(tennisBracelets.data?.description);
+      // tennisBracelets.data.description = purify.sanitize(tennisBracelets.data?.description);
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -116,7 +116,7 @@ const fetchDiamond = async () => {
         throw new Error("Network response was not ok");
       }
       diamondStuds = await response.json();
-      diamondStuds.data.description = purify.sanitize(diamondStuds.data?.description);
+      // diamondStuds.data.description = purify.sanitize(diamondStuds.data?.description);
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -167,7 +167,7 @@ const fetchDiamond = async () => {
         throw new Error("Network response was not ok");
       }
       engagementRings = await response.json();
-      engagementRings.data.description = purify.sanitize(engagementRings.data?.description);
+      // engagementRings.data.description = purify.sanitize(engagementRings.data?.description);
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -185,7 +185,7 @@ const fetchDiamond = async () => {
         throw new Error("Network response was not ok");
       }
       engagementRings = await response.json();
-      engagementRings.data.description = purify.sanitize(engagementRings.data?.description);
+      // engagementRings.data.description = purify.sanitize(engagementRings.data?.description);
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -203,7 +203,7 @@ const fetchDiamond = async () => {
         throw new Error("Network response was not ok");
       }
       weddingCollection = await response.json();
-      weddingCollection.data.description = purify.sanitize(weddingCollection.data?.description);
+      // weddingCollection.data.description = purify.sanitize(weddingCollection.data?.description);
 
     } catch (error) {
       console.error("Error fetching data:", error);

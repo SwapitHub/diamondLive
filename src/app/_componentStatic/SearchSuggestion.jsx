@@ -8,6 +8,7 @@ import Link from "next/link";
 
 export const SearchSuggestion = ({ suggestionData, suggestion }) => {
   const {
+    searching,
     setSearching,
     setShowSuggestion,
     setShowSuggestionHeader,
@@ -29,7 +30,7 @@ export const SearchSuggestion = ({ suggestionData, suggestion }) => {
                       <>
                         <li>
                           <Link
-                            href="/search"
+                            href={`/search?q=${item?.name}`}
                             onClick={() => {
                               setSearching(item?.name);
                               setShowSuggestion(false);

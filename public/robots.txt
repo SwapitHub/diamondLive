@@ -1,3 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow: privacy-policy
+Disallow: /account
+/cart
+/term-of-use
+/privacy-policy
+/check_out
+/payment
+/success

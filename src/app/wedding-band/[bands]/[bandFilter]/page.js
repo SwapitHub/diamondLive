@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import ChooseWeddingBands from "./ChooseWeddingBands";
 
 async function fetchDataFromAPI(bands, bandFilter) {
@@ -9,6 +10,34 @@ async function fetchDataFromAPI(bands, bandFilter) {
 
   return data;
 }
+
+const fetchWeddingBandAttributes = async () => {
+  let weddingBand = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/metalcolor`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    weddingBand = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return weddingBand;
+};
+
+const fetchWeddingBands = async (weddingBands, priceSorting) => {
+  let weddingBand = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/weddingband-products?subcategory=${weddingBands === undefined ? "" : weddingBands}&sortby=${priceSorting === undefined ? "" : priceSorting}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    weddingBand = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return weddingBand;
+};
 
 export async function generateMetadata({ params }) {
   const { bands, bandFilter } = params;
@@ -60,18 +89,24 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function DetailRingPage({ params }) {
+export default async function WeddingBands({ params }) {
   const { bands, bandFilter } = params;
+  const cookieStore = cookies();
+  const priceSorting = cookieStore.get('bandsPrice')
+  console.log(priceSorting);
+  
   const filterValue = Array.isArray(bandFilter) ? bandFilter[0] : bandFilter;
   const data = await fetchDataFromAPI(bands, filterValue);
+  const metalColor = await fetchWeddingBandAttributes();
+  const FilterRoseData = await fetchWeddingBands(filterValue, priceSorting?.value);
   
-
   return (
     <div>
       <ChooseWeddingBands
-        bands={bands}
         weddingBands={filterValue}
-        gemData={data}
+        metalColor={metalColor.data}
+        filterRoseData={FilterRoseData.data}
+        newPrevData={FilterRoseData}
       />
     </div>
   );
