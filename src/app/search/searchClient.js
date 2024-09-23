@@ -445,10 +445,10 @@ const SearchPage = ({
   //secureLocalStorage Filters
 
   useEffect(() => {
-    const metalsName = JSON.parse(secureLocalStorage.getItem("searchMetal"));
-    const stylesName = JSON.parse(Cookies.get("searchStyle"));
-    const shapesName = JSON.parse(Cookies.get("searchShape"));
-    const searchedItem = JSON.parse(secureLocalStorage.getItem("searchedItem"));
+    const metalsName = JSON?.parse(secureLocalStorage.getItem("searchMetal"));
+    const stylesName = JSON?.parse(Cookies.get("searchStyle"));
+    const shapesName = JSON?.parse(Cookies.get("searchShape"));
+    const searchedItem = JSON?.parse(secureLocalStorage.getItem("searchedItem"));
 
     if (metalsName) {
       setSelectedMetalIds(metalsName);

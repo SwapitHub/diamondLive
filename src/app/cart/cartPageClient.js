@@ -234,6 +234,8 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
           console.log("remove-cartitem API Error:", error);
         });
     });
+
+    window.location.reload()
   };
   const [disableButton, setDisableButton] = useState(false);
   const handleWishlist = async (

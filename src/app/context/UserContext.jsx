@@ -1,13 +1,15 @@
 "use client";
-import { createContext, useState, useContext } from 'react';
-import secureLocalStorage from 'react-secure-storage';
+import { createContext, useState, useContext } from "react";
+import secureLocalStorage from "react-secure-storage";
 
 // Create the context
 export const UserContext = createContext(null);
 
 // Create a provider component
 export const UserProvider = ({ children }) => {
-  const searchedValue = JSON.parse(secureLocalStorage.getItem('searchedItem'));
+  const searchedValue = secureLocalStorage.getItem("searchedItem")
+    ? JSON.parse(secureLocalStorage.getItem("searchedItem"))
+    : "";
   const [cartDetails, setCartDetails] = useState();
   const [userId, setUserId] = useState();
   const [removeWishList, setRemoveWishList] = useState();
