@@ -14,11 +14,13 @@ import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
+
+
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { productList } from "../../../../../store/actions/productActions";
 import {
@@ -28,42 +30,37 @@ import {
 import Cookies from "js-cookie";
 
 
-const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,filterRoseData, product_count }) => {
-  
+const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shapeData ,ShopByStyle, product_count}) => {
+
   const searchParams = useSearchParams();
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
-  const pathname = usePathname();
-  const router = useRouter()
+  const router = useRouter();
 
   const [pathSegments, setPathSegments] = useState([]);
   const [queryParams, setQueryParams] = useState({});
   useEffect(() => {
-    if (pathname) {
-      const segments = pathname.split("/").filter((segment) => segment);
+    if (router.pathname) {
+      const segments = router.pathname.split("/").filter((segment) => segment);
       setPathSegments(segments);
     }
-    setQueryParams(searchParams);
-  }, [pathname]);
+    // setQueryParams(new URLSearchParams(window.location.search));
+  }, [router.pathname]);
 
   const mainCategory = pathSegments[0] || "";
   const subCategory = pathSegments;
 
   let menuShapeName, menuShopStyle;
   const [trellisRing, setTrellisRing] = useState();
-  const [metalColorName, setMetalColorName] = useState("White");
 
-  
   useEffect(() => {
     if (rings === "shape") {
       menuShapeName = ringFilter;
       
     } else if (rings === "style") {
       menuShopStyle = ringFilter;
-    } else if(rings === 'metal'){
-      setMetalColorName(ringFilter)
-    }else{
+    } else {
       setTrellisRing(rings)
     }
   }, []);
@@ -76,6 +73,9 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
   const [items, setItems] = useState([]);
 
   const { baseUrl, imgAssetsUrl, imgBaseUrl } = useContext(UserContext);
+
+
+  
   const options = [
     { value: "best_seller", label: "Best Sellers" },
     { value: "Newest", label: "Newest" },
@@ -83,24 +83,28 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
     { value: "high_to_low", label: "Price (High to Low)" },
   ];
 
+  const selectSortPrice = options.filter(
+    (option) => Cookies.get("PriceShorting") === option.value
+  )
+ 
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
   const platinum = "platinum";
 
-  // const [filterRoseData, setFilterRoseData] = useState(filterRoseDatas);
-  const shapeCookies = Cookies.get("shapeName")
+  // const [filterRoseData, setFilterRoseData] = useState([]);
+  const [metalColorName, setMetalColorName] = useState("White");
   const [newPrevData, setNewPrevData] = useState([]);
-  const [shapeName, setShapeName]= useState(shapeCookies)
-  
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [changeName, setChangeName] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [activePage, setActivePage] = useState([]);
   const [activeColor, setActiveColor] = useState({});
+  const [shapeName, setShapeName] = useState([]);
   const [activeStyleIds, setActiveStyleIds] = useState([]);
   const [shapeBreadCamb, setShapeBreadCamb] = useState([]);
+
   const [selectedShopStyleIds, setSelectedShopStyleIds] = useState(() => {
     const savedStyles = secureLocalStorage.getItem("selectedShopStyleIds");
     return savedStyles ? JSON.parse(savedStyles) : [];
@@ -109,15 +113,10 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
   a.push(menuShopStyle);
   const mergedArray = [...activeStyleIds, ...a];
   const selectedShopStyleIdsString = mergedArray.join(",");
-  const [metalId, setMetalId] = useState();
-  const [metalColorUrl, setMetalColorUrl] = useState();
-
-
-
-
-
  
-
+  const [metalId, setMetalId] = useState();
+  const [priceShorting, setPriceShorting] = useState();
+  const [metalColorUrl, setMetalColorUrl] = useState();
   useEffect(() => {
     setMetalColorUrl(menuMetal);
   }, [menuMetal]);
@@ -141,13 +140,19 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
 
   useEffect(() => {
     if (menuShapeName) {
-      secureLocalStorage.setItem("clickedShape", menuShapeName);
+      // secureLocalStorage.setItem("clickedShape", menuShapeName);
+      Cookies.set("clickedShape",menuShapeName,{
+        expires: 3650,
+        secure: true,
+        sameSite: 'Strict'
+      })
+
       setGetLocalStoreShape(menuShapeName);
     }
   }, [menuShapeName]);
 
   const [getLocalStoreShape, setGetLocalStoreShape] = useState(
-    secureLocalStorage.getItem("clickedShape") || ""
+    Cookies.get("clickedShape") || ""
   );
 
   const [getLocalStoreMetal, setGetLocalStoreMetal] = useState();
@@ -159,21 +164,50 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
   }, [menuMetal]);
 
   // bridal set for start
-  const checkedBridalSets = searchParams.get("bridal-sets");
-  let checkedBridalSetsNew = checkedBridalSets === "true";
-
+  // const checkedBridalSets = searchParams.get("bridal-sets");
+  // let checkedBridalSetsNew = checkedBridalSets === "true";
+  const checkedBridalSetsNew = searchParams.get('bridalSets')
+  console.log(checkedBridalSetsNew);
+  
   const [localBridalData, setLocalBridalData] = useState(checkedBridalSetsNew);
-  useEffect(() => {
-    setLocalBridalData(checkedBridalSetsNew);
-  }, [checkedBridalSetsNew]);
+  // Cookies.set("localBridalData",localBridalData,{
+  //   expires: 3650,
+  //   secure: true,
+  //   sameSite: 'Strict'
+  // })
 
-  useEffect(() => {
-    secureLocalStorage.setItem("bridalSetsData", localBridalData);
-  }, [localBridalData]);
+  // useEffect(() => {
+  //   setLocalBridalData(checkedBridalSetsNew);
+  // }, [checkedBridalSetsNew]);
+
+  // useEffect(() => {
+  //   // secureLocalStorage.setItem("bridalSetsData", localBridalData);
+
+  //   Cookies.set("bridalSetsData",localBridalData,{
+  //     expires: 3650,
+  //     secure: true,
+  //     sameSite: 'Strict'
+  //   })
+  // }, [localBridalData]);
 
   const getBridalSet = () => {
-   
-    setLocalBridalData((prevState) => !prevState);
+    // const searchParams = new URLSearchParams(window.location.search);
+    // searchParams.delete("bridal-sets");
+    // const newSearchString = searchParams.toString();
+    // const newURL = `/engagement-rings/start-with-a-setting${
+    //   newSearchString ? `?${newSearchString}` : ""
+    // }`;
+    // router.push(newURL); 
+    if(checkedBridalSetsNew==='true'){
+
+      router.push('/engagement-rings/start-with-a-setting');
+    }
+    else {
+      router.push('/engagement-rings/start-with-bridal-set?bridalSets=true');
+
+    }
+    // setLocalBridalData((prevState) => !prevState);
+    // window.location.reload()
   };
 
   // bridal set for end
@@ -236,110 +270,113 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
 
     fetchData();
   }, []);
-  
   // cont a = bredCramStyleFilter.
   // ===============  shop by price range==============
 
   // =============== shop by price range end==============
 
-  // useMemo(() => {
-  //   const fetchData = () => {
-  //     setLoading(true);
+  useMemo(() => {
+    // const fetchData = () => {
+    //   setLoading(true);
 
-  //     const URLNEW = `${baseUrl}/products?page=${page}${
-  //       priceShorting
-  //         ? `&sortby=${priceShorting == undefined ? "" : priceShorting}`
-  //         : ""
-  //     }${
-  //       selectedShopStyleIdsString
-  //         ? `&ring_style=${selectedShopStyleIdsString}`
-  //         : ""
-  //     }${shapeName ? `&shape=${shapeName ? shapeName : ""}` : ""}${
-  //       localBridalData
-  //         ? `&bridal_sets=${localBridalData == null ? "" : localBridalData}`
-  //         : ""
-  //     }${
-  //       trellisRing
-  //         ? `&subcategory=${trellisRing == null ? "" : trellisRing}`
-  //         : ""
-  //     }`;
+    //   const URLNEW = `${baseUrl}/products?page=${page}${
+    //     priceShorting
+    //       ? `&sortby=${priceShorting == undefined ? "" : priceShorting}`
+    //       : ""
+    //   }${
+    //     selectedShopStyleIdsString
+    //       ? `&ring_style=${selectedShopStyleIdsString}`
+    //       : ""
+    //   }${shapeName ? `&shape=${shapeName ? shapeName : ""}` : ""}${
+    //     localBridalData
+    //       ? `&bridal_sets=${localBridalData == null ? "" : localBridalData}`
+    //       : ""
+    //   }${
+    //     trellisRing
+    //       ? `&subcategory=${trellisRing == null ? "" : trellisRing}`
+    //       : ""
+    //   }`;
       
-  //     axios
-  //       .get(URLNEW)
-  //       .then((res) => {
-  //         if (res.status === 200) {
-  //           setNewPrevData(res.data);
+    //   axios
+    //     .get(URLNEW)
+    //     .then((res) => {
+    //       if (res.status === 200) {
+    //         setNewPrevData(res.data);
 
-  //           const updatedProducts = res.data.data.map((product) => ({
-  //             id: product.id,
-  //             sku: product.sku,
-  //             name: product.product_browse_pg_name,
-  //             image: product.default_image_url,
-  //             images: product.default_image_url
-  //               .split("/")
-  //               .slice(-1)
-  //               .join()
-  //               .split(".")
-  //               .shift(),
-  //             slug: product.slug,
-  //             CenterShape: product.CenterShape,
-  //             multiCategory: product.multiCategory,
-  //             imageName: product.default_image_url
-  //               .split("/")
-  //               .slice(-1)
-  //               .join()
-  //               .split(".")
-  //               .shift(),
-  //             white_gold_price: product.white_gold_price,
-  //             yellow_gold_price: product.yellow_gold_price,
-  //             rose_gold_price: product.rose_gold_price,
-  //             platinum_price: product.platinum_price,
-  //           }));
+    //         const updatedProducts = res.data.data.map((product) => ({
+    //           id: product.id,
+    //           sku: product.sku,
+    //           name: product.product_browse_pg_name,
+    //           image: product.default_image_url,
+    //           images: product.default_image_url
+    //             .split("/")
+    //             .slice(-1)
+    //             .join()
+    //             .split(".")
+    //             .shift(),
+    //           slug: product.slug,
+    //           CenterShape: product.CenterShape,
+    //           multiCategory: product.multiCategory,
+    //           imageName: product.default_image_url
+    //             .split("/")
+    //             .slice(-1)
+    //             .join()
+    //             .split(".")
+    //             .shift(),
+    //           white_gold_price: product.white_gold_price,
+    //           yellow_gold_price: product.yellow_gold_price,
+    //           rose_gold_price: product.rose_gold_price,
+    //           platinum_price: product.platinum_price,
+    //         }));
 
-  //           if (page > 1) {
-  //             setFilterRoseData((prevData) => [
-  //               ...prevData,
-  //               ...updatedProducts,
-  //             ]);
-  //           } else {
-  //             setFilterRoseData(updatedProducts);
-  //           }
+    //         if (page > 1) {
+    //           setFilterRoseData((prevData) => [
+    //             ...prevData,
+    //             ...updatedProducts,
+    //           ]);
+    //         } else {
+    //           setFilterRoseData(updatedProducts);
+    //         }
 
-  //           setTimeout(() => {
-  //             setLoading(false);
-  //           }, 5500);
-  //         }
-  //       })
-  //       .catch(() => {
-  //         console.log("API error");
-  //         setLoading(false);
-  //       });
-  //   };
-  //   fetchData();
+    //         setTimeout(() => {
+    //           setLoading(false);
+    //         }, 5500);
+    //       }
+    //     })
+    //     .catch(() => {
+    //       console.log("API error");
+    //       setLoading(false);
+    //     });
+    // };
+    // fetchData();
 
-  //   // window.addEventListener("beforeunload", (event) => {
-  //   //   fetchData();
-  //   // });
+    // window.addEventListener("beforeunload", (event) => {
+    //   fetchData();
+    // });
 
-  //   // window.addEventListener("unload", (event) => {
-  //   //   fetchData();
-  //   // });
-  //   const timeoutColor = setTimeout(() => {
-  //     commonMetalColor(metalColorName || "White");
-  //   }, 1500);
+    // window.addEventListener("unload", (event) => {
+    //   fetchData();
+    // });
+    const timeoutColor = setTimeout(() => {
+      commonMetalColor(metalColorName || "White");
+    }, 1500);
 
-  //   return () => clearTimeout(timeoutColor);
+    return () => clearTimeout(timeoutColor);
+  }, [
+   
+    getLocalStoreMetal,
+    metalColorName,
+  ]);
+
+  // useEffect(() => {
+  //   setPage(1);
   // }, [
-  //   page,
   //   selectedShopStyleIdsString,
-  //   priceShorting,
-  //   localBridalData,
   //   shapeName,
-  //   getLocalStoreMetal,
+  //   metalId,
+  //   priceShorting,
   //   metalColorName,
   // ]);
-
-
   //  scroll pagination start============
 
   useEffect(() => {
@@ -368,9 +405,9 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
       }
     };
     if (page * 30 < newPrevData.product_count && !loading) {
-      // window.addEventListener("scroll", handleInfiniteScroll);
+      window.addEventListener("scroll", handleInfiniteScroll);
     }
-    // return () => window.removeEventListener("scroll", handleInfiniteScroll);
+    return () => window.removeEventListener("scroll", handleInfiniteScroll);
   }, [loading]);
 
   //  =====================scroll pagination end===================
@@ -404,28 +441,52 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
   };
 
   // =============== shop by shape start ==============
-
+  // useMemo(() => {
+  //   axios
+  //     .get(`${baseUrl}/diamondshape`)
+  //     .then((res) => {
+  //       setShapeData(res.data.data);
+  //       setShapeName(menuShapeName);
+  //     })
+  //     .catch(() => {
+  //       console.log("API error");
+  //     });
+  // }, [menuShapeName]);
 
   const shapeOnclick = (shapeNameItem) => {
-    const clickedShape = secureLocalStorage.getItem("clickedShape");
+    const clickedShape = Cookies.get("clickedShape");
 
     if (clickedShape == shapeNameItem) {
       // If the clicked shape is already active, remove the filter
      
+      Cookies.remove('clickedShape', { path: '/' })
 
-      secureLocalStorage.removeItem("clickedShape");
+      // secureLocalStorage.removeItem("clickedShape");
       setShapeBreadCamb("");
+      setShapeName("");
       setGetLocalStoreShape("");
-    } 
+    } else {
+      // searchParams.delete("shape");
+      // const newSearchString = searchParams.toString();
+      // const newURL = `${"/engagement-rings/start-with-a-setting"}${
+      //   newSearchString ? `?${newSearchString}` : ""
+      // }`;
+      // router.replace(newURL);
 
-    
-    
-    Cookies.set("shapeName",shapeNameItem,{
-      expires: 3650,
-      secure: true,
-      sameSite: 'Strict'
-    })
-    window.location.reload()
+
+      setShapeName(shapeNameItem);
+
+      Cookies.set("clickedShape",shapeNameItem,{
+        expires: 3650,
+        secure: true,
+        sameSite: 'Strict'
+      })
+
+      // secureLocalStorage.setItem("clickedShape", shapeNameItem);
+    }
+
+    window.location.replace("/engagement-rings/start-with-a-setting")
+
   };
 
   // =============== shop by metal start ==============
@@ -438,52 +499,91 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
       setMetalId(metaColorId);
     }
     setMetalColorName(MetalColorName);
-  
+    // const searchParams = new URLSearchParams(window.location.search);
+    // searchParams.delete("metal");
+    // const newSearchString = searchParams.toString();
+    // const newURL = `${"/engagement-rings/start-with-a-setting"}${
+    //   newSearchString ? `?${newSearchString}` : ""
+    // }`;
+    // router.replace(newURL);
   };
 
   // =============== shop by metal end ==============
   // =============== shop by shape end ==============
 
   // =============== shop by  style ==============
- 
+  // const [ShopByStyle, setShopStyle] = useState([]);
+  // useMemo(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`${baseUrl}/product-style`);
+  //       setShopStyle(response.data.data);
+  //     } catch (error) {
+  //       console.log("shop style api error:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
-    const storedSelectedShopStyleIds =
-      JSON.parse(secureLocalStorage.getItem("selectedShopStyleIds")) || [];
-    setSelectedShopStyleIds(storedSelectedShopStyleIds);
-    setActiveStyleIds(storedSelectedShopStyleIds);
+    const storedSelectedShopStyleIds = Cookies.get("selectedShopStyleIds");
+    
+    if (storedSelectedShopStyleIds) {
+      try {
+        const parsedShopStyleIds = JSON.parse(storedSelectedShopStyleIds);
+        setSelectedShopStyleIds(parsedShopStyleIds);
+        setActiveStyleIds(parsedShopStyleIds);
+      } catch (error) {
+        console.error("Error parsing selectedShopStyleIds:", error);
+      }
+    }
   }, []);
 
   useEffect(() => {
     if (menuShopStyle) {
-      secureLocalStorage.setItem(
-        "selectedShopStyleIds",
-        JSON.stringify([menuShopStyle])
-      );
-      secureLocalStorage.removeItem("clickedShape");
+      // secureLocalStorage.setItem(
+      //   "selectedShopStyleIds",
+      //   JSON.stringify([menuShopStyle])
+      // );
+
+      Cookies.set("selectedShopStyleIds",JSON.stringify([menuShopStyle]),{
+        expires: 3650,
+        secure: true,
+        sameSite: 'Strict'
+      })
+  Cookies.remove('clickedShape', { path: '/' })
+
+      // secureLocalStorage.removeItem("clickedShape");
     }
     if (menuShapeName) {
-      secureLocalStorage.setItem("clickedShape", menuShapeName);
-      secureLocalStorage.removeItem("selectedShopStyleIds");
+      // secureLocalStorage.setItem("clickedShape", menuShapeName);
+      // secureLocalStorage.removeItem("selectedShopStyleIds");
+      Cookies.set("clickedShape",menuShapeName,{
+        expires: 3650,
+        secure: true,
+        sameSite: 'Strict'
+      })
+  Cookies.remove('selectedShopStyleIds', { path: '/' })
+
     }
   }, [menuShopStyle, menuShapeName]);
-  // useEffect(() => {
-  //   const storedStyleData = secureLocalStorage.getItem("selectedShopStyleIds");
-  //   const storedShapeData = Cookies.get("shapeName");
-  //   // const storedColorData = secureLocalStorage.getItem("colorDataSlider");
+  useEffect(() => {
+    const storedStyleData = Cookies.get("selectedShopStyleIds");
+    const storedShapeData = Cookies.get("clickedShape");
+    // const storedColorData = secureLocalStorage.getItem("colorDataSlider");
 
-  //   const parsedStyleData = storedStyleData ? JSON.parse(storedStyleData) : [];
+    const parsedStyleData = storedStyleData ? JSON.parse(storedStyleData) : [];
 
-  //   // const parsedColorData = storedColorData ? JSON.parse(storedColorData) : [];
+    // const parsedColorData = storedColorData ? JSON.parse(storedColorData) : [];
 
-  //   setActiveStyleIds(parsedStyleData);
-  //   setShapeName(storedShapeData);
-  //   // setColorDataSlider(parsedColorData);
-  // }, [menuShopStyle]);
-
-  
+    setActiveStyleIds(parsedStyleData);
+    setShapeName(storedShapeData);
+    // setColorDataSlider(parsedColorData);
+  }, [menuShopStyle, shapeName]);
 
   const ShopStyle = (styleItem) => {
+
     let updatedStyleDataSlider = [...activeStyleIds];
 
     if (activeStyleIds?.includes(styleItem)) {
@@ -497,37 +597,51 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
 
     // Update state
     setActiveStyleIds(updatedStyleDataSlider);
+   console.log(updatedStyleDataSlider);
 
-    secureLocalStorage.setItem(
-      "selectedShopStyleIds",
-      JSON.stringify(updatedStyleDataSlider)
-    );
-    Cookies.set("ring_style",selectedShopStyleIdsString,{
+    Cookies.set("selectedShopStyleIds",JSON.stringify(updatedStyleDataSlider),{
       expires: 3650,
       secure: true,
       sameSite: 'Strict'
     })
-  window.location.reload()
 
+    window.location.replace("/engagement-rings/start-with-a-setting")
+
+    // secureLocalStorage.setItem(
+    //   "selectedShopStyleIds",
+    //   JSON.stringify(updatedStyleDataSlider)
+    // );
   };
 
   const getBridalSetData = () => {
-    setLocalBridalData(false);
-    secureLocalStorage.removeItem("bridalSetsData");
+  //   window.location.reload()
+  //   setLocalBridalData(false);
+  // Cookies.remove('bridalSetsData', { path: '/' })
+
+    // secureLocalStorage.removeItem("bridalSetsData");
     
   };
 
   const resetAllShape = () => {
-    
-    commonMetalColor("White");
+    window.location.replace("/engagement-rings/start-with-a-setting")
+
+    Cookies.remove('selectedShopStyleIds', { path: '/' })
+  Cookies.remove('ring_style', { path: '/' })
+  Cookies.remove('clickedShape', { path: '/' })
+
+    commonMetalColor("White");    
     setActiveStyleIds([]);
     setShapeName();
     setMetalId();
     setMetalColorValue(white);
     setMetalColorName("White");
-    secureLocalStorage.removeItem("selectedShopStyleIds");
-    secureLocalStorage.removeItem("clickedShape");
+    // secureLocalStorage.removeItem("selectedShopStyleIds");
+  
+
+    // secureLocalStorage.removeItem("clickedShape");
+
     secureLocalStorage.removeItem("metaColorIds");
+
   };
 
   const resetAllColor = () => {
@@ -546,7 +660,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
   // =============== shop by price range==============
 
   // ===============shop by price range end==============
-  if (typeof window !== "undefined") {
+  
   function commonMetalColor(idMetal) {
     $(
       ".all-pages-data, .all-img1.common-img, .main-common-active.all-card-four-colors > div"
@@ -561,9 +675,10 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
       }
     });
   }
-  }
+  
 
   if (typeof window !== "undefined") {
+    $(document).ready(function () {
   $(".resultdata > div.all-pages-data").each(function (i, odiv) {
     $(".shop-by-metal-color > .metal-all-color").on("click", function () {
       var idMetal = $(this).attr("id");
@@ -645,6 +760,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
         priceElement.addClass("price-active");
       });
   });
+})
   }
   // ================
 
@@ -697,7 +813,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
   });
   }
   // ==================sort by price start
-  
+
   const handlePriceChange = (selectedOption) => {
     Cookies.set("PriceShorting",selectedOption.value,{
       expires: 3650,
@@ -705,7 +821,8 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
       sameSite: 'Strict'
     })
 
-    window.location.reload()
+    window.location.replace("/engagement-rings/start-with-a-setting")
+
   };
   // ========
   const ShopStyleSlider = {
@@ -769,7 +886,12 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
           setLoading(true);
           const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${ring_price}&ring_id=${ring_id}&ring_color=${ring_color}&product_type=${product_type}&img_sku=${imgSku}&ring_type=natural`;
           // Make API call
-          const response = await axios.get(apiUrl);
+          const response = await axios.get(apiUrl, {
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-TOKEN": tokenData,
+            },
+          });
 
           if (response.status === 200) {
             dispatch(productList());
@@ -798,7 +920,19 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
     }
   };
 
-
+  const [tokenData, setTokenData] = useState();
+  useEffect(() => {
+    axios
+      .get(
+        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
+      )
+      .then((res) => {
+        setTokenData(res.data.csrf_token);
+      })
+      .catch((error) => {
+        console.log("CSRF Token API Error:", error);
+      });
+  }, []);
   // =======remove to card
   useMemo(() => {
     setLoading(true);
@@ -812,7 +946,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("remove_wishlist_item API Error:", error);
+          console.log("CSRF Token API Error:", error);
         });
     };
 
@@ -872,10 +1006,17 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
       );
 
       // Update secureLocalStorage with the new array
-      secureLocalStorage.setItem(
-        "selectedShopStyleIds",
-        JSON.stringify(updatedStyles)
-      );
+      Cookies.set("selectedShopStyleIds", JSON.stringify(updatedStyles),{
+        expires: 3650,
+        secure: true,
+        sameSite: 'Strict'
+      })
+      window.location.replace("/engagement-rings/start-with-a-setting")
+
+      // secureLocalStorage.setItem(
+      //   "selectedShopStyleIds",
+      //   JSON.stringify(updatedStyles)
+      // );
       // if (menuStyleNames?.includes(gemStyle)) {
 
       
@@ -886,11 +1027,17 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
   const handleShapeRemove = () => {
     
     setShapeName();
-    secureLocalStorage.removeItem("clickedShape");
+    // secureLocalStorage.removeItem("clickedShape");
+  Cookies.remove('clickedShape', { path: '/' })
+  window.location.replace("/engagement-rings/start-with-a-setting")
+
   };
 
+  // const bridalSetSearch = window.location.search;
+  // const currentUrl = window.location.href;
+  // var newSubCategory = location.pathname.substring(1);
 
-
+  // var newJoinBridalSet = newSubCategory.concat(bridalSetSearch);
 
   return (
     <>
@@ -939,7 +1086,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
               ringName={`2. Choose Rings`}
               ringLink={`javascript:void(0)`}
               diamondName={` 1. Choose Diamonds`}
-              diamondLink={`/diamond/start-with-a-diamond/`}
+              diamondLink={`/engagement-rings/start-with-a-diamond/`}
               gemStoneName={`1. Choose Gemstones`}
               gemStoneLink={`/gemstones/start-with-a-gemstone`}
             />
@@ -960,7 +1107,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
                 ringName={`1. Choose Setting`}
                 ringLink={`javascript:void(0)`}
                 diamondName={` 2. Choose Diamonds`}
-                diamondLink={`/diamond/start-with-a-diamond/`}
+                diamondLink={`/engagement-rings/start-with-a-diamond/`}
               />
             </>
           )}
@@ -1090,7 +1237,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
                       <span className="corusel-diamond-checkbox">
                         <form action="">
                           <div class="form-group-diamond">
-                            <input
+                          <input
                               type="checkbox"
                               id="html2"
                               onChange={getBridalSet}
@@ -1479,7 +1626,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
         {/* ======mobile filter end========= */}
 
         <div className="best-seller-main">
-          <span>
+        <span>
             {product_count}{" "}
             {product_count > 1
               ? "ENGAGEMENT RINGS"
@@ -1490,7 +1637,7 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
             <form>
               <label for="#">Sort : </label>
               <Select
-                placeholder="Best Seller"
+                  placeholder={selectSortPrice.map(item=>item.label)}
                 onChange={handlePriceChange}
                 options={options}
                 isSearchable={false}
@@ -1633,10 +1780,8 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
         </div>
 
         <div className="resultdata setings-Page-img">
-          {filterRoseData?.length > 0 ? (
+          {filterRoseData.length > 0 ? (
             filterRoseData.map((item, index) => (
-              
-              
               <div
                 key={index}
                 className="resultdata all-pages-data "
@@ -1644,7 +1789,6 @@ const StartWithASetting = ({ rings, ringFilter,metalColor,shapeData,ShopByStyle,
                   secureLocalStorage.removeItem("diamond_type_ring")
                 }
               >
-                
                 <div className="outerDiv" id={`items-${item.id}`}>
                   <Link
                     href={`${

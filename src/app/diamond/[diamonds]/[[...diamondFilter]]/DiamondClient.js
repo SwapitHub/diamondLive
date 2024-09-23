@@ -488,13 +488,13 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
       });
       fetchData();
 
-      window.addEventListener("beforeunload", (event) => {
-        fetchData();
-      });
+      // window.addEventListener("beforeunload", (event) => {
+      //   fetchData();
+      // });
 
-      window.addEventListener("unload", (event) => {
-        fetchData();
-      });
+      // window.addEventListener("unload", (event) => {
+      //   fetchData();
+      // });
     }
   }, [
     diamondPriceRange,
@@ -1721,9 +1721,8 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
                   </table>
                 </div>
               </div>
-              {loader ? (
-                <LoaderSpinner />
-              ) : activeResult === 1 ? (
+              {
+                 activeResult === 1 ? (
                 data.map((item) => {
                   return (
                     <>
@@ -2147,12 +2146,12 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
                           </div>
                         </div>
                       </div>
-                      <div>{loading && <LoaderSpinner />}</div>
+                      {/* <div>{loading && <LoaderSpinner />}</div> */}
                     </>
                   );
                 })
               )}
-              <div>{loading && <LoaderSpinner />}</div>
+              {/* <div>{loading && <LoaderSpinner />}</div> */}
               {data.length < 1 && activeResult === 1 && (
                 <h2 className="center">{loading ? null : "Data Not Found"}</h2>
               )}

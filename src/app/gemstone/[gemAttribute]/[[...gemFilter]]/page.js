@@ -113,30 +113,39 @@ export default async function DetailRingPage({ params }) {
   const gemShape = cookieStore.get("gemShape");
   const gemColor = cookieStore.get("gemColor");
   const StyleFilterValue = gemStyle ? JSON.parse(gemStyle?.value) : "";
-  const gemStyleFilter = StyleFilterValue
-    ? StyleFilterValue.map(
-        (style) =>
-          `&gem_type[]=${style.charAt(0).toUpperCase() + style.slice(1)}`
-      ).join("")
-    : "";
+  const gemStyleFilter =
+    gemAttribute === "style"
+      ? `&gem_type[]=${gemFilter}`
+      : StyleFilterValue
+      ? StyleFilterValue.map(
+          (style) =>
+            `&gem_type[]=${style.charAt(0).toUpperCase() + style.slice(1)}`
+        ).join("")
+      : "";
   const colorFilterValue = gemColor ? JSON.parse(gemColor?.value) : "";
-  const gemColorFilter = colorFilterValue
-    ? colorFilterValue
-        .map(
-          (color) =>
-            `&color[]=${color.charAt(0).toUpperCase() + color.slice(1)}`
-        )
-        .join("")
-    : "";
+  const gemColorFilter =
+    gemAttribute === "color"
+      ? `&color[]=${gemFilter}`
+      : colorFilterValue
+      ? colorFilterValue
+          .map(
+            (color) =>
+              `&color[]=${color.charAt(0).toUpperCase() + color.slice(1)}`
+          )
+          .join("")
+      : "";
   const shapeFilterValue = gemShape ? JSON.parse(gemShape?.value) : "";
-  const gemShapeFilter = shapeFilterValue
-    ? shapeFilterValue
-        .map(
-          (shapes) =>
-            `&shapes[]=${shapes.charAt(0).toUpperCase() + shapes.slice(1)}`
-        )
-        .join("")
-    : "";
+  const gemShapeFilter =
+    gemAttribute === "shape"
+      ? `&shapes[]=${gemFilter}`
+      : shapeFilterValue
+      ? shapeFilterValue
+          .map(
+            (shapes) =>
+              `&shapes[]=${shapes.charAt(0).toUpperCase() + shapes.slice(1)}`
+          )
+          .join("")
+      : "";
   const filterValue = Array.isArray(gemFilter) ? gemFilter[0] : gemFilter;
   const data = await fetchDataFromAPI(gemAttribute, filterValue);
   const gemstoneFilterData = await fetchGemstoneAttributes();

@@ -39,9 +39,6 @@ body {
   background: #F6F6F6 !important;
   font-style: normal;
 }
-div:empty{
-  display: none;
-}
 
 body a,
 body input {
