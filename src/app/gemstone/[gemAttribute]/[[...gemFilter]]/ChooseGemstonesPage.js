@@ -139,7 +139,7 @@ export const ChooseGemstonesPage = ({
   const [shapeDataSlider, setShapeDataSlider] = useState();
 
   const dispatch = useDispatch();
-  const user_id = Cookies.get("formData");
+  const user_id = Cookies.get("userIdCookies");
   const gemstone = "gemstone";
 
   const [page, setPage] = useState(1);

@@ -11,6 +11,7 @@ import { removeToWishlist } from "../../../store/actions/wishlistAction";
 import { validateEmail } from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
 import { ContinueShoping } from "../_componentStatic/ContinueShopping";
+import Cookies from "js-cookie";
 
 const WishList = ({wishListDataBase}) => {
     
@@ -89,7 +90,7 @@ const WishList = ({wishListDataBase}) => {
 
 
   // =======================
-  const userId = secureLocalStorage.getItem("formData");
+  const userId = Cookies.get("userIdCookies");
 
   
   // =============
@@ -259,7 +260,7 @@ const WishList = ({wishListDataBase}) => {
         currentUrl={currentUrl}
       /> */}
    
-      {wishListDataBase ? (
+      {userId ? (
         <section className="wishlist-main wishlist-data-base">
           <div className="container">
             <div className="breadcrums">

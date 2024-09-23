@@ -31,6 +31,7 @@ import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../store/actions/wishlistAction";
+import Cookies from "js-cookie";
 
 const FinalRing = ({ diamondDataServer, ringData }) => {
   const [removeWishList, setRemoveWishList] = useState();
@@ -78,7 +79,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
     }
   }, [listColor]);
 
-  const user_id = secureLocalStorage.getItem("formData");
+  const user_id = Cookies.get("userIdCookies");;
   const diamondData = Object.assign({}, ...data);
   const ring_diamond = "ring_diamond";
   useMemo(() => {

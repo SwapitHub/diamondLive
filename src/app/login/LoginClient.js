@@ -16,6 +16,8 @@ import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
 export const LoginSignup = () => {
   const router = useRouter();
+  const user_id_cookies = Cookies.get("userIdCookies")
+
 
   const cartData = useSelector((state) => state.cartData);
   const wishlistData = useSelector((state) => state.wishlistData);
@@ -34,12 +36,15 @@ export const LoginSignup = () => {
   }
 
   const [previousPath, setPreviousPath] = useState();
+  console.log(previousPath);
+  
   useEffect(() => {
-    const path = secureLocalStorage.getItem("previousPath") || "/";
+    const path = localStorage.getItem("previousPath") || "/";
     setPreviousPath(path);
   }, []);
 
   const handleValidationsSignIn = (event) => {
+
     event.preventDefault();
     const formData = {
       email: document.getElementById("sign-email").value,
@@ -187,18 +192,8 @@ export const LoginSignup = () => {
                 });
               // ============
             });
-
-            toast.success("Login Successfully !", {
-              position: "top-right",
-            });
-
-            router
-              .push(previousPath === "/cart" ? "/cart" : "/accounts")
-              .then(() => {
-                setTimeout(() => {
-                  secureLocalStorage.removeItem("previousPath");
-                }, 2000);
-              });
+            
+           
 
             wishlistData.forEach((item) => {
               var wishListURL = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${
@@ -328,6 +323,30 @@ export const LoginSignup = () => {
                   console.error("Error:", error);
                 });
             });
+
+            toast.success("Login Successfully !", {
+              position: "top-right",
+            });
+
+
+          
+        
+            router
+              .push(previousPath == "/cart" ? "/cart"  : "/accounts" )
+setTimeout(() => {
+  window.location.reload()
+
+
+}, 2000)
+
+             
+                setTimeout(() => {
+                  localStorage.removeItem("previousPath");
+
+                }, 6000);
+
+             
+
           } else {
             console.error("Error Status:", response.status);
           }
@@ -403,6 +422,9 @@ export const LoginSignup = () => {
 
   return (
     <>
+    {
+      user_id_cookies ? router.push( "/accounts") :
+
       <div className="my-accout-section">
         <div className="container container-1290-list-pages">
           <div className="title">
@@ -552,6 +574,8 @@ export const LoginSignup = () => {
           </div>
         </div>
       </div>
+    }
+      
     </>
   );
 };

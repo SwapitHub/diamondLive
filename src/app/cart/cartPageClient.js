@@ -20,6 +20,7 @@ import {
 import { addToWishlist } from "../../../store/actions/wishlistAction";
 import { ChooseYourImpact } from "../_componentStatic/ChooseYourImpact";
 import { UserContext } from "../context/UserContext";
+import Cookies from "js-cookie";
 
 const CartPage = ({ cart, cartDetails, metalColor }) => {
 
@@ -40,8 +41,10 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   const [plans, setPlans] = useState(1);
   const handleChange = (event) => setMessage(event.target.value);
   const cartData = useSelector((state) => state.cartData);
+  console.log(cartData);
+  
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
-  const user_id = secureLocalStorage.getItem("formData");
+  const user_id = Cookies.get("userIdCookies");
   const now = new Date();
   const date = now.toLocaleDateString();
   const time = now.toLocaleTimeString();
@@ -175,7 +178,7 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   }, [removeCartItem]);
   // ==================
   // =======================
-  const userId = secureLocalStorage.getItem("formData");
+  const userId = Cookies.get("userIdCookies");
 
 
   // ========================end
@@ -310,13 +313,14 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   }, []);
 
   // ============ meta tag  =======================//
+  const previousPath = window.location.pathname;
   
   const handleClickCheckOut = () => {
     
     if (user_id) {
       navigate.push("/check_out");
     } else {
-      secureLocalStorage.setItem("previousPath", window.location.pathname);
+      localStorage.setItem("previousPath",previousPath );
       navigate.push("/login");
       toast.info("Please log in to proceed to checkout.", {
         position: "top-right",
@@ -328,7 +332,7 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   return (
     <>
       
-      {cartDetails ? (
+      {userId ? (
         <div className="shoping-car-page data-base-cart">
           <div className="container">
             {cartDetails.length > 0 ? (

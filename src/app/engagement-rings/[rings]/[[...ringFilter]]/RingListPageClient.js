@@ -68,7 +68,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   const menuMetal = pathSegments[2] || "";
 
   const diamond_origin = searchParams.get("diamond_origin");
-  const user_id = secureLocalStorage.getItem("formData");
+  const user_id = Cookies.get("userIdCookies");;
   const ring = "ring";
   const [items, setItems] = useState([]);
 
@@ -597,7 +597,6 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
 
     // Update state
     setActiveStyleIds(updatedStyleDataSlider);
-   console.log(updatedStyleDataSlider);
 
     Cookies.set("selectedShopStyleIds",JSON.stringify(updatedStyleDataSlider),{
       expires: 3650,
@@ -1637,7 +1636,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
             <form>
               <label for="#">Sort : </label>
               <Select
-                  placeholder={selectSortPrice.map(item=>item.label)}
+                  placeholder={selectSortPrice ? selectSortPrice.map(item=>item.label) : "Newest"}
                 onChange={handlePriceChange}
                 options={options}
                 isSearchable={false}

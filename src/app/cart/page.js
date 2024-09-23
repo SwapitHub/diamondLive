@@ -100,7 +100,7 @@ const CartPageServer = async () => {
   const cart = await fetchMetaCart();
   const cookieStore = cookies();
   const userId = cookieStore.get('userIdCookies')
-  const cartDetails = await fetchCartData(userId.value);
+  const cartDetails = await fetchCartData(userId?.value);
   const metalColor = await fetchMetalData();
   
   return (

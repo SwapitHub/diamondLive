@@ -83,7 +83,7 @@ const WishlistPageServer = async () => {
   const wishlistServer = await fetchMetawishlist();
   const cookieStore = cookies();
   const user_id = cookieStore.get('userIdCookies')
-  const wishlist = await fetchWishlistData(user_id.value);
+  const wishlist = await fetchWishlistData(user_id?.value);
   
   return (
     <>

@@ -8,6 +8,7 @@ import { removeToWishlist } from "../../../store/actions/wishlistAction";
 import { addToCart } from "../../../store/actions/cartActions";
 import Link from "next/link";
 import { productList, productListCart } from "../../../store/actions/productActions";
+import Cookies from "js-cookie";
 
 
 export const WishlistHover = () => {
@@ -50,7 +51,7 @@ export const WishlistHover = () => {
     dispatch(removeToWishlist(item));
   }
 
-  const userId = secureLocalStorage.getItem("formData");
+  const userId = Cookies.get("userIdCookies");
 
   const [removeWishList, setRemoveWishList] = useState();
   const wishlistData = useSelector((state) => state.wishlistData);

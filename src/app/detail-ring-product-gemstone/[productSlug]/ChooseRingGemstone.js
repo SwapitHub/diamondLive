@@ -369,7 +369,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
       .catch((error) => {
         console.error("Error:", error);
       });
-    const searchParams = useSearchParams();
+    const searchParams = new URLSearchParams(queryParams);
     searchParams.set("color", colorName); 
     const newSearchString = searchParams.toString();
 
@@ -466,7 +466,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
 
   // variant start here
   const handleVariation = (variantSlug) => {
-    const searchParams = useSearchParams();
+    const searchParams = new URLSearchParams(queryParams);
   
     const newSearchString = searchParams.toString();
 
@@ -485,7 +485,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   useEffect(() => {
     const totalCaratWeight = secureLocalStorage.getItem("totalCaratWeight");
     if (totalCaratWeight) {
-      const searchParams = useSearchParams();
+      const searchParams = new URLSearchParams(queryParams);
       const newSearchString = searchParams.toString();
 
       const newURL = `${`/detail-ring-product-gemstone/${productSlug}`}?${newSearchString}`;
