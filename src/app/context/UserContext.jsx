@@ -6,14 +6,11 @@ import secureLocalStorage from "react-secure-storage";
 export const UserContext = createContext(null);
 
 // Create a provider component
-export const UserProvider = ({ children }) => {
-  const searchedValue = secureLocalStorage.getItem("searchedItem")
-    ? JSON.parse(secureLocalStorage.getItem("searchedItem"))
-    : "";
+export const UserProvider = ({ children }) => {    
   const [cartDetails, setCartDetails] = useState();
   const [userId, setUserId] = useState();
   const [removeWishList, setRemoveWishList] = useState();
-  const [searching, setSearching] = useState(searchedValue || "");
+  const [searching, setSearching] = useState("");
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [showSuggestionHeader, setShowSuggestionHeader] = useState(false);
   const [loadingCart, setLoadingCart] = useState(false);

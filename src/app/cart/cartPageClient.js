@@ -41,7 +41,6 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   const [plans, setPlans] = useState(1);
   const handleChange = (event) => setMessage(event.target.value);
   const cartData = useSelector((state) => state.cartData);
-  console.log(cartData);
   
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
   const user_id = Cookies.get("userIdCookies");
@@ -307,6 +306,7 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   };
   const [loader, setLoader] = useState(true);
   useEffect(() => {
+    dispatch(productList())
     const timeout = setTimeout(() => {
       setLoader(false);
     }, 2000);
@@ -342,7 +342,7 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
                 <div className="shoping-card">
                   { (
                     cartDetails?.map((item, index) => {
-                      
+                     
                       const selectedMetalColor = metalColor.find(
                         (colorItem) => colorItem.slug === item?.active_color
                       );
