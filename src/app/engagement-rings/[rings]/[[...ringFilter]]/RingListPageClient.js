@@ -23,7 +23,7 @@ import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { productList } from "../../../../../store/actions/productActions";
 import {
@@ -45,6 +45,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter()
+
 
   const [pathSegments, setPathSegments] = useState([]);
   const [queryParams, setQueryParams] = useState({});
@@ -98,6 +99,8 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
 
   const [filterRoseData, setFilterRoseData] = useState([]);
   const [newPrevData, setNewPrevData] = useState([]);
+  console.log(newPrevData);
+  
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [changeName, setChangeName] = useState("");
@@ -167,7 +170,6 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
   // bridal set for start
   const checkedBridalSets = searchParams.get("bridalSets");
   let checkedBridalSetsNew = checkedBridalSets === "true";
-console.log(checkedBridalSets);
 
   const [localBridalData, setLocalBridalData] = useState(checkedBridalSetsNew);
   useEffect(() => {
@@ -1556,7 +1558,7 @@ console.log(checkedBridalSets);
 
         <div className="best-seller-main">
           <span>
-            {newPrevData.product_count}{" "}
+            {newPrevData.product_count}
             {newPrevData.product_count > 1
               ? "ENGAGEMENT RINGS"
               : "ENGAGEMENT RING"}
