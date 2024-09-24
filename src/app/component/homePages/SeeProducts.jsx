@@ -30,9 +30,9 @@ export const SeeProducts = ({
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
             <div
-              dangerouslySetInnerHTML={{
-                __html: diamondPendants?.description,
-              }}
+              // dangerouslySetInnerHTML={{
+              //   __html: diamondPendants?.description,
+              // }}
             ></div>
           </div>
           <div className="see-products-img">
@@ -41,9 +41,9 @@ export const SeeProducts = ({
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
             <div
-              // dangerouslySetInnerHTML={{
-              //   __html: tennisBracelets?.description,
-              // }}
+              dangerouslySetInnerHTML={{
+                __html: tennisBracelets?.description,
+              }}
             ></div>
           </div>
           <div className="see-products-img">
