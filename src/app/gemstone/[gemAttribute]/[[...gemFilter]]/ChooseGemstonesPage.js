@@ -98,12 +98,13 @@ export const ChooseGemstonesPage = ({
   }
   useEffect(() => {
     if (gemStyle) {
-      secureLocalStorage.setItem(
-        "styleDataSlider",
-        JSON.stringify([capitalizeFirstLetter(gemStyle)])
-      );
+      
       secureLocalStorage.removeItem("shapeDataSlider");
       secureLocalStorage.removeItem("colorDataSlider");
+      
+
+      Cookies.remove("gemShape", { path: "/" });
+      Cookies.remove("gemColor", { path: "/" });
       Cookies.set(
         "gemStyle",
         JSON.stringify([capitalizeFirstLetter(gemStyle)]),
@@ -113,17 +114,16 @@ export const ChooseGemstonesPage = ({
           sameSite: "Strict",
         }
       );
-
-      Cookies.remove("gemShape", { path: "/" });
-      Cookies.remove("gemColor", { path: "/" });
+      secureLocalStorage.setItem(
+        "styleDataSlider",
+        JSON.stringify([capitalizeFirstLetter(gemStyle)])
+      );
     }
     if (gemShape) {
-      secureLocalStorage.setItem(
-        "shapeDataSlider",
-        JSON.stringify([capitalizeFirstLetter(gemShape)])
-      );
       secureLocalStorage.removeItem("styleDataSlider");
       secureLocalStorage.removeItem("colorDataSlider");
+      Cookies.remove("gemStyle", { path: "/" });
+      Cookies.remove("gemColor", { path: "/" });
       Cookies.set(
         "gemShape",
         JSON.stringify([capitalizeFirstLetter(gemShape)]),
@@ -133,17 +133,22 @@ export const ChooseGemstonesPage = ({
           sameSite: "Strict",
         }
       );
-      Cookies.remove("gemStyle", { path: "/" });
-
-      Cookies.remove("gemColor", { path: "/" });
+      secureLocalStorage.setItem(
+        "shapeDataSlider",
+        JSON.stringify([capitalizeFirstLetter(gemShape)])
+      );
     }
     if (gemColor) {
+     
+      secureLocalStorage.removeItem("shapeDataSlider");
+      secureLocalStorage.removeItem("styleDataSlider");
+     
+      Cookies.remove("gemStyle", { path: "/" });
+      Cookies.remove("gemShape", { path: "/" });
       secureLocalStorage.setItem(
         "colorDataSlider",
         JSON.stringify([capitalizeFirstLetter(gemColor)])
       );
-      secureLocalStorage.removeItem("shapeDataSlider");
-      secureLocalStorage.removeItem("styleDataSlider");
       Cookies.set(
         "gemColor",
         JSON.stringify([capitalizeFirstLetter(gemColor)]),
@@ -153,8 +158,6 @@ export const ChooseGemstonesPage = ({
           sameSite: "Strict",
         }
       );
-      Cookies.remove("gemStyle", { path: "/" });
-      Cookies.remove("gemShape", { path: "/" });
     }
   }, [gemStyle, gemShape, gemColor]);
 

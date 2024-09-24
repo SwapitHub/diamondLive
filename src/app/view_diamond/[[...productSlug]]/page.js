@@ -121,16 +121,16 @@ const DiamondPage = async ({ searchParams, params }) => {
   const { diamond_origin, stock_num } = searchParams;
   const {productSlug} = params
   const diamondMeta = await fetchMeta();
-  const ringDetail = await fetchDetailMeta(productSlug);
+  const ringDetail = productSlug ? await fetchDetailMeta(productSlug) : null;
   const diamondDetails = await fetchDiamondDetail(diamond_origin, stock_num);
 
-  const filterData = {
+  const filterData = ringDetail ? {
     product: ringDetail.data,
     imgUrl: ringDetail.data.internal_sku,
-  };
+  } : null;
   return (
     <>
-      <SelectDiamond diamondDetails={diamondDetails.response.body.diamonds} productSlug={productSlug ? productSlug : null} filterData={filterData}/>
+      <SelectDiamond diamondDetails={diamondDetails.response.body.diamonds} productSlug={productSlug ? productSlug : null} filterData={filterData ? filterData : null}/>
     </>
   );
 };
