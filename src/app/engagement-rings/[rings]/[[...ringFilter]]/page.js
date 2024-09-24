@@ -191,7 +191,7 @@ export default async function DetailRingPage({ searchParams, params }) {
         metalColor={metalColor.data}
         shapeData={shapeData.data}
         ShopByStyle={ShopByStyle.data}
-        filterRoseData={filterRoseData.data}
+        filterRoseDatas={filterRoseData.data}
         product_count={product_count}
       />
     </div>

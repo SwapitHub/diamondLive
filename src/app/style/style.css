@@ -14710,6 +14710,9 @@ section.add-matching-wedding-band .love-right-content h4 {
 .ShopDiamondShape-img-text:empty {
   display: none;
 }
+.server-side{
+  display: none !important;
+}
 @media (min-width: 2250px) {
   .bridalSets,
   .bridalSets-2 {

@@ -8,6 +8,7 @@ import styles from './page.module.css';
 import ReduxProvider from "./reduxProvider";
 import "./style/style.css";
 import HeaderServer from "./_componentStatic/HeaderServer";
+import Head from "next/head";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -30,7 +31,12 @@ export async function generateMetadata() {
 }
 export default function RootLayout({ children }) {
   return (
+    <>
+    <Head>
+       <meta http-equiv="Cache-Control" content="max-age: 86400, must-revalidate"/>
+      </Head>
     <html lang="en">
+       
       <body className={styles.customFont}>
       <ToastWrapper>
        
@@ -62,5 +68,7 @@ export default function RootLayout({ children }) {
         </ToastWrapper>
       </body>
     </html>
+    </>
+    
   );
 }

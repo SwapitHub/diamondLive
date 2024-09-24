@@ -105,9 +105,9 @@ export default async function WeddingBands({ params }) {
       <ChooseWeddingBands
         weddingBands={filterValue}
         metalColor={metalColor.data}
-        filterRoseData={FilterRoseData.data}
-        newPrevData={FilterRoseData}
+        filterRoseDataServer={FilterRoseData.data}
+        newPrevDataServer={FilterRoseData}
       />
     </div>
-  );
+  ); 
 }

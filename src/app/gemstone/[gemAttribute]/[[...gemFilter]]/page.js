@@ -161,9 +161,9 @@ export default async function DetailRingPage({ params }) {
         gemAttribute={gemAttribute}
         gemFilter={filterValue}
         gemstoneFilterData={gemstoneFilterData.data}
-        data={gemstoneData.response.body.gemstones}
-        gemCount={gemstoneData.response.body}
+        dataServer={gemstoneData.response.body.gemstones}
+        gemCountServer={gemstoneData.response.body}
       />
     </div>
   );
-}
+} 

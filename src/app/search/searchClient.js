@@ -11,15 +11,13 @@ import Select from "react-select";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 import { SearchSuggestion } from "../_componentStatic/SearchSuggestion";
 import { UserContext } from "../context/UserContext";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
-
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 const SearchPage = ({
   metalColor,
   shapeData,
   ShopByStyle,
-  searchData,
-  searchedProductCount,
+  searchDataServer,
 }) => {
   const {
     searching,
@@ -29,33 +27,32 @@ const SearchPage = ({
     setShowSuggestionHeader,
     imgAssetsUrl,
   } = useContext(UserContext);
-
+  const [searchData, setSearchData] = useState([]);
+  const [priceShorting, setPriceShorting] = useState();
+  const [searchedProductCount, setSearchedProductCount] = useState();
   const [shapeFilter, setShapeFilter] = useState([]);
   const [firstApiCall, setFirstApiCall] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const q = searchParams.get('q');
   const options = [
     { value: "", label: "Select Option" },
     { value: "best_seller", label: "Best Sellers" },
     { value: "low_to_high", label: "Price (Low to High)" },
     { value: "high_to_low", label: "Price (High to Low)" },
   ];
-
   const newoption = options.filter(
     (option) => Cookies.get("searchPrice") === option.value
   );
-
   const { baseUrl, imgBaseUrl } = useContext(UserContext);
-
   const handlePriceChange = (selectedOption) => {
     Cookies.set("searchPrice", selectedOption.value, {
       expires: 3650,
       secure: true,
       sameSite: "Strict",
     });
-    window.location.reload();
+    setPriceShorting(selectedOption.value);
   };
 
   // ===========metal three color rose yellow white  =============================
@@ -65,7 +62,7 @@ const SearchPage = ({
   const [isActive, setIsActive] = useState(false);
   const [activePage, setActivePage] = useState([]);
   const [activeColor, setActiveColor] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [selectedMetalIds, setSelectedMetalIds] = useState([]);
   const [selectedStyles, setSelectedStyles] = useState([]);
@@ -270,12 +267,12 @@ const SearchPage = ({
       setShowSuggestion(true);
     }
   }
-
   const handleSearchQuery = () => {
     if (searchValue.length > 0) {
       const newSearchParams = new URLSearchParams(searchParams.toString());
       if (searchValue) {
         newSearchParams.set("q", searchValue);
+        setPage(1);
       } else {
         newSearchParams.delete("q");
       }
@@ -305,20 +302,17 @@ const SearchPage = ({
         return [...prevSlug, slug];
       }
     });
-    window.location.reload();
   };
 
   const handleRemoveStyle = (slug) => {
     setSelectedStyles((prevSelectedStyles) =>
       prevSelectedStyles.filter((selectedStyle) => selectedStyle !== slug)
     );
-    window.location.reload();
   };
   const handleRemoveShape = (shape) => {
     setShapeFilter((prevSelectedStyles) =>
       prevSelectedStyles.filter((selectedShape) => selectedShape !== shape)
     );
-    window.location.reload();
   };
   const handleRemoveColor = (color) => {
     commonMetalColor("White");
@@ -332,10 +326,11 @@ const SearchPage = ({
     setSelectedMetalIds([]);
     setMetalId([]);
     setMetalColorName("");
+    secureLocalStorage.removeItem("searchShape");
+    secureLocalStorage.removeItem("searchStyle");
+    secureLocalStorage.removeItem("searchMetal");
     Cookies.remove("searchShape", { path: "/" });
     Cookies.remove("searchStyle", { path: "/" });
-    secureLocalStorage.removeItem("searchMetal");
-    window.location.reload();
   };
 
   const handleItemClick = (shape) => {
@@ -348,64 +343,61 @@ const SearchPage = ({
         return [...prevSelectedShapes, shape];
       }
     });
-    window.location.reload();
   };
 
-  // useMemo(() => {
-  //   const delayedSearch = debounce(() => {
-  //     setLoading(true);
-  //     axios
-  //       .get(
-  //         `${baseUrl}/search?q=${searching}&page=${page}${
-  //           shapeFilter.length > 0
-  //             ? `&shape=${shapeFilter ? shapeFilter : ""}`
-  //             : ""
-  //         }${
-  //           selectedStyles.length > 0
-  //             ? `&ring_style=${selectedStyles ? selectedStyles : ""}`
-  //             : ""
-  //         }${
-  //           priceShorting
-  //             ? `&sortby=${priceShorting == undefined ? "" : priceShorting}`
-  //             : ""
-  //         }`
-  //       )
-  //       .then((res) => {
-  //         setSearchedProductCount(res.data);
+  useMemo(() => {
+    const delayedSearch = debounce(() => {
+      setLoading(true);
+      axios
+        .get(
+          `${baseUrl}/search?q=${q}&page=${page}${
+            shapeFilter.length > 0
+              ? `&shape=${shapeFilter ? shapeFilter : ""}`
+              : ""
+          }${
+            selectedStyles.length > 0
+              ? `&ring_style=${selectedStyles ? selectedStyles : ""}`
+              : ""
+          }${
+            priceShorting
+              ? `&sortby=${priceShorting == undefined ? "" : priceShorting}`
+              : ""
+          }`
+        )
+        .then((res) => {
+          setSearchedProductCount(res.data);
 
-  //         if (page > 1) {
-  //           setSearchData((prevData) => [...prevData, ...res.data.data]);
-  //           setLoading(false);
-  //         } else {
-  //           setSearchData(res.data.data);
-  //         }
+          if (page > 1) {
+            setSearchData((prevData) => [...prevData, ...res.data.data]);
+            setLoading(false);
+          } else {
+            setSearchData(res.data.data);
+          }
 
-  //         setLoading(false);
-  //         setFirstApiCall(true);
-  //       })
-  //       .catch(() => {
-  //         console.log("API error");
-  //         setLoading(false);
-  //       });
-  //   }, 200);
-  //   delayedSearch();
+          setLoading(false);
+          setFirstApiCall(true);
+        })
+        .catch(() => {
+          console.log("API error");
+          setLoading(false);
+        });
+    }, 200);
+    delayedSearch();
 
-  //   const timeoutColor = setTimeout(() => {
-  //     if (metalColorName) {
-  //       commonMetalColor(metalColorName);
-  //     }
-  //   }, 1500);
+    const timeoutColor = setTimeout(() => {
+      if (metalColorName) {
+        commonMetalColor(metalColorName);
+      }
+    }, 1500);
 
-  //   return delayedSearch.cancel;
-  // }, [searching, page, shapeFilter, selectedStyles, priceShorting]);
+    return delayedSearch.cancel;
+  }, [q, page, shapeFilter, selectedStyles, priceShorting]);
 
   useEffect(() => {
     setPage(1);
   }, [shapeFilter, selectedMetalIds, selectedStyles, metalColorName]);
 
   //  scroll pagination start============
-  console.log("out", page);
-
   useEffect(() => {
     const handleInfiniteScroll = debounce(() => {
       try {
@@ -420,35 +412,33 @@ const SearchPage = ({
 
         if (
           scrollTop + clientHeight >= 0.7 * scrollHeight &&
-          (page - 1) * 30 < searchedProductCount?.product_count
+          page < totalPagesNeeded
         ) {
+          setLoading(true);
           setPage((prev) => prev + 1);
-          const newSearchParams = new URLSearchParams(searchParams.toString());
-          newSearchParams.set('page', page);
-          router.push(`${pathname}?${newSearchParams.toString()}`, undefined, { shallow: true });
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         }
       } catch (error) {
         console.log(error);
       }
     }, 100);
-    if (
-      searchedProductCount &&
-      (page - 1) * 30 < searchedProductCount.product_count
-    ) {
+    if (page * 30 < searchedProductCount?.product_count) {
       window.addEventListener("scroll", handleInfiniteScroll);
     }
     return () => window.removeEventListener("scroll", handleInfiniteScroll);
-  }, [searchedProductCount, page]);
+  }, [firstApiCall, loading]);
 
-  //  =====================scroll pagination end===================
+  //  =====================scroll pagination end==================
 
   //secureLocalStorage Filters
 
   useEffect(() => {
-    const metalsName = JSON?.parse(secureLocalStorage.getItem("searchMetal"));
-    const stylesName = JSON?.parse(Cookies.get("searchStyle"));
-    const shapesName = JSON?.parse(Cookies.get("searchShape"));
-    const searchedItem = JSON?.parse(secureLocalStorage.getItem("searchedItem"));
+    const metalsName = JSON.parse(secureLocalStorage.getItem("searchMetal"));
+    const stylesName = JSON.parse(secureLocalStorage.getItem("searchStyle"));
+    const shapesName = JSON.parse(secureLocalStorage.getItem("searchShape"));
+    const searchedItem = JSON.parse(secureLocalStorage.getItem("searchedItem"));
 
     if (metalsName) {
       setSelectedMetalIds(metalsName);
@@ -481,6 +471,12 @@ const SearchPage = ({
         secure: true,
         sameSite: "Strict",
       });
+      secureLocalStorage.setItem(
+        "searchMetal",
+        JSON.stringify(selectedMetalIds)
+      );
+      secureLocalStorage.setItem("searchStyle", JSON.stringify(selectedStyles));
+      secureLocalStorage.setItem("searchShape", JSON.stringify(shapeFilter));
       secureLocalStorage.setItem("searchedItem", JSON.stringify(searching));
     }, 500);
     debounceUpdatesecureLocalStorage();
@@ -693,10 +689,182 @@ const SearchPage = ({
               </div>
             )}
           </div>
-
           <div className="resultdata setings-Page-img">
-            {searchData?.length > 0 ? (
-              searchData?.map((item) => {
+            {searchData.length > 0 ? (
+              searchData.map((item) => {
+                return (
+                  <div className="resultdata all-pages-data" key={item.id}>
+                    <div className="outerDiv">
+                      <Link
+                        href={
+                          item.menu == "engagement-rings"
+                            ? `/engagement-ring/${item.slug}?color=${
+                                activeColor[item?.id] || white
+                              }`
+                            : item.menu == "wedding-band"
+                            ? `/detail-wedding-band/${item.slug}?color=${
+                                activeColor[item?.id] || white
+                              }`
+                            : "javascript:void(0);"
+                        }
+                      >
+                        <div className="main-common-active product-main-img">
+                          <div className="all-img1 common-img defaultImg White">
+                            <span className="common-stand-img-1">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item?.default_image_url}
+                                alt={item.name}
+                                onError={handleError}
+                              />
+                            </span>
+                            <span className="common-stand-img white-stand-img">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.jpg`}
+                                alt={item.name}
+                                onError={handleError}
+                              />
+                            </span>
+                          </div>
+
+                          <div className="all-img1 img-1 common-img Yellow">
+                            <span className="common-stand-img-1">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.alt.jpg`}
+                                alt={item.name}
+                                onError={handleError}
+                              />
+                            </span>
+                            <span className="common-stand-img yellow-stand-img">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.alt.jpg`}
+                                alt={item.name}
+                                onError={handleError}
+                              />
+                            </span>
+                          </div>
+
+                          <div className="all-img1 img-2 common-img Pink">
+                            <span className="common-stand-img-1">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.alt1.jpg`}
+                                alt={item.name}
+                                onError={handleError}
+                              />
+                            </span>
+                            <span className="common-stand-img rose-stand-img">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.alt1.jpg`}
+                                alt={item.name}
+                                onError={handleError}
+                              />
+                            </span>
+                          </div>
+                          <div className="all-img1 img-3 common-img Platinum">
+                            <span className="common-stand-img-1">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.default_image_url}
+                                alt={item.name}
+                                onError={handleError}
+                              />
+                            </span>
+                            <span className="common-stand-img platinum-stand-img">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.jpg`}
+                                alt={item.name}
+                                onError={handleError}
+                              />
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="main-common-active all-card-four-colors ">
+                          {metalColor.map((MetalColor, index) => (
+                            <div
+                              key={MetalColor.id}
+                              className={`all-card-four-color ${
+                                MetalColor.name
+                              }${
+                                (item.id === activePage &&
+                                  activeColor === MetalColor.slug) ||
+                                MetalColor.slug == "18k-white-gold" ||
+                                changeName == MetalColor.slug
+                                  ? " active"
+                                  : ""
+                              }`}
+                            >
+                              <Link
+                                href="#"
+                                style={{
+                                  background: MetalColor.color,
+                                }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  onChangeName(MetalColor.slug, item.id);
+                                }}
+                              ></Link>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="main-common-active">
+                          <div className="metal-name-by-default">
+                            <span>{item.name}</span>
+                          </div>
+                          {metalColor.map((MetalValue, index) => (
+                            <div
+                              className={`metal-name-item-name ${MetalValue.name}`}
+                              key={MetalValue.id}
+                            >
+                              <span id="metalValueSpan">
+                                {MetalValue.value}
+                              </span>
+                              <span>{item.name}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="main-common-active">
+                          <div className="all-img1 product-price defaultImg White">
+                            ${Math.round(item.white_gold_price)}
+                          </div>
+                          <div className="all-img1 product-price img-1 Yellow">
+                            ${Math.round(item.yellow_gold_price)}
+                          </div>
+                          <div className="all-img1 product-price img-2 Pink">
+                            ${Math.round(item.rose_gold_price)}
+                          </div>
+                          <div className="all-img1 product-price img-3 Platinum">
+                            ${Math.round(item?.platinum_price)}
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <h3 className="center">Data not found</h3>
+            )}
+          </div>
+          <div className="resultdata setings-Page-img server-side">
+            {searchDataServer.length > 0 ? (
+              searchDataServer.map((item) => {
                 return (
                   <div className="resultdata all-pages-data" key={item.id}>
                     <div className="outerDiv">

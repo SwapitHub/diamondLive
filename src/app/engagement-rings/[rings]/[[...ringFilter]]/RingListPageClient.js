@@ -14,53 +14,65 @@ import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
-
+// import { ProductListFaq } from "../../../pages/home/ProductListFaq";
+// import { addToWishList, removeToWishlist } from "../../../redux/action";
+// import { productList } from "../../../redux/productAction";
+// import LoaderSpinner from "../../LoaderSpinner";
 
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { productList } from "../../../../../store/actions/productActions";
 import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../../store/actions/wishlistAction";
+// import { HeaderMetaTag } from "../../../seoTags/MetaTagHeader";
+// import { Tabbing } from "../reusable_components/Tabbing";
 import Cookies from "js-cookie";
 
 
-const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shapeData ,ShopByStyle, product_count}) => {
+const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,shapeData, metalColor}) => {
+  const user_id = secureLocalStorage.getItem("formData");
 
+  
   const searchParams = useSearchParams();
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
-  const router = useRouter();
+  const pathname = usePathname();
+  const router = useRouter()
 
   const [pathSegments, setPathSegments] = useState([]);
   const [queryParams, setQueryParams] = useState({});
   useEffect(() => {
-    if (router.pathname) {
-      const segments = router.pathname.split("/").filter((segment) => segment);
+    if (pathname) {
+      const segments = pathname.split("/").filter((segment) => segment);
       setPathSegments(segments);
     }
-    // setQueryParams(new URLSearchParams(window.location.search));
-  }, [router.pathname]);
+    setQueryParams(searchParams);
+  }, [pathname]);
 
   const mainCategory = pathSegments[0] || "";
   const subCategory = pathSegments;
 
   let menuShapeName, menuShopStyle;
   const [trellisRing, setTrellisRing] = useState();
+  const [metalColorName, setMetalColorName] = useState("White");
 
+  
   useEffect(() => {
     if (rings === "shape") {
       menuShapeName = ringFilter;
       
     } else if (rings === "style") {
       menuShopStyle = ringFilter;
-    } else {
+    } else if(rings === 'metal'){
+      setMetalColorName(ringFilter)
+    }else{
       setTrellisRing(rings)
     }
   }, []);
@@ -68,14 +80,10 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   const menuMetal = pathSegments[2] || "";
 
   const diamond_origin = searchParams.get("diamond_origin");
-  const user_id = Cookies.get("userIdCookies");;
   const ring = "ring";
   const [items, setItems] = useState([]);
 
   const { baseUrl, imgAssetsUrl, imgBaseUrl } = useContext(UserContext);
-
-
-  
   const options = [
     { value: "best_seller", label: "Best Sellers" },
     { value: "Newest", label: "Newest" },
@@ -83,17 +91,12 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
     { value: "high_to_low", label: "Price (High to Low)" },
   ];
 
-  const selectSortPrice = options.filter(
-    (option) => Cookies.get("PriceShorting") === option.value
-  )
- 
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
   const platinum = "platinum";
 
-  // const [filterRoseData, setFilterRoseData] = useState([]);
-  const [metalColorName, setMetalColorName] = useState("White");
+  const [filterRoseData, setFilterRoseData] = useState([]);
   const [newPrevData, setNewPrevData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -104,7 +107,6 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   const [shapeName, setShapeName] = useState([]);
   const [activeStyleIds, setActiveStyleIds] = useState([]);
   const [shapeBreadCamb, setShapeBreadCamb] = useState([]);
-
   const [selectedShopStyleIds, setSelectedShopStyleIds] = useState(() => {
     const savedStyles = secureLocalStorage.getItem("selectedShopStyleIds");
     return savedStyles ? JSON.parse(savedStyles) : [];
@@ -113,7 +115,6 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   a.push(menuShopStyle);
   const mergedArray = [...activeStyleIds, ...a];
   const selectedShopStyleIdsString = mergedArray.join(",");
- 
   const [metalId, setMetalId] = useState();
   const [priceShorting, setPriceShorting] = useState();
   const [metalColorUrl, setMetalColorUrl] = useState();
@@ -140,18 +141,18 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
 
   useEffect(() => {
     if (menuShapeName) {
-      // secureLocalStorage.setItem("clickedShape", menuShapeName);
+      secureLocalStorage.setItem("clickedShape", menuShapeName);
       Cookies.set("clickedShape",menuShapeName,{
         expires: 3650,
         secure: true,
         sameSite: 'Strict'
       })
-
       setGetLocalStoreShape(menuShapeName);
     }
   }, [menuShapeName]);
 
   const [getLocalStoreShape, setGetLocalStoreShape] = useState(
+    secureLocalStorage.getItem("clickedShape") || "",
     Cookies.get("clickedShape") || ""
   );
 
@@ -164,31 +165,17 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   }, [menuMetal]);
 
   // bridal set for start
-  // const checkedBridalSets = searchParams.get("bridal-sets");
-  // let checkedBridalSetsNew = checkedBridalSets === "true";
-  const checkedBridalSetsNew = searchParams.get('bridalSets')
-  console.log(checkedBridalSetsNew);
-  
+  const checkedBridalSets = searchParams.get("bridal-sets");
+  let checkedBridalSetsNew = checkedBridalSets === "true";
+
   const [localBridalData, setLocalBridalData] = useState(checkedBridalSetsNew);
-  // Cookies.set("localBridalData",localBridalData,{
-  //   expires: 3650,
-  //   secure: true,
-  //   sameSite: 'Strict'
-  // })
+  useEffect(() => {
+    setLocalBridalData(checkedBridalSetsNew);
+  }, [checkedBridalSetsNew]);
 
-  // useEffect(() => {
-  //   setLocalBridalData(checkedBridalSetsNew);
-  // }, [checkedBridalSetsNew]);
-
-  // useEffect(() => {
-  //   // secureLocalStorage.setItem("bridalSetsData", localBridalData);
-
-  //   Cookies.set("bridalSetsData",localBridalData,{
-  //     expires: 3650,
-  //     secure: true,
-  //     sameSite: 'Strict'
-  //   })
-  // }, [localBridalData]);
+  useEffect(() => {
+    secureLocalStorage.setItem("bridalSetsData", localBridalData);
+  }, [localBridalData]);
 
   const getBridalSet = () => {
     // const searchParams = new URLSearchParams(window.location.search);
@@ -198,16 +185,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
     //   newSearchString ? `?${newSearchString}` : ""
     // }`;
     // router.push(newURL); 
-    if(checkedBridalSetsNew==='true'){
-
-      router.push('/engagement-rings/start-with-a-setting');
-    }
-    else {
-      router.push('/engagement-rings/start-with-bridal-set?bridalSets=true');
-
-    }
-    // setLocalBridalData((prevState) => !prevState);
-    // window.location.reload()
+    setLocalBridalData((prevState) => !prevState);
   };
 
   // bridal set for end
@@ -276,84 +254,84 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   // =============== shop by price range end==============
 
   useMemo(() => {
-    // const fetchData = () => {
-    //   setLoading(true);
+    const fetchData = () => {
+      setLoading(true);
 
-    //   const URLNEW = `${baseUrl}/products?page=${page}${
-    //     priceShorting
-    //       ? `&sortby=${priceShorting == undefined ? "" : priceShorting}`
-    //       : ""
-    //   }${
-    //     selectedShopStyleIdsString
-    //       ? `&ring_style=${selectedShopStyleIdsString}`
-    //       : ""
-    //   }${shapeName ? `&shape=${shapeName ? shapeName : ""}` : ""}${
-    //     localBridalData
-    //       ? `&bridal_sets=${localBridalData == null ? "" : localBridalData}`
-    //       : ""
-    //   }${
-    //     trellisRing
-    //       ? `&subcategory=${trellisRing == null ? "" : trellisRing}`
-    //       : ""
-    //   }`;
+      const URLNEW = `${baseUrl}/products?page=${page}${
+        priceShorting
+          ? `&sortby=${priceShorting == undefined ? "" : priceShorting}`
+          : ""
+      }${
+        selectedShopStyleIdsString
+          ? `&ring_style=${selectedShopStyleIdsString}`
+          : ""
+      }${shapeName ? `&shape=${shapeName ? shapeName : ""}` : ""}${
+        localBridalData
+          ? `&bridal_sets=${localBridalData == null ? "" : localBridalData}`
+          : ""
+      }${
+        trellisRing
+          ? `&subcategory=${trellisRing == null ? "" : trellisRing}`
+          : ""
+      }`;
       
-    //   axios
-    //     .get(URLNEW)
-    //     .then((res) => {
-    //       if (res.status === 200) {
-    //         setNewPrevData(res.data);
+      axios
+        .get(URLNEW)
+        .then((res) => {
+          if (res.status === 200) {
+            setNewPrevData(res.data);
 
-    //         const updatedProducts = res.data.data.map((product) => ({
-    //           id: product.id,
-    //           sku: product.sku,
-    //           name: product.product_browse_pg_name,
-    //           image: product.default_image_url,
-    //           images: product.default_image_url
-    //             .split("/")
-    //             .slice(-1)
-    //             .join()
-    //             .split(".")
-    //             .shift(),
-    //           slug: product.slug,
-    //           CenterShape: product.CenterShape,
-    //           multiCategory: product.multiCategory,
-    //           imageName: product.default_image_url
-    //             .split("/")
-    //             .slice(-1)
-    //             .join()
-    //             .split(".")
-    //             .shift(),
-    //           white_gold_price: product.white_gold_price,
-    //           yellow_gold_price: product.yellow_gold_price,
-    //           rose_gold_price: product.rose_gold_price,
-    //           platinum_price: product.platinum_price,
-    //         }));
+            const updatedProducts = res.data.data.map((product) => ({
+              id: product.id,
+              sku: product.sku,
+              name: product.product_browse_pg_name,
+              image: product.default_image_url,
+              images: product.default_image_url
+                .split("/")
+                .slice(-1)
+                .join()
+                .split(".")
+                .shift(),
+              slug: product.slug,
+              CenterShape: product.CenterShape,
+              multiCategory: product.multiCategory,
+              imageName: product.default_image_url
+                .split("/")
+                .slice(-1)
+                .join()
+                .split(".")
+                .shift(),
+              white_gold_price: product.white_gold_price,
+              yellow_gold_price: product.yellow_gold_price,
+              rose_gold_price: product.rose_gold_price,
+              platinum_price: product.platinum_price,
+            }));
 
-    //         if (page > 1) {
-    //           setFilterRoseData((prevData) => [
-    //             ...prevData,
-    //             ...updatedProducts,
-    //           ]);
-    //         } else {
-    //           setFilterRoseData(updatedProducts);
-    //         }
+            if (page > 1) {
+              setFilterRoseData((prevData) => [
+                ...prevData,
+                ...updatedProducts,
+              ]);
+            } else {
+              setFilterRoseData(updatedProducts);
+            }
 
-    //         setTimeout(() => {
-    //           setLoading(false);
-    //         }, 5500);
-    //       }
-    //     })
-    //     .catch(() => {
-    //       console.log("API error");
-    //       setLoading(false);
-    //     });
-    // };
-    // fetchData();
+            setTimeout(() => {
+              setLoading(false);
+            }, 5500);
+          }
+        })
+        .catch(() => {
+          console.log("API error");
+          setLoading(false);
+        });
+    };
+    fetchData();
 
     // window.addEventListener("beforeunload", (event) => {
     //   fetchData();
     // });
-
+``
     // window.addEventListener("unload", (event) => {
     //   fetchData();
     // });
@@ -363,20 +341,24 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
 
     return () => clearTimeout(timeoutColor);
   }, [
-   
+    page,
+    selectedShopStyleIdsString,
+    priceShorting,
+    localBridalData,
+    shapeName,
     getLocalStoreMetal,
     metalColorName,
   ]);
 
-  // useEffect(() => {
-  //   setPage(1);
-  // }, [
-  //   selectedShopStyleIdsString,
-  //   shapeName,
-  //   metalId,
-  //   priceShorting,
-  //   metalColorName,
-  // ]);
+  useEffect(() => {
+    setPage(1);
+  }, [
+    selectedShopStyleIdsString,
+    shapeName,
+    metalId,
+    priceShorting,
+    metalColorName,
+  ]);
   //  scroll pagination start============
 
   useEffect(() => {
@@ -441,27 +423,20 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   };
 
   // =============== shop by shape start ==============
-  // useMemo(() => {
-  //   axios
-  //     .get(`${baseUrl}/diamondshape`)
-  //     .then((res) => {
-  //       setShapeData(res.data.data);
-  //       setShapeName(menuShapeName);
-  //     })
-  //     .catch(() => {
-  //       console.log("API error");
-  //     });
-  // }, [menuShapeName]);
+ 
 
   const shapeOnclick = (shapeNameItem) => {
-    const clickedShape = Cookies.get("clickedShape");
+    
+    const clickedShape = secureLocalStorage.getItem("clickedShape");
+    const clickedShapeCookies = Cookies.get("clickedShape");
 
-    if (clickedShape == shapeNameItem) {
+    if (clickedShape == shapeNameItem || clickedShapeCookies==shapeNameItem) {
       // If the clicked shape is already active, remove the filter
      
+
+      secureLocalStorage.removeItem("clickedShape");
       Cookies.remove('clickedShape', { path: '/' })
 
-      // secureLocalStorage.removeItem("clickedShape");
       setShapeBreadCamb("");
       setShapeName("");
       setGetLocalStoreShape("");
@@ -472,8 +447,6 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
       //   newSearchString ? `?${newSearchString}` : ""
       // }`;
       // router.replace(newURL);
-
-
       setShapeName(shapeNameItem);
 
       Cookies.set("clickedShape",shapeNameItem,{
@@ -481,12 +454,8 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
         secure: true,
         sameSite: 'Strict'
       })
-
-      // secureLocalStorage.setItem("clickedShape", shapeNameItem);
+      secureLocalStorage.setItem("clickedShape", shapeNameItem);
     }
-
-    window.location.replace("/engagement-rings/start-with-a-setting")
-
   };
 
   // =============== shop by metal start ==============
@@ -512,24 +481,18 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   // =============== shop by shape end ==============
 
   // =============== shop by  style ==============
-  // const [ShopByStyle, setShopStyle] = useState([]);
-  // useMemo(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`${baseUrl}/product-style`);
-  //       setShopStyle(response.data.data);
-  //     } catch (error) {
-  //       console.log("shop style api error:", error);
-  //     }
-  //   };
 
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
-    const storedSelectedShopStyleIds = Cookies.get("selectedShopStyleIds");
-    
-    if (storedSelectedShopStyleIds) {
+
+    const storedSelectedShopStyleIdsCoo = Cookies.get("selectedShopStyleIds");
+
+    const storedSelectedShopStyleIds =
+      JSON.parse(secureLocalStorage.getItem("selectedShopStyleIds")) || [];
+    setSelectedShopStyleIds(storedSelectedShopStyleIds);
+    setActiveStyleIds(storedSelectedShopStyleIds);
+
+    if (storedSelectedShopStyleIdsCoo) {
       try {
         const parsedShopStyleIds = JSON.parse(storedSelectedShopStyleIds);
         setSelectedShopStyleIds(parsedShopStyleIds);
@@ -542,48 +505,47 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
 
   useEffect(() => {
     if (menuShopStyle) {
-      // secureLocalStorage.setItem(
-      //   "selectedShopStyleIds",
-      //   JSON.stringify([menuShopStyle])
-      // );
-
+      secureLocalStorage.setItem(
+        "selectedShopStyleIds",
+        JSON.stringify([menuShopStyle])
+      );
       Cookies.set("selectedShopStyleIds",JSON.stringify([menuShopStyle]),{
         expires: 3650,
         secure: true,
         sameSite: 'Strict'
       })
   Cookies.remove('clickedShape', { path: '/' })
-
-      // secureLocalStorage.removeItem("clickedShape");
+      secureLocalStorage.removeItem("clickedShape");
     }
     if (menuShapeName) {
-      // secureLocalStorage.setItem("clickedShape", menuShapeName);
-      // secureLocalStorage.removeItem("selectedShopStyleIds");
+      secureLocalStorage.setItem("clickedShape", menuShapeName);
+      secureLocalStorage.removeItem("selectedShopStyleIds");
       Cookies.set("clickedShape",menuShapeName,{
         expires: 3650,
         secure: true,
         sameSite: 'Strict'
       })
   Cookies.remove('selectedShopStyleIds', { path: '/' })
-
     }
   }, [menuShopStyle, menuShapeName]);
   useEffect(() => {
-    const storedStyleData = Cookies.get("selectedShopStyleIds");
-    const storedShapeData = Cookies.get("clickedShape");
+    const storedStyleData = secureLocalStorage.getItem("selectedShopStyleIds");
+    const storedShapeData = secureLocalStorage.getItem("clickedShape");
+    const storedStyleDataC = Cookies.get("selectedShopStyleIds");
+    const storedShapeDataC = Cookies.get("clickedShape");
     // const storedColorData = secureLocalStorage.getItem("colorDataSlider");
 
     const parsedStyleData = storedStyleData ? JSON.parse(storedStyleData) : [];
+    const parsedStyleDataC = storedStyleDataC ? JSON.parse(storedStyleDataC) : [];
 
     // const parsedColorData = storedColorData ? JSON.parse(storedColorData) : [];
 
-    setActiveStyleIds(parsedStyleData);
-    setShapeName(storedShapeData);
+    setActiveStyleIds(parsedStyleData || parsedStyleDataC);
+    setShapeName(storedShapeData || storedShapeDataC);
     // setColorDataSlider(parsedColorData);
   }, [menuShopStyle, shapeName]);
 
   const ShopStyle = (styleItem) => {
-
     let updatedStyleDataSlider = [...activeStyleIds];
 
     if (activeStyleIds?.includes(styleItem)) {
@@ -597,50 +559,37 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
 
     // Update state
     setActiveStyleIds(updatedStyleDataSlider);
-
     Cookies.set("selectedShopStyleIds",JSON.stringify(updatedStyleDataSlider),{
       expires: 3650,
       secure: true,
       sameSite: 'Strict'
     })
 
-    window.location.replace("/engagement-rings/start-with-a-setting")
-
-    // secureLocalStorage.setItem(
-    //   "selectedShopStyleIds",
-    //   JSON.stringify(updatedStyleDataSlider)
-    // );
+    secureLocalStorage.setItem(
+      "selectedShopStyleIds",
+      JSON.stringify(updatedStyleDataSlider)
+    );
   };
 
   const getBridalSetData = () => {
-  //   window.location.reload()
-  //   setLocalBridalData(false);
-  // Cookies.remove('bridalSetsData', { path: '/' })
-
-    // secureLocalStorage.removeItem("bridalSetsData");
+    setLocalBridalData(false);
+    secureLocalStorage.removeItem("bridalSetsData");
     
   };
 
   const resetAllShape = () => {
-    window.location.replace("/engagement-rings/start-with-a-setting")
-
-    Cookies.remove('selectedShopStyleIds', { path: '/' })
+     Cookies.remove('selectedShopStyleIds', { path: '/' })
   Cookies.remove('ring_style', { path: '/' })
   Cookies.remove('clickedShape', { path: '/' })
-
-    commonMetalColor("White");    
+    commonMetalColor("White");
     setActiveStyleIds([]);
     setShapeName();
     setMetalId();
     setMetalColorValue(white);
     setMetalColorName("White");
-    // secureLocalStorage.removeItem("selectedShopStyleIds");
-  
-
-    // secureLocalStorage.removeItem("clickedShape");
-
+    secureLocalStorage.removeItem("selectedShopStyleIds");
+    secureLocalStorage.removeItem("clickedShape");
     secureLocalStorage.removeItem("metaColorIds");
-
   };
 
   const resetAllColor = () => {
@@ -659,7 +608,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   // =============== shop by price range==============
 
   // ===============shop by price range end==============
-  
+
   function commonMetalColor(idMetal) {
     $(
       ".all-pages-data, .all-img1.common-img, .main-common-active.all-card-four-colors > div"
@@ -811,17 +760,11 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
     });
   });
   }
+
   // ==================sort by price start
 
   const handlePriceChange = (selectedOption) => {
-    Cookies.set("PriceShorting",selectedOption.value,{
-      expires: 3650,
-      secure: true,
-      sameSite: 'Strict'
-    })
-
-    window.location.replace("/engagement-rings/start-with-a-setting")
-
+    setPriceShorting(selectedOption.value);
   };
   // ========
   const ShopStyleSlider = {
@@ -885,12 +828,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
           setLoading(true);
           const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${ring_price}&ring_id=${ring_id}&ring_color=${ring_color}&product_type=${product_type}&img_sku=${imgSku}&ring_type=natural`;
           // Make API call
-          const response = await axios.get(apiUrl, {
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRF-TOKEN": tokenData,
-            },
-          });
+          const response = await axios.get(apiUrl);
 
           if (response.status === 200) {
             dispatch(productList());
@@ -919,19 +857,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
     }
   };
 
-  const [tokenData, setTokenData] = useState();
-  useEffect(() => {
-    axios
-      .get(
-        "http://ec2-3-18-62-57.us-east-2.compute.amazonaws.com/admin/api/csrf-token"
-      )
-      .then((res) => {
-        setTokenData(res.data.csrf_token);
-      })
-      .catch((error) => {
-        console.log("CSRF Token API Error:", error);
-      });
-  }, []);
+
   // =======remove to card
   useMemo(() => {
     setLoading(true);
@@ -945,7 +871,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
           dispatch(productList());
         })
         .catch((error) => {
-          console.log("CSRF Token API Error:", error);
+          console.log("remove_wishlist_item API Error:", error);
         });
     };
 
@@ -1010,12 +936,10 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
         secure: true,
         sameSite: 'Strict'
       })
-      window.location.replace("/engagement-rings/start-with-a-setting")
-
-      // secureLocalStorage.setItem(
-      //   "selectedShopStyleIds",
-      //   JSON.stringify(updatedStyles)
-      // );
+      secureLocalStorage.setItem(
+        "selectedShopStyleIds",
+        JSON.stringify(updatedStyles)
+      );
       // if (menuStyleNames?.includes(gemStyle)) {
 
       
@@ -1026,17 +950,13 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
   const handleShapeRemove = () => {
     
     setShapeName();
-    // secureLocalStorage.removeItem("clickedShape");
   Cookies.remove('clickedShape', { path: '/' })
-  window.location.replace("/engagement-rings/start-with-a-setting")
 
+    secureLocalStorage.removeItem("clickedShape");
   };
 
-  // const bridalSetSearch = window.location.search;
-  // const currentUrl = window.location.href;
-  // var newSubCategory = location.pathname.substring(1);
 
-  // var newJoinBridalSet = newSubCategory.concat(bridalSetSearch);
+
 
   return (
     <>
@@ -1085,7 +1005,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
               ringName={`2. Choose Rings`}
               ringLink={`javascript:void(0)`}
               diamondName={` 1. Choose Diamonds`}
-              diamondLink={`/engagement-rings/start-with-a-diamond/`}
+              diamondLink={`/diamond/start-with-a-diamond/`}
               gemStoneName={`1. Choose Gemstones`}
               gemStoneLink={`/gemstones/start-with-a-gemstone`}
             />
@@ -1106,7 +1026,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
                 ringName={`1. Choose Setting`}
                 ringLink={`javascript:void(0)`}
                 diamondName={` 2. Choose Diamonds`}
-                diamondLink={`/engagement-rings/start-with-a-diamond/`}
+                diamondLink={`/diamond/start-with-a-diamond/`}
               />
             </>
           )}
@@ -1236,7 +1156,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
                       <span className="corusel-diamond-checkbox">
                         <form action="">
                           <div class="form-group-diamond">
-                          <input
+                            <input
                               type="checkbox"
                               id="html2"
                               onChange={getBridalSet}
@@ -1625,9 +1545,9 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
         {/* ======mobile filter end========= */}
 
         <div className="best-seller-main">
-        <span>
-            {product_count}{" "}
-            {product_count > 1
+          <span>
+            {newPrevData.product_count}{" "}
+            {newPrevData.product_count > 1
               ? "ENGAGEMENT RINGS"
               : "ENGAGEMENT RING"}
           </span>
@@ -1636,7 +1556,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
             <form>
               <label for="#">Sort : </label>
               <Select
-                  placeholder={selectSortPrice ? selectSortPrice.map(item=>item.label) : "Newest"}
+                placeholder="Best Seller"
                 onChange={handlePriceChange}
                 options={options}
                 isSearchable={false}
@@ -1781,6 +1701,284 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
         <div className="resultdata setings-Page-img">
           {filterRoseData.length > 0 ? (
             filterRoseData.map((item, index) => (
+              <div
+                key={index}
+                className="resultdata all-pages-data "
+                onClick={() =>
+                  secureLocalStorage.removeItem("diamond_type_ring")
+                }
+              >
+                <div className="outerDiv" id={`items-${item.id}`}>
+                  <Link
+                    href={`${
+                      newData.length > 0
+                        ? `/detail-ring-product-gemstone/${item.slug}/?color=${
+                            activeColor[item?.id] || metalColorValue
+                          }&stock_num=${stock_num ? stock_num : ""}`
+                        : `/engagement-ring/${item.slug}/?color=${
+                            activeColor[item.id] || metalColorValue
+                          }${stock_num ? `&stock_num=${stock_num}` : ""}${
+                            diamond_origin
+                              ? `&diamond_origin=${diamond_origin}`
+                              : ""
+                          }`
+                    }`}
+                  >
+                    <div className="main-common-active product-main-img">
+                      <div className="all-img1 common-img defaultImg White">
+                        <span className="common-stand-img-1">
+                          <LazyLoadImage
+                            width="auto"
+                            height="auto"
+                            effect="blur"
+                            className="lazy-image"
+                            src={item.image}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                            }}
+                          />
+                        </span>
+                        <span className="common-stand-img white-stand-img">
+                          <LazyLoadImage
+                            width="auto"
+                            height="auto"
+                            effect="blur"
+                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.side.jpg`}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                            }}
+                          />
+                        </span>
+                        <LazyLoadImage
+                          width="auto"
+                          height="auto"
+                          effect="blur"
+                          className="video-poster"
+                          src="https://www.icegif.com/wp-content/uploads/2023/07/icegif-1260.gif"
+                          alt={item.name}
+                        />
+                      </div>
+
+                      <div className="all-img1 img-1 common-img Yellow">
+                        <span className="common-stand-img-1">
+                          <LazyLoadImage
+                            width="auto"
+                            height="auto"
+                            effect="blur"
+                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.alt.jpg`}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                            }}
+                          />
+                        </span>
+                        <span className="common-stand-img yellow-stand-img">
+                          <LazyLoadImage
+                            width="auto"
+                            height="auto"
+                            effect="blur"
+                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.side.alt.jpg`}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                            }}
+                          />
+                        </span>
+                      </div>
+
+                      <div className="all-img1 img-2 common-img Pink">
+                        <span className="common-stand-img-1">
+                          <LazyLoadImage
+                            width="auto"
+                            height="auto"
+                            effect="blur"
+                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.alt1.jpg`}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                            }}
+                          />
+                        </span>
+                        <span className="common-stand-img rose-stand-img">
+                          <LazyLoadImage
+                            width="auto"
+                            height="auto"
+                            effect="blur"
+                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.side.alt1.jpg`}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                            }}
+                          />
+                        </span>
+                      </div>
+                      <div className="all-img1 img-3 common-img Platinum">
+                        <span className="common-stand-img-1">
+                          <LazyLoadImage
+                            width="auto"
+                            height="auto"
+                            effect="blur"
+                            src={item.image}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                            }}
+                          />
+                        </span>
+                        <span className="common-stand-img platinum-stand-img">
+                          <LazyLoadImage
+                            width="auto"
+                            height="auto"
+                            effect="blur"
+                            src={`${imgBaseUrl}/${item.imageName}/${item.imageName}.side.jpg`}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                            }}
+                          />
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="heart-icon">
+                      <Link href={`${item.id}`}>
+                        {user_id ? (
+                          wishlistIds.includes(item.id) ? (
+                            <IoMdHeart
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleWishlistRemove(item, item.id);
+                              }}
+                            />
+                          ) : (
+                            <CiHeart
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleWishlist(
+                                  item,
+                                  user_id,
+                                  ring,
+                                  item.id,
+                                  white,
+                                  item.white_gold_price,
+                                  item.imageName,
+                                  item.imageName
+                                );
+                              }}
+                            />
+                          )
+                        ) : beforeLoginWishlistIds.includes(item?.id) ? (
+                          <IoMdHeart
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleWishlistRemove(item, item.id);
+                            }}
+                          />
+                        ) : (
+                          <CiHeart
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleWishlist(
+                                item,
+                                user_id,
+                                ring,
+                                item.id,
+                                white,
+                                item.white_gold_price,
+                                item.imageName,
+                                item.imageName
+                              );
+                            }}
+                          />
+                        )}
+                      </Link>
+                    </div>
+
+                    <div className="main-common-active all-card-four-colors ">
+                      {metalColor.map((MetalColor, index) => (
+                        <div
+                          key={index}
+                          className={`all-card-four-color ${MetalColor.name}${
+                            (item.id === activePage &&
+                              activeColor === MetalColor.slug) ||
+                            MetalColor.slug == "18k-white-gold" ||
+                            changeName == MetalColor.slug
+                              ? " active"
+                              : ""
+                          }`}
+                        >
+                          <Link
+                            href="#"
+                            style={{
+                              background: MetalColor.color,
+                            }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              onChangeName(MetalColor.slug, item.id);
+                            }}
+                          ></Link>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="main-common-active">
+                      <div className="metal-name-by-default">
+                        <span>{item.name}</span>
+                      </div>
+                      {metalColor.map((MetalValue, index) => (
+                        <div
+                          className={`metal-name-item-name ${MetalValue.name}`}
+                          key={index}
+                        >
+                          <span id="metalValueSpan">{MetalValue.value}</span>
+                          <span>{item.name}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="main-common-active">
+                      <div className="all-img1 product-price defaultImg White">
+                        ${Math.round(item.white_gold_price)}
+                      </div>
+                      <div className="all-img1 product-price img-1 Yellow">
+                        ${Math.round(item.yellow_gold_price)}
+                      </div>
+                      <div className="all-img1 product-price img-2 Pink">
+                        ${Math.round(item.rose_gold_price)}
+                      </div>
+                      <div className="all-img1 product-price img-3 Platinum">
+                        ${Math.round(item.platinum_price)}
+                      </div>
+                    </div>
+                  </Link>
+                  {/* <div>{item.id}</div> */}
+                </div>
+              </div>
+            ))
+          ) : (
+            <h3 className="center">{loading ? null : "Data Not Found"}</h3>
+          )}
+        </div>
+
+
+        {/* =================server side */}
+        <div className="resultdata setings-Page-img server-side">
+          {filterRoseDatas.length > 0 ? (
+            filterRoseDatas.map((item, index) => (
               <div
                 key={index}
                 className="resultdata all-pages-data "
@@ -2053,6 +2251,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseData, metalColor, shap
             <h3 className="center">{loading ? null : "Data Not Found"}</h3>
           )}
         </div>
+        {/* =================server side end */}
         {/* <div>
           <ProductListMoreToExplore />
           </div> */}

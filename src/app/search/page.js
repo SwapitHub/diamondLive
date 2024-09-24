@@ -138,6 +138,7 @@ export async function generateMetadata() {
     },
   };
 }
+
 const WishlistPageServer = async ({ searchParams }) => {
   const { q, page } = searchParams;
   const cookieStore = cookies();
@@ -166,7 +167,7 @@ const WishlistPageServer = async ({ searchParams }) => {
         metalColor={metalColor.data}
         shapeData={shapeData.data}
         ShopByStyle={ShopByStyle.data}
-        searchData={searchData.data}
+        searchDataServer={searchData.data}
         searchedProductCount={searchData}
       />
     </>
