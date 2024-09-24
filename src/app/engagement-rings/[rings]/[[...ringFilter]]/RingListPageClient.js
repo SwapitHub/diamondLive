@@ -165,8 +165,9 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
   }, [menuMetal]);
 
   // bridal set for start
-  const checkedBridalSets = searchParams.get("bridal-sets");
+  const checkedBridalSets = searchParams.get("bridalSets");
   let checkedBridalSetsNew = checkedBridalSets === "true";
+console.log(checkedBridalSets);
 
   const [localBridalData, setLocalBridalData] = useState(checkedBridalSetsNew);
   useEffect(() => {
@@ -178,13 +179,14 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
   }, [localBridalData]);
 
   const getBridalSet = () => {
-    // const searchParams = new URLSearchParams(window.location.search);
-    // searchParams.delete("bridal-sets");
-    // const newSearchString = searchParams.toString();
-    // const newURL = `/engagement-rings/start-with-a-setting${
-    //   newSearchString ? `?${newSearchString}` : ""
-    // }`;
-    // router.push(newURL); 
+    if(checkedBridalSets==='true'){
+
+      router.push('/engagement-rings/start-with-a-setting');
+    }
+    else {
+      router.push('/engagement-rings/start-with-bridal-set?bridalSets=true');
+
+    }
     setLocalBridalData((prevState) => !prevState);
   };
 
@@ -765,6 +767,12 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
 
   const handlePriceChange = (selectedOption) => {
     setPriceShorting(selectedOption.value);
+
+    Cookies.set("PriceShorting",selectedOption.value,{
+      expires: 3650,
+      secure: true,
+      sameSite: 'Strict'
+    })
   };
   // ========
   const ShopStyleSlider = {
@@ -953,6 +961,8 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
   Cookies.remove('clickedShape', { path: '/' })
 
     secureLocalStorage.removeItem("clickedShape");
+
+    
   };
 
 
