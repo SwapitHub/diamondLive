@@ -19,9 +19,9 @@ export const SeeProducts = ({
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
             <div
-              // dangerouslySetInnerHTML={{
-              //   __html: anniversaryRings?.description,
-              // }}
+              dangerouslySetInnerHTML={{
+                __html: anniversaryRings?.description,
+              }}
             ></div>
           </div>
           <div className="see-products-img">
