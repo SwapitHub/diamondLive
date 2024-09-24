@@ -14707,6 +14707,9 @@ section.add-matching-wedding-band .love-right-content h4 {
 .choose-setting-pages-main .main-common-active.product-main-img{
   min-height: 236px;
 }
+.ShopDiamondShape-img-text:empty {
+  display: none;
+}
 @media (min-width: 2250px) {
   .bridalSets,
   .bridalSets-2 {

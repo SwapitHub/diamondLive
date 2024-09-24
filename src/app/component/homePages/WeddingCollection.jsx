@@ -4,7 +4,6 @@ import Link from "next/link";
 
 export const WeddingCollection = ({engagementRingMain,weddingJewelry,weddingCollection}) => {
   
-    console.log(engagementRingMain);
     
   return (
     <section className="own-engagment gemstone WeddingCollection">

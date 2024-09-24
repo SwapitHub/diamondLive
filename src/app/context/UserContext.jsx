@@ -1,6 +1,5 @@
 "use client";
-import { createContext, useState, useContext } from "react";
-import secureLocalStorage from "react-secure-storage";
+import { createContext, useState } from "react";
 
 // Create the context
 export const UserContext = createContext(null);

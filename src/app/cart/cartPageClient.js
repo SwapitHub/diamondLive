@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import { CiGift, CiHeart } from "react-icons/ci";
 import { IoIosClose } from "react-icons/io";
 import { toast } from "react-toastify";
-
 import GooglePayButton from "@google-pay/button-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -36,7 +35,6 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
   const [removeCartItem, setRemoveCartItem] = useState();
-  const [shapeData, setShapeData] = useState([]);
   const [checked, setChecked] = useState(true);
   const [plans, setPlans] = useState(1);
   const handleChange = (event) => setMessage(event.target.value);
