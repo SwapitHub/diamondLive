@@ -18,6 +18,23 @@ const fetchDetailMeta = async (productSlug) => {
   return ringDetail;
 };
 
+const fetchDetailFontOption = async () => {
+  let ringDetail = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/fonts`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    ringDetail = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return ringDetail;
+};
+
+
 const fetchShapeData = async () => {
   let shape = [];
   try {
@@ -96,7 +113,7 @@ export default async function RingDetailPage({ params, searchParams }) {
   const ringDetail = await fetchDetailMeta(productSlug);
   const shape = await fetchShapeData();
   const diamond = await fetchDiamondDetail(diamond_origin, stock_num);
-  
+  const FontOption = await fetchDetailFontOption()
   const filterData = {
     product: ringDetail.data,
     imgUrl: ringDetail.data.internal_sku,
@@ -104,7 +121,7 @@ export default async function RingDetailPage({ params, searchParams }) {
 
   return (
     <>
-      <DetailRingProduct filterData={filterData} shapeData={shape.data} diamondData={diamond.response.body.diamonds}/>
+      <DetailRingProduct filterData={filterData} shapeData={shape.data} diamondData={diamond.response.body.diamonds} fontStyleOptions={FontOption.data}/>
     </>
   );
 }

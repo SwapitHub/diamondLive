@@ -14388,7 +14388,11 @@ section.add-matching-wedding-band .love-right-content h4 {
   width: 50%;
   display: inline-block;
 }
-.singleProduct .select-custom-size-side > span {
+.singleProduct .select-custom-size-side > span > a {
+  justify-content: flex-start;
+  display: flex;
+}
+.singleProduct .select-custom-size-side > span{
   width: 150px;
   justify-content: flex-start;
 }
@@ -14712,6 +14716,19 @@ section.add-matching-wedding-band .love-right-content h4 {
 }
 .server-side{
   display: none !important;
+}
+.singleProduct-text .metal-common > span ,.bold-650{
+  font-weight: 600 !important;
+}
+.Diamond-Original-main.Diamond-Origin span.bold-650 {
+  padding-left: 5px;
+}
+.ring-info div span svg {
+  cursor: pointer;
+  margin-left: 0px;
+  width: 18px;
+  height: 18px;
+  margin-right: 1px;
 }
 @media (min-width: 2250px) {
   .bridalSets,

@@ -17,8 +17,17 @@ import { IoClose } from "react-icons/io5";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
+import Cookies from "js-cookie";
 
-const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
+const ChooseDiamondsShape = ({
+  diamonds,
+  diamondsFilter,
+  productSlug,
+  shapeData,
+  dataServer,
+  totalDiamondServer,
+  filterData,
+}) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const font_style = searchParams.get("font_style");
@@ -35,12 +44,16 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
   const compareData = useSelector((state) => state.compareData);
   const pageSize = 30;
 
-
-  useEffect(()=>{
-    if(diamonds === 'shape'){
-      setMenuShapeName(diamondsFilter)
+  useEffect(() => {
+    if (diamonds === "shape") {
+      setMenuShapeName(diamondsFilter);
+      Cookies.set("diamondShape", JSON.stringify([diamondsFilter]), {
+        expires: 3650,
+        secure: true,
+        sameSite: "Strict",
+      });
     }
-  },[])
+  }, []);
   let shapeSlider = "";
   if (menuShapeName) {
     shapeSlider = `&shapes[]=${
@@ -79,7 +92,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
 
   // const [menuShapeNames, setMenuShapeNames] = useState(menuShapeName);
   const [labGrownDetails, setLabGrownDetails] = useState();
-  
+
   const [activeResult, setActiveResult] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -88,27 +101,34 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
   const initialType = lastPathSegment === "lab_grown" ? "lab_grown" : "natural";
   const [type, setType] = useState(initialType);
 
-  const [newDiamondType, setNewDiamondType] = useState(diamond_original || initialType);
+  const [newDiamondType, setNewDiamondType] = useState(
+    diamond_original || initialType
+  );
 
-  
   const handleTypeChange = (newType) => {
     setType(newType);
     setNewDiamondType(newType);
 
     if (!productSlug) {
-      history.push(
+      window.location.replace(
         `/diamond/start-with-a-diamond${
           newType === "lab_grown" ? "/lab_grown" : ""
         }${searchParams}`
       );
     }
+    Cookies.set("diamondType", newType, {
+      expires: 3650,
+      secure: true,
+      sameSite: "Strict",
+    });
   };
 
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
   useEffect(() => {
     const newPathSegments = pathname.split("/");
     const newLastPathSegment = newPathSegments[newPathSegments.length - 1];
-    const newType = newLastPathSegment === "lab_grown" ? "lab_grown" : "natural";
+    const newType =
+      newLastPathSegment === "lab_grown" ? "lab_grown" : "natural";
     setNewDiamondType(newType);
     setType(newType);
   }, [pathname]);
@@ -182,7 +202,6 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
   const [diamondFilter, setDiamondFilter] = useState(
     diamondColor ? moreFilter : shape
   );
-  const [shapeData, setShapeData] = useState([]);
   const [shapeName, setShapeName] = useState([]);
   const [activeStyleIds, setActiveStyleIds] = useState([]);
 
@@ -227,17 +246,27 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
       "shapeDiamondData",
       JSON.stringify(updatedShapeDataSlider)
     );
+
+    Cookies.set("diamondShape", JSON.stringify(updatedShapeDataSlider), {
+      expires: 3650,
+      secure: true,
+      sameSite: "Strict",
+    });
   };
 
   const handleRemoveShape = (shape) => {
     setShapeDataSlider((prevSelectedStyles) =>
       prevSelectedStyles?.filter((selectedShape) => selectedShape !== shape)
     );
-    if(menuShapeName){
-
-      setMenuShapeName('')
+    if (menuShapeName) {
+      setMenuShapeName("");
     }
     secureLocalStorage.setItem("shapeDiamondData", shapeDataSlider);
+    Cookies.set("diamondShape", JSON.stringify(shapeDataSlider), {
+      expires: 3650,
+      secure: true,
+      sameSite: "Strict",
+    });
   };
   const handleRemoveCarat = () => {
     setCaratRange([minCaratRange, maxCaratRange]);
@@ -266,7 +295,6 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
     secureLocalStorage.removeItem("cutRange");
   };
   const handleResetAll = () => {
-  
     if (menuShapeName) {
       setMenuShapeName("");
     }
@@ -290,6 +318,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
     secureLocalStorage.removeItem("clarityRange");
     secureLocalStorage.removeItem("selectedOption");
     secureLocalStorage.removeItem("shapeDiamondData");
+    Cookies.remove("diamondShape", { path: "/" });
   };
 
   const newShapeSliderData = shapeDataSlider
@@ -373,6 +402,11 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
     secureLocalStorage.setItem("cutfilter", JSON.stringify(cutSliderValue));
     secureLocalStorage.setItem("selectedOption", selectedOption);
     secureLocalStorage.setItem("diamondType", newDiamondType);
+    Cookies.set("diamondType", newDiamondType, {
+      expires: 3650,
+      secure: true,
+      sameSite: "Strict",
+    });
   }, [
     colorRange,
     sliderValue,
@@ -390,15 +424,15 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
         const url = `https://apiservices.vdbapp.com//v2/diamonds?type=${
           newDiamondType == "lab_grown" ? "Lab_grown_diamond" : "Diamond"
         }&markup_mode=true${
-          diamondPriceRange[1]
-            ? `&price_total_to=${
-                diamondPriceRange[1] ? diamondPriceRange[1] : ""
-              }`
-            : ""
-        }${
           diamondPriceRange[0]
             ? ` &price_total_from=${
                 diamondPriceRange[0] ? diamondPriceRange[0] : ""
+              }`
+            : ""
+        }${
+          diamondPriceRange[1] 
+            ? `&price_total_to=${
+                diamondPriceRange[1] ? diamondPriceRange[1] : ""
               }`
             : ""
         }${
@@ -461,7 +495,6 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
             "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
         };
 
-        
         try {
           setLoading(true);
 
@@ -487,14 +520,6 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
         }
       });
       fetchData();
-
-      // window.addEventListener("beforeunload", (event) => {
-      //   fetchData();
-      // });
-
-      // window.addEventListener("unload", (event) => {
-      //   fetchData();
-      // });
     }
   }, [
     diamondPriceRange,
@@ -555,19 +580,6 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
 
   //  =====================scroll pagination end===================
 
-  // =============== shop by shape start ==============
-  useMemo(() => {
-    axios
-      .get(`${baseUrl}/diamondshape`)
-      .then((res) => {
-        setShapeData(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
-
-  // =============== shop by shape end ==============
   // =============== shop by price range==============
 
   const caratHandleChange = (newRange) => {
@@ -733,38 +745,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
   };
   // ===============ring details Api==============
 
-  const [filterData, setFilterData] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
-
-  useMemo(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/product/${productSlug}`);
-
-        const product = response.data.data;
-        const imgUrl = product.default_image_url
-          .split("/")
-          .slice(-1)
-          .join()
-          .split(".")
-          .shift();
-
-        // Update state with both product and imgUrl
-        setFilterData({
-          product: product,
-          imgUrl: imgUrl,
-        });
-
-        const similarProductsData = JSON.parse(product.similar_products);
-        setSimilarProducts(similarProductsData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [productSlug]);
-  // ring api details Api end
 
   const diamondShape = {
     dots: false,
@@ -818,11 +799,11 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
     axios
       .get(
         `${baseUrl}/get_product_price?product_sku=${
-          filterData.product?.sku
+          filterData?.product?.sku
         }&metalType=${
           listColor === "Platinum" ? "Platinum" : "18kt"
         }&metalColor=${
-          filterData.product?.metalColor
+          filterData?.product?.metalColor
         }&diamond_type=${diamond_original}`
       )
 
@@ -837,9 +818,7 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [
-    filterData
-  ]);
+  }, [filterData]);
   useEffect(() => {
     if (center_stone) {
       setColorRange([14.5, 29.4]);
@@ -854,7 +833,6 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
   const filter_button = () => {
     setFilterbutton(!filterbutton);
   };
- 
 
   const [loadedIframes, setLoadedIframes] = useState({});
 
@@ -1721,8 +1699,9 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
                   </table>
                 </div>
               </div>
-              {
-                 activeResult === 1 ? (
+              {loader ? (
+                <LoaderSpinner />
+              ) : activeResult === 1 ? (
                 data.map((item) => {
                   return (
                     <>
@@ -1870,7 +1849,21 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
                             <div class="slect-dimond">
                               {productSlug ? (
                                 <Link
-                                  href={`/final_ring/${filterData.product?.slug}/?color=${productColor}&stock_num=${item.stock_num}&diamond_original=${labGrownDetails?.diamond_type}&diamond_origin=${newDiamondType}&ring_size=${ring_size}${font_style ? `&font_style=${font_style}`:""}${textEngraving ? `&textEngraving=${textEngraving}`:""}`}
+                                  href={`/final_ring/${
+                                    filterData.product?.slug
+                                  }/?color=${productColor}&stock_num=${
+                                    item.stock_num
+                                  }&diamond_original=${
+                                    labGrownDetails?.diamond_type
+                                  }&diamond_origin=${newDiamondType}&ring_size=${ring_size}${
+                                    font_style
+                                      ? `&font_style=${font_style}`
+                                      : ""
+                                  }${
+                                    textEngraving
+                                      ? `&textEngraving=${textEngraving}`
+                                      : ""
+                                  }`}
                                 >
                                   select diamond
                                 </Link>
@@ -2083,7 +2076,15 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
                                     item?.type === "lab_grown_diamond"
                                       ? `&diamond_origin=lab_grown`
                                       : ""
-                                  }${font_style ? `&font_style=${font_style}`:""}${textEngraving ? `&textEngraving=${textEngraving}`:""}`}
+                                  }${
+                                    font_style
+                                      ? `&font_style=${font_style}`
+                                      : ""
+                                  }${
+                                    textEngraving
+                                      ? `&textEngraving=${textEngraving}`
+                                      : ""
+                                  }`}
                                 >
                                   select diamond
                                 </Link>
@@ -2146,12 +2147,724 @@ const ChooseDiamondsShape = ({ diamonds, diamondsFilter, productSlug }) => {
                           </div>
                         </div>
                       </div>
-                      {/* <div>{loading && <LoaderSpinner />}</div> */}
+                      <div>{loading && <LoaderSpinner />}</div>
                     </>
                   );
                 })
               )}
-              {/* <div>{loading && <LoaderSpinner />}</div> */}
+              <div>{loading && <LoaderSpinner />}</div>
+              {data.length < 1 && activeResult === 1 && (
+                <h2 className="center">{loading ? null : "Data Not Found"}</h2>
+              )}
+            </div>
+            <div className="data-table-responsive server-side">
+              <div className="diamonds-table">
+                <div className="data-tabs">
+                  <ul>
+                    <li
+                      className={activeResult === 1 ? `active` : ""}
+                      onClick={() => setActiveResult(1)}
+                    >
+                      Result (<span>{totalDiamondServer}</span>)
+                    </li>
+                    <li
+                      className={activeResult === 2 ? `active` : ""}
+                      onClick={() => {
+                        if (compareData && compareData.length > 0) {
+                          setActiveResult(2);
+                        }
+                      }}
+                      style={
+                        compareData?.length === 0
+                          ? { cursor: "not-allowed" }
+                          : { cursor: "pointer" }
+                      }
+                    >
+                      Compare
+                      <span>({compareData?.length})</span>
+                    </li>
+                  </ul>
+                  {(shapeDataSlider?.length > 0 ||
+                    caratRange[0] > minCaratRange ||
+                    caratRange[1] < maxCaratRange ||
+                    diamondPriceRange[0] > minDiamondPriceRange ||
+                    diamondPriceRange[1] < maxDiamondPriceRange ||
+                    colorRange[0] > minColorRange ||
+                    colorRange[1] < maxColorRange ||
+                    clarityRange[0] > minClarityRange ||
+                    clarityRange[1] < maxClarityRange ||
+                    cutRange[0] > minCutRange ||
+                    cutRange[1] < maxCutRange) && (
+                    <div className="breadCram">
+                      <Link
+                        href="javascript:void(0);"
+                        onClick={() => handleResetAll()}
+                      >
+                        Reset Filters{" "}
+                        <span>
+                          <IoClose />
+                        </span>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+                {shapeDataSlider?.length > 0 ||
+                caratRange[0] > minCaratRange ||
+                caratRange[1] < maxCaratRange ||
+                diamondPriceRange[0] > minDiamondPriceRange ||
+                diamondPriceRange[1] < maxDiamondPriceRange ||
+                colorRange[0] > minColorRange ||
+                colorRange[1] < maxColorRange ||
+                clarityRange[0] > minClarityRange ||
+                clarityRange[1] < maxClarityRange ||
+                cutRange[0] > minCutRange ||
+                cutRange[1] < maxCutRange ? (
+                  <div className="applying-breadCrum">
+                    {/* <div className="toggale-data-function">
+                  <label className="switch delivery">
+                    <div className="toggle-datta">
+                      <p>
+                        <Switch
+                          onChange={() => handleChange()}
+                          checked={checked}
+                          uncheckedIcon={false}
+                          checkedIcon={false}
+                          onColor="#232323"
+                        />
+                        Quick Ship
+                      </p>
+                      <div className="toggle-icon-img">{<PiVanFill />}</div>
+                    </div>
+                  </label>
+                  <label className="switch">
+                    <div className="toggle-datta">
+                      <p>
+                        <Switch
+                          onChange={() => handleChanges()}
+                          checked={checkedSecond}
+                          uncheckedIcon={false}
+                          checkedIcon={false}
+                          onColor="#232323"
+                        />
+                        Real View
+                      </p>
+                      <div className="toggle-icon-img">
+                        <FaCamera />
+                      </div>
+                    </div>
+                  </label>
+                </div> */}
+                    <div className="bredCramStyleFilter">
+                      {shapeDataSlider?.map((item) => (
+                        <div className="breadCram" key={item}>
+                          <Link
+                            href="javascript:void(0);"
+                            onClick={() => handleRemoveShape(item)}
+                          >
+                            {item}
+                            <span>
+                              <IoClose />
+                            </span>
+                          </Link>
+                        </div>
+                      ))}
+                      {(caratRange[0] > minCaratRange ||
+                        caratRange[1] < maxCaratRange) && (
+                        <div className="breadCram">
+                          <Link
+                            href="javascript:void(0);"
+                            onClick={() => handleRemoveCarat()}
+                          >
+                            {caratRange[0] === caratRange[1]
+                              ? `${caratRange[0]} Carat`
+                              : `${caratRange[0]} - ${caratRange[1]} Carat `}{" "}
+                            <span>
+                              <IoClose />
+                            </span>
+                          </Link>
+                        </div>
+                      )}
+                      {(diamondPriceRange[0] > minDiamondPriceRange ||
+                        diamondPriceRange[1] < maxDiamondPriceRange) && (
+                        <div className="breadCram">
+                          <Link
+                            href="javascript:void(0);"
+                            onClick={() => handleRemovePrice()}
+                          >
+                            {diamondPriceRange[0] === diamondPriceRange[1]
+                              ? `
+                        $${diamondPriceRange[0]} Price`
+                              : `$${diamondPriceRange[0]} - $${diamondPriceRange[1]} Price`}{" "}
+                            <span>
+                              <IoClose />
+                            </span>
+                          </Link>
+                        </div>
+                      )}
+                      {(colorRange[0] > minColorRange ||
+                        colorRange[1] < maxColorRange) && (
+                        <div className="breadCram">
+                          <Link
+                            href="javascript:void(0);"
+                            onClick={() => handleRemoveColor()}
+                          >
+                            {sliderValue[0] ===
+                            sliderValue[sliderValue.length - 1]
+                              ? `${sliderValue[0]} Color`
+                              : `${sliderValue[0]} - ${
+                                  sliderValue[sliderValue.length - 1]
+                                } Color`}{" "}
+                            <span>
+                              <IoClose />
+                            </span>
+                          </Link>
+                        </div>
+                      )}
+                      {(clarityRange[0] > minClarityRange ||
+                        clarityRange[1] < maxClarityRange) && (
+                        <div className="breadCram">
+                          <Link
+                            href="javascript:void(0);"
+                            onClick={() => handleRemoveClarity()}
+                          >
+                            {claritySliderValue[0] ===
+                            claritySliderValue[claritySliderValue.length - 1]
+                              ? `${claritySliderValue[0]} Clarity`
+                              : `${claritySliderValue[0]} - ${
+                                  claritySliderValue[
+                                    claritySliderValue.length - 1
+                                  ]
+                                } Clarity`}{" "}
+                            <span>
+                              <IoClose />
+                            </span>
+                          </Link>
+                        </div>
+                      )}
+                      {(cutRange[0] > minCutRange ||
+                        cutRange[1] < maxCutRange) && (
+                        <div className="breadCram">
+                          <Link
+                            href="javascript:void(0);"
+                            onClick={() => handleRemoveCut()}
+                          >
+                            {cutSliderValue[0] ===
+                            cutSliderValue[cutSliderValue.length - 1]
+                              ? `${cutSliderValue[0]} Cut`
+                              : `${cutSliderValue[0]} - ${
+                                  cutSliderValue[cutSliderValue.length - 1]
+                                } Cut`}{" "}
+                            <span>
+                              <IoClose />
+                            </span>
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : null}
+
+                <div className="table-outer">
+                  <table id="customers">
+                    <tr>
+                      <th>
+                        Shape
+                        <span>
+                          <FaAngleDown />
+                        </span>
+                      </th>
+                      <th>
+                        Price
+                        <span>
+                          <FaAngleDown />
+                        </span>
+                      </th>
+                      <th>
+                        Carat
+                        <span>
+                          <FaAngleDown />
+                        </span>
+                      </th>
+                      <th>
+                        Cut
+                        <span>
+                          <FaAngleDown />
+                        </span>
+                      </th>
+                      <th>
+                        Color
+                        <span>
+                          <FaAngleDown />
+                        </span>
+                      </th>
+                      <th>
+                        Clarity
+                        <span>
+                          <FaAngleDown />
+                        </span>
+                      </th>
+                      <th>
+                        Compare
+                        <span>
+                          <FaAngleDown />
+                        </span>
+                      </th>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              {activeResult === 1 ? (
+                dataServer.map((item) => {
+                  return (
+                    <>
+                      <ul
+                        className="prodcut-data"
+                        onClick={() => handleClick(item.id)}
+                      >
+                        <li className="heading-data-categery">
+                          <div className="main-wrapper">
+                            <div className="item-shape-image">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.image_url}
+                                alt={item.shape}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                }}
+                              />
+                            </div>
+                            <p>{item.shape}</p>
+                          </div>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>${Math.round(item.total_sales_price)}</p>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>{item.size}</p>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>{item.cut}</p>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>{item.color}</p>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>{item.clarity}</p>
+                        </li>
+                        <li className="heading-data-categery campare boder-rt">
+                          <form action="">
+                            <div className="form-group">
+                              <input
+                                type="checkbox"
+                                id={`html${item.id}`}
+                                checked={clickedCheckboxes?.includes(item.id)}
+                                onClick={() => trackClick(item.id, item)}
+                              />
+                              <label htmlFor={`html${item.id}`}></label>
+                            </div>
+                          </form>
+                        </li>
+                      </ul>
+                      <div className={activeUL === item.id ? "" : "hide-data"}>
+                        <div class="inner-dimond-data-stucture">
+                          <div class="prodcut-img">
+                            {!loadedIframes[item.id] && (
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.image_url}
+                                alt={item.shape}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                }}
+                              />
+                            )}
+                            <iframe
+                              src={item.video_url}
+                              frameBorder="0"
+                              title="video"
+                              onLoad={() => handleIframeLoad(item.id)}
+                              allow="autoplay"
+                            ></iframe>
+                          </div>
+                          <div class="pro-cart-data">
+                            <div class="pro-data-cart head">
+                              {productSlug ? (
+                                <Link
+                                  href={`/view_diamond?stock_num=${
+                                    item.stock_num
+                                  }&slug=${
+                                    filterData.product?.slug
+                                  }&color=${productColor}&diamond_original=${diamond_original}${
+                                    newDiamondType === "lab_grown"
+                                      ? `&diamond_origin=${newDiamondType}`
+                                      : `&diamond_origin=natural`
+                                  }&ring_size=${ring_size}${
+                                    textEngraving
+                                      ? `&textEngraving=${textEngraving}`
+                                      : ""
+                                  }${
+                                    font_style
+                                      ? `&font_style=${font_style}`
+                                      : ""
+                                  }`}
+                                >
+                                  <p>
+                                    {item.size} Carat {item.shape} Diamond
+                                  </p>
+                                </Link>
+                              ) : (
+                                <Link
+                                  href={`/view_diamond?stock_num=${
+                                    item.stock_num
+                                  }${
+                                    newDiamondType === "lab_grown"
+                                      ? `&diamond_origin=${newDiamondType}`
+                                      : ""
+                                  }`}
+                                >
+                                  <p>
+                                    {item.size} Carat {item.shape} Diamond
+                                  </p>
+                                </Link>
+                              )}
+                              {/* <Link href="javascript:void(0);">
+                              <p>
+                                {item.size} Carat {item.shape} Diamond
+                              </p>
+                            </Link> */}
+                            </div>
+                            <div class="pro-data-cart border-btm">
+                              <p>
+                                Price: ${Math.round(item.total_sales_price)}
+                              </p>
+                            </div>
+                            <div class="pro-data-cart border-btm">
+                              <p>Carat: {item.size}</p>
+                            </div>
+                            {item.cut && (
+                              <div class="pro-data-cart border-btm">
+                                <p>Cut: {item.cut}</p>
+                              </div>
+                            )}
+                            <div class="pro-data-cart border-btm">
+                              <p>Color: {item.color}</p>
+                            </div>
+                            <div class="pro-data-cart border-btm">
+                              <p>Clarity: {item.clarity}</p>
+                            </div>
+                          </div>
+                          <div class="pro-cart-btn">
+                            <div class="slect-dimond">
+                              {productSlug ? (
+                                <Link
+                                  href={`/final_ring/${
+                                    filterData.product?.slug
+                                  }/?color=${productColor}&stock_num=${
+                                    item.stock_num
+                                  }&diamond_original=${
+                                    labGrownDetails?.diamond_type
+                                  }&diamond_origin=${newDiamondType}&ring_size=${ring_size}${
+                                    font_style
+                                      ? `&font_style=${font_style}`
+                                      : ""
+                                  }${
+                                    textEngraving
+                                      ? `&textEngraving=${textEngraving}`
+                                      : ""
+                                  }`}
+                                >
+                                  select diamond
+                                </Link>
+                              ) : (
+                                <Link
+                                  href={`/engagement-rings/start-with-a-setting?stock_num=${item.stock_num}&diamond_origin=${newDiamondType}`}
+                                >
+                                  select diamond
+                                </Link>
+                              )}
+                            </div>
+                            <div class="view-dmd">
+                              {productSlug ? (
+                                <Link
+                                  href={`/view_diamond/${
+                                    filterData.product?.slug
+                                  }?stock_num=${
+                                    item.stock_num
+                                  }&color=${productColor}&diamond_original=${diamond_original}${
+                                    newDiamondType === "lab_grown"
+                                      ? `&diamond_origin=${newDiamondType}`
+                                      : "&diamond_origin=natural"
+                                  }&ring_size=${ring_size}${
+                                    textEngraving
+                                      ? `&textEngraving=${textEngraving}`
+                                      : ""
+                                  }${
+                                    font_style
+                                      ? `&font_style=${font_style}`
+                                      : ""
+                                  }`}
+                                >
+                                  view diamond detail
+                                </Link>
+                              ) : (
+                                <Link
+                                  href={`/view_diamond?stock_num=${
+                                    item.stock_num
+                                  }${
+                                    newDiamondType === "lab_grown"
+                                      ? `&diamond_origin=${newDiamondType}`
+                                      : ""
+                                  }`}
+                                >
+                                  view diamond detail
+                                </Link>
+                              )}
+                            </div>
+                            <div class="other-btn-bar">
+                              <span>quick ship</span>
+                              <span>in another user bag</span>
+                              <span>only one available</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })
+              ) : (
+                compareData.map((item) => {
+                  return (
+                    <>
+                      <ul
+                        className="prodcut-data"
+                        onClick={() => handleClick(item.id)}
+                      >
+                        <li className="heading-data-categery">
+                          <div className="main-wrapper">
+                            <div className="item-shape-image">
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.image_url}
+                                alt={item.shape}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                }}
+                              />
+                            </div>
+                            <p>{item.shape}</p>
+                          </div>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>${Math.round(item.total_sales_price)}</p>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>{item.size}</p>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>{item.cut}</p>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>{item.color}</p>
+                        </li>
+                        <li className="heading-data-categery">
+                          <p>{item.clarity}</p>
+                        </li>
+                        <li className="heading-data-categery campare boder-rt">
+                          <form action="">
+                            <div className="form-group">
+                              <input
+                                type="checkbox"
+                                id={`html${item.id}`}
+                                checked={clickedCheckboxes?.includes(item.id)}
+                                onClick={() => trackClick(item.id, item)}
+                              />
+                              <label htmlFor={`html${item.id}`}></label>
+                            </div>
+                          </form>
+                        </li>
+                      </ul>
+                      <div className={activeUL === item.id ? "" : "hide-data"}>
+                        <div class="inner-dimond-data-stucture">
+                          <div class="prodcut-img">
+                            {!loadedIframes[item.id] && (
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.image_url}
+                                alt={item.shape}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                }}
+                              />
+                            )}
+                            <iframe
+                              src={item.video_url}
+                              frameBorder="0"
+                              title="video"
+                              onLoad={() => handleIframeLoad(item.id)}
+                              allow="autoplay"
+                            ></iframe>
+                          </div>
+                          <div class="pro-cart-data">
+                            <div class="pro-data-cart head">
+                              {productSlug ? (
+                                <Link
+                                  href={`/view_diamond/${
+                                    filterData.product?.slug
+                                  }?stock_num=${
+                                    item.stock_num
+                                  }&color=${productColor}${
+                                    item?.type === "lab_grown_diamond"
+                                      ? `&diamond_origin=lab_grown`
+                                      : ""
+                                  }&diamond_original=${diamond_original}${
+                                    textEngraving
+                                      ? `&textEngraving=${textEngraving}`
+                                      : ""
+                                  }${
+                                    font_style
+                                      ? `&font_style=${font_style}`
+                                      : ""
+                                  }`}
+                                >
+                                  <p>
+                                    {item.size} Carat {item.shape} Diamond
+                                  </p>
+                                </Link>
+                              ) : (
+                                <Link
+                                  href={`/view_diamond?stock_num=${
+                                    item.stock_num
+                                  }${
+                                    item?.type !== "diamond"
+                                      ? `&diamond_origin=lab_grown`
+                                      : ""
+                                  }`}
+                                >
+                                  <p>
+                                    {item.size} Carat {item.shape} Diamond
+                                  </p>
+                                </Link>
+                              )}
+                            </div>
+                            <div class="pro-data-cart border-btm">
+                              <p>
+                                Price: ${Math.round(item.total_sales_price)}
+                              </p>
+                            </div>
+                            <div class="pro-data-cart border-btm">
+                              <p>Carat: {item.size}</p>
+                            </div>
+                            {item.cut && (
+                              <div class="pro-data-cart border-btm">
+                                <p>Cut: {item.cut}</p>
+                              </div>
+                            )}
+                            <div class="pro-data-cart border-btm">
+                              <p>Color: {item.color}</p>
+                            </div>
+                            <div class="pro-data-cart border-btm">
+                              <p>Clarity: {item.clarity}</p>
+                            </div>
+                          </div>
+                          <div class="pro-cart-btn">
+                            <div class="slect-dimond">
+                              {productSlug ? (
+                                <Link
+                                  href={`/final_ring/${
+                                    filterData.product?.slug
+                                  }?color=${productColor}&stock_num=${
+                                    item.stock_num
+                                  }&diamond_original=${
+                                    labGrownDetails?.diamond_type
+                                  }${
+                                    item?.type === "lab_grown_diamond"
+                                      ? `&diamond_origin=lab_grown`
+                                      : ""
+                                  }${
+                                    font_style
+                                      ? `&font_style=${font_style}`
+                                      : ""
+                                  }${
+                                    textEngraving
+                                      ? `&textEngraving=${textEngraving}`
+                                      : ""
+                                  }`}
+                                >
+                                  select diamond
+                                </Link>
+                              ) : (
+                                <Link
+                                  href={`/engagement-rings/start-with-a-setting?stock_num=${
+                                    item.stock_num
+                                  }${
+                                    item?.type !== "diamond"
+                                      ? `&diamond_origin=lab_grown`
+                                      : ""
+                                  }`}
+                                >
+                                  select diamond
+                                </Link>
+                              )}
+                            </div>
+                            <div class="view-dmd">
+                              {productSlug ? (
+                                <Link
+                                  href={`/view_diamond/${
+                                    filterData.product?.slug
+                                  }?stock_num=${
+                                    item.stock_num
+                                  }&color=${productColor}${
+                                    item?.type !== "diamond"
+                                      ? `&diamond_origin=lab_grown`
+                                      : ""
+                                  }&diamond_original=${diamond_original}${
+                                    textEngraving
+                                      ? `&textEngraving=${textEngraving}`
+                                      : ""
+                                  }${
+                                    font_style
+                                      ? `&font_style=${font_style}`
+                                      : ""
+                                  }`}
+                                >
+                                  view diamond detail
+                                </Link>
+                              ) : (
+                                <Link
+                                  href={`/view_diamond?stock_num=${
+                                    item.stock_num
+                                  }${
+                                    item?.type !== "diamond"
+                                      ? `&diamond_origin=lab_grown`
+                                      : ""
+                                  }`}
+                                >
+                                  view diamond detail
+                                </Link>
+                              )}
+                            </div>
+                            <div class="other-btn-bar">
+                              <span>quick ship</span>
+                              <span>in another user bag</span>
+                              <span>only one available</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>{loading && <LoaderSpinner />}</div>
+                    </>
+                  );
+                })
+              )}
+              <div>{loading && <LoaderSpinner />}</div>
               {data.length < 1 && activeResult === 1 && (
                 <h2 className="center">{loading ? null : "Data Not Found"}</h2>
               )}

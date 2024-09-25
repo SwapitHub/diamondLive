@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { BiDownArrow, BiSolidPhoneCall, BiUpArrow } from "react-icons/bi";
 import { CiHeart } from "react-icons/ci";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -16,6 +16,8 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
 // import { ShapePopup } from "../../popups/ShapePopup";
+import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
+import { UserContext } from "@/app/context/UserContext";
 import { Select } from "antd";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
@@ -24,25 +26,23 @@ import "react-medium-image-zoom/dist/styles.css";
 import secureLocalStorage from "react-secure-storage";
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
-import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
-import { UserContext } from "@/app/context/UserContext";
 import { addToCart } from "../../../../store/actions/cartActions";
 
+import { DropHint } from "@/app/_componentStatic/DropHint";
+import NewsLetter from "@/app/_componentStatic/NewsLetter";
+import { useData } from "@/app/context/DataContext";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   productList,
   productListCart,
 } from "../../../../store/actions/productActions";
-import NewsLetter from "@/app/_componentStatic/NewsLetter";
-import Link from "next/link";
-import { DropHint } from "@/app/_componentStatic/DropHint";
-import { useData } from "@/app/context/DataContext";
-import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
-import { useRouter, useSearchParams } from "next/navigation";
 import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
 
-export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
+export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyleOptions}) => {
   const router = useRouter(); // Call userouter at the top level of the component
   const [urlColor, setUrlColor] = useState("");
+  const searchParams = useSearchParams();
   const queryParams = useSearchParams();
   const listColor = queryParams.get("color");
   const stock_num = queryParams.get("stock_num");
@@ -50,7 +50,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
   const diamond_original = queryParams.get("diamond_original");
 
   // find url area
-  const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
+  const { baseUrl, imgBaseUrl, imgAssetsUrl} = useContext(UserContext);
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
@@ -434,7 +434,6 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
       .catch((error) => {
         console.error("Error:", error);
       });
-    const searchParams = useSearchParams()
     searchParams.set("color", colorName);
     searchParams.delete("diamond_original");
     const newSearchString = searchParams.toString();
@@ -449,8 +448,9 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
   };
 
   // nature and lab-grown
-  const onChangeNature = (original) => {
-    setChangeOverNature(original);
+  const [diamondOrigin, setDiamondOrigin] = useState();
+  const handleDiamondOriginHover = (origin) => {
+    setDiamondOrigin(origin);
   };
 
   const onChangeClickNature = (
@@ -540,8 +540,14 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
   });
 
   // variant start here
+  const [changeOverVariation, setChangeOverVariation] = useState()
+  
+  
+  const onChangeOverVariation = (fraction)=>{
+    setChangeOverVariation(fraction);
+  }
   const handleVariation = (variantSlug) => {
-    const searchParams = useSearchParams()
+    localStorage.setItem("fractionWedding")
 
     const newSearchString = searchParams.toString();
 
@@ -559,7 +565,6 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
   useEffect(() => {
     const totalCaratWeight = secureLocalStorage.getItem("totalCaratWeight");
     if (totalCaratWeight) {
-      const searchParams = useSearchParams()
 
       const newSearchString = searchParams.toString();
 
@@ -624,19 +629,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
     setSelectedFontStyleOption(fontStyleOptions);
   };
 
-  const fontStyleOptions = [
-    { value: "ℋ𝒶𝓇𝓇𝒾𝓃ℊ𝓉ℴ𝓃", label: "ℋ𝒶𝓇𝓇𝒾𝓃ℊ𝓉ℴ𝓃" },
-    { value: "ℒ𝓊𝒸𝒾𝒹𝒶 𝒞𝒶𝓁𝓁𝒾𝑔𝓇𝒶𝓅𝒽𝓎", label: "ℒ𝓊𝒸𝒾𝒹𝒶 𝒞𝒶𝓁𝓁𝒾𝑔𝓇𝒶𝓅𝒽𝓎" },
-    { value: "𝔉𝔯𝔢𝔢𝔰𝔱𝔶𝔩𝔢 𝔖𝔠𝔯𝔦𝔭𝔱", label: "𝔉𝔯𝔢𝔢𝔰𝔱𝔶𝔩𝔢 𝔖𝔠𝔯𝔦𝔭𝔱" },
-    { value: "𝓢𝓬𝓻𝓲𝓹𝓽 𝓜𝓣 𝓑𝓸𝓵𝓭", label: "𝓢𝓬𝓻𝓲𝓹𝓽 𝓜𝓣 𝓑𝓸𝓵𝓭" },
-    { value: "𝚃𝚒𝚖𝚎𝚜 𝙽𝚎𝚠 𝚁𝚘𝚖𝚊𝚗", label: "𝚃𝚒𝚖𝚎𝚜 𝙽𝚎𝚠 𝚁𝚘𝚖𝚊𝚗" },
-    {
-      value: "𝕽𝖆𝖌𝖊 𝕴𝖙𝖆𝖑𝖎𝖈",
-      label: "𝕽𝖆𝖌𝖊 𝕴𝖙𝖆𝖑𝖎𝖈",
-    },
-    { value: "𝕴𝖓𝖋𝖔𝖗𝖒𝖆𝖑 𝕽𝖔𝖒𝖆𝖓", label: "𝕴𝖓𝖋𝖔𝖗𝖒𝖆𝖑 𝕽𝖔𝖒𝖆𝖓" },
-    { value: "𝐻𝑒𝓁𝓋𝑒𝓉𝒾𝒸𝒶", label: "𝐻𝑒𝓁𝓋𝑒𝓉𝒾𝒸𝒶" },
-  ];
+ 
 
   const [textEngraving, setTextEngraving] = useState();
   const onchangeEngraving = (event) => {
@@ -3697,145 +3690,107 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
                       </div>
                     </div>
 
-                    {filterData.product?.variants.length > 0 ? (
-                      <div className="Diamond-Original-main  Setting-Carat Variation">
-                        <span className="bold full-width">
-                          Setting Carat Weight (setting only) :
-                        </span>
-                        {filterData.product?.variants.map(
-                          (variantItem, index) => {
-                            const inputString = variantItem.sku;
-                            const regex = /(\d+\/\d+)/;
-                            const match = inputString?.match(regex);
-                            if (match && match?.length > 0) {
-                              const fraction = match[0];
+                    {
+                             
+                             filterData.product?.SideDiamondNumber > 0 &&    (
+                              filterData.product?.variants.length > 0 ? (
+                           
+                                                 <div className="Diamond-Original-main  Setting-Carat Variation">
+                                                  <span className="bold full-width">
+                                                     Setting Carat Weight (setting only) : <span className="bold-650">
+                                                     {
+                                                              <span>{changeOverVariation ? `${changeOverVariation} ct tw `: filterData.product?.fractionsemimount }  </span>
+                                                           }
+                                                       </span> 
+                                                   </span>
+                           
+                                                   {filterData.product?.variants.map(
+                                                     (variantItem, index) => {
+                                                       const inputString = variantItem.sku;
+                                                       const regex = /(\d+\/\d+)/;
+                                                       const match = inputString?.match(regex);
+                                                       if (match && match?.length > 0) {
+                                                         const fraction = match[0];
+                           
+                                                         return (
+                                                           <>
+                                                             <div
+                                                               className={
+                                                                 variantSlug === variantItem.slug
+                                                                   ? "active-variant variant-outer"
+                                                                   : "variant-outer"
+                                                               }
+                                                               key={index}
+                                                             >
+                                                               <span
+                                                                 onClick={() =>
+                                                                   handleVariation(variantItem.slug)
+                                                                 }
+                                                                 onMouseEnter={() => onChangeOverVariation(fraction)}
+                           
+                                                               
+                                                     onMouseOut={() => onChangeOverVariation( )}
+                                                               >
+                                                                  
+                                                                 {fraction}
+                                                               </span>
+                                                             </div>
+                                                           </>
+                                                         );
+                                                       }
+                                                       return null; // Make sure to return null if the condition is not met
+                                                     }
+                                                   )}
+                                                 </div>
+                                               ) : (
+                                                 filterData.product?.fractionsemimount && (
+                                                   <div className="Diamond-Original-main  Setting-Carat Variation N/A">
+                                                     <span className=" full-width">
+                                                       <span className="bold">
+                                                         Setting Carat Weight (setting only) :{" "}
+                                                       </span>{" "}
+                                                       <span>
+                                                         {" "}
+                                                         {filterData.product?.fractionsemimount}
+                                                       </span>
+                                                     </span>
+                                                   </div>
+                                                 )
+                                               )
+                           
+                              )
+                                                  }
 
-                              return (
-                                <>
-                                  <div
-                                    className={
-                                      variantSlug === variantItem.slug
-                                        ? "active-variant variant-outer"
-                                        : "variant-outer"
-                                    }
-                                    key={index}
-                                  >
-                                    <span
-                                      onClick={() =>
-                                        handleVariation(variantItem.slug)
-                                      }
-                                    >
-                                      {fraction}
-                                    </span>
-                                  </div>
-                                </>
-                              );
-                            }
-                            return null; // Make sure to return null if the condition is not met
-                          }
-                        )}
-                      </div>
-                    ) : (
-                      <div className="Diamond-Original-main  Setting-Carat Variation N/A">
-                        <span className=" full-width">
-                          <span className="bold">
-                            Total Carat Weight (setting only) :{" "}
-                          </span>{" "}
-                          <span> {filterData.product?.fractionsemimount}</span>
-                        </span>
-                      </div>
-                    )}
-
-                    {filterData?.product?.center_stones?.length > 1 && (
-                      <div className="Diamond-Original-main  Centerstone">
-                        {filterData?.product?.center_stones?.map(
-                          (centerStone, index) => {
-                            return (
-                              <>
-                                {index === 0 && (
-                                  <span className="bold full-width">
-                                    Center Stone :
-                                  </span>
-                                )}
-
-                                <span
-                                  className={`${
-                                    centerStone?.value === centerStoneData
-                                      ? "active-stone"
-                                      : ""
-                                  }`}
-                                >
-                                  <Link
-                                    href="javascript:void(0)"
-                                    onClick={() =>
-                                      handleCenterStone(centerStone?.value)
-                                    }
-                                  >
-                                    {centerStone?.name}
-                                  </Link>
-                                </span>
-                              </>
-                            );
-                          }
-                        )}
-
-                        <span
-                        // className={`${
-                        //   centerStoneData?.length > 0 ? "" : "active-stone"
-                        // }`}
-                        >
-                          <Link
-                            onClick={() => handleCenterStoneFull()}
-                            href={`${
-                              selectedOption
-                                ? `/engagement-rings/start-with-a-diamond/${
-                                    diamondTypeClick == "lab_grown"
-                                      ? "lab_grown"
-                                      : ""
-                                  }/${
-                                    filterData.product?.slug
-                                  }/?color=${changeClick}&diamond_original=${diamondTypeClick}${
-                                    typeof centerStoneData === "undefined"
-                                      ? ""
-                                      : `&center_stone=${centerStoneData}`
-                                  }${
-                                    selectedFontStyleOption === undefined
-                                      ? ""
-                                      : `&font_style=${selectedFontStyleOption}`
-                                  }${
-                                    textEngraving === undefined
-                                      ? ""
-                                      : `&textEngraving=${textEngraving}`
-                                  }&ring_size=${selectedOption}`
-                                : "javascript:void(0);"
-                            }`}
-                          >
-                            See Full Inventory
-                          </Link>
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="Diamond-Original-main">
+<div className="Diamond-Original-main">
                       <span class="bold">
                         Diamond Origin:
                         <span
                           className={
                             diamondTypeClick === "natural"
-                              ? "unbold active"
-                              : "unbold"
+                              ? "unbold active bold-650"
+                              : "unbold bold-650"
                           }
+                         
                         >
-                          Natural
+                          {diamondOrigin
+                            ? diamondOrigin
+                            : diamondTypeClick === "natural"
+                            ? "Natural"
+                            : "Lab Grown"}
                         </span>
                         <span
                           className={
                             diamondTypeClick === "lab_grown"
-                              ? "unbold active"
-                              : "unbold"
+                              ? "unbold active bold-650"
+                              : "unbold bold-650"
                           }
+                         
                         >
-                          Lab Grown
+                          {diamondOrigin
+                            ? diamondOrigin
+                            : diamondTypeClick === "lab_grown"
+                            ? "Lab Grown"
+                            : "Natural"}
                         </span>
                       </span>
                       <div className="Diamond-Original">
@@ -3856,6 +3811,11 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
                               "natural"
                             );
                           }}
+                           onMouseEnter={() =>
+                            handleDiamondOriginHover("Natural")
+                          }
+                          onMouseOut={() => handleDiamondOriginHover("")}
+                          
                         >
                           Natural
                         </Link>
@@ -3876,6 +3836,10 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
                               "lab_grown"
                             );
                           }}
+                          onMouseEnter={() =>
+                            handleDiamondOriginHover("Lab Grown")
+                          }
+                          onMouseOut={() => handleDiamondOriginHover("")}
                         >
                           Lab Grown
                         </Link>
@@ -4006,20 +3970,18 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
                       </div>
                     </div>
                     <div className="bold select-custom-size-side">
-                      <span>
-                        {" "}
-                        <div onClick={() => togglePopup()}>
-                          <span>
+                    <span>
+                       
+                       
+                       <Link href="/ring-sizer">
+                       <span>
+
                             <IoInformationCircleOutline />
-                          </span>
-                          {ringSize && (
-                            <div>
-                              <RingSizeChart setRingSize={setRingSize} />
-                            </div>
-                          )}
-                        </div>{" "}
-                        Size :{" "}
-                      </span>{" "}
+                       </span>
+                       
+                       <span> Size :{" "}</span>
+                       </Link>
+                    </span>
                       <Select
                         defaultValue={selectedOption}
                         onChange={handleSelectSize}
@@ -4176,8 +4138,9 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData}) => {
 
                     <div className="contact-us-btn shipping-add">
                       {" "}
-                      Still can’t find your perfect ring?{" "}
-                      <Link href="/contact-us">Contact-us</Link> to customize
+                      Still can’t find your perfect ring?{" "} Send us a
+                      <Link href="/custom-concierge"> customization </Link> request
+
                     </div>
 
                     <div className="shipping-add">

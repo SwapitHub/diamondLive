@@ -32,9 +32,10 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
 import { removeToWishlist } from "../../../../store/actions/wishlistAction";
+import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
 
 
-export default function ChooseRingGemstone({filterData, diamondData, listColor, shapeData}) {
+export default function ChooseRingGemstone({filterData, diamondData, listColor, shapeData, fontStyleOptions}) {
  
 
   const history = useRouter(); // Call useHistory at the top level of the component
@@ -47,9 +48,9 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   
   // find url area
   const { baseUrl,imgBaseUrl,imgAssetsUrl } = useContext(UserContext);
-  const white = "18k-white-gold";
-  const yellow = "18k-yellow-gold";
-  const rose = "18k-rose-gold";
+  const white = "18K-white-gold";
+  const yellow = "18K-yellow-gold";
+  const rose = "18K-rose-gold";
   const platinum = "platinum";
 
   const [altColor, setAltColor] = useState();
@@ -108,18 +109,24 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   const resultdiamondTypeByDefault =
     diamondTypeByDefault?.diamondQuality?.split(/\s*,\s*/);
 
-  const [ringSize, setRingSize] = useState(false);
-  useEffect(() => {
-    if (ringSize) {
-      document.body.classList.add("email-popup-open");
-    } else {
-      document.body.classList.remove("email-popup-open");
-    }
-  }, [ringSize]);
-  const togglePopup = () => {
-    setRingSize(!ringSize);
-    document.body.classList.toggle("email-popup-open", ringSize);
-  };
+    const [ringSize, setRingSize] = useState(false);
+    const [typeOfRing, setTypeOfRing] = useState(false);
+    useEffect(() => {
+      if (ringSize || typeOfRing) {
+        document.body.classList.add("email-popup-open");
+      } else {
+        document.body.classList.remove("email-popup-open");
+      }
+    }, [ringSize, typeOfRing]);
+  
+    const togglePopupRingType = () => {
+      setTypeOfRing(!typeOfRing);
+      document.body.classList.toggle("email-popup-open", typeOfRing);
+    };
+    const togglePopup = () => {
+      setRingSize(!ringSize);
+      document.body.classList.toggle("email-popup-open", ringSize);
+    };
   var globalProductImages = [];
 
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -248,7 +255,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     }
   }, [open]);
 
-  useEffect(() => {
+  useMemo(() => {
     axios
       .get(
         `${baseUrl}/get_product_price?product_sku=${
@@ -262,11 +269,10 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
 
       .then((response) => {
         if (response.status === 200) {
-         
+          setDiamondTypeColor(response.data.data);
           setDiamondTypeByDefault(response.data.data);
           setDiamondType(response.data.data);
           setChangeClick(listColor);
-          
         } else {
           console.error("Error Status:", response.status);
         }
@@ -275,9 +281,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [
-    filterData
-  ]);
+  }, [urlColor]);
 
 
   useEffect(() => {
@@ -379,6 +383,10 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
 
   // nature and lab-grown
   
+  const [diamondOrigin, setDiamondOrigin] = useState();
+  const handleDiamondOriginHover = (origin) => {
+    setDiamondOrigin(origin);
+  };
 
   const onChangeClickNature = (
     productSku,
@@ -464,8 +472,19 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     year: "numeric",
   });
 
+  const [changeOverVariation, setChangeOverVariation] = useState()
+ 
+
+ 
+  
+  const onChangeOverVariation = (fraction)=>{
+    setChangeOverVariation(fraction);
+  }
+
   // variant start here
   const handleVariation = (variantSlug) => {
+    
+
     const searchParams = new URLSearchParams(queryParams);
   
     const newSearchString = searchParams.toString();
@@ -578,19 +597,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     setSelectedFontStyleOption(fontStyleOptions);
   };
 
-  const fontStyleOptions = [
-    { value: "ℋ𝒶𝓇𝓇𝒾𝓃ℊ𝓉ℴ𝓃", label: "ℋ𝒶𝓇𝓇𝒾𝓃ℊ𝓉ℴ𝓃" },
-    { value: "ℒ𝓊𝒸𝒾𝒹𝒶 𝒞𝒶𝓁𝓁𝒾𝑔𝓇𝒶𝓅𝒽𝓎", label: "ℒ𝓊𝒸𝒾𝒹𝒶 𝒞𝒶𝓁𝓁𝒾𝑔𝓇𝒶𝓅𝒽𝓎" },
-    { value: "𝔉𝔯𝔢𝔢𝔰𝔱𝔶𝔩𝔢 𝔖𝔠𝔯𝔦𝔭𝔱", label: "𝔉𝔯𝔢𝔢𝔰𝔱𝔶𝔩𝔢 𝔖𝔠𝔯𝔦𝔭𝔱" },
-    { value: "𝓢𝓬𝓻𝓲𝓹𝓽 𝓜𝓣 𝓑𝓸𝓵𝓭", label: "𝓢𝓬𝓻𝓲𝓹𝓽 𝓜𝓣 𝓑𝓸𝓵𝓭" },
-    { value: "𝚃𝚒𝚖𝚎𝚜 𝙽𝚎𝚠 𝚁𝚘𝚖𝚊𝚗", label: "𝚃𝚒𝚖𝚎𝚜 𝙽𝚎𝚠 𝚁𝚘𝚖𝚊𝚗" },
-    {
-      value: "𝕽𝖆𝖌𝖊 𝕴𝖙𝖆𝖑𝖎𝖈",
-      label: "𝕽𝖆𝖌𝖊 𝕴𝖙𝖆𝖑𝖎𝖈",
-    },
-    { value: "𝕴𝖓𝖋𝖔𝖗𝖒𝖆𝖑 𝕽𝖔𝖒𝖆𝖓", label: "𝕴𝖓𝖋𝖔𝖗𝖒𝖆𝖑 𝕽𝖔𝖒𝖆𝖓" },
-    { value: "𝐻𝑒𝓁𝓋𝑒𝓉𝒾𝒸𝒶", label: "𝐻𝑒𝓁𝓋𝑒𝓉𝒾𝒸𝒶" },
-  ];
+
 
   const [textEngraving, setTextEngraving] = useState();
   const onchangeEngraving = (event) => {
@@ -3870,91 +3877,114 @@ ${changeClick === rose ? "active" : ""}
                       </div>
                     </div>
                     
-                    {filterData.product?.variants.length > 0 ? (
-                      <div className="Diamond-Original-main  Setting-Carat Variation">
-                        <span className="bold full-width">
-                          Setting Carat Weight (setting only) :
-                        </span>
+                    {
+                             
+                             filterData.product?.SideDiamondNumber > 0 &&    (
+                              filterData.product?.variants.length > 0 ? (
+                           
+                                                 <div className="Diamond-Original-main  Setting-Carat Variation">
+                                                  <span className="bold full-width">
+                                                     Setting Carat Weight (setting only) : <span className="bold-650">
+                                                     {
+                                                              <span>{changeOverVariation ? `${changeOverVariation} ct tw `: filterData.product?.fractionsemimount }  </span>
+                                                           }
+                                                       </span> 
+                                                   </span>
+                           
+                                                   {filterData.product?.variants.map(
+                                                     (variantItem, index) => {
+                                                       const inputString = variantItem.sku;
+                                                       const regex = /(\d+\/\d+)/;
+                                                       const match = inputString?.match(regex);
+                                                       if (match && match?.length > 0) {
+                                                         const fraction = match[0];
+                           
+                                                         return (
+                                                           <>
+                                                             <div
+                                                               className={
+                                                                 variantSlug === variantItem.slug
+                                                                   ? "active-variant variant-outer"
+                                                                   : "variant-outer"
+                                                               }
+                                                               key={index}
+                                                             >
+                                                               <span
+                                                                 onClick={() =>
+                                                                   handleVariation(variantItem.slug)
+                                                                 }
+                                                                 onMouseEnter={() => onChangeOverVariation(fraction)}
+                           
+                                                               
+                                                     onMouseOut={() => onChangeOverVariation( )}
+                                                               >
+                                                                  
+                                                                 {fraction}
+                                                               </span>
+                                                             </div>
+                                                           </>
+                                                         );
+                                                       }
+                                                       return null; // Make sure to return null if the condition is not met
+                                                     }
+                                                   )}
+                                                 </div>
+                                               ) : (
+                                                 filterData.product?.fractionsemimount && (
+                                                   <div className="Diamond-Original-main  Setting-Carat Variation N/A">
+                                                     <span className=" full-width">
+                                                       <span className="bold">
+                                                         Setting Carat Weight (setting only) :{" "}
+                                                       </span>{" "}
+                                                       <span>
+                                                         {" "}
+                                                         {filterData.product?.fractionsemimount}
+                                                       </span>
+                                                     </span>
+                                                   </div>
+                                                 )
+                                               )
+                           
+                              )
+                                                  }
 
-                        {filterData.product?.variants.map(
-                          (variantItem, index) => {
-                            const inputString = variantItem.sku;
-                            const regex = /(\d+\/\d+)/;
-                            const match = inputString?.match(regex);
-                            if (match && match?.length > 0) {
-                              const fraction = match[0];
-
-                              return (
-                                <>
-                                  <div
-                                    className={
-                                      variantSlug === variantItem.slug
-                                        ? "active-variant variant-outer"
-                                        : "variant-outer"
-                                    }
-                                    key={index}
-                                  >
-                                    <span
-                                      onClick={() =>
-                                        handleVariation(variantItem.slug)
-                                      }
-                                    >
-                                      {fraction}
-                                    </span>
-                                  </div>
-                                </>
-                              );
-                            }
-                            return null; // Make sure to return null if the condition is not met
-                          }
-                        )}
-                      </div>
-                    ) : (
-                      filterData.product?.fractionsemimount && (
-                        <div className="Diamond-Original-main  Setting-Carat Variation N/A">
-                          <span className=" full-width">
-                            <span className="bold">
-                              Setting Carat Weight (setting only) :{" "}
-                            </span>{" "}
-                            <span>
-                              {" "}
-                              {filterData.product?.fractionsemimount}
-                            </span>
-                          </span>
-                        </div>
-                      )
-                    )}
-
-                    <div className="Diamond-Original-main">
+<div className="Diamond-Original-main">
                       <span class="bold">
                         Diamond Origin:
                         <span
                           className={
-                            
-                              diamondTypeClick === "natural"
-                              ? "unbold active"
-                              : "unbold"
+                            diamondTypeClick === "natural"
+                              ? "unbold active bold-650"
+                              : "unbold bold-650"
                           }
+                         
                         >
-                          Natural
+                          {diamondOrigin
+                            ? diamondOrigin
+                            : diamondTypeClick === "natural"
+                            ? "Natural"
+                            : "Lab Grown"}
                         </span>
                         <span
                           className={
-                         diamondTypeClick === "lab_grown"
-                            ? "unbold active"
-                            : "unbold"
+                            diamondTypeClick === "lab_grown"
+                              ? "unbold active bold-650"
+                              : "unbold bold-650"
                           }
+                         
                         >
-                          Lab Grown
+                          {diamondOrigin
+                            ? diamondOrigin
+                            : diamondTypeClick === "lab_grown"
+                            ? "Lab Grown"
+                            : "Natural"}
                         </span>
                       </span>
                       <div className="Diamond-Original">
                         <Link
                           href="javascript:void(0)"
                           className={
-                        diamondTypeClick === "natural"
-                              ? "active"
-                              : ""
+                            diamondTypeClick === "natural" ? "active" : ""
                           }
                           // onMouseEnter={() => onChangeNature("natural")}
                           // onMouseOut={() => onChangeNature()}
@@ -3968,15 +3998,18 @@ ${changeClick === rose ? "active" : ""}
                               "natural"
                             );
                           }}
+                           onMouseEnter={() =>
+                            handleDiamondOriginHover("Natural")
+                          }
+                          onMouseOut={() => handleDiamondOriginHover("")}
+                          
                         >
                           Natural
                         </Link>
                         <Link
                           href="javascript:void(0)"
                           className={
-                            diamondTypeClick === "lab_grown"
-                              ? "active"
-                              : ""
+                            diamondTypeClick === "lab_grown" ? "active" : ""
                           }
                           // onMouseEnter={() => onChangeNature("lab_grown")}
                           // onMouseOut={() => onChangeNature()}
@@ -3990,6 +4023,10 @@ ${changeClick === rose ? "active" : ""}
                               "lab_grown"
                             );
                           }}
+                          onMouseEnter={() =>
+                            handleDiamondOriginHover("Lab Grown")
+                          }
+                          onMouseOut={() => handleDiamondOriginHover("")}
                         >
                           Lab Grown
                         </Link>
@@ -4127,19 +4164,17 @@ ${changeClick === rose ? "active" : ""}
                     </div>
                     <div className="bold select-custom-size-side">
                       <span>
-                        {" "}
-                        <div onClick={() => togglePopup()}>
-                          <span>
+                       
+                       
+                       <Link href="/ring-sizer">
+                       <span>
+
                             <IoInformationCircleOutline />
-                          </span>
-                          {ringSize && (
-                            <div>
-                              <RingSizeChart setRingSize={setRingSize} />
-                            </div>
-                          )}
-                        </div>{" "}
-                        Size :{" "}
-                      </span>{" "}
+                       </span>
+                       
+                       <span> Size :{" "}</span>
+                       </Link>
+                    </span>
                       <Select
                         defaultValue={selectedOption}
                         onChange={handleSelectSize}
@@ -4301,10 +4336,11 @@ ${changeClick === rose ? "active" : ""}
                     </Link>
                   </div>
 
-                    <div className="contact-us-btn shipping-add">
+                  <div className="contact-us-btn shipping-add">
                       {" "}
-                      Still can’t find your perfect ring?{" "}
-                      <Link href="/contact-us">Contact Us</Link> to customize
+                      Still can’t find your perfect ring?{" "} Send us a
+                      <Link href="/custom-concierge"> customization </Link> request
+
                     </div>
 
                     <div className="shipping-add">
@@ -4421,7 +4457,9 @@ ${changeClick === rose ? "active" : ""}
                           <div className="ring-info">
                             <span>RING INFORMATION</span>
                             <div>
-                              <span>Style: {filterData.product?.internal_sku}</span>
+                              <span>
+                                Style: {filterData.product?.internal_sku}
+                              </span>
                             </div>
                             <div>
                               <span>
@@ -4443,19 +4481,53 @@ ${changeClick === rose ? "active" : ""}
                           </div> */}
                           </div>
                           <div className="ring-info">
-                            <span>Accent Gemstones (sideStones)</span>
+                          <span>Accent Gemstones (sideStones)</span>
                             <div>
                               <span>
-                              Number:{" "}
+                                Number:{" "}
                                 {filterData.product?.SideDiamondNumber
                                   ? filterData.product?.SideDiamondNumber
                                   : 0}
                               </span>
                             </div>
+                            <div>
+                              <span onClick={() => togglePopupRingType()}>
+                                <IoInformationCircleOutline />
+                              </span>{" "}
+                              <span>
+                                Type: Natural or lab depending on center diamond
+                                selected.
+                              </span>
+                            </div>
+                            {typeOfRing && (
+                              <div className="new-popups">
+                                <DiamondType setTypeOfRing={setTypeOfRing} />
+                              </div>
+                            )}
+                            
+                            <div>
+                              <span>
+                                Average Color:{" "}
+                                {filterData.product?.SideDiamondNumber
+                                  ? diamondTypeClick === "natural"
+                                    ? `G`
+                                    : `E, F, G`
+                                  : `N/A`}
+                              </span>
+                            </div>
+                            <div>
+                              <span>
+                                Average Clarity:{" "}
+                                {filterData.product?.SideDiamondNumber
+                                  ? diamondTypeClick === "natural"
+                                    ? `SI`
+                                    : `VS-SI1`
+                                  : `N/A`}
+                              </span>
+                            </div>
                             <div className="color-clarity-details">
                               <div
                                 className={
-                               
                                   diamondTypeClick === "natural"
                                     ? "unbold active"
                                     : "unbold"
@@ -4515,7 +4587,6 @@ ${changeClick === rose ? "active" : ""}
 
                               <div
                                 className={
-                              
                                   diamondTypeClick === "lab_grown"
                                     ? "unbold active"
                                     : "unbold"

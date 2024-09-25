@@ -92,9 +92,9 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
     { value: "high_to_low", label: "Price (High to Low)" },
   ];
 
-  const white = "18k-white-gold";
-  const yellow = "18k-yellow-gold";
-  const rose = "18k-rose-gold";
+  const white = "18K-white-gold";
+  const yellow = "18K-yellow-gold";
+  const rose = "18K-rose-gold";
   const platinum = "platinum";
 
   const [filterRoseData, setFilterRoseData] = useState([]);
@@ -1560,8 +1560,8 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
           <span>
             {newPrevData.product_count}
             {newPrevData.product_count > 1
-              ? "ENGAGEMENT RINGS"
-              : "ENGAGEMENT RING"}
+              ? " ENGAGEMENT RINGS"
+              : " ENGAGEMENT RING"}
           </span>
 
           <div className="best-seller">
@@ -1927,7 +1927,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
                           className={`all-card-four-color ${MetalColor.name}${
                             (item.id === activePage &&
                               activeColor === MetalColor.slug) ||
-                            MetalColor.slug == "18k-white-gold" ||
+                            MetalColor.slug == "18K-white-gold" ||
                             changeName == MetalColor.slug
                               ? " active"
                               : ""
@@ -2205,7 +2205,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
                           className={`all-card-four-color ${MetalColor.name}${
                             (item.id === activePage &&
                               activeColor === MetalColor.slug) ||
-                            MetalColor.slug == "18k-white-gold" ||
+                            MetalColor.slug == "18K-white-gold" ||
                             changeName == MetalColor.slug
                               ? " active"
                               : ""

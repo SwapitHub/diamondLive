@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import ChooseDiamondsShape from "./DiamondClient";
 
 async function fetchDataFromAPI(diamond, diamondFilter) {
@@ -14,6 +15,62 @@ async function fetchDataFromAPI(diamond, diamondFilter) {
 
   return data;
 }
+
+const fetchDiamondAttributes = async () => {
+  let diamond = [];
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/diamondshape`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    diamond = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return diamond;
+};
+
+const fetchDiamonds = async (diamondShapeFilter, newDiamondType) => {
+  let diamond = [];
+  try {
+    const headers = {
+      Authorization:
+        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
+    };
+    const response = await fetch(
+      `https://apiservices.vdbapp.com//v2/diamonds?type=${
+        newDiamondType == "lab_grown" ? "Lab_grown_diamond" : "Diamond"
+      }&${diamondShapeFilter ? diamondShapeFilter : ""}&with_images=true`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    diamond = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return diamond;
+};
+
+const fetchRingDetail = async (productSlug) => {
+  let ring = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/product/${productSlug}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    ring = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return ring;
+};
 
 export async function generateMetadata({ params }) {
   const { diamonds, diamondFilter } = params;
@@ -66,7 +123,52 @@ export async function generateMetadata({ params }) {
 
 export default async function DetailRingPage({ params }) {
   const { diamonds, diamondFilter } = params;
+  const cookieStore = cookies();
+  const diamondStyle = cookieStore.get("diamondShape");
+  const newDiamondType = cookieStore.get("diamondType");
+  const caratFilter = cookieStore.get("caratfilter");
+  const shapeFilterValue = diamondStyle ? JSON.parse(diamondStyle?.value) : "";
+  const diamondShapeFilter =
+    diamonds === "shape"
+      ? `&shapes[]=${
+          diamondFilter[0]?.charAt(0).toUpperCase() + diamondFilter[0].slice(1)
+        }`
+      : shapeFilterValue
+      ? shapeFilterValue
+          .map(
+            (shapes) =>
+              `&shapes[]=${shapes.charAt(0).toUpperCase() + shapes.slice(1)}`
+          )
+          .join("")
+      : "";
+
   const data = await fetchDataFromAPI(diamonds, diamondFilter);
+  const shapeData = await fetchDiamondAttributes();
+  const diamondData = await fetchDiamonds(
+    diamondShapeFilter,
+    newDiamondType?.value
+    // caratFilter ? caratFilter[0] : "",
+    // caratFilter ? caratFilter[1] : "",
+  );
+  const ringData =
+    diamondFilter?.length > 1
+      ? await fetchRingDetail(diamondFilter?.length > 1 && diamondFilter[0])
+      : null;
+  const filterData = ringData
+    ? {
+        product: ringData && ringData.data,
+        imgUrl:
+          ringData &&
+          ringData?.data?.default_image_url
+            .split("/")
+            .slice(-1)
+            .join()
+            .split(".")
+            .shift(),
+      }
+    : null;
+
+  console.log("========", caratFilter?.value);
 
   return (
     <div>
@@ -74,6 +176,10 @@ export default async function DetailRingPage({ params }) {
         diamonds={diamonds}
         diamondsFilter={diamondFilter ? diamondFilter[0] : diamondFilter}
         productSlug={diamondFilter?.length > 1 && diamondFilter[0]}
+        shapeData={shapeData.data}
+        dataServer={diamondData.response.body.diamonds}
+        totalDiamondServer={diamondData.response.body.total_diamonds_found}
+        filterData={filterData ? filterData : null}
       />
     </div>
   );

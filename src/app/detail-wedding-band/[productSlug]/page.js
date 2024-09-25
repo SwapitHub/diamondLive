@@ -17,6 +17,22 @@ const fetchDetailMeta = async (productSlug) => {
   return bandDetail;
 };
 
+const fetchDetailFontOption = async () => {
+  let ringDetail = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/fonts`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    ringDetail = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return ringDetail;
+};
+
 const fetchShapeData = async () => {
   let shape = [];
   try {
@@ -64,6 +80,7 @@ export default async function bandDetailPage({ params }) {
 
   const bandDetail = await fetchDetailMeta(productSlug);
   const shape = await fetchShapeData();
+  const FontOption = await fetchDetailFontOption()
   
   const filterData={
     product: bandDetail.data,
@@ -72,7 +89,7 @@ export default async function bandDetailPage({ params }) {
 
   return (
     <>
-      <WeddingBandsDetail productSlug={productSlug} filterData={filterData} shapeData={shape.data}/>
+      <WeddingBandsDetail productSlug={productSlug} filterData={filterData} shapeData={shape.data} fontStyleOptions={FontOption.data}/>
     </>
   );
 }

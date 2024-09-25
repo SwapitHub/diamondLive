@@ -17,7 +17,21 @@ const fetchDetailMeta = async (productSlug) => {
   }
   return ringDetail;
 };
-
+const fetchDetailFontOption = async () => {
+  let ringDetail = [];
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/fonts`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    ringDetail = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return ringDetail;
+};
 const fetchGemstoneDetail = async (stock_num) => {
   let gemstone = [];
   try {
@@ -91,6 +105,8 @@ export default async function RingDetailPage({ searchParams, params }) {
   const gemstoneDetail = await fetchGemstoneDetail(stock_num);
   const ringDetail = await fetchDetailMeta(productSlug);
   const shape = await fetchShapeData();
+  const FontOption = await fetchDetailFontOption()
+
   const filterData = {
     product: ringDetail.data,
     imgUrl: ringDetail.data.internal_sku,
@@ -103,6 +119,7 @@ export default async function RingDetailPage({ searchParams, params }) {
         diamondData={gemstoneDetail.response.body.gemstones}
         listColor={color}
         shapeData={shape.data}
+        fontStyleOptions={FontOption.data}
       />
     </>
   );
