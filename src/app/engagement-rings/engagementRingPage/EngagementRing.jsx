@@ -51,8 +51,7 @@ const covetedProducts = async () => {
   }
   return coveted;
 };
-
-const EngagementRing = async() => {
+const EngagementRing = async({roseGold,yellowGold,platinumRings,whiteGold,bridalSetRing}) => {
 
   const diamond = await diamondShape();
   const shopStyle = await productStyle();
@@ -66,7 +65,7 @@ const EngagementRing = async() => {
       <RingEndsSoon />
       <ShopDiamondCotegory shopStyle={shopStyle.data} />
       <RingReadyToShip />
-      <RingExclusive />
+      <RingExclusive roseGold={roseGold} yellowGold={yellowGold} platinumRings={platinumRings} whiteGold={whiteGold}bridalSetRing={bridalSetRing}/>
       {/* <RingReviews /> */}
       <RingEducation />
       {/* <RingFaq /> */}

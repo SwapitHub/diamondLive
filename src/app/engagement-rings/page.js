@@ -16,15 +16,101 @@ const fetchMeta = async () => {
   return gemstone;
 };
 
+// ==========weight API start
+const fetchRingRoseGold = async () => {
+  let anniversaryRings = {};
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/widget/Rose Gold Rings`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    anniversaryRings = await response.json();
 
+    anniversaryRings.data.description = purify.sanitize(anniversaryRings.data?.description);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return anniversaryRings;
+};
 
+const fetchRingYellowGold = async () => {
+  let anniversaryRings = {};
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/widget/Yellow Gold Rings`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    anniversaryRings = await response.json();
+
+    anniversaryRings.data.description = purify.sanitize(anniversaryRings.data?.description);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return anniversaryRings;
+};
+const fetchRingPlatinumRings = async () => {
+  let anniversaryRings = {};
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/widget/Platinum Rings`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    anniversaryRings = await response.json();
+
+    anniversaryRings.data.description = purify.sanitize(anniversaryRings.data?.description);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return anniversaryRings;
+};
+const fetchRingWhiteGold = async () => {
+  let anniversaryRings = {};
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/widget/White Gold Rings`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    anniversaryRings = await response.json();
+
+    anniversaryRings.data.description = purify.sanitize(anniversaryRings.data?.description);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return anniversaryRings;
+};
+const fetchRingBridalSetRing = async () => {
+  let anniversaryRings = {};
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/widget/Bridal Set Ring`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    anniversaryRings = await response.json();
+
+    anniversaryRings.data.description = purify.sanitize(anniversaryRings.data?.description);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return anniversaryRings;
+};
+// ==========weight API End
 
 export async function generateMetadata() {
   const data = await fetchMeta();
 
   
   return {
-    title: data.data?.meta_title || "Default Title",
+    title: data.data?.meta_title ||  data.data.title,
     description: data.data?.meta_description || "Default Description",
     openGraph: {
       title: data.data?.meta_title || "Default Title",
@@ -43,17 +129,22 @@ export async function generateMetadata() {
   };
 
 }
-const weddingBand = async ({searchParams, params}) => {
+const EngagementRings = async ({searchParams, params}) => {
   const {productSlug} = params
   
   const Metadata = await fetchMeta(productSlug);
+  const roseGold = await fetchRingRoseGold();
+  const yellowGold = await fetchRingYellowGold();
+  const platinumRings = await fetchRingPlatinumRings();
+  const whiteGold = await fetchRingWhiteGold();
+  const bridalSetRing = await fetchRingBridalSetRing();
   
   
   return (
     <>
-      <EngagementRing gemstoneData={Metadata} />
+      <EngagementRing roseGold={roseGold.data} yellowGold={yellowGold.data} platinumRings={platinumRings.data} whiteGold={whiteGold.data} bridalSetRing={bridalSetRing.data}/>
     </>
   );
 };
 
-export default weddingBand;
+export default EngagementRings;

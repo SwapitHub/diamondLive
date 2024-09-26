@@ -14,24 +14,19 @@ import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
-// import { ProductListFaq } from "../../../pages/home/ProductListFaq";
-// import { addToWishList, removeToWishlist } from "../../../redux/action";
-// import { productList } from "../../../redux/productAction";
-// import LoaderSpinner from "../../LoaderSpinner";
 
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
 import Link from "next/link";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { productList } from "../../../../../store/actions/productActions";
 import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../../store/actions/wishlistAction";
-// import { HeaderMetaTag } from "../../../seoTags/MetaTagHeader";
-// import { Tabbing } from "../reusable_components/Tabbing";
+
 import Cookies from "js-cookie";
 
 
@@ -427,7 +422,6 @@ console.log(metalColorName);
   const [styleFilter, setStyleFilter] = useState(style);
   const FilterProduct = (styleData) => {
     setStyleFilter(styleData);
-    router.push("/engagement-rings/start-with-a-setting")
   };
 
   // =============== shop by shape start ==============
@@ -1355,7 +1349,7 @@ console.log(metalColorName);
                           className={`shop-by-metal-color ${
                             metalId === MetalColor.id ||
                             getLocalStoreMetal == MetalColor?.id ||
-                            MetalColor.name === menuMetal
+                            MetalColor.name === metalColorName
                               ? "metal-color-active"
                               : ""
                           }`}

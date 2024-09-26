@@ -290,7 +290,7 @@ const Header = ({ navData, siteInfo }) => {
 
           <nav className="nav">
             <ul>
-              {navData.map((res) => {
+              {navData?.map((res) => {
                 var urlslug = "";
 
                 return (

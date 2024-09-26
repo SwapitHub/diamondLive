@@ -31,6 +31,21 @@ const fetchMetalData = async () => {
   return checkout;
 };
 
+const fetchSiteInfo = async () => {
+  let checkout = [];
+
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/siteinfo`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    checkout = await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return checkout;
+};
+
 const fetchDiamondShape = async () => {
   let checkout = [];
 
@@ -100,16 +115,17 @@ export async function generateMetadata({ params, searchParams }) {
   const { bridalSets } = searchParams;
   const { rings, ringFilter } = params;
   const data = await fetchDataFromAPI(rings, ringFilter, bridalSets);
+  const siteInfo = await fetchSiteInfo();
 
   if (data) {
     const metadata = {
-      title: data.data?.meta_title || "Default Title",
-      description: data.data?.meta_description || "Default Description",
+      title: data.data?.meta_title || siteInfo.data?.meta_title,
+      description: data.data?.meta_description || siteInfo.data?.meta_description,
       openGraph: {
-        title: data.data?.meta_title || "Default Title",
-        description: data.data?.meta_description || "Default Description",
-        url: data.data?.image || "http://default-url.com",
-        siteName: data.data?.meta_site_name || "Default Site Name",
+        title: data.data?.meta_title || siteInfo.data?.meta_title,
+        description: data.data?.meta_description || siteInfo.data?.meta_description,
+        url: data.data?.image || siteInfo.data?.logo,
+        siteName: data.data?.meta_site_name || "SAMA",
         images: [
           {
             url:

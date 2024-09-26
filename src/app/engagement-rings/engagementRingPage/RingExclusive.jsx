@@ -1,73 +1,94 @@
-"use client"
-import React, { useContext } from 'react'
-import Link from 'next/link'
-import { UserContext } from '@/app/context/UserContext'
+"use client";
+import Link from "next/link";
 
-export const RingExclusive = () => {
-    const {imgAssetsUrl} = useContext(UserContext)
-    return (
-        <section className="own-engagment own-pd-control">
-            <div className="container">
-                <div className="popular-engagment">
-                    <div className="heading-sec">
-                        <h2 className="heading-text">
-                        Shop Engagement Rings By Style 
-                        </h2>
-                    </div>
-                    <div className="inner-polular-eng">
-                        <div className="popular-grid-wrapper">
-                            <Link href="/engagement-rings/metal/White">
-                                <div className="imgg-sec">
-                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/White-gold-ring.png`} alt="white-rings" />
-                                </div>
-                                <div className="text-con">
-                                    <p>White Gold Rings</p>
-                                </div>
-                            </Link>
-                        </div>
-                        <div className="popular-grid-wrapper">
-                            <Link href="/engagement-rings/metal/Yellow">
-                                <div className="imgg-sec">
-                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Yellow-gold.png`} alt="yellow-rings" />
-                                </div>
-                                <div className="text-con">
-                                    <p>Yellow Gold Rings</p>
-                                </div>
-                            </Link>
-                        </div>
-                        <div className="popular-grid-wrapper">
-                            <Link href="/engagement-rings/metal/Pink">
-                                <div className="imgg-sec">
-                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Rose-gold.png`} alt="rose-rings" />
-                                </div>
-                                <div className="text-con">
-                                    <p>Rose Gold Rings</p>
-                                </div>
-                            </Link>
-                        </div>
-                        <div className="popular-grid-wrapper">
-                            <Link href="/engagement-rings/metal/Platinum">
-                                <div className="imgg-sec">
-                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/platinumring.png`} alt="platinum-rings" />
-                                </div>
-                                <div className="text-con">
-                                    <p>Platinum Rings</p>
-                                </div>
-                            </Link>
-                        </div>
-                        <div className="popular-grid-wrapper">
-                            <Link href="/engagement-rings/start-with-a-setting?bridal-sets=true">
-                                <div className="imgg-sec">
-                                    <img width="auto"  height="auto"   src={`${imgAssetsUrl}/frontend/images/Bridal-set-ring.png`} alt="bridal-rings" />
-                                </div>
-                                <div className="text-con">
-                                    <p>Bridal Set Ring</p>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
+export const RingExclusive = ({
+  roseGold,
+  yellowGold,
+  platinumRings,
+  whiteGold,
+  bridalSetRing,
+}) => {
+  return (
+    <section className="own-engagment own-pd-control">
+      <div className="container">
+        <div className="popular-engagment">
+          <div className="heading-sec">
+            <h2 className="heading-text">Shop Engagement Rings By Style</h2>
+          </div>
+          <div className="inner-polular-eng">
+            <div className="popular-grid-wrapper">
+            <Link href={`${whiteGold?.url}`}>
+                <div
+                  className="imgg-sec"
+                  dangerouslySetInnerHTML={{
+                    __html: whiteGold?.description,
+                  }}
+                ></div>
+
+                <div className="text-con">
+                  <p>{whiteGold?.name}</p>
                 </div>
+              </Link>
             </div>
-        </section>
-    )
-}
+            <div className="popular-grid-wrapper">
+             <Link href={`${yellowGold?.url}`}>
+                <div
+                  className="imgg-sec"
+                  dangerouslySetInnerHTML={{
+                    __html: yellowGold?.description,
+                  }}
+                ></div>
+
+                <div className="text-con">
+                  <p>{yellowGold?.name}</p>
+                </div>
+              </Link>
+            </div>
+            <div className="popular-grid-wrapper">
+              <Link href={`${roseGold?.url}`}>
+                <div
+                  className="imgg-sec"
+                  dangerouslySetInnerHTML={{
+                    __html: roseGold?.description,
+                  }}
+                ></div>
+
+                <div className="text-con">
+                  <p>{roseGold?.name}</p>
+                </div>
+              </Link>
+            </div>
+            <div className="popular-grid-wrapper">
+              <Link href={`${platinumRings?.url}`}>
+                <div
+                  className="imgg-sec"
+                  dangerouslySetInnerHTML={{
+                    __html: platinumRings?.description,
+                  }}
+                ></div>
+
+                <div className="text-con">
+                  <p>{platinumRings?.name}</p>
+                </div>
+              </Link>
+            </div>
+            <div className="popular-grid-wrapper">
+            <Link href={`${bridalSetRing?.url}`}>
+                <div
+                  className="imgg-sec"
+                  dangerouslySetInnerHTML={{
+                    __html: bridalSetRing?.description,
+                  }}
+                ></div>
+
+                <div className="text-con">
+                  <p>{bridalSetRing?.name}</p>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
