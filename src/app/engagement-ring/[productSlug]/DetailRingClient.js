@@ -433,9 +433,10 @@ const handleDiamondOriginHover = (origin) => {
     setChangeOverShape(shapeNameItem || "");
   };
 
-  const [shapeNameSelected, setShapeNameSelected] = useState("");
-  const shapeOnclick = (shape) => {
+  const [shapeNameSelected, setShapeNameSelected] = useState("N/A");
+  const shapeOnclick = (shape, shapeName) => {
     setShapeProduct((prevState) => (prevState === shape ? "" : shape));
+    setShapeNameSelected((prevState) => (prevState === shapeName ? "N/A" : shapeName));
   };
 
   // faq details page
@@ -3534,7 +3535,7 @@ ${changeClick === rose ? "active" : ""}
                                       changeOverShape && "hover-active"
                                     }`}
                                   >
-                                    {changeOverShape ? changeOverShape : "N/A"}
+                                    {changeOverShape}
                                   </span>
                                   <span
                                     class={`unbold ${
@@ -3561,17 +3562,12 @@ ${changeClick === rose ? "active" : ""}
                                             className={
                                               shapeItemId === ShapeItem.id
                                                 ? "shape shape-active"
-                                                : changeOverShape ===
-                                                  ShapeItem.shape
-                                                ? "shape active-hov"
                                                 : "shape"
                                             }
                                             key={ShapeItem.id}
                                             onClick={() => {
-                                              shapeOnclick(ShapeItem.slug);
-                                              setShapeNameSelected(
-                                                ShapeItem.shape
-                                              );
+                                              shapeOnclick(ShapeItem.slug, ShapeItem.shape);
+                                             
                                               setShapeItemId((prevState) =>
                                                 ShapeItem.id === prevState
                                                   ? ""
@@ -3582,15 +3578,16 @@ ${changeClick === rose ? "active" : ""}
                                               onChangeOverShape(ShapeItem.shape)
                                             }
                                             onMouseLeave={() =>
-                                              onChangeOverShape(shapeNameSelected)
+                                              onChangeOverShape("")
                                             }
                                           >
-                                            <img
-                                              width="auto"
-                                              height="auto"
+                                            <img width="auto"   height="auto"
                                               src={ShapeItem.icon}
                                               alt={ShapeItem.shape}
-                                              onError={handleError}
+                                              onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                              }}
                                             />
                                           </div>
                                         );

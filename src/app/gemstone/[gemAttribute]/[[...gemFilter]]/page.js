@@ -1,4 +1,4 @@
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { ChooseGemstonesPage } from "./ChooseGemstonesPage";
 
 async function fetchDataFromAPI(gemAttribute, gemFilter) {
@@ -60,12 +60,6 @@ export async function generateMetadata({ params }) {
   const { gemAttribute, gemFilter } = params;
   const filterValue = Array.isArray(gemFilter) ? gemFilter[0] : gemFilter;
   const data = await fetchDataFromAPI(gemAttribute, filterValue);
-  const headersList = headers();
-  const domain = headersList.get('host') || "";
-  const fullUrl = headersList.get('referer') || "";
-
-  console.log("=============",fullUrl);
-  
 
   if (data !== null) {
     const metadata = {
@@ -74,8 +68,8 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title: data.data?.meta_title || "Default Title",
         description: data.data?.meta_description || "Default Description",
-        url: fullUrl || "http://default-url.com",
-        siteName: data.data?.meta_site_name || "SAMA",
+        url: data.data?.meta_url || "http://default-url.com",
+        siteName: data.data?.meta_site_name || "Default Site Name",
         images: [
           {
             url:
@@ -160,8 +154,6 @@ export default async function DetailRingPage({ params }) {
     gemColorFilter,
     gemShapeFilter
   );
-
-
 
   return (
     <div>

@@ -48,9 +48,9 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   
   // find url area
   const { baseUrl,imgBaseUrl,imgAssetsUrl } = useContext(UserContext);
-  const white = "18K-white-gold";
-  const yellow = "18K-yellow-gold";
-  const rose = "18K-rose-gold";
+  const white = "18k-white-gold";
+  const yellow = "18k-yellow-gold";
+  const rose = "18k-rose-gold";
   const platinum = "platinum";
 
   const [altColor, setAltColor] = useState();
@@ -427,9 +427,10 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     setChangeOverShape(shapeNameItem || "");
   };
 
-  const [shapeNameSelected, setShapeNameSelected] = useState("");
-  const shapeOnclick = (shape) => {
+  const [shapeNameSelected, setShapeNameSelected] = useState("N/A");
+  const shapeOnclick = (shape, shapeName) => {
     setShapeProduct((prevState) => (prevState === shape ? "" : shape));
+    setShapeNameSelected((prevState) => (prevState === shapeName ? "N/A" : shapeName));
   };
   
   // faq details page
@@ -3600,24 +3601,25 @@ ${changeClick === rose ? "active" : ""}
                                 className="shape-main View-with-diamond-Shape"
                                 key={ShapeItemSlug.id}
                               >
-                                <span className={`bold ${changeOverShape && "active-main-hover"}`}>
+                                <span
+                                  className={`bold ${
+                                    changeOverShape && "active-main-hover"
+                                  }`}
+                                >
                                   View with diamond Shape :
                                   <span
                                     class={`unbold ${
-                                      changeOverShape &&  "hover-active" 
-                                    
+                                      changeOverShape && "hover-active"
                                     }`}
                                   >
-                                   {changeOverShape}
+                                    {changeOverShape}
                                   </span>
-
                                   <span
                                     class={`unbold ${
                                       shapeNameSelected && "active"
-                                    
                                     }`}
                                   >
-                                  {shapeNameSelected} 
+                                    {shapeNameSelected}
                                   </span>
                                 </span>
 
@@ -3641,10 +3643,8 @@ ${changeClick === rose ? "active" : ""}
                                             }
                                             key={ShapeItem.id}
                                             onClick={() => {
-                                              shapeOnclick(ShapeItem.slug);
-                                              setShapeNameSelected(
-                                                ShapeItem.shape
-                                              );
+                                              shapeOnclick(ShapeItem.slug, ShapeItem.shape);
+                                             
                                               setShapeItemId((prevState) =>
                                                 ShapeItem.id === prevState
                                                   ? ""

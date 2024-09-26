@@ -1,9 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow: /account
-/cart
-/term-of-use
-/privacy-policy
-/check_out
-/payment
-/success
+Disallow: /cart
+Disallow: /term-of-use
+Disallow: /privacy-policy
+Disallow: /check_out
+Disallow: /payment
+Disallow: /success

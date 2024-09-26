@@ -192,7 +192,7 @@ const ChooseWeddingBands = ({
           }
           setTimeout(() => {
             setLoading(false);
-          }, 5500);
+          }, 3000);
         }
       })
       .catch(() => {
@@ -220,7 +220,7 @@ const ChooseWeddingBands = ({
         setPage((prev) => prev + 1);
         setTimeout(() => {
           setLoading(false);
-        }, 4000);
+        }, 3000);
       }
     } catch (error) {
       console.log(error);
@@ -652,7 +652,6 @@ const ChooseWeddingBands = ({
       axios
         .get(removeWish)
         .then((res) => {
-          setLoading(false);
           dispatch(productList());
         })
         .catch((error) => {
@@ -765,7 +764,7 @@ const ChooseWeddingBands = ({
         </div>
 
         <div className="best-seller-main">
-          <span>{newPrevDataServer.count} WEDDING RINGS</span>
+          <span>{newPrevDataServer.product_count} WEDDING RINGS</span>
 
           <div className="best-seller">
             <form>
@@ -1443,7 +1442,7 @@ const ChooseWeddingBands = ({
         {/* <div>
           <ProductListFaq />
         </div> */}
-        <h3 className="center">{loading ? null : `data not found`}</h3>
+        <h3 className="center">{filterRoseDataServer.length>0 ? null : `data not found`}</h3>
         <div>{loading && <LoaderSpinner />}</div>
       </div>
     </>

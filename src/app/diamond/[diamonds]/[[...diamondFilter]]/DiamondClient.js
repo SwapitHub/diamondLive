@@ -64,23 +64,6 @@ const ChooseDiamondsShape = ({
   const [shapeDataSlider, setShapeDataSlider] = useState([]);
 
   useEffect(() => {
-    const item = secureLocalStorage.getItem("shapeDiamondData");
-
-    let storedData = [];
-    if (item) {
-      try {
-        storedData = JSON.parse(item);
-      } catch (error) {
-        console.error(
-          "Failed to parse shapeDiamondData from secureLocalStorage:",
-          error
-        );
-      }
-    }
-    setShapeDataSlider(storedData);
-  }, []);
-
-  useEffect(() => {
     if (menuShapeName) {
       setShapeDataSlider(conMenuShapeName);
       secureLocalStorage.setItem(
@@ -205,18 +188,6 @@ const ChooseDiamondsShape = ({
   const [shapeName, setShapeName] = useState([]);
   const [activeStyleIds, setActiveStyleIds] = useState([]);
 
-  useEffect(() => {
-    if (shapeDataSlider) {
-      try {
-        secureLocalStorage?.setItem(
-          "shapeDiamondData",
-          JSON.stringify(shapeDataSlider)
-        );
-      } catch (e) {
-        console.error("Failed to stringify shape data:", e);
-      }
-    }
-  }, [shapeDataSlider]);
 
   const handleShapeClick = (styleItem) => {
     // Ensure shapeDataSlider is an array
@@ -350,6 +321,7 @@ const ChooseDiamondsShape = ({
       secureLocalStorage.getItem("clarityRange")
     );
     const selectedValue = secureLocalStorage.getItem("selectedOption");
+    const selectedShape = JSON.parse(secureLocalStorage.getItem("shapeDiamondData"));
     secureLocalStorage.getItem("diamondType");
 
     // Handle null values
@@ -380,6 +352,9 @@ const ChooseDiamondsShape = ({
     if (savedCutRange !== null && savedCutValue !== null) {
       setCutRange(savedCutValue);
       setCutSliderValue(savedCutRange);
+    }
+    if(selectedShape !== null){
+      setShapeDataSlider(selectedShape)
     }
   }, []);
 

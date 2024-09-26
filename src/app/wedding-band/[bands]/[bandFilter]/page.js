@@ -93,8 +93,6 @@ export default async function WeddingBands({ params }) {
   const { bands, bandFilter } = params;
   const cookieStore = cookies();
   const priceSorting = cookieStore.get('bandsPrice')
-  console.log(priceSorting);
-  
   const filterValue = Array.isArray(bandFilter) ? bandFilter[0] : bandFilter;
   const data = await fetchDataFromAPI(bands, filterValue);
   const metalColor = await fetchWeddingBandAttributes();
