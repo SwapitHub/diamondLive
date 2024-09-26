@@ -12,6 +12,7 @@ import { validateEmail } from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
 import { ContinueShoping } from "../_componentStatic/ContinueShopping";
 import Cookies from "js-cookie";
+import NewsLetter from "../_componentStatic/NewsLetter";
 
 const WishList = ({wishListDataBase}) => {
     
@@ -2179,15 +2180,21 @@ const WishList = ({wishListDataBase}) => {
                     >
                       <div className="input-group">
                         <label className="sr-only">Email address</label>
-                        <input
+
+                        <NewsLetter
+                          portalId="45427602"
+                          formId="5ada63ac-16ec-4ecb-bca7-21caf983c404"
+                          targetId="commonId"
+                        />
+                        {/* <input
                           type="text"
                           className="zip-code"
                           placeholder="Your Email Address"
                           name="email"
                           id="whishlist-email"
                           onChange={(e) => setNewsLetterResult(e.target.value)}
-                        />
-                        <div className="error_1"></div>
+                        /> */}
+                        {/* <div className="error_1"></div>
                         <span className="input-group-btn">
                           <input
                             type="submit"
@@ -2195,7 +2202,7 @@ const WishList = ({wishListDataBase}) => {
                             value=""
                             onClick={validateWhishList}
                           ></input>
-                        </span>
+                        </span> */}
                       </div>
                     </form>
                   )}

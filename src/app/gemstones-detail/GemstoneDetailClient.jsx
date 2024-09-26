@@ -25,6 +25,7 @@ import { DropHint } from "../_componentStatic/DropHint";
 import { Tabbing } from "../_componentStatic/Tabbing";
 import { useData } from "../context/DataContext";
 import { UserContext } from "../context/UserContext";
+import AverageDimensionsPopup from "../_componentStatic/popups/AverageDimensionsPopup";
 
 export default function GemstonesDetail({ gemstone }) {
 
@@ -38,7 +39,6 @@ export default function GemstonesDetail({ gemstone }) {
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
   const [removeWishList, setRemoveWishList] = useState();
   const wishListDataBase = useSelector((state) => state.productDataWishlist);
-  console.log(data);
 
   const toggleDiamond = () => {
     setDiamondDetails(!diamondDetails);
@@ -203,7 +203,7 @@ export default function GemstonesDetail({ gemstone }) {
       JSON.stringify({ diamond: diamond })
     );
     setHelpData({ diamond: diamond });
-    navigate("/help");
+    navigate.push("/help");
   };
 
   let wishlistIds = [];

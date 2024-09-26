@@ -37,7 +37,7 @@ import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishl
 import { productList } from "../../../../store/actions/productActions";
 
 
-const SelectDiamond = ({diamondDetails, productSlug, filterData}) => {
+const SelectDiamond = ({diamondDetailsResult, productSlug, filterData}) => {
   const [banner, setBanner] = useState({});
   const [open, setOpen] = useState(false);
   const [measOpen, setMeasOpen] = useState(false);
@@ -56,6 +56,7 @@ const SelectDiamond = ({diamondDetails, productSlug, filterData}) => {
   const [clarityOpen, setClarityOpen] = useState(false);
   const [newData, setNewData] = useState([]);
   const { baseUrl, imgAssetsUrl } = useContext(UserContext);
+  const [diamondDetails, setDiamondDetails] = useState(1)
 
   const queryParams = useSearchParams();
   const stock_num = queryParams.get("stock_num");
@@ -75,7 +76,7 @@ const SelectDiamond = ({diamondDetails, productSlug, filterData}) => {
 
   const [removeWishList, setRemoveWishList] = useState();
   useMemo(() => {
-    setNewData(diamondDetails)
+    setNewData(diamondDetailsResult)
   }, []);
   
   
@@ -321,7 +322,7 @@ const SelectDiamond = ({diamondDetails, productSlug, filterData}) => {
             />
           </div>
           <div className="sticky-right-column">
-            {newData.map((item) => {
+            {newData?.map((item) => {
               return (
                 <>
                   <div className="sticky-inner-main">

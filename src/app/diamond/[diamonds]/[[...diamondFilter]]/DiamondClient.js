@@ -225,20 +225,7 @@ const ChooseDiamondsShape = ({
     });
   };
 
-  const handleRemoveShape = (shape) => {
-    setShapeDataSlider((prevSelectedStyles) =>
-      prevSelectedStyles?.filter((selectedShape) => selectedShape !== shape)
-    );
-    if (menuShapeName) {
-      setMenuShapeName("");
-    }
-    secureLocalStorage.setItem("shapeDiamondData", shapeDataSlider);
-    Cookies.set("diamondShape", JSON.stringify(shapeDataSlider), {
-      expires: 3650,
-      secure: true,
-      sameSite: "Strict",
-    });
-  };
+
   const handleRemoveCarat = () => {
     setCaratRange([minCaratRange, maxCaratRange]);
     secureLocalStorage.removeItem("caratfilter");
@@ -1520,7 +1507,7 @@ const ChooseDiamondsShape = ({
                         <div className="breadCram" key={item}>
                           <Link
                             href="javascript:void(0);"
-                            onClick={() => handleRemoveShape(item)}
+                            onClick={() => handleShapeClick(item)}
                           >
                             {item}
                             <span>
@@ -2234,7 +2221,7 @@ const ChooseDiamondsShape = ({
                         <div className="breadCram" key={item}>
                           <Link
                             href="javascript:void(0);"
-                            onClick={() => handleRemoveShape(item)}
+                            onClick={() => handleShapeClick(item)}
                           >
                             {item}
                             <span>

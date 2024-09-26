@@ -4228,7 +4228,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                         <NewsLetter
                           portalId="45427602"
                           formId="5ada63ac-16ec-4ecb-bca7-21caf983c404"
-                          targetId="commonId"
+                          targetId="wishId"
                         />
                       </div>
                     </div>

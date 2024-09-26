@@ -130,7 +130,7 @@ const DiamondPage = async ({ searchParams, params }) => {
   } : null;
   return (
     <>
-      <SelectDiamond diamondDetails={diamondDetails.response.body.diamonds} productSlug={productSlug ? productSlug : null} filterData={filterData ? filterData : null}/>
+      <SelectDiamond diamondDetailsResult={diamondDetails.response.body.diamonds} productSlug={productSlug ? productSlug : null} filterData={filterData ? filterData : null}/>
     </>
   );
 };

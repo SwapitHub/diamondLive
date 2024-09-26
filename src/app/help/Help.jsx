@@ -35,7 +35,6 @@ const Help = () => {
     }
   }, []);
 
-  console.log(helpData);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -175,7 +174,7 @@ const Help = () => {
                       )}
                     </ul>
                   </Link>
-                  {helpData && (
+                  {!helpData && (
                     <Link href="/">
                       <ul>
                         <li>
