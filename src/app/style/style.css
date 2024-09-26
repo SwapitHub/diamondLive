@@ -3761,7 +3761,7 @@ span.pro-description p {
 .detail-metal span {
   font-size: 14px;
   margin-left: 5px;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 
 span.pr-heading b {

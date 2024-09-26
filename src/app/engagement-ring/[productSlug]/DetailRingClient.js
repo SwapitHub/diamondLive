@@ -53,9 +53,9 @@ const DetailRingProduct = ({ filterData, shapeData, diamondData, fontStyleOption
   const diamond_original = queryParams.get("diamond_original");
   // find url area
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
-  const white = "18K-white-gold";
-  const yellow = "18K-yellow-gold";
-  const rose = "18K-rose-gold";
+  const white = "18k-white-gold";
+  const yellow = "18k-yellow-gold";
+  const rose = "18k-rose-gold";
   const platinum = "platinum";
 
   const [altColor, setAltColor] = useState();
@@ -3534,7 +3534,7 @@ ${changeClick === rose ? "active" : ""}
                                       changeOverShape && "hover-active"
                                     }`}
                                   >
-                                    {changeOverShape}
+                                    {changeOverShape ? changeOverShape : "N/A"}
                                   </span>
                                   <span
                                     class={`unbold ${
@@ -3582,7 +3582,7 @@ ${changeClick === rose ? "active" : ""}
                                               onChangeOverShape(ShapeItem.shape)
                                             }
                                             onMouseLeave={() =>
-                                              onChangeOverShape("")
+                                              onChangeOverShape(" ")
                                             }
                                           >
                                             <img
@@ -3633,6 +3633,7 @@ ${changeClick === rose ? "active" : ""}
                             </span>
                             <span className="span-over">
                               {" "}
+                             
                               {changeOver?.replace(/-/g, " ")}{" "}
                               {changeOver === platinum &&
                                 `$(${

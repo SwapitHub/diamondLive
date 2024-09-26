@@ -37,6 +37,7 @@ import Cookies from "js-cookie";
 
 const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,shapeData, metalColor}) => {
   const user_id = secureLocalStorage.getItem("formData");
+console.log(metalColor);
 
   
   const searchParams = useSearchParams();
@@ -79,6 +80,8 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
   }, []);
 
   const menuMetal = pathSegments[2] || "";
+  console.log(menuMetal);
+  
 
   const diamond_origin = searchParams.get("diamond_origin");
   const ring = "ring";
@@ -86,20 +89,20 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
 
   const { baseUrl, imgAssetsUrl, imgBaseUrl } = useContext(UserContext);
   const options = [
+    { value: " ", label: "Select Option" },
     { value: "best_seller", label: "Best Sellers" },
     { value: "Newest", label: "Newest" },
     { value: "low_to_high", label: "Price (Low to High)" },
     { value: "high_to_low", label: "Price (High to Low)" },
   ];
 
-  const white = "18K-white-gold";
-  const yellow = "18K-yellow-gold";
-  const rose = "18K-rose-gold";
+  const white = "18k-white-gold";
+  const yellow = "18k-yellow-gold";
+  const rose = "18k-rose-gold";
   const platinum = "platinum";
 
   const [filterRoseData, setFilterRoseData] = useState([]);
   const [newPrevData, setNewPrevData] = useState([]);
-  console.log(newPrevData);
   
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -1568,7 +1571,7 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
             <form>
               <label for="#">Sort : </label>
               <Select
-                placeholder="Best Seller"
+                placeholder={options.length<0 ? options.map((item)=>{item.label}) : "Select Option"}
                 onChange={handlePriceChange}
                 options={options}
                 isSearchable={false}
@@ -1927,14 +1930,14 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
                           className={`all-card-four-color ${MetalColor.name}${
                             (item.id === activePage &&
                               activeColor === MetalColor.slug) ||
-                            MetalColor.slug == "18K-white-gold" ||
+                            MetalColor.slug == "18k-white-gold" ||
                             changeName == MetalColor.slug
                               ? " active"
                               : ""
                           }`}
                         >
                           <Link
-                            href="#"
+                            href="javascript:void(0)"
                             style={{
                               background: MetalColor.color,
                             }}
@@ -2205,14 +2208,14 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
                           className={`all-card-four-color ${MetalColor.name}${
                             (item.id === activePage &&
                               activeColor === MetalColor.slug) ||
-                            MetalColor.slug == "18K-white-gold" ||
+                            MetalColor.slug == "18k-white-gold" ||
                             changeName == MetalColor.slug
                               ? " active"
                               : ""
                           }`}
                         >
                           <Link
-                            href="#"
+                            href="javascript:void(0)"
                             style={{
                               background: MetalColor.color,
                             }}
