@@ -3582,7 +3582,7 @@ ${changeClick === rose ? "active" : ""}
                                               onChangeOverShape(ShapeItem.shape)
                                             }
                                             onMouseLeave={() =>
-                                              onChangeOverShape(" ")
+                                              onChangeOverShape(shapeNameSelected)
                                             }
                                           >
                                             <img
@@ -3869,7 +3869,7 @@ ${changeClick === rose ? "active" : ""}
                                                        <span className="bold">
                                                          Setting Carat Weight (setting only) :{" "}
                                                        </span>{" "}
-                                                       <span>
+                                                       <span className="bold-650">
                                                          {" "}
                                                          {filterData.product?.fractionsemimount}
                                                        </span>

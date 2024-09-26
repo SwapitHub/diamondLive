@@ -37,7 +37,6 @@ import Cookies from "js-cookie";
 
 const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,shapeData, metalColor}) => {
   const user_id = secureLocalStorage.getItem("formData");
-console.log(metalColor);
 
   
   const searchParams = useSearchParams();
@@ -64,6 +63,7 @@ console.log(metalColor);
   let menuShapeName, menuShopStyle;
   const [trellisRing, setTrellisRing] = useState();
   const [metalColorName, setMetalColorName] = useState("White");
+console.log(metalColorName);
 
   
   useEffect(() => {
@@ -427,6 +427,7 @@ console.log(metalColor);
   const [styleFilter, setStyleFilter] = useState(style);
   const FilterProduct = (styleData) => {
     setStyleFilter(styleData);
+    router.push("/engagement-rings/start-with-a-setting")
   };
 
   // =============== shop by shape start ==============
@@ -475,6 +476,8 @@ console.log(metalColor);
       setMetalId(metaColorId);
     }
     setMetalColorName(MetalColorName);
+
+    
     // const searchParams = new URLSearchParams(window.location.search);
     // searchParams.delete("metal");
     // const newSearchString = searchParams.toString();
@@ -645,10 +648,10 @@ console.log(metalColor);
       }
     });
 
-    if (menuMetal) {
-      var idMetal = menuMetal;
-      commonMetalColor(idMetal);
-    }
+    // if (menuMetal) {
+    //   var idMetal = menuMetal;
+    //   commonMetalColor(idMetal);
+    // }
 
     // if(metalColorName){
     // commonMetalColor(metalColorName);

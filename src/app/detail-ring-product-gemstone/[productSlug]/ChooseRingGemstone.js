@@ -3936,7 +3936,7 @@ ${changeClick === rose ? "active" : ""}
                                                        <span className="bold">
                                                          Setting Carat Weight (setting only) :{" "}
                                                        </span>{" "}
-                                                       <span>
+                                                       <span className="bold-650">
                                                          {" "}
                                                          {filterData.product?.fractionsemimount}
                                                        </span>

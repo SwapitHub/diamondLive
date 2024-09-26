@@ -3749,7 +3749,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                                        <span className="bold">
                                                          Setting Carat Weight (setting only) :{" "}
                                                        </span>{" "}
-                                                       <span>
+                                                       <span className="bold-650">
                                                          {" "}
                                                          {filterData.product?.fractionsemimount}
                                                        </span>
