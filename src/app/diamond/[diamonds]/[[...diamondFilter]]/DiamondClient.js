@@ -225,6 +225,7 @@ const ChooseDiamondsShape = ({
     });
   };
 
+  
 
   const handleRemoveCarat = () => {
     setCaratRange([minCaratRange, maxCaratRange]);

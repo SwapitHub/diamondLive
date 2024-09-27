@@ -3612,7 +3612,7 @@ ${changeClick === rose ? "active" : ""}
                                       changeOverShape && "hover-active"
                                     }`}
                                   >
-                                    {changeOverShape}
+                                    {changeOverShape }
                                   </span>
                                   <span
                                     class={`unbold ${

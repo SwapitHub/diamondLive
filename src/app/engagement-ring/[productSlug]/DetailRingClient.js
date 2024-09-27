@@ -662,9 +662,22 @@ const handleDiamondOriginHover = (origin) => {
   };
 
   const handleError = (e) => {
+    console.log("error data");
+  
+    // Prevent recursive error handling
     e.target.onerror = null;
+  
+    // Replace the image source with a fallback image
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+  
+    // Find and remove the parent div with the class `default-img`
+    const defaultImgElement = e.target.closest(".default-img");
+    
+    if (defaultImgElement) {
+      defaultImgElement.remove();
+    }
   };
+  
   return (
     <>
    

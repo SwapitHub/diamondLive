@@ -116,9 +116,13 @@ export async function generateMetadata({ params, searchParams }) {
   const { rings, ringFilter } = params;
   const data = await fetchDataFromAPI(rings, ringFilter, bridalSets);
   const siteInfo = await fetchSiteInfo();
+console.log(rings);
 
   if (data) {
     const metadata = {
+      alternates: {
+        canonical: `${process.env.WEBSITE_URL}/engagement-rings/start-with-a-setting`,
+    },
       title: data.data?.meta_title || siteInfo.data?.meta_title,
       description: data.data?.meta_description || siteInfo.data?.meta_description,
       openGraph: {

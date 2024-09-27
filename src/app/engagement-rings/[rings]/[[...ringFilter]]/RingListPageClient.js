@@ -28,6 +28,7 @@ import {
 } from "../../../../../store/actions/wishlistAction";
 
 import Cookies from "js-cookie";
+import Head from "next/head";
 
 
 const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,shapeData, metalColor}) => {
@@ -972,6 +973,12 @@ console.log(metalColorName);
 
   return (
     <>
+     <div>
+      <Head>
+        <title>My page title</title>
+      </Head>
+      <p>Hello world!</p>
+    </div>
       {stock_num ? (
         <div className="sticky-gemstone-name">
           {(newData.length > 0 ? newData : diamondData).map((item, i) => {
