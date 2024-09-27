@@ -25,7 +25,7 @@ const gemstone = async () => {
 const faqs = async () => {
   let style = [];
   try {
-    const response = await fetch(`${process.env.BASE_URL}/faq`);
+    const response = await fetch(`${process.env.BASE_URL}/gemstone-faq`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

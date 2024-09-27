@@ -28,7 +28,6 @@ import {
 } from "../../../../../store/actions/wishlistAction";
 
 import Cookies from "js-cookie";
-import Head from "next/head";
 
 
 const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,shapeData, metalColor}) => {
@@ -973,12 +972,6 @@ console.log(metalColorName);
 
   return (
     <>
-     <div>
-      <Head>
-        <title>My page title</title>
-      </Head>
-      <p>Hello world!</p>
-    </div>
       {stock_num ? (
         <div className="sticky-gemstone-name">
           {(newData.length > 0 ? newData : diamondData).map((item, i) => {
@@ -1026,7 +1019,7 @@ console.log(metalColorName);
               diamondName={` 1. Choose Diamonds`}
               diamondLink={`/diamond/start-with-a-diamond/`}
               gemStoneName={`1. Choose Gemstones`}
-              gemStoneLink={`/gemstones/start-with-a-gemstone`}
+              gemStoneLink={`/gemstone/start-with-a-gemstone`}
             />
           ) : (
             <>
@@ -1870,7 +1863,7 @@ console.log(metalColorName);
                     </div>
 
                     <div className="heart-icon">
-                      <Link href={`${item.id}`}>
+                      <Link href='javascript:void(0);'>
                         {user_id ? (
                           wishlistIds.includes(item.id) ? (
                             <IoMdHeart
@@ -2148,7 +2141,7 @@ console.log(metalColorName);
                     </div>
 
                     <div className="heart-icon">
-                      <Link href={`${item.id}`}>
+                      <Link href='javascript:void(0);'>
                         {user_id ? (
                           wishlistIds.includes(item.id) ? (
                             <IoMdHeart

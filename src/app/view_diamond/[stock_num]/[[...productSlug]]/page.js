@@ -58,8 +58,9 @@ const fetchDetailMeta = async (productSlug) => {
   return ringDetail;
 };
 
-export async function generateMetadata({ searchParams }) {
-  const { diamond_origin, stock_num } = searchParams;
+export async function generateMetadata({ searchParams, params }) {
+  const { diamond_origin } = searchParams;
+  const {stock_num} = params
   
   const data = await fetchMeta();
 
@@ -118,8 +119,8 @@ export async function generateMetadata({ searchParams }) {
   return defaultMetadata;
 }
 const DiamondPage = async ({ searchParams, params }) => {
-  const { diamond_origin, stock_num } = searchParams;
-  const {productSlug} = params
+  const { diamond_origin } = searchParams;
+  const {productSlug, stock_num} = params
   const diamondMeta = await fetchMeta();
   const ringDetail = productSlug ? await fetchDetailMeta(productSlug) : null;
   const diamondDetails = await fetchDiamondDetail(diamond_origin, stock_num);

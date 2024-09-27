@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -66,18 +66,6 @@ export const CartHover = () => {
   const [removeCart, setRemoveCart] = useState(null);
   const cartDetails = useSelector((state) => state.productDataCart);
 
-  // =============
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/metalcolor`)
-      .then((res) => {
-        setMetalColor(res.data.data);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, []);
-
   const handleRemoveItem = (
     itemId,
     ring_id,
@@ -101,6 +89,7 @@ export const CartHover = () => {
   };
 
   useEffect(() => {
+    if(removeCart){
     axios
       .get(`${baseUrl}/remove-cartitem/${removeCart}`)
       .then((res) => {
@@ -109,6 +98,7 @@ export const CartHover = () => {
       .catch((error) => {
         console.log("cartItemAPI Error:", error);
       });
+    }
   }, [removeCart]);
   // ==================
 

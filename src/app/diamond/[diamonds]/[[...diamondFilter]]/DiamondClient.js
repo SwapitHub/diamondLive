@@ -381,7 +381,7 @@ const ChooseDiamondsShape = ({
     selectedOption,
   ]);
 
-  useMemo(() => {
+  useEffect(() => {
     if (activeResult === 1) {
       const fetchData = debounce(async () => {
         const url = `https://apiservices.vdbapp.com//v2/diamonds?type=${
@@ -482,7 +482,12 @@ const ChooseDiamondsShape = ({
           setLoading(false);
         }
       });
-      fetchData();
+      const debouncedFetchDataGem = debounce(fetchData, 150);
+      debouncedFetchDataGem();
+  
+      return () => {
+        debouncedFetchDataGem.cancel();
+      };
     }
   }, [
     diamondPriceRange,
@@ -520,7 +525,7 @@ const ChooseDiamondsShape = ({
         const totalPagesNeeded = Math.ceil(totalDiamond / pageSize);
 
         if (
-          scrollTop + clientHeight >= 0.7 * scrollHeight &&
+          scrollTop + clientHeight >= 0.6 * scrollHeight &&
           !loading &&
           page < totalPagesNeeded
         ) {
@@ -720,18 +725,6 @@ const ChooseDiamondsShape = ({
     autoplaySpeed: 2000,
   };
 
-  // loader
-  const [loader, setLoader] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading delay
-    const timeout = setTimeout(() => {
-      setLoader(false);
-    }, 2000);
-
-    // Cleanup timeout
-    return () => clearTimeout(timeout);
-  }, []);
 
   const [clickedCheckboxes, setClickedCheckboxes] = useState([]);
   const [compareClickedItem, setCompareClickedItem] = useState([]);
@@ -759,6 +752,7 @@ const ChooseDiamondsShape = ({
 
   // ============ price  lab_grown =======================//
   useMemo(() => {
+    if(filterData){
     axios
       .get(
         `${baseUrl}/get_product_price?product_sku=${
@@ -781,7 +775,9 @@ const ChooseDiamondsShape = ({
       .catch((error) => {
         console.error("Error:", error);
       });
+    }
   }, [filterData]);
+
   useEffect(() => {
     if (center_stone) {
       setColorRange([14.5, 29.4]);
@@ -1662,9 +1658,7 @@ const ChooseDiamondsShape = ({
                   </table>
                 </div>
               </div>
-              {loader ? (
-                <LoaderSpinner />
-              ) : activeResult === 1 ? (
+              {activeResult === 1 ? (
                 data.map((item) => {
                   return (
                     <>

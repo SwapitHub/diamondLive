@@ -66,10 +66,10 @@ export async function generateMetadata({params}) {
 
   
   return {
-    title: data.data?.name || "Default Title",
+    title: Metadata.data?.name || "Default Title",
     description: data.data?.description || "Default Description",
     openGraph: {
-      title: data.data?.name || "Default Title",
+      title: Metadata.data?.name || "Default Title",
       description: data.data?.description || "Default Description",
       url: data.data?.default_image_url || "http://default-url.com",
       siteName: data.data?.meta_site_name || "Default Site Name",

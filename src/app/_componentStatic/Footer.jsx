@@ -31,7 +31,7 @@ export const Footer = ({ftrIcon, FooterData}) => {
                   FooterData.map((item) => (
                     <ul className="ftr-contact-ul" key={item.id} >
                       <h4>
-                        <Link href="#">{item.name}</Link>
+                        <Link href="javascript:void(0);">{item.name}</Link>
                       </h4>
                       {item.pages.map((innerItem) => (
                         <li key={innerItem.id}>

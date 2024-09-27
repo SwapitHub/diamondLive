@@ -116,6 +116,7 @@ const WishList = ({wishListDataBase}) => {
   };
   // =======remove to card
   useMemo(() => {
+    if(removeWishList){
     axios
       .get(`${baseUrl}/remove_wishlist_item/${removeWishList}`)
       .then((res) => {
@@ -124,6 +125,7 @@ const WishList = ({wishListDataBase}) => {
       .catch((error) => {
         console.log("remove_wishlist_item API Error:", error);
       });
+    }
   }, [removeWishList]);
   // ==================
 
@@ -1228,7 +1230,7 @@ const WishList = ({wishListDataBase}) => {
                                       )
                                     ) : (
                                       <p className="band-not-available">
-                                        <Link href="/wedding-band/wedding">
+                                        <Link href="/wedding-band">
                                           Band Unavailable Choose Another Band
                                         </Link>
                                       </p>
@@ -2843,7 +2845,7 @@ const WishList = ({wishListDataBase}) => {
                                   )
                                 ) : (
                                   <p className="band-not-available">
-                                    <Link href="/wedding-band/wedding">
+                                    <Link href="/wedding-band">
                                       Band Unavailable Choose Another Band
                                     </Link>
                                   </p>
@@ -3451,7 +3453,7 @@ const WishList = ({wishListDataBase}) => {
                                   )
                                 ) : (
                                   <p className="band-not-available">
-                                    <Link href="/wedding-band/wedding">
+                                    <Link href="/wedding-band">
                                       Band Unavailable Choose Another Band
                                     </Link>
                                   </p>

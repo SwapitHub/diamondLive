@@ -4130,7 +4130,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                     ) : (
                       <span className="product-not-available">
                         product is not available{" "}
-                        <Link href="/wedding-band/wedding">
+                        <Link href="/wedding-band">
                           Choose Another Wedding-band
                         </Link>
                       </span>

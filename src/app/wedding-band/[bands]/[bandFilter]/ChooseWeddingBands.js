@@ -87,7 +87,7 @@ const ChooseWeddingBands = ({
     const savedActiveStyles = secureLocalStorage.getItem("activeStyleIds");
     return savedActiveStyles ? JSON.parse(savedActiveStyles) : [];
   });
-  const [shapeData, setShapeData] = useState([]);
+
   const [metalId, setMetalId] = useState([]);
   const [priceShorting, setPriceShorting] = useState();
 
@@ -132,73 +132,71 @@ const ChooseWeddingBands = ({
 
   // =============== shop by price range end==============
   // ``${baseUrl}/products?page=${page}&sortby=${priceShorting}&ring_style=${selectedShopStyleIds}&shape=${shapeName}&metal_color=${metalId}&price_range=${minPrice},${maxPrice}`
-  const shapeValue =
-    getLocalStoreShape !== null
-      ? getLocalStoreShape
-      : shapeName !== null
-      ? shapeName
-      : menuShapeName !== null
-      ? menuShapeName
-      : "";
-  const metalIdData =
-    getLocalMetaColorIds == metalId
-      ? metalId
-      : getLocalMetaColorIds
-      ? getLocalMetaColorIds
-      : "";
+ 
+ 
 
-  useMemo(() => {
+  useEffect(() => {
     setLoading(true);
+    const fetchWeddingBands = () => {
+      const URLNEW = `${baseUrl}/weddingband-products?subcategory=${
+        weddingBands === undefined ? "" : weddingBands
+      }${priceShorting === undefined ? "" : `&sortby=${priceShorting}`}`;
+      axios
+        .get(URLNEW)
+        .then((res) => {
+          if (res.status === 200) {
+            setNewPrevData(res.data);
 
-    const URLNEW = `${baseUrl}/weddingband-products?subcategory=${
-      weddingBands === undefined ? "" : weddingBands
-    }&sortby=${priceShorting === undefined ? "" : priceShorting}`;
-    axios
-      .get(URLNEW)
-      .then((res) => {
-        if (res.status === 200) {
-          setNewPrevData(res.data);
+            const updatedProducts = res.data.data.map((product) => ({
+              id: product.id,
+              sku: product.sku,
+              name: product.product_browse_pg_name,
+              image: product.default_image_url,
+              images: product.default_image_url
+                .split("/")
+                .slice(-1)
+                .join()
+                .split(".")
+                .shift(),
+              slug: product.slug,
+              CenterShape: product.CenterShape,
+              multiCategory: product.multiCategory,
+              imageName: product.default_image_url
+                .split("/")
+                .slice(-1)
+                .join()
+                .split(".")
+                .shift(),
+              white_gold_price: product.white_gold_price,
+              yellow_gold_price: product.yellow_gold_price,
+              rose_gold_price: product.rose_gold_price,
+              platinum_price: product.platinum_price,
+            }));
 
-          const updatedProducts = res.data.data.map((product) => ({
-            id: product.id,
-            sku: product.sku,
-            name: product.product_browse_pg_name,
-            image: product.default_image_url,
-            images: product.default_image_url
-              .split("/")
-              .slice(-1)
-              .join()
-              .split(".")
-              .shift(),
-            slug: product.slug,
-            CenterShape: product.CenterShape,
-            multiCategory: product.multiCategory,
-            imageName: product.default_image_url
-              .split("/")
-              .slice(-1)
-              .join()
-              .split(".")
-              .shift(),
-            white_gold_price: product.white_gold_price,
-            yellow_gold_price: product.yellow_gold_price,
-            rose_gold_price: product.rose_gold_price,
-            platinum_price: product.platinum_price,
-          }));
-
-          if (page > 1) {
-            setFilterRoseData((prevData) => [...prevData, ...updatedProducts]);
-          } else {
-            setFilterRoseData(updatedProducts);
+            if (page > 1) {
+              setFilterRoseData((prevData) => [
+                ...prevData,
+                ...updatedProducts,
+              ]);
+            } else {
+              setFilterRoseData(updatedProducts);
+            }
+            setTimeout(() => {
+              setLoading(false);
+            }, 3000);
           }
-          setTimeout(() => {
-            setLoading(false);
-          }, 3000);
-        }
-      })
-      .catch(() => {
-        console.log("API error");
-        setLoading(false);
-      });
+        })
+        .catch(() => {
+          console.log("API error");
+          setLoading(false);
+        });
+    };
+    const debouncedFetchDataGem = debounce(fetchWeddingBands, 150);
+    debouncedFetchDataGem();
+
+    return () => {
+      debouncedFetchDataGem.cancel();
+    };
   }, [baseUrl, weddingBands, priceShorting]);
 
   //  scroll pagination start============
@@ -261,62 +259,7 @@ const ChooseWeddingBands = ({
     setStyleFilter(styleData);
   };
 
-  // =============== shop by shape start ==============
-  useMemo(() => {
-    axios
-      .get(`${baseUrl}/diamondshape`)
-      .then((res) => {
-        setShapeData(res.data.data);
-        setShapeName(menuShapeName);
-      })
-      .catch(() => {
-        console.log("API error");
-      });
-  }, [menuShapeName]);
 
-  const shapeOnclick = (shapeNameItem) => {
-    const clickedShape = getLocalStoreShape;
-
-    if (menuShapeName) {
-      const searchParams = useSearchParams();
-      searchParams.delete("shape");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/engagement-rings/settings"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      router.replace(newURL);
-    }
-    if (clickedShape === shapeNameItem) {
-      secureLocalStorage.removeItem("clickedShape");
-      setShapeBreadCamb("");
-      setShapeName("");
-    } else {
-      setShapeBreadCamb(shapeNameItem);
-      setShapeName((prevShapeName) =>
-        prevShapeName === shapeNameItem ? "" : shapeNameItem
-      );
-      if (!menuShapeName) {
-        secureLocalStorage.setItem("clickedShape", shapeNameItem);
-      }
-    }
-  };
-
-  // =============== shop by shape end ==============
-
-  // =============== shop by  style ==============
-  const [ShopByStyle, setShopStyle] = useState([]);
-  useMemo(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/product-style`);
-        setShopStyle(response.data.data);
-      } catch (error) {
-        console.log("shop style api error:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const storedSelectedShopStyleIds =
@@ -324,37 +267,6 @@ const ChooseWeddingBands = ({
     setSelectedShopStyleIds(storedSelectedShopStyleIds);
     setActiveStyleIds(storedSelectedShopStyleIds);
   }, []);
-
-  const ShopStyle = (shopStyleId) => {
-    if (menuShopStyle === shopStyleId) {
-      const searchParams = useSearchParams();
-      searchParams.delete("style");
-      const newSearchString = searchParams.toString();
-      const newURL = `${"/engagement-rings/settings"}${
-        newSearchString ? `?${newSearchString}` : ""
-      }`;
-      router.replace(newURL);
-    }
-    const isActive = activeStyleIds.includes(shopStyleId);
-    const updatedActiveStyleIds = isActive
-      ? activeStyleIds.filter((id) => id !== shopStyleId)
-      : [...activeStyleIds, shopStyleId];
-
-    setActiveStyleIds(updatedActiveStyleIds);
-
-    const updatedSelectedShopStyleIds = selectedShopStyleIds.includes(
-      shopStyleId
-    )
-      ? selectedShopStyleIds.filter((selectedId) => selectedId !== shopStyleId)
-      : [...selectedShopStyleIds, shopStyleId];
-
-    setSelectedShopStyleIds(updatedSelectedShopStyleIds);
-
-    secureLocalStorage.setItem(
-      "selectedShopStyleIds",
-      JSON.stringify(updatedSelectedShopStyleIds)
-    );
-  };
 
   const getBridalSetData = () => {
     setLocalBridalData(false);
@@ -364,7 +276,7 @@ const ChooseWeddingBands = ({
     setActiveStyleIds([]);
     setSelectedShopStyleIds([]);
     setShapeBreadCamb([]);
-    setShapeName([]);
+  
     setMetalColorValue();
     setMetalId([]);
     setLocalBridalData(false);
@@ -375,7 +287,7 @@ const ChooseWeddingBands = ({
   };
   const resetAllShape = () => {
     setShapeBreadCamb();
-    setShapeName([]);
+ 
 
     secureLocalStorage.removeItem("clickedShape");
   };
@@ -645,6 +557,7 @@ const ChooseWeddingBands = ({
 
   // =======remove to card
   useMemo(() => {
+    if(removeWishList){
     setLoading(true);
     const fetchData = () => {
       const removeWish = `${baseUrl}/remove_wishlist_item/${removeWishList}`;
@@ -666,6 +579,7 @@ const ChooseWeddingBands = ({
     }
 
     return () => debouncedFetchData.cancel(); // Cleanup
+  }
   }, [removeWishList]);
   // ==================
   // ============
@@ -777,6 +691,7 @@ const ChooseWeddingBands = ({
                 }
                 onChange={handlePriceChange}
                 options={options}
+                isSearchable={false}
               />
             </form>
           </div>
@@ -1079,7 +994,7 @@ const ChooseWeddingBands = ({
                     </div>
 
                     <div className="heart-icon">
-                      <Link href={`${item.id}`}>
+                      <Link href='javascript:void(0);'>
                         {user_id ? (
                           wishlistIds.includes(item.id) ? (
                             <IoMdHeart
@@ -1319,7 +1234,7 @@ const ChooseWeddingBands = ({
                     </div>
 
                     <div className="heart-icon">
-                      <Link href={`${item.id}`}>
+                      <Link href='javascript:void(0);'>
                         {user_id ? (
                           wishlistIds.includes(item.id) ? (
                             <IoMdHeart
@@ -1442,7 +1357,9 @@ const ChooseWeddingBands = ({
         {/* <div>
           <ProductListFaq />
         </div> */}
-        <h3 className="center">{filterRoseDataServer.length>0 ? null : `data not found`}</h3>
+        <h3 className="center">
+          {filterRoseDataServer.length > 0 ? null : `data not found`}
+        </h3>
         <div>{loading && <LoaderSpinner />}</div>
       </div>
     </>

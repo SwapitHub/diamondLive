@@ -14,7 +14,7 @@ export const BridalJewellery = ({home}) => {
               <div>
                 <Link
                   className="button"
-                  href={`${home.data.section1?.link}`}
+                  href={`/${home.data.section1?.link}`}
                 >
                 {home.data.section1?.btn_name}
                 </Link>

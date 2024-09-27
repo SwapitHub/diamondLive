@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
-import Slider from "react-slider";
+
 
 const BankPopup = ({ setBankOpen }) => {
   const handleClose=(event)=>{
@@ -15,7 +14,7 @@ const BankPopup = ({ setBankOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Bank Wire</h3>
-              <Link to="javascript:void(0);" onClick={() => setBankOpen(false)}>
+              <Link href="javascript:void(0);" onClick={() => setBankOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

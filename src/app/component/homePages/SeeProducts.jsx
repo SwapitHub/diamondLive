@@ -14,7 +14,7 @@ export const SeeProducts = ({
       <div className="container">
         <div className="common-row see-products">          
           <div className="see-products-img">
-            <Link href={anniversaryRings?.url} className="See-Products">
+            <Link href={`/${anniversaryRings?.url}`} className="See-Products">
               <span>Trellis Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
@@ -25,7 +25,7 @@ export const SeeProducts = ({
             ></div>
           </div>
           <div className="see-products-img">
-            <Link href={diamondPendants?.url} className="See-Products">
+            <Link href={`/${diamondPendants?.url}`} className="See-Products">
               <span>Vintage Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
@@ -36,7 +36,7 @@ export const SeeProducts = ({
             ></div>
           </div>
           <div className="see-products-img">
-            <Link href={tennisBracelets?.url} className="See-Products">
+            <Link href={`${tennisBracelets?.url}`} className="See-Products">
               <span>Eternity Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>
@@ -47,7 +47,7 @@ export const SeeProducts = ({
             ></div>
           </div>
           <div className="see-products-img">
-            <Link href={diamondStuds?.url} className="See-Products">
+            <Link href={`${diamondStuds?.url}`} className="See-Products">
               <span>Nature Inspired Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
             </Link>

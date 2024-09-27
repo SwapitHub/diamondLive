@@ -40,8 +40,8 @@ const fetchGemstoneDetail = async (stock_num) => {
   return diamond;
 };
 
-export async function generateMetadata({ searchParams }) {
-  const { stock_num } = searchParams;
+export async function generateMetadata({ searchParams ,params }) {
+  const  {stock_num}  = params;
 
   const data = await fetchMeta();
 
@@ -73,8 +73,8 @@ export async function generateMetadata({ searchParams }) {
     return metadataList[0];
   }
 }
-const DiamondPage = async ({ searchParams }) => {
-  const { stock_num } = searchParams;
+const DiamondPage = async ({ searchParams,params }) => {
+  const  {stock_num}  = params;
 
   const diamondMeta = await fetchMeta();
 

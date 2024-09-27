@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
-import Slider from "react-slider";
 
 const AverageDimensionsPopup = ({ setAveragePopup }) => {
 
@@ -16,7 +14,7 @@ const AverageDimensionsPopup = ({ setAveragePopup }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Dimensions of Gemstone</h3>
-              <Link to="javascript:void(0);" onClick={() => setAveragePopup(false)}>
+              <Link href="javascript:void(0);" onClick={() => setAveragePopup(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

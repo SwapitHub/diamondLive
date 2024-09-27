@@ -34,7 +34,7 @@ export const SettingPreferences = ({ profileData }) => {
             </div>
 
             <div className="update-info">
-              <Link href="#" onClick={handleClick}>
+              <Link href="javascript:void(0);" onClick={handleClick}>
                 Update Info
               </Link>
             </div>

@@ -18,14 +18,14 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import secureLocalStorage from "react-secure-storage";
-import { addToCart } from "../../../store/actions/cartActions";
-import { productList, productListCart } from "../../../store/actions/productActions";
-import { addToWishlist, removeToWishlist } from "../../../store/actions/wishlistAction";
-import { DropHint } from "../_componentStatic/DropHint";
-import { Tabbing } from "../_componentStatic/Tabbing";
-import { useData } from "../context/DataContext";
-import { UserContext } from "../context/UserContext";
-import AverageDimensionsPopup from "../_componentStatic/popups/AverageDimensionsPopup";
+import { addToCart } from "../../../../store/actions/cartActions";
+import { productList, productListCart } from "../../../../store/actions/productActions";
+import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
+import { DropHint } from "../../_componentStatic/DropHint";
+import { Tabbing } from "../../_componentStatic/Tabbing";
+import { useData } from "../../context/DataContext";
+import { UserContext } from "../../context/UserContext";
+import AverageDimensionsPopup from "../../_componentStatic/popups/AverageDimensionsPopup";
 
 export default function GemstonesDetail({ gemstone }) {
 

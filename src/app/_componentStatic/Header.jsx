@@ -70,20 +70,22 @@ const Header = ({ navData, siteInfo }) => {
     setSuggestion(value);
   };
   useMemo(() => {
-    const delayedSuggestion = debounce(() => {
-      axios
-        .get(`${baseUrl}/search-suggestion?q=${suggestion}`)
-        .then((res) => {
-          setSuggestionData(res.data.data);
-        })
-        .catch(() => {
-          console.log("API error");
-        });
-    }, 500); // Adjust the debounce delay according to your preference
+    if (suggestion) {
+      const delayedSuggestion = debounce(() => {
+        axios
+          .get(`${baseUrl}/search-suggestion?q=${suggestion}`)
+          .then((res) => {
+            setSuggestionData(res.data.data);
+          })
+          .catch(() => {
+            console.log("API error");
+          });
+      }, 500); // Adjust the debounce delay according to your preference
 
-    delayedSuggestion(); // Initial call to avoid empty suggestion on component mount
+      delayedSuggestion(); // Initial call to avoid empty suggestion on component mount
 
-    return delayedSuggestion.cancel; // Cleanup function
+      return delayedSuggestion.cancel; // Cleanup function
+    }
   }, [suggestion]);
   //search api
   const [searchValue, setSearchValue] = useState("");
@@ -100,20 +102,22 @@ const Header = ({ navData, siteInfo }) => {
     }
   }
   useMemo(() => {
-    const delayedSearch = debounce(() => {
-      axios
-        .get(`${baseUrl}/search?q=${searching}`)
-        .then((res) => {
-          setSearchData(res.data.data);
-        })
-        .catch(() => {
-          console.log("API error");
-        });
-    }, 500); // Adjust the debounce delay according to your preference
+    if (searching) {
+      const delayedSearch = debounce(() => {
+        axios
+          .get(`${baseUrl}/search?q=${searching}`)
+          .then((res) => {
+            setSearchData(res.data.data);
+          })
+          .catch(() => {
+            console.log("API error");
+          });
+      }, 500); // Adjust the debounce delay according to your preference
 
-    delayedSearch(); // Initial call to avoid empty search on component mount
+      delayedSearch(); // Initial call to avoid empty search on component mount
 
-    return delayedSearch.cancel; // Cleanup function
+      return delayedSearch.cancel; // Cleanup function
+    }
   }, [searchValue, searching]);
   // search end here
 
@@ -144,14 +148,16 @@ const Header = ({ navData, siteInfo }) => {
   const [profileData, setProfileData] = useState();
 
   useMemo(() => {
-    axios
-      .get(`${baseUrl}/user-account?user_id=${userId}`)
-      .then((res) => {
-        setProfileData(res.data);
-      })
-      .catch(() => {
-        console.log("profile API is not working");
-      });
+    if (userId) {
+      axios
+        .get(`${baseUrl}/user-account?user_id=${userId}`)
+        .then((res) => {
+          setProfileData(res.data);
+        })
+        .catch(() => {
+          console.log("profile API is not working");
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -242,7 +248,7 @@ const Header = ({ navData, siteInfo }) => {
                     <span className="msg-box">{result?.length}</span>
                   ) : null}
 
-                  <Link href={"/cart"}>
+                  <Link href="/cart">
                     <BsBag />
                   </Link>
                 </div>
@@ -614,7 +620,6 @@ const Header = ({ navData, siteInfo }) => {
                 <Link href={userId ? "/accounts" : "/login"}>
                   <AiOutlineUser />
                 </Link>
-
               </div>
             </div>
             <div className="header-search">

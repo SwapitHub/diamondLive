@@ -24,7 +24,7 @@ const LoveBrilliance = ({home}) => {
             {home.data.section5?.description}
             </p>
 
-            <Link class="btn explore" href={`${home.data.section5?.link}`}>
+            <Link class="btn explore" href={`/${home.data.section5?.link}`}>
             {home.data.section5?.btn_name}
             </Link>
           </div>

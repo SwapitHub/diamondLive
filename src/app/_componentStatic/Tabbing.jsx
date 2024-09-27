@@ -18,13 +18,13 @@ export const Tabbing = ({
         <div className="ring-choose-setting flex">
           {newData?.length > 0 ? (
             <div className="one-choose-setting first-btn">
-              <Link href="/gemstones/start-with-a-gemstone">
+              <Link href="/gemstone/start-with-a-gemstone">
                 1. Choose Gemstones
               </Link>
             </div>
           ) : type === "ring-gemstone" || type === "gem-final" ? (
             <div className="one-choose-setting first-btn">
-              <Link href="/gemstones/start-with-a-gemstone">
+              <Link href="/gemstone/start-with-a-gemstone">
                 1. Choose Gemstone
               </Link>
             </div>

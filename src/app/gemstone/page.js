@@ -22,8 +22,6 @@ const fetchMeta = async () => {
 export async function generateMetadata() {
   const data = await fetchMeta();
 
-  console.log(data);
-  
   return {
     title: data.data?.meta_title || "Default Title",
     description: data.data?.meta_description || "Default Description",

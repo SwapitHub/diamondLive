@@ -12,7 +12,7 @@ export const WeddingCollection = ({engagementRingMain,weddingJewelry,weddingColl
           <div className="heading-sec"></div>
           <div className="ring-grid-sec">
             <div className="grid-wrapper-bar">
-              <Link href={`${engagementRingMain?.url}`}>
+              <Link href={`/${engagementRingMain?.url}`}>
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
@@ -26,7 +26,7 @@ export const WeddingCollection = ({engagementRingMain,weddingJewelry,weddingColl
               </Link>
             </div>
             <div className="grid-wrapper-bar">
-              <Link href={`${weddingJewelry?.url}`}>
+              <Link href={`/${weddingJewelry?.url}`}>
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{
@@ -40,7 +40,7 @@ export const WeddingCollection = ({engagementRingMain,weddingJewelry,weddingColl
               </Link>
             </div>
             <div className="grid-wrapper-bar">
-              <Link href={`${weddingCollection?.url}`}>
+              <Link href={`/${weddingCollection?.url}`}>
                 <div className="img-bar">
                   <div
                     dangerouslySetInnerHTML={{

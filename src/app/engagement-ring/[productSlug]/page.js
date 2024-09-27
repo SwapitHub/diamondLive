@@ -84,7 +84,6 @@ export async function generateMetadata({ params }) {
 
   // Return metadata if needed
   return {
-    // manifest: 'https://nextjs.org/manifest.json',
     title: data.data?.meta_title || data.data?.name,
     description: data.data?.meta_description || data.data?.description,
     openGraph: {

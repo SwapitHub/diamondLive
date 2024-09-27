@@ -840,7 +840,7 @@ export const WishlistHover = () => {
                               )
                             ) : (
                               <p className="band-not-available">
-                                <Link href="/wedding-band/wedding">
+                                <Link href="/wedding-band">
                                   Band Unavailable Choose Another Band
                                 </Link>
                               </p>
@@ -1458,7 +1458,7 @@ export const WishlistHover = () => {
                                     (item?.qty || item.item?.gem_type) && (
                                       <div className="whislist-button-purple">
                                         <Link
-                                          href="#"
+                                          href="javascript:void(0);"
                                           onClick={(e) => {
                                             e.preventDefault();
                                             dispatch(
@@ -1695,7 +1695,7 @@ export const WishlistHover = () => {
                                       )
                                     ) : (
                                       <p className="band-not-available">
-                                        <Link href="/wedding-band/wedding">
+                                        <Link href="/wedding-band">
                                           Band Unavailable Choose Another Band
                                         </Link>
                                       </p>

@@ -78,6 +78,9 @@ export async function generateMetadata({ params }) {
 
   if (data) {
     const metadata = {
+      alternates: {
+        canonical: `${process.env.WEBSITE_URL}/diamond/${diamonds}`,
+    },
       title: data.data?.meta_title || "Default Title",
       description: data.data?.meta_description || "Default Description",
       openGraph: {
@@ -131,7 +134,7 @@ export default async function DetailRingPage({ params }) {
   const diamondShapeFilter =
     diamonds === "shape"
       ? `&shapes[]=${
-          diamondFilter[0]?.charAt(0).toUpperCase() + diamondFilter[0].slice(1)
+        diamondFilter ? diamondFilter[0]?.charAt(0).toUpperCase() + diamondFilter[0].slice(1) : ""
         }`
       : shapeFilterValue
       ? shapeFilterValue
@@ -168,7 +171,7 @@ export default async function DetailRingPage({ params }) {
       }
     : null;
 
-  console.log("========", caratFilter?.value);
+  
 
   return (
     <div>

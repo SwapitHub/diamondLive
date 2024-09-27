@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
 import Slider from "react-slider";
-import { UserContext } from "../../../App";
+import Link from "next/link";
+import { UserContext } from "@/app/context/UserContext";
 
 const CaratPopup = ({ setIsOpen }) => {
   const {imgAssetsUrl} = useContext(UserContext)
@@ -36,7 +36,7 @@ const CaratPopup = ({ setIsOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Carat</h3>
-              <Link to="javascript:void(0);" onClick={() => setIsOpen(false)}>
+              <Link href="javascript:void(0);" onClick={() => setIsOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>

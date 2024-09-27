@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
 import Slider from "react-slider";
-import { UserContext } from "../../../App";
+import Link from "next/link";
+import { UserContext } from "@/app/context/UserContext";
 
 const ColorPopup = ({ setColorOpen }) => {
   const [color, setColor] = useState(0);
@@ -34,7 +34,7 @@ const ColorPopup = ({ setColorOpen }) => {
           <div className="need-ass-popup">
             <div className="close-popup-icon">
               <h3 className="modal-title">Color</h3>
-              <Link to="javascript:void(0);" onClick={() => setColorOpen(false)}>
+              <Link href="javascript:void(0);" onClick={() => setColorOpen(false)}>
                 Close <IoMdClose />
               </Link>
             </div>
