@@ -120,21 +120,23 @@ const ChooseDiamondsShape = ({
   const [checkedSecond, setCheckedSecond] = useState(false);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const resultArray = ["D", "F", "H", "K", "O", "R", "U", "Z"];
-  const clarityOptions = ["VVS1", "VS1", "SI1", "SI3", "VS", "VVS", "FL", "IF"];
-  const cutOptions = [
-    "Ideal",
-    "Excellent",
-    "Very Good",
-    "Good",
-    "Fair",
-    "Poor",
+  const resultArray = ["D", "E", "F", "G", "H", "I", "J"];
+  const clarityOptions = [
+    "VVS1",
+    "VVS2",
+    "VS1",
+    "VS2",
+    "SI1",
+    "SI2",
+    "FL",
+    "IF",
   ];
+  const cutOptions = ["Ideal", "Excellent", "Very Good", "Good", "Fair"];
   let updatedArray = [...resultArray];
-  const [sliderValue, setSliderValue] = useState([]);
+  const [sliderValue, setSliderValue] = useState(["D", "J"]);
 
-  const [cutSliderValue, setCutSliderValue] = useState([]);
-  const [claritySliderValue, setClaritySliderValue] = useState([]);
+  const [cutSliderValue, setCutSliderValue] = useState(["Ideal", "Fair"]);
+  const [claritySliderValue, setClaritySliderValue] = useState(["VVS1", "IF"]);
 
   function handleChange() {
     setChecked(!checked);
@@ -148,12 +150,12 @@ const ChooseDiamondsShape = ({
   const [filterProduct, setFilterProduct] = useState(moreFilter);
   // range slider==============
   const minCaratRange = 0.01;
-  const maxCaratRange = 15.0;
+  const maxCaratRange = 5.0;
   const [minCarat, setMinCarat] = useState(minCaratRange);
   const [maxCarat, setMaxCarat] = useState(maxCaratRange);
   const [caratRange, setCaratRange] = useState([
     center_stone ? center_stone : 0.01,
-    15.0,
+    5.0,
   ]);
 
   const minDiamondPriceRange = 100;
@@ -187,7 +189,6 @@ const ChooseDiamondsShape = ({
   );
   const [shapeName, setShapeName] = useState([]);
   const [activeStyleIds, setActiveStyleIds] = useState([]);
-
 
   const handleShapeClick = (styleItem) => {
     // Ensure shapeDataSlider is an array
@@ -225,8 +226,6 @@ const ChooseDiamondsShape = ({
     });
   };
 
-  
-
   const handleRemoveCarat = () => {
     setCaratRange([minCaratRange, maxCaratRange]);
     secureLocalStorage.removeItem("caratfilter");
@@ -237,19 +236,19 @@ const ChooseDiamondsShape = ({
   };
   const handleRemoveColor = () => {
     setColorRange([minColorRange, maxColorRange]);
-    setSliderValue([]);
+    setSliderValue(["D", "J"]);
     secureLocalStorage.removeItem("colorRange");
     secureLocalStorage.removeItem("colorfilter");
   };
   const handleRemoveClarity = () => {
     setClarityRange([minClarityRange, maxClarityRange]);
-    setClaritySliderValue([]);
+    setClaritySliderValue(["VVS1", "IF"]);
     secureLocalStorage.removeItem("clarityfilter");
     secureLocalStorage.removeItem("clarityRange");
   };
   const handleRemoveCut = () => {
     setCutRange([minCutRange, maxCutRange]);
-    setCutSliderValue([]);
+    setCutSliderValue(["Ideal", "Fair"]);
     secureLocalStorage.removeItem("cutfilter");
     secureLocalStorage.removeItem("cutRange");
   };
@@ -263,9 +262,9 @@ const ChooseDiamondsShape = ({
     setColorRange([minColorRange, maxColorRange]);
     setClarityRange([minClarityRange, maxClarityRange]);
     setCutRange([minCutRange, maxCutRange]);
-    setSliderValue([]);
-    setClaritySliderValue([]);
-    setCutSliderValue([]);
+    setSliderValue(["D", "J"]);
+    setClaritySliderValue(["VVS1", "IF"]);
+    setCutSliderValue(["Ideal", "Fair"]);
     setSelectedOption("");
     secureLocalStorage.removeItem("caratfilter");
     secureLocalStorage.removeItem("pricefilter");
@@ -309,21 +308,23 @@ const ChooseDiamondsShape = ({
       secureLocalStorage.getItem("clarityRange")
     );
     const selectedValue = secureLocalStorage.getItem("selectedOption");
-    const selectedShape = JSON.parse(secureLocalStorage.getItem("shapeDiamondData"));
+    const selectedShape = JSON.parse(
+      secureLocalStorage.getItem("shapeDiamondData")
+    );
     secureLocalStorage.getItem("diamondType");
 
     // Handle null values
 
-    if (selectedValue !== null) {
+    if (selectedValue) {
       setSelectedOption(selectedValue);
     }
-    if (savedCaratRange !== null) {
+    if (savedCaratRange) {
       setCaratRange(savedCaratRange);
     }
-    if (savedPriceRange !== null) {
+    if (savedPriceRange) {
       setDiamondPriceRange(savedPriceRange);
     }
-    if (savedColorRange !== null && savedColorValue !== null) {
+    if (savedColorRange && savedColorValue) {
       setSliderValue(
         Array.isArray(savedColorRange)
           ? savedColorRange
@@ -332,17 +333,17 @@ const ChooseDiamondsShape = ({
       setColorRange(savedColorValue);
     }
 
-    if (savedClarityRange !== null && savedClarityValue) {
+    if (savedClarityRange && savedClarityValue) {
       setClarityRange(savedClarityValue);
       setClaritySliderValue(savedClarityRange);
     }
 
-    if (savedCutRange !== null && savedCutValue !== null) {
+    if (savedCutRange && savedCutValue) {
       setCutRange(savedCutValue);
       setCutSliderValue(savedCutRange);
     }
-    if(selectedShape !== null){
-      setShapeDataSlider(selectedShape)
+    if (selectedShape) {
+      setShapeDataSlider(selectedShape);
     }
   }, []);
 
@@ -393,7 +394,7 @@ const ChooseDiamondsShape = ({
               }`
             : ""
         }${
-          diamondPriceRange[1] 
+          diamondPriceRange[1]
             ? `&price_total_to=${
                 diamondPriceRange[1] ? diamondPriceRange[1] : ""
               }`
@@ -460,8 +461,11 @@ const ChooseDiamondsShape = ({
 
         try {
           setLoading(true);
+          console.log(url);
 
           const response = await axios.get(url, { params, headers });
+          console.log(response.data.response.body.total_diamonds_found);
+
           if (response.status === 200) {
             if (page === 1) {
               setData(response.data.response.body.diamonds);
@@ -484,7 +488,7 @@ const ChooseDiamondsShape = ({
       });
       const debouncedFetchDataGem = debounce(fetchData, 150);
       debouncedFetchDataGem();
-  
+
       return () => {
         debouncedFetchDataGem.cancel();
       };
@@ -567,13 +571,12 @@ const ChooseDiamondsShape = ({
   const colorHandleChange = (value) => {
     const colorRanges = [
       { label: "D", min: 0, max: 14.7 },
-      { label: "F", min: 14.5, max: 29.4 },
-      { label: "H", min: 29.2, max: 44.1 },
-      { label: "K", min: 44, max: 58.8 },
-      { label: "O", min: 58.5, max: 73.5 },
-      { label: "R", min: 73.1, max: 88.2 },
-      { label: "U", min: 88, max: 100 },
-      { label: "Z", min: 100, max: 100 },
+      { label: "E", min: 14.5, max: 29.4 },
+      { label: "F", min: 29.2, max: 44.1 },
+      { label: "G", min: 44, max: 58.8 },
+      { label: "H", min: 58.5, max: 73.5 },
+      { label: "I", min: 73.1, max: 88.2 },
+      { label: "J", min: 88, max: 100 },
     ];
 
     updatedArray = updatedArray.filter((item) => {
@@ -587,7 +590,7 @@ const ChooseDiamondsShape = ({
     secureLocalStorage.setItem("colorfilter", JSON.stringify(resultString));
 
     if (value[0] <= 0 && value[1] >= 100) {
-      setSliderValue([]);
+      setSliderValue(["D", "J"]);
       setColorRange([minColorRange, maxColorRange]);
     } else {
       setColorRange(value);
@@ -597,12 +600,11 @@ const ChooseDiamondsShape = ({
   const cutHandleChange = (newRange) => {
     let updatedCutArray = cutOptions.slice();
     const cutRanges = [
-      { label: "Ideal", min: 0, max: 17 },
-      { label: "Excellent", min: 17, max: 34 },
-      { label: "Very Good", min: 34, max: 51 },
-      { label: "Good", min: 51, max: 68 },
-      { label: "Fair", min: 68, max: 85 },
-      { label: "Poor", min: 85, max: 100 },
+      { label: "Ideal", min: 0, max: 20 },
+      { label: "Excellent", min: 20, max: 40 },
+      { label: "Very Good", min: 40, max: 60 },
+      { label: "Good", min: 60, max: 80 },
+      { label: "Fair", min: 80, max: 100 },
     ];
 
     updatedCutArray = updatedCutArray.filter((item) => {
@@ -615,7 +617,7 @@ const ChooseDiamondsShape = ({
     secureLocalStorage.setItem("cutfilter", JSON.stringify(updatedCutArray));
 
     if (newRange[0] <= 0 && newRange[1] >= 100) {
-      setCutSliderValue([]);
+      setCutSliderValue(["Ideal", "Fair"]);
       setCutRange([0, 100]);
     } else {
       setCutRange(newRange);
@@ -626,14 +628,14 @@ const ChooseDiamondsShape = ({
     let updateClarityOptions = clarityOptions.slice();
 
     const clarityRanges = [
-      { label: "VVS1", min: 0, max: 14.7 },
-      { label: "VS1", min: 14.5, max: 29.4 },
-      { label: "SI1", min: 29.2, max: 44.1 },
-      { label: "SI3", min: 44, max: 58.8 },
-      { label: "VS", min: 58.5, max: 73.5 },
-      { label: "VVS", min: 73.1, max: 88.2 },
-      { label: "FL", min: 88, max: 100 },
-      { label: "IF", min: 100, max: 100 },
+      { label: "VVS1", min: 0, max: 12.5 },
+      { label: "VVS2", min: 12.5, max: 25 },
+      { label: "VS1", min: 25, max: 37.5 },
+      { label: "VS2", min: 37.5, max: 50 },
+      { label: "SI1", min: 50, max: 62.5 },
+      { label: "SI2", min: 62.5, max: 75 },
+      { label: "FL", min: 75, max: 87.5 },
+      { label: "IF", min: 87.5, max: 100 },
     ];
 
     updateClarityOptions = updateClarityOptions.filter((item) => {
@@ -649,7 +651,7 @@ const ChooseDiamondsShape = ({
     );
 
     if (newRange[0] <= 0 && newRange[1] >= 100) {
-      setClaritySliderValue([]);
+      setClaritySliderValue(["VVS1", "IF"]);
       setClarityRange([minClarityRange, maxClarityRange]);
     } else {
       setClarityRange(newRange);
@@ -679,36 +681,36 @@ const ChooseDiamondsShape = ({
     setSelectedOption(e.target.value);
     switch (e.target.value) {
       case "optimal_balance":
-        setColorRange([14.5, 29.4]);
+        setColorRange([29.2, 73.5]);
         setSliderValue(["F", "G", "H"]);
-        setCutRange([17, 51]);
+        setCutRange([20, 60]);
         setCutSliderValue(["Excellent", "Very Good"]);
-        setClarityRange([14.5, 29.4]);
+        setClarityRange([21, 62.5]);
         setClaritySliderValue(["VS1", "VS2", "SI1"]);
         break;
       case "max_brilliance":
-        setCutRange([17, 34]);
+        setCutRange([20, 40]);
         setCutSliderValue(["Excellent"]);
         setColorRange([minColorRange, maxColorRange]);
-        setSliderValue([]);
+        setSliderValue(["D", "J"]);
         setClarityRange([minClarityRange, maxClarityRange]);
-        setClaritySliderValue([]);
+        setClaritySliderValue(["VVS1", "IF"]);
         break;
       case "superior_quality":
-        setCutRange([0, 34]);
+        setCutRange([0, 40]);
         setCutSliderValue(["Ideal", "Excellent"]);
-        setColorRange([0, 14.5]);
+        setColorRange([0, 44.1]);
         setSliderValue(["D", "E", "F"]);
-        setClarityRange([0, 88]);
+        setClarityRange([12.5, 87.5]);
         setClaritySliderValue(["VVS2", "FL"]);
         break;
       default:
         setColorRange([minColorRange, maxColorRange]);
-        setSliderValue([]);
-        setCutSliderValue([]);
+        setSliderValue(["D", "J"]);
+        setCutSliderValue(["Ideal", "Fair"]);
         setCutRange([minCutRange, maxCutRange]);
         setClarityRange([minClarityRange, maxClarityRange]);
-        setClaritySliderValue([]);
+        setClaritySliderValue(["VVS1", "IF"]);
     }
   };
   // ===============ring details Api==============
@@ -724,7 +726,6 @@ const ChooseDiamondsShape = ({
     autoplay: false,
     autoplaySpeed: 2000,
   };
-
 
   const [clickedCheckboxes, setClickedCheckboxes] = useState([]);
   const [compareClickedItem, setCompareClickedItem] = useState([]);
@@ -752,29 +753,29 @@ const ChooseDiamondsShape = ({
 
   // ============ price  lab_grown =======================//
   useMemo(() => {
-    if(filterData){
-    axios
-      .get(
-        `${baseUrl}/get_product_price?product_sku=${
-          filterData?.product?.sku
-        }&metalType=${
-          listColor === "Platinum" ? "Platinum" : "18kt"
-        }&metalColor=${
-          filterData?.product?.metalColor
-        }&diamond_type=${diamond_original}`
-      )
+    if (filterData) {
+      axios
+        .get(
+          `${baseUrl}/get_product_price?product_sku=${
+            filterData?.product?.sku
+          }&metalType=${
+            listColor === "Platinum" ? "Platinum" : "18kt"
+          }&metalColor=${
+            filterData?.product?.metalColor
+          }&diamond_type=${diamond_original}`
+        )
 
-      .then((response) => {
-        if (response.status === 200) {
-          setLabGrownDetails(response.data.data);
-        } else {
-          console.error("Error Status:", response.status);
-        }
-      })
+        .then((response) => {
+          if (response.status === 200) {
+            setLabGrownDetails(response.data.data);
+          } else {
+            console.error("Error Status:", response.status);
+          }
+        })
 
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
   }, [filterData]);
 
@@ -1058,13 +1059,13 @@ const ChooseDiamondsShape = ({
 
                 <div className="color-text">
                   <ul>
-                    <li>D-F</li>
-                    <li>F-H</li>
-                    <li>H-K</li>
-                    <li>K-O</li>
-                    <li>O-R</li>
-                    <li>R-U</li>
-                    <li>U-Z</li>
+                    <li>D</li>
+                    <li>E</li>
+                    <li>F</li>
+                    <li>G</li>
+                    <li>H</li>
+                    <li>I</li>
+                    <li>J</li>
                   </ul>
                 </div>
               </div>
@@ -1077,9 +1078,9 @@ const ChooseDiamondsShape = ({
                     max={maxCutRange}
                     value={cutRange}
                     onAfterChange={cutHandleChange}
-                    minDistance={17}
-                    marks={17}
-                    step={17}
+                    minDistance={20}
+                    marks={[0, 20, 40, 60, 80, 102.7]}
+                    step={20}
                   ></Slider>
                 </div>
 
@@ -1087,14 +1088,12 @@ const ChooseDiamondsShape = ({
                   <ul>
                     <li>Ideal</li>
                     <li>
-                      Excellent/
-                      <br />
+                      Excellent / <br />
                       Super Ideal
                     </li>
                     <li>Very Good</li>
                     <li>Good</li>
                     <li>Fair</li>
-                    <li>Poor</li>
                   </ul>
                 </div>
               </div>
@@ -1110,22 +1109,23 @@ const ChooseDiamondsShape = ({
                     min={minClarityRange}
                     max={maxClarityRange}
                     value={clarityRange}
-                    minDistance={14.7}
-                    marks={[0, 14.6, 29.3, 44.1, 58.6, 73.4, 88.1]}
-                    step={14.7}
+                    minDistance={12.5}
+                    marks={[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 102.8]}
+                    step={12.5}
                     trackStyle={{ backgroundColor: "red" }}
                   />
                 </div>
 
                 <div className="color-text">
                   <ul className="clarity">
-                    <li>VVS1-VS1</li>
-                    <li>VS1-SI1</li>
-                    <li>SI1-SI3</li>
-                    <li>SI3-VS</li>
-                    <li>VS-VVS</li>
-                    <li>VVS-FL</li>
-                    <li>FL-IF</li>
+                    <li>VVS1</li>
+                    <li>VVS2</li>
+                    <li>VS1</li>
+                    <li>VS2</li>
+                    <li>SI1</li>
+                    <li>SI2</li>
+                    <li>FL</li>
+                    <li>IF</li>
                   </ul>
                 </div>
               </div>
@@ -1307,13 +1307,13 @@ const ChooseDiamondsShape = ({
 
                 <div className="color-text">
                   <ul>
-                    <li>D-F</li>
-                    <li>F-H</li>
-                    <li>H-K</li>
-                    <li>K-O</li>
-                    <li>O-R</li>
-                    <li>R-U</li>
-                    <li>U-Z</li>
+                    <li>D</li>
+                    <li>E</li>
+                    <li>F</li>
+                    <li>G</li>
+                    <li>H</li>
+                    <li>I</li>
+                    <li>J</li>
                   </ul>
                 </div>
               </div>
@@ -1326,20 +1326,22 @@ const ChooseDiamondsShape = ({
                     max={maxCutRange}
                     value={cutRange}
                     onAfterChange={cutHandleChange}
-                    minDistance={17}
-                    marks={17}
-                    step={17}
+                    minDistance={20}
+                    marks={[0, 20, 40, 60, 80, 102.7]}
+                    step={20}
                   ></Slider>
                 </div>
 
                 <div className="cut-list-diamonds">
                   <ul>
                     <li>Ideal</li>
-                    <li>Excellent / Super Ideal</li>
+                    <li>
+                      Excellent / <br />
+                      Super Ideal
+                    </li>
                     <li>Very Good</li>
                     <li>Good</li>
                     <li>Fair</li>
-                    <li>Poor</li>
                   </ul>
                 </div>
               </div>
@@ -1353,22 +1355,23 @@ const ChooseDiamondsShape = ({
                     className="slider"
                     onAfterChange={clarityHandleChange}
                     value={clarityRange}
-                    minDistance={14.7}
-                    marks={[0, 14.6, 29.3, 44.1, 58.6, 73.4, 88.1]}
-                    step={14.7}
+                    minDistance={12.5}
+                    marks={[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 102.8]}
+                    step={12.5}
                     trackStyle={{ backgroundColor: "red" }}
                   />
                 </div>
 
                 <div className="color-text">
                   <ul className="clarity">
-                    <li>VVS1-VS1</li>
-                    <li>VS1-SI1</li>
-                    <li>SI1-SI3</li>
-                    <li>SI3-VS</li>
-                    <li>VS-VVS</li>
-                    <li>VVS-FL</li>
-                    <li>FL-IF</li>
+                    <li>VVS1</li>
+                    <li>VVS2</li>
+                    <li>VS1</li>
+                    <li>VS2</li>
+                    <li>SI1</li>
+                    <li>SI2</li>
+                    <li>FL</li>
+                    <li>IF</li>
                   </ul>
                 </div>
               </div>
@@ -1658,457 +1661,459 @@ const ChooseDiamondsShape = ({
                   </table>
                 </div>
               </div>
-              {activeResult === 1 ? (
-                data.map((item) => {
-                  return (
-                    <>
-                      <ul
-                        className="prodcut-data"
-                        onClick={() => handleClick(item.id)}
-                      >
-                        <li className="heading-data-categery">
-                          <div className="main-wrapper">
-                            <div className="item-shape-image">
-                              <LazyLoadImage
-                                width="auto"
-                                height="auto"
-                                src={item.image_url}
-                                alt={item.shape}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                }}
-                              />
+              {activeResult === 1
+                ? data.map((item) => {
+                    return (
+                      <>
+                        <ul
+                          className="prodcut-data"
+                          onClick={() => handleClick(item.id)}
+                        >
+                          <li className="heading-data-categery">
+                            <div className="main-wrapper">
+                              <div className="item-shape-image">
+                                <LazyLoadImage
+                                  width="auto"
+                                  height="auto"
+                                  src={item.image_url}
+                                  alt={item.shape}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                  }}
+                                />
+                              </div>
+                              <p>{item.shape}</p>
                             </div>
-                            <p>{item.shape}</p>
-                          </div>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>${Math.round(item.total_sales_price)}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.size}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.cut}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.color}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.clarity}</p>
-                        </li>
-                        <li className="heading-data-categery campare boder-rt">
-                          <form action="">
-                            <div className="form-group">
-                              <input
-                                type="checkbox"
-                                id={`html${item.id}`}
-                                checked={clickedCheckboxes?.includes(item.id)}
-                                onClick={() => trackClick(item.id, item)}
-                              />
-                              <label htmlFor={`html${item.id}`}></label>
-                            </div>
-                          </form>
-                        </li>
-                      </ul>
-                      <div className={activeUL === item.id ? "" : "hide-data"}>
-                        <div class="inner-dimond-data-stucture">
-                          <div class="prodcut-img">
-                            {!loadedIframes[item.id] && (
-                              <LazyLoadImage
-                                width="auto"
-                                height="auto"
-                                src={item.image_url}
-                                alt={item.shape}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                }}
-                              />
-                            )}
-                            <iframe
-                              src={item.video_url}
-                              frameBorder="0"
-                              title="video"
-                              onLoad={() => handleIframeLoad(item.id)}
-                              allow="autoplay"
-                            ></iframe>
-                          </div>
-                          <div class="pro-cart-data">
-                            <div class="pro-data-cart head">
-                              {productSlug ? (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }&slug=${
-                                    filterData.product?.slug
-                                  }&color=${productColor}&diamond_original=${diamond_original}${
-                                    newDiamondType === "lab_grown"
-                                      ? `&diamond_origin=${newDiamondType}`
-                                      : `&diamond_origin=natural`
-                                  }&ring_size=${ring_size}${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }`}
-                                >
-                                  <p>
-                                    {item.size} Carat {item.shape} Diamond
-                                  </p>
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    newDiamondType === "lab_grown"
-                                      ? `&diamond_origin=${newDiamondType}`
-                                      : ""
-                                  }`}
-                                >
-                                  <p>
-                                    {item.size} Carat {item.shape} Diamond
-                                  </p>
-                                </Link>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>${Math.round(item.total_sales_price)}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.size}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.cut}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.color}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.clarity}</p>
+                          </li>
+                          <li className="heading-data-categery campare boder-rt">
+                            <form action="">
+                              <div className="form-group">
+                                <input
+                                  type="checkbox"
+                                  id={`html${item.id}`}
+                                  checked={clickedCheckboxes?.includes(item.id)}
+                                  onClick={() => trackClick(item.id, item)}
+                                />
+                                <label htmlFor={`html${item.id}`}></label>
+                              </div>
+                            </form>
+                          </li>
+                        </ul>
+                        <div
+                          className={activeUL === item.id ? "" : "hide-data"}
+                        >
+                          <div class="inner-dimond-data-stucture">
+                            <div class="prodcut-img">
+                              {!loadedIframes[item.id] && (
+                                <LazyLoadImage
+                                  width="auto"
+                                  height="auto"
+                                  src={item.image_url}
+                                  alt={item.shape}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                  }}
+                                />
                               )}
-                              {/* <Link href="javascript:void(0);">
+                              <iframe
+                                src={item.video_url}
+                                frameBorder="0"
+                                title="video"
+                                onLoad={() => handleIframeLoad(item.id)}
+                                allow="autoplay"
+                              ></iframe>
+                            </div>
+                            <div class="pro-cart-data">
+                              <div class="pro-data-cart head">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }&slug=${
+                                      filterData.product?.slug
+                                    }&color=${productColor}&diamond_original=${diamond_original}${
+                                      newDiamondType === "lab_grown"
+                                        ? `&diamond_origin=${newDiamondType}`
+                                        : `&diamond_origin=natural`
+                                    }&ring_size=${ring_size}${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }`}
+                                  >
+                                    <p>
+                                      {item.size} Carat {item.shape} Diamond
+                                    </p>
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      newDiamondType === "lab_grown"
+                                        ? `&diamond_origin=${newDiamondType}`
+                                        : ""
+                                    }`}
+                                  >
+                                    <p>
+                                      {item.size} Carat {item.shape} Diamond
+                                    </p>
+                                  </Link>
+                                )}
+                                {/* <Link href="javascript:void(0);">
                               <p>
                                 {item.size} Carat {item.shape} Diamond
                               </p>
                             </Link> */}
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>
-                                Price: ${Math.round(item.total_sales_price)}
-                              </p>
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>Carat: {item.size}</p>
-                            </div>
-                            {item.cut && (
-                              <div class="pro-data-cart border-btm">
-                                <p>Cut: {item.cut}</p>
                               </div>
-                            )}
-                            <div class="pro-data-cart border-btm">
-                              <p>Color: {item.color}</p>
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>Clarity: {item.clarity}</p>
-                            </div>
-                          </div>
-                          <div class="pro-cart-btn">
-                            <div class="slect-dimond">
-                              {productSlug ? (
-                                <Link
-                                  href={`/final_ring/${
-                                    filterData.product?.slug
-                                  }/?color=${productColor}&stock_num=${
-                                    item.stock_num
-                                  }&diamond_original=${
-                                    labGrownDetails?.diamond_type
-                                  }&diamond_origin=${newDiamondType}&ring_size=${ring_size}${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }`}
-                                >
-                                  select diamond
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/engagement-rings/start-with-a-setting?stock_num=${item.stock_num}&diamond_origin=${newDiamondType}`}
-                                >
-                                  select diamond
-                                </Link>
+                              <div class="pro-data-cart border-btm">
+                                <p>
+                                  Price: ${Math.round(item.total_sales_price)}
+                                </p>
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>Carat: {item.size}</p>
+                              </div>
+                              {item.cut && (
+                                <div class="pro-data-cart border-btm">
+                                  <p>Cut: {item.cut}</p>
+                                </div>
                               )}
+                              <div class="pro-data-cart border-btm">
+                                <p>Color: {item.color}</p>
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>Clarity: {item.clarity}</p>
+                              </div>
                             </div>
-                            <div class="view-dmd">
-                              {productSlug ? (
-                                <Link
-                                  href={`/view_diamond/${
-                                    filterData.product?.slug
-                                  }?stock_num=${
-                                    item.stock_num
-                                  }&color=${productColor}&diamond_original=${diamond_original}${
-                                    newDiamondType === "lab_grown"
-                                      ? `&diamond_origin=${newDiamondType}`
-                                      : "&diamond_origin=natural"
-                                  }&ring_size=${ring_size}${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }`}
-                                >
-                                  view diamond detail
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    newDiamondType === "lab_grown"
-                                      ? `&diamond_origin=${newDiamondType}`
-                                      : ""
-                                  }`}
-                                >
-                                  view diamond detail
-                                </Link>
-                              )}
-                            </div>
-                            <div class="other-btn-bar">
-                              <span>quick ship</span>
-                              <span>in another user bag</span>
-                              <span>only one available</span>
+                            <div class="pro-cart-btn">
+                              <div class="slect-dimond">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/final_ring/${
+                                      filterData.product?.slug
+                                    }/?color=${productColor}&stock_num=${
+                                      item.stock_num
+                                    }&diamond_original=${
+                                      labGrownDetails?.diamond_type
+                                    }&diamond_origin=${newDiamondType}&ring_size=${ring_size}${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }`}
+                                  >
+                                    select diamond
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/engagement-rings/start-with-a-setting?stock_num=${item.stock_num}&diamond_origin=${newDiamondType}`}
+                                  >
+                                    select diamond
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="view-dmd">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/view_diamond/${
+                                      filterData.product?.slug
+                                    }?stock_num=${
+                                      item.stock_num
+                                    }&color=${productColor}&diamond_original=${diamond_original}${
+                                      newDiamondType === "lab_grown"
+                                        ? `&diamond_origin=${newDiamondType}`
+                                        : "&diamond_origin=natural"
+                                    }&ring_size=${ring_size}${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }`}
+                                  >
+                                    view diamond detail
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      newDiamondType === "lab_grown"
+                                        ? `&diamond_origin=${newDiamondType}`
+                                        : ""
+                                    }`}
+                                  >
+                                    view diamond detail
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="other-btn-bar">
+                                <span>quick ship</span>
+                                <span>in another user bag</span>
+                                <span>only one available</span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </>
-                  );
-                })
-              ) : (
-                compareData.map((item) => {
-                  return (
-                    <>
-                      <ul
-                        className="prodcut-data"
-                        onClick={() => handleClick(item.id)}
-                      >
-                        <li className="heading-data-categery">
-                          <div className="main-wrapper">
-                            <div className="item-shape-image">
-                              <LazyLoadImage
-                                width="auto"
-                                height="auto"
-                                src={item.image_url}
-                                alt={item.shape}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                }}
-                              />
-                            </div>
-                            <p>{item.shape}</p>
-                          </div>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>${Math.round(item.total_sales_price)}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.size}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.cut}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.color}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.clarity}</p>
-                        </li>
-                        <li className="heading-data-categery campare boder-rt">
-                          <form action="">
-                            <div className="form-group">
-                              <input
-                                type="checkbox"
-                                id={`html${item.id}`}
-                                checked={clickedCheckboxes?.includes(item.id)}
-                                onClick={() => trackClick(item.id, item)}
-                              />
-                              <label htmlFor={`html${item.id}`}></label>
-                            </div>
-                          </form>
-                        </li>
-                      </ul>
-                      <div className={activeUL === item.id ? "" : "hide-data"}>
-                        <div class="inner-dimond-data-stucture">
-                          <div class="prodcut-img">
-                            {!loadedIframes[item.id] && (
-                              <LazyLoadImage
-                                width="auto"
-                                height="auto"
-                                src={item.image_url}
-                                alt={item.shape}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                }}
-                              />
-                            )}
-                            <iframe
-                              src={item.video_url}
-                              frameBorder="0"
-                              title="video"
-                              onLoad={() => handleIframeLoad(item.id)}
-                              allow="autoplay"
-                            ></iframe>
-                          </div>
-                          <div class="pro-cart-data">
-                            <div class="pro-data-cart head">
-                              {productSlug ? (
-                                <Link
-                                  href={`/view_diamond/${
-                                    filterData.product?.slug
-                                  }?stock_num=${
-                                    item.stock_num
-                                  }&color=${productColor}${
-                                    item?.type === "lab_grown_diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }&diamond_original=${diamond_original}${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }`}
-                                >
-                                  <p>
-                                    {item.size} Carat {item.shape} Diamond
-                                  </p>
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    item?.type !== "diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }`}
-                                >
-                                  <p>
-                                    {item.size} Carat {item.shape} Diamond
-                                  </p>
-                                </Link>
-                              )}
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>
-                                Price: ${Math.round(item.total_sales_price)}
-                              </p>
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>Carat: {item.size}</p>
-                            </div>
-                            {item.cut && (
-                              <div class="pro-data-cart border-btm">
-                                <p>Cut: {item.cut}</p>
+                      </>
+                    );
+                  })
+                : compareData.map((item) => {
+                    return (
+                      <>
+                        <ul
+                          className="prodcut-data"
+                          onClick={() => handleClick(item.id)}
+                        >
+                          <li className="heading-data-categery">
+                            <div className="main-wrapper">
+                              <div className="item-shape-image">
+                                <LazyLoadImage
+                                  width="auto"
+                                  height="auto"
+                                  src={item.image_url}
+                                  alt={item.shape}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                  }}
+                                />
                               </div>
-                            )}
-                            <div class="pro-data-cart border-btm">
-                              <p>Color: {item.color}</p>
+                              <p>{item.shape}</p>
                             </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>Clarity: {item.clarity}</p>
-                            </div>
-                          </div>
-                          <div class="pro-cart-btn">
-                            <div class="slect-dimond">
-                              {productSlug ? (
-                                <Link
-                                  href={`/final_ring/${
-                                    filterData.product?.slug
-                                  }?color=${productColor}&stock_num=${
-                                    item.stock_num
-                                  }&diamond_original=${
-                                    labGrownDetails?.diamond_type
-                                  }${
-                                    item?.type === "lab_grown_diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }`}
-                                >
-                                  select diamond
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/engagement-rings/start-with-a-setting?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    item?.type !== "diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }`}
-                                >
-                                  select diamond
-                                </Link>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>${Math.round(item.total_sales_price)}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.size}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.cut}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.color}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.clarity}</p>
+                          </li>
+                          <li className="heading-data-categery campare boder-rt">
+                            <form action="">
+                              <div className="form-group">
+                                <input
+                                  type="checkbox"
+                                  id={`html${item.id}`}
+                                  checked={clickedCheckboxes?.includes(item.id)}
+                                  onClick={() => trackClick(item.id, item)}
+                                />
+                                <label htmlFor={`html${item.id}`}></label>
+                              </div>
+                            </form>
+                          </li>
+                        </ul>
+                        <div
+                          className={activeUL === item.id ? "" : "hide-data"}
+                        >
+                          <div class="inner-dimond-data-stucture">
+                            <div class="prodcut-img">
+                              {!loadedIframes[item.id] && (
+                                <LazyLoadImage
+                                  width="auto"
+                                  height="auto"
+                                  src={item.image_url}
+                                  alt={item.shape}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                  }}
+                                />
                               )}
+                              <iframe
+                                src={item.video_url}
+                                frameBorder="0"
+                                title="video"
+                                onLoad={() => handleIframeLoad(item.id)}
+                                allow="autoplay"
+                              ></iframe>
                             </div>
-                            <div class="view-dmd">
-                              {productSlug ? (
-                                <Link
-                                  href={`/view_diamond/${
-                                    filterData.product?.slug
-                                  }?stock_num=${
-                                    item.stock_num
-                                  }&color=${productColor}${
-                                    item?.type !== "diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }&diamond_original=${diamond_original}${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }`}
-                                >
-                                  view diamond detail
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    item?.type !== "diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }`}
-                                >
-                                  view diamond detail
-                                </Link>
+                            <div class="pro-cart-data">
+                              <div class="pro-data-cart head">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/view_diamond/${
+                                      filterData.product?.slug
+                                    }?stock_num=${
+                                      item.stock_num
+                                    }&color=${productColor}${
+                                      item?.type === "lab_grown_diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }&diamond_original=${diamond_original}${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }`}
+                                  >
+                                    <p>
+                                      {item.size} Carat {item.shape} Diamond
+                                    </p>
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      item?.type !== "diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }`}
+                                  >
+                                    <p>
+                                      {item.size} Carat {item.shape} Diamond
+                                    </p>
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>
+                                  Price: ${Math.round(item.total_sales_price)}
+                                </p>
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>Carat: {item.size}</p>
+                              </div>
+                              {item.cut && (
+                                <div class="pro-data-cart border-btm">
+                                  <p>Cut: {item.cut}</p>
+                                </div>
                               )}
+                              <div class="pro-data-cart border-btm">
+                                <p>Color: {item.color}</p>
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>Clarity: {item.clarity}</p>
+                              </div>
                             </div>
-                            <div class="other-btn-bar">
-                              <span>quick ship</span>
-                              <span>in another user bag</span>
-                              <span>only one available</span>
+                            <div class="pro-cart-btn">
+                              <div class="slect-dimond">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/final_ring/${
+                                      filterData.product?.slug
+                                    }?color=${productColor}&stock_num=${
+                                      item.stock_num
+                                    }&diamond_original=${
+                                      labGrownDetails?.diamond_type
+                                    }${
+                                      item?.type === "lab_grown_diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }`}
+                                  >
+                                    select diamond
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/engagement-rings/start-with-a-setting?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      item?.type !== "diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }`}
+                                  >
+                                    select diamond
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="view-dmd">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/view_diamond/${
+                                      filterData.product?.slug
+                                    }?stock_num=${
+                                      item.stock_num
+                                    }&color=${productColor}${
+                                      item?.type !== "diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }&diamond_original=${diamond_original}${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }`}
+                                  >
+                                    view diamond detail
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      item?.type !== "diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }`}
+                                  >
+                                    view diamond detail
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="other-btn-bar">
+                                <span>quick ship</span>
+                                <span>in another user bag</span>
+                                <span>only one available</span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div>{loading && <LoaderSpinner />}</div>
-                    </>
-                  );
-                })
-              )}
+                        <div>{loading && <LoaderSpinner />}</div>
+                      </>
+                    );
+                  })}
               <div>{loading && <LoaderSpinner />}</div>
               {data.length < 1 && activeResult === 1 && (
                 <h2 className="center">{loading ? null : "Data Not Found"}</h2>
@@ -2370,457 +2375,459 @@ const ChooseDiamondsShape = ({
                   </table>
                 </div>
               </div>
-              {activeResult === 1 ? (
-                dataServer.map((item) => {
-                  return (
-                    <>
-                      <ul
-                        className="prodcut-data"
-                        onClick={() => handleClick(item.id)}
-                      >
-                        <li className="heading-data-categery">
-                          <div className="main-wrapper">
-                            <div className="item-shape-image">
-                              <LazyLoadImage
-                                width="auto"
-                                height="auto"
-                                src={item.image_url}
-                                alt={item.shape}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                }}
-                              />
+              {activeResult === 1
+                ? dataServer.map((item) => {
+                    return (
+                      <>
+                        <ul
+                          className="prodcut-data"
+                          onClick={() => handleClick(item.id)}
+                        >
+                          <li className="heading-data-categery">
+                            <div className="main-wrapper">
+                              <div className="item-shape-image">
+                                <LazyLoadImage
+                                  width="auto"
+                                  height="auto"
+                                  src={item.image_url}
+                                  alt={item.shape}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                  }}
+                                />
+                              </div>
+                              <p>{item.shape}</p>
                             </div>
-                            <p>{item.shape}</p>
-                          </div>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>${Math.round(item.total_sales_price)}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.size}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.cut}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.color}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.clarity}</p>
-                        </li>
-                        <li className="heading-data-categery campare boder-rt">
-                          <form action="">
-                            <div className="form-group">
-                              <input
-                                type="checkbox"
-                                id={`html${item.id}`}
-                                checked={clickedCheckboxes?.includes(item.id)}
-                                onClick={() => trackClick(item.id, item)}
-                              />
-                              <label htmlFor={`html${item.id}`}></label>
-                            </div>
-                          </form>
-                        </li>
-                      </ul>
-                      <div className={activeUL === item.id ? "" : "hide-data"}>
-                        <div class="inner-dimond-data-stucture">
-                          <div class="prodcut-img">
-                            {!loadedIframes[item.id] && (
-                              <LazyLoadImage
-                                width="auto"
-                                height="auto"
-                                src={item.image_url}
-                                alt={item.shape}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                }}
-                              />
-                            )}
-                            <iframe
-                              src={item.video_url}
-                              frameBorder="0"
-                              title="video"
-                              onLoad={() => handleIframeLoad(item.id)}
-                              allow="autoplay"
-                            ></iframe>
-                          </div>
-                          <div class="pro-cart-data">
-                            <div class="pro-data-cart head">
-                              {productSlug ? (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }&slug=${
-                                    filterData.product?.slug
-                                  }&color=${productColor}&diamond_original=${diamond_original}${
-                                    newDiamondType === "lab_grown"
-                                      ? `&diamond_origin=${newDiamondType}`
-                                      : `&diamond_origin=natural`
-                                  }&ring_size=${ring_size}${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }`}
-                                >
-                                  <p>
-                                    {item.size} Carat {item.shape} Diamond
-                                  </p>
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    newDiamondType === "lab_grown"
-                                      ? `&diamond_origin=${newDiamondType}`
-                                      : ""
-                                  }`}
-                                >
-                                  <p>
-                                    {item.size} Carat {item.shape} Diamond
-                                  </p>
-                                </Link>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>${Math.round(item.total_sales_price)}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.size}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.cut}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.color}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.clarity}</p>
+                          </li>
+                          <li className="heading-data-categery campare boder-rt">
+                            <form action="">
+                              <div className="form-group">
+                                <input
+                                  type="checkbox"
+                                  id={`html${item.id}`}
+                                  checked={clickedCheckboxes?.includes(item.id)}
+                                  onClick={() => trackClick(item.id, item)}
+                                />
+                                <label htmlFor={`html${item.id}`}></label>
+                              </div>
+                            </form>
+                          </li>
+                        </ul>
+                        <div
+                          className={activeUL === item.id ? "" : "hide-data"}
+                        >
+                          <div class="inner-dimond-data-stucture">
+                            <div class="prodcut-img">
+                              {!loadedIframes[item.id] && (
+                                <LazyLoadImage
+                                  width="auto"
+                                  height="auto"
+                                  src={item.image_url}
+                                  alt={item.shape}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                  }}
+                                />
                               )}
-                              {/* <Link href="javascript:void(0);">
+                              <iframe
+                                src={item.video_url}
+                                frameBorder="0"
+                                title="video"
+                                onLoad={() => handleIframeLoad(item.id)}
+                                allow="autoplay"
+                              ></iframe>
+                            </div>
+                            <div class="pro-cart-data">
+                              <div class="pro-data-cart head">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }&slug=${
+                                      filterData.product?.slug
+                                    }&color=${productColor}&diamond_original=${diamond_original}${
+                                      newDiamondType === "lab_grown"
+                                        ? `&diamond_origin=${newDiamondType}`
+                                        : `&diamond_origin=natural`
+                                    }&ring_size=${ring_size}${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }`}
+                                  >
+                                    <p>
+                                      {item.size} Carat {item.shape} Diamond
+                                    </p>
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      newDiamondType === "lab_grown"
+                                        ? `&diamond_origin=${newDiamondType}`
+                                        : ""
+                                    }`}
+                                  >
+                                    <p>
+                                      {item.size} Carat {item.shape} Diamond
+                                    </p>
+                                  </Link>
+                                )}
+                                {/* <Link href="javascript:void(0);">
                               <p>
                                 {item.size} Carat {item.shape} Diamond
                               </p>
                             </Link> */}
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>
-                                Price: ${Math.round(item.total_sales_price)}
-                              </p>
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>Carat: {item.size}</p>
-                            </div>
-                            {item.cut && (
-                              <div class="pro-data-cart border-btm">
-                                <p>Cut: {item.cut}</p>
                               </div>
-                            )}
-                            <div class="pro-data-cart border-btm">
-                              <p>Color: {item.color}</p>
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>Clarity: {item.clarity}</p>
-                            </div>
-                          </div>
-                          <div class="pro-cart-btn">
-                            <div class="slect-dimond">
-                              {productSlug ? (
-                                <Link
-                                  href={`/final_ring/${
-                                    filterData.product?.slug
-                                  }/?color=${productColor}&stock_num=${
-                                    item.stock_num
-                                  }&diamond_original=${
-                                    labGrownDetails?.diamond_type
-                                  }&diamond_origin=${newDiamondType}&ring_size=${ring_size}${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }`}
-                                >
-                                  select diamond
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/engagement-rings/start-with-a-setting?stock_num=${item.stock_num}&diamond_origin=${newDiamondType}`}
-                                >
-                                  select diamond
-                                </Link>
+                              <div class="pro-data-cart border-btm">
+                                <p>
+                                  Price: ${Math.round(item.total_sales_price)}
+                                </p>
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>Carat: {item.size}</p>
+                              </div>
+                              {item.cut && (
+                                <div class="pro-data-cart border-btm">
+                                  <p>Cut: {item.cut}</p>
+                                </div>
                               )}
+                              <div class="pro-data-cart border-btm">
+                                <p>Color: {item.color}</p>
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>Clarity: {item.clarity}</p>
+                              </div>
                             </div>
-                            <div class="view-dmd">
-                              {productSlug ? (
-                                <Link
-                                  href={`/view_diamond/${
-                                    filterData.product?.slug
-                                  }?stock_num=${
-                                    item.stock_num
-                                  }&color=${productColor}&diamond_original=${diamond_original}${
-                                    newDiamondType === "lab_grown"
-                                      ? `&diamond_origin=${newDiamondType}`
-                                      : "&diamond_origin=natural"
-                                  }&ring_size=${ring_size}${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }`}
-                                >
-                                  view diamond detail
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    newDiamondType === "lab_grown"
-                                      ? `&diamond_origin=${newDiamondType}`
-                                      : ""
-                                  }`}
-                                >
-                                  view diamond detail
-                                </Link>
-                              )}
-                            </div>
-                            <div class="other-btn-bar">
-                              <span>quick ship</span>
-                              <span>in another user bag</span>
-                              <span>only one available</span>
+                            <div class="pro-cart-btn">
+                              <div class="slect-dimond">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/final_ring/${
+                                      filterData.product?.slug
+                                    }/?color=${productColor}&stock_num=${
+                                      item.stock_num
+                                    }&diamond_original=${
+                                      labGrownDetails?.diamond_type
+                                    }&diamond_origin=${newDiamondType}&ring_size=${ring_size}${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }`}
+                                  >
+                                    select diamond
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/engagement-rings/start-with-a-setting?stock_num=${item.stock_num}&diamond_origin=${newDiamondType}`}
+                                  >
+                                    select diamond
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="view-dmd">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/view_diamond/${
+                                      filterData.product?.slug
+                                    }?stock_num=${
+                                      item.stock_num
+                                    }&color=${productColor}&diamond_original=${diamond_original}${
+                                      newDiamondType === "lab_grown"
+                                        ? `&diamond_origin=${newDiamondType}`
+                                        : "&diamond_origin=natural"
+                                    }&ring_size=${ring_size}${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }`}
+                                  >
+                                    view diamond detail
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      newDiamondType === "lab_grown"
+                                        ? `&diamond_origin=${newDiamondType}`
+                                        : ""
+                                    }`}
+                                  >
+                                    view diamond detail
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="other-btn-bar">
+                                <span>quick ship</span>
+                                <span>in another user bag</span>
+                                <span>only one available</span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </>
-                  );
-                })
-              ) : (
-                compareData.map((item) => {
-                  return (
-                    <>
-                      <ul
-                        className="prodcut-data"
-                        onClick={() => handleClick(item.id)}
-                      >
-                        <li className="heading-data-categery">
-                          <div className="main-wrapper">
-                            <div className="item-shape-image">
-                              <LazyLoadImage
-                                width="auto"
-                                height="auto"
-                                src={item.image_url}
-                                alt={item.shape}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                }}
-                              />
-                            </div>
-                            <p>{item.shape}</p>
-                          </div>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>${Math.round(item.total_sales_price)}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.size}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.cut}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.color}</p>
-                        </li>
-                        <li className="heading-data-categery">
-                          <p>{item.clarity}</p>
-                        </li>
-                        <li className="heading-data-categery campare boder-rt">
-                          <form action="">
-                            <div className="form-group">
-                              <input
-                                type="checkbox"
-                                id={`html${item.id}`}
-                                checked={clickedCheckboxes?.includes(item.id)}
-                                onClick={() => trackClick(item.id, item)}
-                              />
-                              <label htmlFor={`html${item.id}`}></label>
-                            </div>
-                          </form>
-                        </li>
-                      </ul>
-                      <div className={activeUL === item.id ? "" : "hide-data"}>
-                        <div class="inner-dimond-data-stucture">
-                          <div class="prodcut-img">
-                            {!loadedIframes[item.id] && (
-                              <LazyLoadImage
-                                width="auto"
-                                height="auto"
-                                src={item.image_url}
-                                alt={item.shape}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                }}
-                              />
-                            )}
-                            <iframe
-                              src={item.video_url}
-                              frameBorder="0"
-                              title="video"
-                              onLoad={() => handleIframeLoad(item.id)}
-                              allow="autoplay"
-                            ></iframe>
-                          </div>
-                          <div class="pro-cart-data">
-                            <div class="pro-data-cart head">
-                              {productSlug ? (
-                                <Link
-                                  href={`/view_diamond/${
-                                    filterData.product?.slug
-                                  }?stock_num=${
-                                    item.stock_num
-                                  }&color=${productColor}${
-                                    item?.type === "lab_grown_diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }&diamond_original=${diamond_original}${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }`}
-                                >
-                                  <p>
-                                    {item.size} Carat {item.shape} Diamond
-                                  </p>
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    item?.type !== "diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }`}
-                                >
-                                  <p>
-                                    {item.size} Carat {item.shape} Diamond
-                                  </p>
-                                </Link>
-                              )}
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>
-                                Price: ${Math.round(item.total_sales_price)}
-                              </p>
-                            </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>Carat: {item.size}</p>
-                            </div>
-                            {item.cut && (
-                              <div class="pro-data-cart border-btm">
-                                <p>Cut: {item.cut}</p>
+                      </>
+                    );
+                  })
+                : compareData.map((item) => {
+                    return (
+                      <>
+                        <ul
+                          className="prodcut-data"
+                          onClick={() => handleClick(item.id)}
+                        >
+                          <li className="heading-data-categery">
+                            <div className="main-wrapper">
+                              <div className="item-shape-image">
+                                <LazyLoadImage
+                                  width="auto"
+                                  height="auto"
+                                  src={item.image_url}
+                                  alt={item.shape}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                  }}
+                                />
                               </div>
-                            )}
-                            <div class="pro-data-cart border-btm">
-                              <p>Color: {item.color}</p>
+                              <p>{item.shape}</p>
                             </div>
-                            <div class="pro-data-cart border-btm">
-                              <p>Clarity: {item.clarity}</p>
-                            </div>
-                          </div>
-                          <div class="pro-cart-btn">
-                            <div class="slect-dimond">
-                              {productSlug ? (
-                                <Link
-                                  href={`/final_ring/${
-                                    filterData.product?.slug
-                                  }?color=${productColor}&stock_num=${
-                                    item.stock_num
-                                  }&diamond_original=${
-                                    labGrownDetails?.diamond_type
-                                  }${
-                                    item?.type === "lab_grown_diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }`}
-                                >
-                                  select diamond
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/engagement-rings/start-with-a-setting?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    item?.type !== "diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }`}
-                                >
-                                  select diamond
-                                </Link>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>${Math.round(item.total_sales_price)}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.size}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.cut}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.color}</p>
+                          </li>
+                          <li className="heading-data-categery">
+                            <p>{item.clarity}</p>
+                          </li>
+                          <li className="heading-data-categery campare boder-rt">
+                            <form action="">
+                              <div className="form-group">
+                                <input
+                                  type="checkbox"
+                                  id={`html${item.id}`}
+                                  checked={clickedCheckboxes?.includes(item.id)}
+                                  onClick={() => trackClick(item.id, item)}
+                                />
+                                <label htmlFor={`html${item.id}`}></label>
+                              </div>
+                            </form>
+                          </li>
+                        </ul>
+                        <div
+                          className={activeUL === item.id ? "" : "hide-data"}
+                        >
+                          <div class="inner-dimond-data-stucture">
+                            <div class="prodcut-img">
+                              {!loadedIframes[item.id] && (
+                                <LazyLoadImage
+                                  width="auto"
+                                  height="auto"
+                                  src={item.image_url}
+                                  alt={item.shape}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                  }}
+                                />
                               )}
+                              <iframe
+                                src={item.video_url}
+                                frameBorder="0"
+                                title="video"
+                                onLoad={() => handleIframeLoad(item.id)}
+                                allow="autoplay"
+                              ></iframe>
                             </div>
-                            <div class="view-dmd">
-                              {productSlug ? (
-                                <Link
-                                  href={`/view_diamond/${
-                                    filterData.product?.slug
-                                  }?stock_num=${
-                                    item.stock_num
-                                  }&color=${productColor}${
-                                    item?.type !== "diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }&diamond_original=${diamond_original}${
-                                    textEngraving
-                                      ? `&textEngraving=${textEngraving}`
-                                      : ""
-                                  }${
-                                    font_style
-                                      ? `&font_style=${font_style}`
-                                      : ""
-                                  }`}
-                                >
-                                  view diamond detail
-                                </Link>
-                              ) : (
-                                <Link
-                                  href={`/view_diamond?stock_num=${
-                                    item.stock_num
-                                  }${
-                                    item?.type !== "diamond"
-                                      ? `&diamond_origin=lab_grown`
-                                      : ""
-                                  }`}
-                                >
-                                  view diamond detail
-                                </Link>
+                            <div class="pro-cart-data">
+                              <div class="pro-data-cart head">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/view_diamond/${
+                                      filterData.product?.slug
+                                    }?stock_num=${
+                                      item.stock_num
+                                    }&color=${productColor}${
+                                      item?.type === "lab_grown_diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }&diamond_original=${diamond_original}${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }`}
+                                  >
+                                    <p>
+                                      {item.size} Carat {item.shape} Diamond
+                                    </p>
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      item?.type !== "diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }`}
+                                  >
+                                    <p>
+                                      {item.size} Carat {item.shape} Diamond
+                                    </p>
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>
+                                  Price: ${Math.round(item.total_sales_price)}
+                                </p>
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>Carat: {item.size}</p>
+                              </div>
+                              {item.cut && (
+                                <div class="pro-data-cart border-btm">
+                                  <p>Cut: {item.cut}</p>
+                                </div>
                               )}
+                              <div class="pro-data-cart border-btm">
+                                <p>Color: {item.color}</p>
+                              </div>
+                              <div class="pro-data-cart border-btm">
+                                <p>Clarity: {item.clarity}</p>
+                              </div>
                             </div>
-                            <div class="other-btn-bar">
-                              <span>quick ship</span>
-                              <span>in another user bag</span>
-                              <span>only one available</span>
+                            <div class="pro-cart-btn">
+                              <div class="slect-dimond">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/final_ring/${
+                                      filterData.product?.slug
+                                    }?color=${productColor}&stock_num=${
+                                      item.stock_num
+                                    }&diamond_original=${
+                                      labGrownDetails?.diamond_type
+                                    }${
+                                      item?.type === "lab_grown_diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }`}
+                                  >
+                                    select diamond
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/engagement-rings/start-with-a-setting?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      item?.type !== "diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }`}
+                                  >
+                                    select diamond
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="view-dmd">
+                                {productSlug ? (
+                                  <Link
+                                    href={`/view_diamond/${
+                                      filterData.product?.slug
+                                    }?stock_num=${
+                                      item.stock_num
+                                    }&color=${productColor}${
+                                      item?.type !== "diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }&diamond_original=${diamond_original}${
+                                      textEngraving
+                                        ? `&textEngraving=${textEngraving}`
+                                        : ""
+                                    }${
+                                      font_style
+                                        ? `&font_style=${font_style}`
+                                        : ""
+                                    }`}
+                                  >
+                                    view diamond detail
+                                  </Link>
+                                ) : (
+                                  <Link
+                                    href={`/view_diamond?stock_num=${
+                                      item.stock_num
+                                    }${
+                                      item?.type !== "diamond"
+                                        ? `&diamond_origin=lab_grown`
+                                        : ""
+                                    }`}
+                                  >
+                                    view diamond detail
+                                  </Link>
+                                )}
+                              </div>
+                              <div class="other-btn-bar">
+                                <span>quick ship</span>
+                                <span>in another user bag</span>
+                                <span>only one available</span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div>{loading && <LoaderSpinner />}</div>
-                    </>
-                  );
-                })
-              )}
+                        <div>{loading && <LoaderSpinner />}</div>
+                      </>
+                    );
+                  })}
               <div>{loading && <LoaderSpinner />}</div>
               {data.length < 1 && activeResult === 1 && (
                 <h2 className="center">{loading ? null : "Data Not Found"}</h2>

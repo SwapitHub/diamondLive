@@ -30,7 +30,7 @@ export const EngagementBridal = ({ home }) => {
             <h2>{home.data.section3?.heading}</h2>
             <p>{home.data.section3?.description}</p>
 
-            <Link className="button" href={`/${home.data.section3?.link}`}>
+            <Link className="button" href={`${home.data.section3?.link}`}>
               {home.data.section3?.btn_name}
             </Link>
           </div>

@@ -21,7 +21,7 @@ export const AnniversaryRingFeatured = ({home}) => {
                 <p>
                 {home.data.section6?.description1}
                 </p>
-                <Link href={`/${home.data.section6?.btn_link}`}>{home.data.section6?.btn_name}</Link>
+                <Link href={`${home.data.section6?.btn_link}`}>{home.data.section6?.btn_name}</Link>
               </div>
             </div>
             <div className="grid-wrapper-bar">
@@ -34,7 +34,7 @@ export const AnniversaryRingFeatured = ({home}) => {
                 {home.data.section6?.description2}
 
                 </p>
-                <Link href={`/${home.data.section6?.btn_link2}`}>{home.data.section6?.btn_name}</Link>
+                <Link href={`${home.data.section6?.btn_link2}`}>{home.data.section6?.btn_name}</Link>
               </div>
             </div>
           </div>

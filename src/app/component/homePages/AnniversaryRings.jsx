@@ -19,7 +19,7 @@ export const AnniversaryRings = ({home}) => {
                 return (
                  
                     <div className="column-width" key={i}>
-                      <Link href={`/${item.link}`}>
+                      <Link href={`${item.link}`}>
                         <div className="ShopCategory-img">
                           <img
                             src={item?.image}

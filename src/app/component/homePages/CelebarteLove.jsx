@@ -21,7 +21,7 @@ export const CelebarteLove = ({ home }) => {
                 <p>
                   {home.data.section2?.description}
                 </p>
-                <Link className="see-btn btn" href={`/${home.data.section2?.link}`}>
+                <Link className="see-btn btn" href={`${home.data.section2?.link}`}>
                   {home.data.section2?.btn_name} {`>`}{" "}
                 </Link>
               
