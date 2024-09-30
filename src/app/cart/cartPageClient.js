@@ -275,6 +275,8 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
       console.error("Error:", error);
       setDisableButton(false);
     }
+
+    window.location.reload()
   };
 
   const handleRemoveItem = (itemId, ring_id) => {
@@ -285,6 +287,8 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
         dispatch(removeFromCart(item));
       }
     });
+
+    window.location.reload()
   };
   const handleRemoveItemCart = (itemId, ring_id) => {
     dispatch(productList());
@@ -301,12 +305,12 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
         dispatch(addToWishlist(item));
       }
     });
+
+    window.location.reload()
   };
   const [loader, setLoader] = useState(true);
   useEffect(() => {
-    cartDetails
     dispatch(productList())
-    dispatch(productListCart())
     const timeout = setTimeout(() => {
       setLoader(false);
     }, 2000);

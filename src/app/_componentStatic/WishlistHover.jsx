@@ -147,6 +147,8 @@ export const WishlistHover = () => {
         console.error("Error:", error);
         setDisableButton(false);
       });
+
+      window.location.reload()
   };
 
  
