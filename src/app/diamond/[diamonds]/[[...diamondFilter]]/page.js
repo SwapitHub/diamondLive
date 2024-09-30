@@ -33,17 +33,12 @@ const fetchDiamondAttributes = async () => {
 const fetchDiamonds = async (diamondShapeFilter, newDiamondType) => {
   let diamond = [];
   try {
-    const headers = {
-      Authorization:
-        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-    };
     const response = await fetch(
-      `https://apiservices.vdbapp.com//v2/diamonds?type=${
+      `${process.env.BASE_URL}/vdb-diamonds?type=${
         newDiamondType == "lab_grown" ? "Lab_grown_diamond" : "Diamond"
       }&${diamondShapeFilter ? diamondShapeFilter : ""}&with_images=true`,
       {
         method: "GET",
-        headers: headers,
       }
     );
     if (!response.ok) {

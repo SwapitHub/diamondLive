@@ -308,7 +308,7 @@ export const ChooseGemstonesPage = ({
 
   useEffect(() => {
     const fetchDataGem = async () => {
-      const url = `https://apiservices.vdbapp.com/v2/gemstones?markup_mode=true&page_number=${page}${
+      const url = `${baseUrl}/vdb-gemstones?markup_mode=true&page_number=${page}${
         gemStyleSlider ? gemStyleSlider : ""
       }${newStyleSliderData ? newStyleSliderData : ""}${
         newColorSliderData ? newColorSliderData : ""
@@ -323,14 +323,10 @@ export const ChooseGemstonesPage = ({
         page_size: pageSize,
       };
 
-      const headers = {
-        Authorization:
-          "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-      };
 
       try {
         setLoading(true);
-        const response = await axios.get(url, { params, headers });
+        const response = await axios.get(url, { params });
         if (response.status === 200) {
         setLoading(false);
           if (page === 1) {
@@ -351,7 +347,7 @@ export const ChooseGemstonesPage = ({
       }
     };
 
-    const debouncedFetchDataGem = debounce(fetchDataGem, 150);
+    const debouncedFetchDataGem = debounce(fetchDataGem);
     debouncedFetchDataGem();
 
     return () => {

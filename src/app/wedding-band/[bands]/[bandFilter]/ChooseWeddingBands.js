@@ -191,7 +191,7 @@ const ChooseWeddingBands = ({
           setLoading(false);
         });
     };
-    const debouncedFetchDataGem = debounce(fetchWeddingBands, 150);
+    const debouncedFetchDataGem = debounce(fetchWeddingBands);
     debouncedFetchDataGem();
 
     return () => {

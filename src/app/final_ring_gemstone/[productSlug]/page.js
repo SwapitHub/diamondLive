@@ -19,15 +19,11 @@ const fetchMeta = async () => {
 const fetchGemstoneData = async (stock_num, ) => {
   let gemstone = [];
   try {
-    const headers = {
-      Authorization:
-        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-    };
+    
     const response = await fetch(
-      `https://apiservices.vdbapp.com//v2/gemstones?stock_num=${stock_num}`,
+      `${process.env.BASE_URL}/vdb-gemstones?stock_num=${stock_num}`,
       {
         method: "GET",
-        headers: headers,
       }
     );
     if (!response.ok) {

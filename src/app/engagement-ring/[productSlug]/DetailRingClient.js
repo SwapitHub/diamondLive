@@ -326,8 +326,9 @@ const DetailRingProduct = ({ filterData, shapeData, diamondData, fontStyleOption
     setChangeOver(colorName);
     
   };
-
   const [changeOverVariation, setChangeOverVariation] = useState()
+ 
+
  
   
   const onChangeOverVariation = (fraction)=>{

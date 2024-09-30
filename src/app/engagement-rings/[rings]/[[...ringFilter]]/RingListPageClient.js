@@ -199,7 +199,7 @@ console.log(metalColorName);
 
   useMemo(() => {
     const fetchData = async () => {
-      const url = `https://apiservices.vdbapp.com//v2/gemstones?markup_mode=true&stock_num=${stock_num}`;
+      const url = `${baseUrl}/vdb-gemstones?markup_mode=true&stock_num=${stock_num}`;
       const params = {
         stock_item_type: "gemstones",
         status: "pending",
@@ -207,13 +207,8 @@ console.log(metalColorName);
         page_size: 30,
       };
 
-      const headers = {
-        Authorization:
-          "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-      };
-
       try {
-        const response = await axios.get(url, { params, headers });
+        const response = await axios.get(url, { params });
         setNewData(response.data.response.body.gemstones);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -226,22 +221,17 @@ console.log(metalColorName);
   // Diamond api
   useMemo(() => {
     const fetchData = async () => {
-      const url = `https://apiservices.vdbapp.com//v2/diamonds?type=${
+      const url = `${baseUrl}/vdb-diamonds?type=${
         diamond_origin == "lab_grown" ? "Lab_grown_Diamond" : "Diamond"
       }&stock_num=${stock_num}`;
 
       const params = {
         stock_item_type: "Diamond",
         status: "pending",
-      };
-
-      const headers = {
-        Authorization:
-          "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-      };
+      }
 
       try {
-        const response = await axios.get(url, { params, headers });
+        const response = await axios.get(url, { params });
         setDiamondData(response.data.response.body.diamonds);
       } catch (error) {
         console.error("Error fetching data:", error);

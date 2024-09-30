@@ -3423,9 +3423,7 @@ section.enviromental-sec {
   padding-top: 15px;
 }
 
-.choose-diamonds .diamond-table-sort {
-  padding-top: 70px;
-}
+
 
 .shape-diamond-more-filter .shape-cut,
 .shape-diamond-filter .shape-slider-2 {
@@ -12997,7 +12995,7 @@ object-position: top;
   padding-top: 45px;
 }
 .choose-diamonds .diamond-table-sort {
-  padding-top: 69px !important;
+  padding-top: 84px !important;
 }
 .main-diamond-filter .shape-diamond-filter.active, .main-diamond-filter .shape-diamond-more-filter.active {
   column-gap: 12px;

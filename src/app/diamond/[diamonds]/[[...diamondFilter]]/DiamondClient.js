@@ -18,6 +18,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
 import Cookies from "js-cookie";
+import { addToCompare, removeFromCompare } from "../../../../../store/actions/compareActions";
 
 const ChooseDiamondsShape = ({
   diamonds,
@@ -384,8 +385,8 @@ const ChooseDiamondsShape = ({
 
   useEffect(() => {
     if (activeResult === 1) {
-      const fetchData = debounce(async () => {
-        const url = `https://apiservices.vdbapp.com//v2/diamonds?type=${
+      const fetchData = async () => {
+        const url = `${baseUrl}/vdb-diamonds?type=${
           newDiamondType == "lab_grown" ? "Lab_grown_diamond" : "Diamond"
         }&markup_mode=true${
           diamondPriceRange[0]
@@ -454,16 +455,12 @@ const ChooseDiamondsShape = ({
           page_size: pageSize,
         };
 
-        const headers = {
-          Authorization:
-            "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-        };
 
         try {
           setLoading(true);
           console.log(url);
 
-          const response = await axios.get(url, { params, headers });
+          const response = await axios.get(url, { param });
           console.log(response.data.response.body.total_diamonds_found);
 
           if (response.status === 200) {
@@ -485,8 +482,8 @@ const ChooseDiamondsShape = ({
         } finally {
           setLoading(false);
         }
-      });
-      const debouncedFetchDataGem = debounce(fetchData, 150);
+      }
+      const debouncedFetchDataGem = debounce(fetchData);
       debouncedFetchDataGem();
 
       return () => {
@@ -741,7 +738,7 @@ const ChooseDiamondsShape = ({
       let updatedState;
       if (prevState?.includes(id)) {
         updatedState = prevState.filter((presentState) => presentState !== id);
-        dispatch(removeToCompare(item));
+        dispatch(removeFromCompare(item));
       } else {
         updatedState = [...prevState, id];
         dispatch(addToCompare(item));
@@ -1744,11 +1741,11 @@ const ChooseDiamondsShape = ({
                               <div class="pro-data-cart head">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
-                                    }&slug=${
+                                    }/${
                                       filterData.product?.slug
-                                    }&color=${productColor}&diamond_original=${diamond_original}${
+                                    }?color=${productColor}&diamond_original=${diamond_original}${
                                       newDiamondType === "lab_grown"
                                         ? `&diamond_origin=${newDiamondType}`
                                         : `&diamond_origin=natural`
@@ -1768,11 +1765,11 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
                                     }${
                                       newDiamondType === "lab_grown"
-                                        ? `&diamond_origin=${newDiamondType}`
+                                        ? `?diamond_origin=${newDiamondType}`
                                         : ""
                                     }`}
                                   >
@@ -1841,10 +1838,10 @@ const ChooseDiamondsShape = ({
                                 {productSlug ? (
                                   <Link
                                     href={`/view_diamond/${
-                                      filterData.product?.slug
-                                    }?stock_num=${
                                       item.stock_num
-                                    }&color=${productColor}&diamond_original=${diamond_original}${
+                                    }/${
+                                      filterData.product?.slug
+                                    }?color=${productColor}&diamond_original=${diamond_original}${
                                       newDiamondType === "lab_grown"
                                         ? `&diamond_origin=${newDiamondType}`
                                         : "&diamond_origin=natural"
@@ -1862,11 +1859,11 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
                                     }${
                                       newDiamondType === "lab_grown"
-                                        ? `&diamond_origin=${newDiamondType}`
+                                        ? `?diamond_origin=${newDiamondType}`
                                         : ""
                                     }`}
                                   >
@@ -1968,10 +1965,10 @@ const ChooseDiamondsShape = ({
                                 {productSlug ? (
                                   <Link
                                     href={`/view_diamond/${
-                                      filterData.product?.slug
-                                    }?stock_num=${
                                       item.stock_num
-                                    }&color=${productColor}${
+                                    }/${
+                                      filterData.product?.slug
+                                    }?color=${productColor}${
                                       item?.type === "lab_grown_diamond"
                                         ? `&diamond_origin=lab_grown`
                                         : ""
@@ -1991,11 +1988,11 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
                                     }${
                                       item?.type !== "diamond"
-                                        ? `&diamond_origin=lab_grown`
+                                        ? `?diamond_origin=lab_grown`
                                         : ""
                                     }`}
                                   >
@@ -2069,10 +2066,10 @@ const ChooseDiamondsShape = ({
                                 {productSlug ? (
                                   <Link
                                     href={`/view_diamond/${
-                                      filterData.product?.slug
-                                    }?stock_num=${
                                       item.stock_num
-                                    }&color=${productColor}${
+                                    }/${
+                                      filterData.product?.slug
+                                    }?color=${productColor}${
                                       item?.type !== "diamond"
                                         ? `&diamond_origin=lab_grown`
                                         : ""
@@ -2090,11 +2087,11 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
                                     }${
                                       item?.type !== "diamond"
-                                        ? `&diamond_origin=lab_grown`
+                                        ? `?diamond_origin=lab_grown`
                                         : ""
                                     }`}
                                   >
@@ -2458,11 +2455,11 @@ const ChooseDiamondsShape = ({
                               <div class="pro-data-cart head">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
-                                    }&slug=${
+                                    }/${
                                       filterData.product?.slug
-                                    }&color=${productColor}&diamond_original=${diamond_original}${
+                                    }?color=${productColor}&diamond_original=${diamond_original}${
                                       newDiamondType === "lab_grown"
                                         ? `&diamond_origin=${newDiamondType}`
                                         : `&diamond_origin=natural`
@@ -2482,11 +2479,11 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
                                     }${
                                       newDiamondType === "lab_grown"
-                                        ? `&diamond_origin=${newDiamondType}`
+                                        ? `?diamond_origin=${newDiamondType}`
                                         : ""
                                     }`}
                                   >
@@ -2555,10 +2552,10 @@ const ChooseDiamondsShape = ({
                                 {productSlug ? (
                                   <Link
                                     href={`/view_diamond/${
-                                      filterData.product?.slug
-                                    }?stock_num=${
                                       item.stock_num
-                                    }&color=${productColor}&diamond_original=${diamond_original}${
+                                    }/${
+                                      filterData.product?.slug
+                                    }?color=${productColor}&diamond_original=${diamond_original}${
                                       newDiamondType === "lab_grown"
                                         ? `&diamond_origin=${newDiamondType}`
                                         : "&diamond_origin=natural"
@@ -2576,11 +2573,11 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
                                     }${
                                       newDiamondType === "lab_grown"
-                                        ? `&diamond_origin=${newDiamondType}`
+                                        ? `?diamond_origin=${newDiamondType}`
                                         : ""
                                     }`}
                                   >
@@ -2682,10 +2679,10 @@ const ChooseDiamondsShape = ({
                                 {productSlug ? (
                                   <Link
                                     href={`/view_diamond/${
-                                      filterData.product?.slug
-                                    }?stock_num=${
                                       item.stock_num
-                                    }&color=${productColor}${
+                                    }/${
+                                      filterData.product?.slug
+                                    }?color=${productColor}${
                                       item?.type === "lab_grown_diamond"
                                         ? `&diamond_origin=lab_grown`
                                         : ""
@@ -2705,11 +2702,11 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
                                     }${
                                       item?.type !== "diamond"
-                                        ? `&diamond_origin=lab_grown`
+                                        ? `?diamond_origin=lab_grown`
                                         : ""
                                     }`}
                                   >
@@ -2783,10 +2780,10 @@ const ChooseDiamondsShape = ({
                                 {productSlug ? (
                                   <Link
                                     href={`/view_diamond/${
-                                      filterData.product?.slug
-                                    }?stock_num=${
                                       item.stock_num
-                                    }&color=${productColor}${
+                                    }/${
+                                      filterData.product?.slug
+                                    }?color=${productColor}${
                                       item?.type !== "diamond"
                                         ? `&diamond_origin=lab_grown`
                                         : ""
@@ -2804,11 +2801,11 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.stock_num
                                     }${
                                       item?.type !== "diamond"
-                                        ? `&diamond_origin=lab_grown`
+                                        ? `?diamond_origin=lab_grown`
                                         : ""
                                     }`}
                                   >
