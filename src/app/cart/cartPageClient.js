@@ -304,7 +304,9 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   };
   const [loader, setLoader] = useState(true);
   useEffect(() => {
+    cartDetails
     dispatch(productList())
+    dispatch(productListCart())
     const timeout = setTimeout(() => {
       setLoader(false);
     }, 2000);

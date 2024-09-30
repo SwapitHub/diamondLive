@@ -21,7 +21,7 @@ const fetchDiamond = async () => {
     let shapeData = [];
     try {
       const response = await fetch(
-        `https://api.rocksama.com/api/v1/diamondshape`
+        `${process.env.BASE_URL}/diamondshape`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -37,7 +37,7 @@ const fetchDiamond = async () => {
     let homeContext = [];
     try {
       const response = await fetch(
-        `https://api.rocksama.com/api/v1/banners`
+        `${process.env.BASE_URL}/banners`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -51,84 +51,29 @@ const fetchDiamond = async () => {
 
   // ============see products and wedding collection api start
 
-  const fetchAnniversaryRings = async () => {
-    let anniversaryRings = {};
-    try {
-      const response = await fetch(
-        `https://api.rocksama.com/api/v1/widget/Trellis Rings`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      anniversaryRings = await response.json();
   
-      anniversaryRings.data.description = purify.sanitize(anniversaryRings.data?.description);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-    return anniversaryRings;
-  };
-
-  const fetchDiamondPendants = async () => {
-    let diamondPendants = [];
+    const fetchshopbystyleHome = async () => {
+    let shopStyle = [];
     try {
       const response = await fetch(
-        `https://api.rocksama.com/api/v1/widget/Vintage Rings`
+        `${process.env.BASE_URL}/shopbystyle`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      diamondPendants = await response.json();
-      diamondPendants.data.description = purify.sanitize(diamondPendants.data?.description);
+      shopStyle = await response.json();
+      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-    return diamondPendants;
-  };
-
-
-
-  const fetchTennisBracelets = async () => {
-    let tennisBracelets = [];
-    try {
-      const response = await fetch(
-        `https://api.rocksama.com/api/v1/widget/Eternity Rings`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      tennisBracelets = await response.json();
-      tennisBracelets.data.description = purify.sanitize(tennisBracelets.data?.description);
-
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-    return tennisBracelets;
-  };
-
-  const fetchDiamondStuds = async () => {
-    let diamondStuds = [];
-    try {
-      const response = await fetch(
-        `https://api.rocksama.com/api/v1/widget/Nature Inspired Rings`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      diamondStuds = await response.json();
-      diamondStuds.data.description = purify.sanitize(diamondStuds.data?.description);
-
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-    return diamondStuds;
+    return shopStyle;
   };
 
   const fetchShopStyle = async () => {
     let shopStyle = [];
     try {
       const response = await fetch(
-        `https://api.rocksama.com/api/v1/product-style`
+        `${process.env.BASE_URL}/product-style`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -145,7 +90,7 @@ const fetchDiamond = async () => {
     let homeAllSections = [];
     try {
       const response = await fetch(
-        `https://api.rocksama.com/api/v1/homecontent`
+        `${process.env.BASE_URL}/homecontent`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -161,7 +106,7 @@ const fetchDiamond = async () => {
     let engagementRings = [];
     try {
       const response = await fetch(
-        `https://api.rocksama.com/api/v1/widget/Natural diamonds`
+        `${process.env.BASE_URL}/widget/Natural diamonds`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -179,7 +124,7 @@ const fetchDiamond = async () => {
     let engagementRings = [];
     try {
       const response = await fetch(
-        `https://api.rocksama.com/api/v1/widget/Gemstones`
+        `${process.env.BASE_URL}/widget/Gemstones`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -197,7 +142,7 @@ const fetchDiamond = async () => {
     let weddingCollection = [];
     try {
       const response = await fetch(
-        `https://api.rocksama.com/api/v1/widget/Lab Grown Diamonds`
+        `${process.env.BASE_URL}/widget/Lab Grown Diamonds`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -213,10 +158,8 @@ const fetchDiamond = async () => {
 export default async function HomePageData() {
   const shapeData = await fetchDiamond();
   const homeContext = await fetchBanner();
-  const anniversaryRings = await fetchAnniversaryRings();
-  const diamondPendants = await fetchDiamondPendants();
-  const tennisBracelets = await fetchTennisBracelets();
-  const diamondStuds = await fetchDiamondStuds();
+  const shopbystyleHome = await fetchshopbystyleHome();
+  
   const shopStyle = await fetchShopStyle();
   const homeAllSections = await fetchHomeAllSections();
   const engagementRingMain = await fetchEngagementRings();
@@ -230,7 +173,7 @@ export default async function HomePageData() {
         <div className="home-page">
         <Banner homeContext={homeContext}/>
         <ShopDiamondShape shapeData={shapeData.data} />
-        <SeeProducts anniversaryRings={anniversaryRings.data} diamondPendants={diamondPendants.data} tennisBracelets={tennisBracelets.data} diamondStuds={diamondStuds.data}/>
+        <SeeProducts shopbystyleHome={shopbystyleHome.data}/>
         <ShopDiamondCotegory shopStyle={shopStyle.data}/>
         <BridalJewellery home={homeAllSections}/>
         <AnniversaryRings home={homeAllSections.data}/>
