@@ -40,6 +40,7 @@ import {
 import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
 
 export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyleOptions}) => {
+
   const router = useRouter(); // Call userouter at the top level of the component
   const [urlColor, setUrlColor] = useState("");
   const searchParams = useSearchParams();
@@ -546,17 +547,33 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   const onChangeOverVariation = (fraction)=>{
     setChangeOverVariation(fraction);
   }
+
   const handleVariation = (variantSlug) => {
-    localStorage.setItem("fractionWedding")
+  
+    const searchParams = new URLSearchParams(queryParams);
 
+    searchParams.delete("diamond_original");
     const newSearchString = searchParams.toString();
-
     const newURL = `${`/detail-wedding-band/${variantSlug}`}?${newSearchString}`;
     router.replace(newURL);
+    router.push(newURL);
+
     setVariantSlug(variantSlug);
+    setDiamondTypeClick("natural");
 
     secureLocalStorage.setItem("totalCaratWeight", variantSlug);
   };
+  // const handleVariation = (variantSlug) => {
+  //   localStorage.setItem("fractionWedding")
+
+  //   const newSearchString = searchParams.toString();
+
+  //   const newURL = `${`/detail-wedding-band/${variantSlug}`}?${newSearchString}`;
+  //   router.replace(newURL);
+  //   setVariantSlug(variantSlug);
+
+  //   secureLocalStorage.setItem("totalCaratWeight", variantSlug);
+  // };
 
   useEffect(() => {
     secureLocalStorage.setItem("totalCaratWeight", productSlug);

@@ -35,7 +35,7 @@ export const SeeProducts = ({
               }}
             ></div>
           </div>
-          <div className="see-products-img">
+          {/* <div className="see-products-img">
             <Link href={`${tennisBracelets?.url}`} className="See-Products">
               <span>Eternity Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
@@ -56,7 +56,7 @@ export const SeeProducts = ({
                 __html: diamondStuds?.description,
               }}
             ></div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
