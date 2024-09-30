@@ -14,10 +14,10 @@ export const SeeProducts = ({
       <div className="container">
         <div className="common-row see-products">          
           <div className="see-products-img">
-            <Link href={`/${anniversaryRings?.url}`} className="See-Products">
+            {/* <Link href={`/${anniversaryRings?.url}`} className="See-Products">
               <span>Trellis Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
-            </Link>
+            </Link> */}
             <div
               dangerouslySetInnerHTML={{
                 __html: anniversaryRings?.description,
@@ -25,10 +25,10 @@ export const SeeProducts = ({
             ></div>
           </div>
           <div className="see-products-img">
-            <Link href={`/${diamondPendants?.url}`} className="See-Products">
+            {/* <Link href={`/${diamondPendants?.url}`} className="See-Products">
               <span>Vintage Rings</span>
               <span> See Products <MdOutlineKeyboardArrowRight /> </span>
-            </Link>
+            </Link> */}
             <div
               dangerouslySetInnerHTML={{
                 __html: diamondPendants?.description,
