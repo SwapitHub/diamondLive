@@ -5,8 +5,9 @@ import { RingEducation } from "./RingEducation";
 import { RingEndsSoon } from "./RingEndsSoon";
 import { RingReadyToShip } from "./RingReadyToShip";
 import { RingExclusive } from "./RingExclusive";
-import { ShopDiamondCotegory } from "@/app/component/homePages/ShopDiamondCotegory";
-import { ShopDiamondShape } from "@/app/component/homePages/ShopDiamondShape";
+import { ShopDiamondShape } from "@/app/[...home]/ShopDiamondShape";
+import { ShopDiamondCotegory } from "@/app/[...home]/ShopDiamondCotegory";
+
 
 const diamondShape = async () => {
   let diamond = [];

@@ -1,5 +1,5 @@
 
-import { ShopDiamondShape } from "@/app/component/homePages/ShopDiamondShape";
+import { ShopDiamondShape } from "@/app/[...home]/ShopDiamondShape";
 import { DiamondBanner } from "./DiamondBanner";
 import { DiamondEdu } from "./DiamondEdu";
 import { DiamondFaq } from "./DiamondFaq";
