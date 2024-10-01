@@ -14,7 +14,7 @@ import { ContinueShoping } from "../_componentStatic/ContinueShopping";
 import Cookies from "js-cookie";
 import NewsLetter from "../_componentStatic/NewsLetter";
 
-const WishList = ({wishListDataBase}) => {
+const WishList = ({wishListDataBase, userId}) => {
     
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
@@ -88,15 +88,6 @@ const WishList = ({wishListDataBase}) => {
   function handleGemRing(item) {
     dispatch(removeToWishlist(item));
   }
-
-
-  // =======================
-  const userId = Cookies.get("userIdCookies");
-
-  
-  // =============
-
-  //   =======
 
   const removeWishlistItem = (wish_list_id, ring_id) => {
     wishlist?.map((item) => {

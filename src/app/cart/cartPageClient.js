@@ -21,7 +21,7 @@ import { ChooseYourImpact } from "../_componentStatic/ChooseYourImpact";
 import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
 
-const CartPage = ({ cart, cartDetails, metalColor }) => {
+const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
 
   const dispatch = useDispatch();
   const white = "18k-white-gold";
@@ -172,17 +172,7 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
       .catch((error) => {
         console.log("remove-cartitem API Error:", error);
       });
-  }, [removeCartItem]);
-  // ==================
-  // =======================
-  const userId = Cookies.get("userIdCookies");
-
-
-  // ========================end
-
-  // =============
-  // =============
- 
+  }, [removeCartItem]); 
 
   const handleAllWishlist = () => {
     setDisableButton(true);
@@ -319,9 +309,9 @@ const CartPage = ({ cart, cartDetails, metalColor }) => {
   }, []);
 
   // ============ meta tag  =======================//
-  const previousPath = window.location.pathname;
   
   const handleClickCheckOut = () => {
+    const previousPath = window.location.pathname;
     
     if (user_id) {
       navigate.push("/check_out");

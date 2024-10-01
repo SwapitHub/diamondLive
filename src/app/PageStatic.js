@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick.css";
 
 
 import LoaderSpinner from "./_componentStatic/LoaderSpinner";
-import HomePage from "./component/homePages/home/page";
+import HomePageData from "./[...home]/page";
 export const UserContext = createContext(null);
 
 export default function Home() {
@@ -43,7 +43,7 @@ export default function Home() {
           <>
             
               <ScrollToTopOnNavigate />
-              <HomePage />
+              <HomePageData />
           </>
         )}
         <ToastContainer

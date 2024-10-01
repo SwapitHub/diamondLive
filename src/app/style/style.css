@@ -15089,6 +15089,10 @@ footer.footer h4 {
 .singleProduct .singleProduct-img .details-videos > span.lazy-load-image-background {
   min-height: 250px;
 }
+.header nav.nav:before, .header nav.nav:after {
+  width: auto;
+ 
+}
 }
 
 
@@ -15307,7 +15311,7 @@ right: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 0;
+    z-index: 11;
     background: #fff;
     height: 100vh;
     padding-left: 15px;
@@ -15588,8 +15592,8 @@ right: 0;
     position: relative;
     margin-top: 15px;
     width: 100%;
-    z-index: -1;
-  }
+    z-index: 1;
+}
 
   .header-search .search-icon {
     position: absolute;
@@ -16272,8 +16276,8 @@ h1.center {
 }
 
 .header-search .search-inner {
-  width: 50%;
-  top: 0;
+  width: 100%;
+  top: 48px;
   left: 0;
 }
 

@@ -90,13 +90,13 @@ const Help = () => {
                           diamond_origin
                         ? `/final_ring_gemstone/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}&diamond_original=${diamond_origin}&ring_size=${ring_size}`
                         : !filterData && diamond?.gem_type == null
-                        ? `/view_diamond?stock_num=${diamond?.stock_num}${
+                        ? `/view_diamond/${diamond?.stock_num}${
                             diamond?.lab_grown === true
-                              ? "&diamond_origin=lab_grown"
+                              ? "?diamond_origin=lab_grown"
                               : ""
                           }`
                         : !filterData && diamond?.gem_type != null
-                        ? `/gemstones-detail/?stock_num=${diamond?.stock_num}`
+                        ? `/gemstones-detail/${diamond?.stock_num}`
                         : product_type === "matching_set"
                         ? `/detail-wedding-band/${filterData?.product?.slug}?color=${listColor}`
                         : filterData && diamond?.gem_type == null
@@ -200,13 +200,13 @@ const Help = () => {
                           diamond_origin
                         ? `/final_ring_gemstone/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}&diamond_original=${diamond_origin}&ring_size=${ring_size}`
                         : !filterData && diamond?.gem_type == null
-                        ?  `/view_diamond?stock_num=${diamond?.stock_num}${
+                        ?  `/view_diamond/${diamond?.stock_num}${
                           diamond?.lab_grown === true
-                            ? "&diamond_origin=lab_grown"
+                            ? "?diamond_origin=lab_grown"
                             : ""
                         }`
                         : !filterData && diamond?.gem_type != null
-                        ? `/gemstones-detail/?stock_num=${diamond?.stock_num}`
+                        ? `/gemstones-detail/${diamond?.stock_num}`
                         : filterData && diamond?.gem_type == null
                         ? `/engagement-ring/${
                             filterData?.product?.slug

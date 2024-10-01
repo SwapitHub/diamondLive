@@ -99,12 +99,12 @@ const PaymentServer = async () => {
   const metalColor = await fetchMetalData();
   const cookieStore = cookies();
   const userId = cookieStore.get('userIdCookies')
-  const cartDetails = await fetchCartData(userId.value);
+  const cartDetails = await fetchCartData(userId?.value);
   const userAccountDataShip = cookieStore.get("userAccountDataShip");
 
   return (
     <>
-      <PaymentForm payment={payment} cartDetails={cartDetails} userAccountDataShip={userAccountDataShip.value} metalColor={metalColor.data}/>
+      <PaymentForm payment={payment} cartDetails={cartDetails} userAccountDataShip={userAccountDataShip?.value} metalColor={metalColor.data}/>
     </>
   );
 };

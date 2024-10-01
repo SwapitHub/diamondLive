@@ -16,7 +16,7 @@ import { OrderHistory } from "./OrderHistory";
 import { SearchSuggestion } from "./SearchSuggestion";
 import { WishlistHover } from "./WishlistHover";
 import secureLocalStorage from "react-secure-storage";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Header = ({ navData, siteInfo }) => {
   const [active, setActive] = useState(false);
@@ -31,6 +31,9 @@ const Header = ({ navData, siteInfo }) => {
     baseUrl,
     imgAssetsUrl,
   } = useContext(UserContext);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     secureLocalStorage.setItem("searchedItem", JSON.stringify(searching));
@@ -163,6 +166,19 @@ const Header = ({ navData, siteInfo }) => {
   useEffect(() => {
     setActive(false);
   }, [pathname]);
+
+  const handleSearchQuery = () => {
+    if (searchValue.length > 0) {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      if (searchValue) {
+        newSearchParams.set("q", searchValue);
+      } else {
+        newSearchParams.delete("q");
+      }
+
+      router.push(`/search?${newSearchParams.toString()}`);
+    }
+  };
 
   return (
     <>
@@ -636,8 +652,19 @@ const Header = ({ navData, siteInfo }) => {
                   value={searching}
                 />
               </form>
-              <div className="search-icon">
-                <Link href="/search">
+              <div
+                className="show-suggestion-page"
+                onMouseLeave={() => setShowSuggestion(false)}
+              >
+                 {showSuggestionHeader && (
+                    <SearchSuggestion
+                      suggestionData={suggestionData}
+                      suggestion={suggestion}
+                    />
+                  )}
+              </div>
+              <div className="search-icon" onClick={()=>handleSearchQuery()}>
+                <Link href="javascript:void(0);" >
                   <AiOutlineSearch />
                 </Link>
               </div>

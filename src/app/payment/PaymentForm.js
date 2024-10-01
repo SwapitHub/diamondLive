@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 
 const PaymentForm = ({userAccountDataShip,cartDetails, metalColor}) => {
-  const userParsedData = JSON.parse(userAccountDataShip);
+  const userParsedData = userAccountDataShip ? JSON.parse(userAccountDataShip) : ""; 
   
   const addressId = userParsedData?.addressId;
   const totalPrice = userParsedData?.totalPrice;

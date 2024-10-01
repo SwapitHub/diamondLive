@@ -1,15 +1,15 @@
 "use client";
 import $ from "jquery";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoaderSpinner from "../_componentStatic/LoaderSpinner";
 
 const ContactUs = ({ FooterData }) => {
-  
   const [loader, setLoader] = useState(false);
   const metaDescriptionLimit = 160;
-  const pathname  = usePathname();
-  // Handle jQuery accordion
+  const pathname = usePathname();
+  const router = useRouter();
+  // Handle jQuery 
   useEffect(() => {
     $(document).ready(function () {
       $(".accordion-item-body").hide();
@@ -50,42 +50,43 @@ const ContactUs = ({ FooterData }) => {
       };
     }, 1000);
   }, [pathname]);
-
+  let matched = false;
   return (
     <>
       <div className="container">
-        
         <div className="footer-all-pages-display">
           {loader ? (
             <LoaderSpinner />
           ) : (
-            Array.isArray(FooterData) && FooterData.map((item) => {
+            Array.isArray(FooterData) &&
+            FooterData.map((item) => {
               return (
                 <>
                   {item.pages.map((innerItem) => {
-                    return (
-                      <>
-                        {pathname  == `/${innerItem.slug}` ? (
-                          <>
-                            <div
-                              className={
-                                item.name === "BRAND" ? innerItem?.slug : ""
-                              }
-                              dangerouslySetInnerHTML={{
-                                __html: (innerItem.content)
-                              }}
-                            ></div>
-                            
-                          </>
-                        ) : null}
-                      </>
-                    );
+                    console.log(pathname, innerItem.slug);
+
+                    if (pathname === `/${innerItem.slug}`) {
+                      matched = true; 
+
+                      return (
+                        <div
+                          className={
+                            item.name === "BRAND" ? innerItem?.slug : ""
+                          }
+                          dangerouslySetInnerHTML={{
+                            __html: innerItem.content,
+                          }}
+                        ></div>
+                      );
+                    }
+                    return null; 
                   })}
                 </>
               );
             })
           )}
         </div>
+        {!matched && router.push("/")}
       </div>
     </>
   );

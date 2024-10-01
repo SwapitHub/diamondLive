@@ -112,8 +112,8 @@ export default async function RingDetailPage({ params, searchParams }) {
   const diamond = await fetchDiamondDetail(diamond_origin, stock_num);
   const FontOption = await fetchDetailFontOption()
   const filterData = {
-    product: ringDetail.data,
-    imgUrl: ringDetail.data.internal_sku,
+    product: ringDetail?.data,
+    imgUrl: ringDetail?.data?.internal_sku,
   };
 
   return (

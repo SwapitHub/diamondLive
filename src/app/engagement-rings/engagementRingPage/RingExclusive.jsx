@@ -17,7 +17,7 @@ export const RingExclusive = ({
           </div>
           <div className="inner-polular-eng">
             <div className="popular-grid-wrapper">
-            <Link href={`/${whiteGold?.url}`}>
+            <Link href={`${whiteGold?.url}`}>
                 <div
                   className="imgg-sec"
                   dangerouslySetInnerHTML={{
@@ -31,7 +31,7 @@ export const RingExclusive = ({
               </Link>
             </div>
             <div className="popular-grid-wrapper">
-             <Link href={`/${yellowGold?.url}`}>
+             <Link href={`${yellowGold?.url}`}>
                 <div
                   className="imgg-sec"
                   dangerouslySetInnerHTML={{
@@ -45,7 +45,7 @@ export const RingExclusive = ({
               </Link>
             </div>
             <div className="popular-grid-wrapper">
-              <Link href={`/${roseGold?.url}`}>
+              <Link href={`${roseGold?.url}`}>
                 <div
                   className="imgg-sec"
                   dangerouslySetInnerHTML={{
@@ -59,7 +59,7 @@ export const RingExclusive = ({
               </Link>
             </div>
             <div className="popular-grid-wrapper">
-              <Link href={`/${platinumRings?.url}`}>
+              <Link href={`${platinumRings?.url}`}>
                 <div
                   className="imgg-sec"
                   dangerouslySetInnerHTML={{
@@ -73,7 +73,7 @@ export const RingExclusive = ({
               </Link>
             </div>
             <div className="popular-grid-wrapper">
-            <Link href={`/${bridalSetRing?.url}`}>
+            <Link href={`${bridalSetRing?.url}`}>
                 <div
                   className="imgg-sec"
                   dangerouslySetInnerHTML={{

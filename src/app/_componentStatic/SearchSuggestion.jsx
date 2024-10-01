@@ -101,7 +101,7 @@ export const SearchSuggestion = ({ suggestionData, suggestion }) => {
 
                   <div className="ss__autocomplete__content__info">
                     <Link
-                      href="/search"
+                      href={`/search?q=${suggestion}`}
                       onClick={() =>
                         secureLocalStorage.setItem(
                           "searchedItem",
