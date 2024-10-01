@@ -460,7 +460,7 @@ const ChooseDiamondsShape = ({
           setLoading(true);
           console.log(url);
 
-          const response = await axios.get(url, { param });
+          const response = await axios.get(url, { params });
           console.log(response.data.response.body.total_diamonds_found);
 
           if (response.status === 200) {
@@ -482,6 +482,8 @@ const ChooseDiamondsShape = ({
         } finally {
           setLoading(false);
         }
+
+        
       }
       const debouncedFetchDataGem = debounce(fetchData);
       debouncedFetchDataGem();
@@ -799,12 +801,7 @@ const ChooseDiamondsShape = ({
 
   return (
     <>
-      {/* <HeaderMetaTag
-        mainCategory={mainCategory}
-        subCategory={newSubCategory}
-        // image="https://d24ppbhzdyfrur.cloudfront.net/uploads/image_url/s3_image/36274429/1701007RubyCushion1_17ct_3932_77c52f06-f67b-4338-8cd9-abcd817c178c.jpg"
-        currentUrl={currentUrl}
-      /> */}
+     
 
       <div
         className={`container choose-diamonds container-1290-list-pages ${
@@ -1076,7 +1073,7 @@ const ChooseDiamondsShape = ({
                     value={cutRange}
                     onAfterChange={cutHandleChange}
                     minDistance={20}
-                    marks={[0, 20, 40, 60, 80, 102.7]}
+                    marks={[0, 20, 40, 60, 80, 102.2]}
                     step={20}
                   ></Slider>
                 </div>
@@ -1107,7 +1104,7 @@ const ChooseDiamondsShape = ({
                     max={maxClarityRange}
                     value={clarityRange}
                     minDistance={12.5}
-                    marks={[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 102.8]}
+                    marks={[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 102.2]}
                     step={12.5}
                     trackStyle={{ backgroundColor: "red" }}
                   />
@@ -1324,7 +1321,7 @@ const ChooseDiamondsShape = ({
                     value={cutRange}
                     onAfterChange={cutHandleChange}
                     minDistance={20}
-                    marks={[0, 20, 40, 60, 80, 102.7]}
+                    marks={[0, 20, 40, 60, 80, 102.2]}
                     step={20}
                   ></Slider>
                 </div>
@@ -1353,7 +1350,7 @@ const ChooseDiamondsShape = ({
                     onAfterChange={clarityHandleChange}
                     value={clarityRange}
                     minDistance={12.5}
-                    marks={[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 102.8]}
+                    marks={[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 102.2]}
                     step={12.5}
                     trackStyle={{ backgroundColor: "red" }}
                   />
