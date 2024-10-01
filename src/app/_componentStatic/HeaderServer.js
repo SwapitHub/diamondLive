@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Header from "./Header";
 
 const headerData = async () => {
@@ -34,7 +35,10 @@ const HeaderServer = async () => {
 
   return (
     <>
+    <Suspense fallback={`loading...`}>
       <Header navData={header.data} siteInfo={site.data}/>
+
+    </Suspense>
     </>
   );
 };
