@@ -73,17 +73,17 @@ useEffect(()=>{
               </div>
               <ul class="nav">
                 <li class={toggle == 1 ? "activated" : ""}>
-                  <Link href="#" onClick={() => setToggle(1)}>
+                  <Link href="javascript:void(0);" onClick={() => setToggle(1)}>
                     Account Overview
                   </Link>
                 </li>
                 <li class={toggle == 2 ? "activated" : ""}>
-                  <Link href="#" onClick={() => setToggle(2)}>
+                  <Link href="javascript:void(0);" onClick={() => setToggle(2)}>
                     Order History
                   </Link>
                 </li>
                 <li class={toggle == 3 ? "activated" : ""}>
-                  <Link href="#" onClick={() => setToggle(3)}>
+                  <Link href="javascript:void(0);" onClick={() => setToggle(3)}>
                     Settings & Preferences
                   </Link>
                 </li>
@@ -124,7 +124,7 @@ useEffect(()=>{
                             <p>
                               Your recent order{" "}
                               <Link
-                                href="#"
+                                href="javascript:void(0);"
                                 onClick={() => {
                                   setToggle(2);
                                   setShowOrderId(item.order_id);
@@ -142,7 +142,7 @@ useEffect(()=>{
                     </div>
 
                     <div class="view-button">
-                      <Link href="#" onClick={() => setToggle(2)}>
+                      <Link href="javascript:void(0);" onClick={() => setToggle(2)}>
                         View Order History
                       </Link>
                     </div>
@@ -156,7 +156,7 @@ useEffect(()=>{
                     </div>
 
                     <div class="view-button">
-                      <Link href="#" onClick={() => setToggle(3)}>
+                      <Link href="javascript:void(0);" onClick={() => setToggle(3)}>
                         Update Preferences
                       </Link>
                     </div>
@@ -398,7 +398,7 @@ useEffect(()=>{
                     </div>
 
                     <div class="view-button">
-                      <Link href="#" onClick={() => setToggle(6)}>
+                      <Link href="javascript:void(0);" onClick={() => setToggle(6)}>
                         Refer a Friend
                       </Link>
                     </div>

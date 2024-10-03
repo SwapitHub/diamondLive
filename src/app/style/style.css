@@ -11008,7 +11008,7 @@ a.nature-active {
 
 .search-icon .search-inner {
   width: auto;
-  top: 40px;
+  top: 60px;
   min-width: 248px;
   left: auto;
   height: 400px;
@@ -13321,9 +13321,7 @@ object-position: top;
 .one-choose-setting.last-btn {
   padding-left: 0px;
 }
-.one-choose-setting.first-btn > a {
-  padding-right: 0;
-}
+
 
 .error {
   color: red;

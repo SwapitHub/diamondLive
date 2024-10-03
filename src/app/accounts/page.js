@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { MyAccountDashboard } from "./MyAccountDashboard";
+import { Suspense } from "react";
 
 const fetchAccount = async () => {
   let account = [];
@@ -89,7 +90,10 @@ const accountPageServer = async () => {
   
   return (
     <>
+    <Suspense>
+
       <MyAccountDashboard  profileData={profileData}/>
+    </Suspense>
     </>
   );
 };
