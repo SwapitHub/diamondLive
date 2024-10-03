@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Header from "./Header";
+import LoaderSpinner from "./LoaderSpinner";
 
 const headerData = async () => {
   let header = [];
@@ -35,7 +36,7 @@ const HeaderServer = async () => {
 
   return (
     <>
-    <Suspense fallback={`loading...`}>
+    <Suspense  fallback={<LoaderSpinner/>}>
       <Header navData={header.data} siteInfo={site.data}/>
 
     </Suspense>

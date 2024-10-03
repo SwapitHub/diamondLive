@@ -2,7 +2,7 @@
 import { format } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
@@ -13,6 +13,7 @@ import { OrdersHistoryDashboard } from "../_componentStatic/OrdersHistoryDashboa
 import { SettingPreferences } from "../_componentStatic/SettingPreferences";
 import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
+import { productList, productListCart } from "../../../store/actions/productActions";
 export const MyAccountDashboard = ({profileData}) => {
   const { toggle, setToggle ,imgBaseUrl} = useContext(UserContext);
   const router = useRouter();
@@ -49,7 +50,10 @@ export const MyAccountDashboard = ({profileData}) => {
   const [showOrderId, setShowOrderId] = useState(null);
 
 
-
+useEffect(()=>{
+  dispatch(productList())
+  dispatch(productListCart())
+},[])
   return (
     <>
       <div class="account-page">

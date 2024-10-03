@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { DropHint } from "@/app/_componentStatic/DropHint";
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import NewsLetter from "@/app/_componentStatic/NewsLetter";
@@ -9,7 +9,7 @@ import { Select } from "antd";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import Link from "next/link";
-import {  useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { BiDownArrow, BiSolidPhoneCall, BiUpArrow } from "react-icons/bi";
 import { CiHeart } from "react-icons/ci";
@@ -34,20 +34,22 @@ import { v4 as uuidv4 } from "uuid";
 import { removeToWishlist } from "../../../../store/actions/wishlistAction";
 import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
 
-
-export default function ChooseRingGemstone({filterData, diamondData, listColor, shapeData, fontStyleOptions}) {
- 
-
+export default function ChooseRingGemstone({
+  filterData,
+  diamondData,
+  listColor,
+  shapeData,
+  fontStyleOptions,
+}) {
   const history = useRouter(); // Call useHistory at the top level of the component
   const [urlColor, setUrlColor] = useState("");
-  var {productSlug} = useParams(); 
+  var { productSlug } = useParams();
   const queryParams = useSearchParams();
   const stock_num = queryParams.get("stock_num");
   const diamond_original = queryParams.get("diamond_original");
-  
-  
+
   // find url area
-  const { baseUrl,imgBaseUrl,imgAssetsUrl } = useContext(UserContext);
+  const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
@@ -84,9 +86,8 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   const [variantSlug, setVariantSlug] = useState();
   const [removeWishList, setRemoveWishList] = useState();
   const [shapeItemId, setShapeItemId] = useState();
-  const [diamondTypeClick, setDiamondTypeClick] = useState('natural');
+  const [diamondTypeClick, setDiamondTypeClick] = useState("natural");
 
-  
   useEffect(() => {
     if (diamond_original) {
       secureLocalStorage.setItem("diamond_type_ring", diamond_original);
@@ -109,24 +110,24 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   const resultdiamondTypeByDefault =
     diamondTypeByDefault?.diamondQuality?.split(/\s*,\s*/);
 
-    const [ringSize, setRingSize] = useState(false);
-    const [typeOfRing, setTypeOfRing] = useState(false);
-    useEffect(() => {
-      if (ringSize || typeOfRing) {
-        document.body.classList.add("email-popup-open");
-      } else {
-        document.body.classList.remove("email-popup-open");
-      }
-    }, [ringSize, typeOfRing]);
-  
-    const togglePopupRingType = () => {
-      setTypeOfRing(!typeOfRing);
-      document.body.classList.toggle("email-popup-open", typeOfRing);
-    };
-    const togglePopup = () => {
-      setRingSize(!ringSize);
-      document.body.classList.toggle("email-popup-open", ringSize);
-    };
+  const [ringSize, setRingSize] = useState(false);
+  const [typeOfRing, setTypeOfRing] = useState(false);
+  useEffect(() => {
+    if (ringSize || typeOfRing) {
+      document.body.classList.add("email-popup-open");
+    } else {
+      document.body.classList.remove("email-popup-open");
+    }
+  }, [ringSize, typeOfRing]);
+
+  const togglePopupRingType = () => {
+    setTypeOfRing(!typeOfRing);
+    document.body.classList.toggle("email-popup-open", typeOfRing);
+  };
+  const togglePopup = () => {
+    setRingSize(!ringSize);
+    document.body.classList.toggle("email-popup-open", ringSize);
+  };
   var globalProductImages = [];
 
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -134,8 +135,6 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlistData);
   const wishListDataBase = useSelector((state) => state.productDataWishlist);
-
-  
 
   const handleWishlist = async (
     item,
@@ -157,21 +156,21 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
         product_type,
         uniqueId: uuidv4(),
         textEngraving,
-        font_style:selectedFontStyleOption,
+        font_style: selectedFontStyleOption,
         ring_type: diamondTypeClick,
         ring_size,
-        img_sku
+        img_sku,
       };
       dispatch(addToWishList(newItem));
 
-     
-
       // Construct URL for API call
-      const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${img_sku}&ring_price=${ring_price}&ring_type=${diamondTypeClick}${textEngraving ? `&engraving=${textEngraving}`: ""}${selectedFontStyleOption ? `&font=${selectedFontStyleOption}`:""}&ring_size=${ring_size}`;
+      const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${img_sku}&ring_price=${ring_price}&ring_type=${diamondTypeClick}${
+        textEngraving ? `&engraving=${textEngraving}` : ""
+      }${
+        selectedFontStyleOption ? `&font=${selectedFontStyleOption}` : ""
+      }&ring_size=${ring_size}`;
       // Make API call
-      const response = await axios.get(apiUrl, {
-       
-      });
+      const response = await axios.get(apiUrl, {});
 
       if (response.status === 200) {
         // setWishListId(response.data.data);
@@ -210,12 +209,9 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
       };
       dispatch(addToWishList(newItem));
 
-     
       const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${ring_img}&ring_price=${ring_price}&ring_type=${ring_type}`;
       // Make API call
-      const response = await axios.get(apiUrl, {
-       
-      });
+      const response = await axios.get(apiUrl, {});
 
       if (response.status === 200) {
         // setWishListId(response.data.data);
@@ -234,7 +230,6 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     wishlist.map((item) => {
       if (belowItem?.id === item.item?.id || belowItem.id === item.ring_id) {
         dispatch(removeToWishlist(item));
-       
       }
     });
 
@@ -283,7 +278,6 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
       });
   }, [urlColor]);
 
-
   useEffect(() => {
     const fetchData = () => {
       const removeWish = `${baseUrl}/remove_wishlist_item/${removeWishList}`;
@@ -305,8 +299,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     }
 
     return () => debouncedFetchData.cancel(); // Cleanup
-  }, [removeWishList])
-
+  }, [removeWishList]);
 
   const DetailsRecommended = {
     dots: false,
@@ -374,7 +367,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
         console.error("Error:", error);
       });
     const searchParams = new URLSearchParams(queryParams);
-    searchParams.set("color", colorName); 
+    searchParams.set("color", colorName);
     const newSearchString = searchParams.toString();
 
     const newURL = `${`/detail-ring-product-gemstone/${variantSlug}`}?${newSearchString}`;
@@ -382,7 +375,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   };
 
   // nature and lab-grown
-  
+
   const [diamondOrigin, setDiamondOrigin] = useState();
   const handleDiamondOriginHover = (origin) => {
     setDiamondOrigin(origin);
@@ -403,7 +396,6 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
 
       .then((response) => {
         if (response.status === 200) {
-          
           setDiamondType(response.data.data);
           setDiamondTypeClick(response.data.data);
         } else {
@@ -430,9 +422,11 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   const [shapeNameSelected, setShapeNameSelected] = useState("N/A");
   const shapeOnclick = (shape, shapeName) => {
     setShapeProduct((prevState) => (prevState === shape ? "" : shape));
-    setShapeNameSelected((prevState) => (prevState === shapeName ? "N/A" : shapeName));
+    setShapeNameSelected((prevState) =>
+      prevState === shapeName ? "N/A" : shapeName
+    );
   };
-  
+
   // faq details page
   var index = 1;
   var index_2 = 2;
@@ -473,21 +467,16 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     year: "numeric",
   });
 
-  const [changeOverVariation, setChangeOverVariation] = useState()
- 
+  const [changeOverVariation, setChangeOverVariation] = useState();
 
- 
-  
-  const onChangeOverVariation = (fraction)=>{
+  const onChangeOverVariation = (fraction) => {
     setChangeOverVariation(fraction);
-  }
+  };
 
   // variant start here
   const handleVariation = (variantSlug) => {
-    
-
     const searchParams = new URLSearchParams(queryParams);
-  
+
     const newSearchString = searchParams.toString();
 
     const newURL = `${`/detail-ring-product-gemstone/${variantSlug}`}?${newSearchString}`;
@@ -497,7 +486,6 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     secureLocalStorage.setItem("totalCaratWeight", variantSlug);
   };
 
-  
   useEffect(() => {
     secureLocalStorage.setItem("totalCaratWeight", productSlug);
   }, [productSlug]);
@@ -514,10 +502,8 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     }
   }, [productSlug]);
 
- 
   const [ftrIcon, setFtrIcon] = useState([]);
   useEffect(() => {
-   
     axios
       .get(`${baseUrl}/siteinfo`)
       .then((res) => {
@@ -529,7 +515,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   }, []);
 
   const [FooterData, setFooterData] = useState([]);
- 
+
   useEffect(() => {
     axios
       .get(`${baseUrl}/footer-pages`)
@@ -540,9 +526,6 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
         console.log("API error");
       });
   }, []);
-
-
-
 
   const router = useRouter();
   const { setHelpData } = useData();
@@ -598,8 +581,6 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
     setSelectedFontStyleOption(fontStyleOptions);
   };
 
-
-
   const [textEngraving, setTextEngraving] = useState();
   const onchangeEngraving = (event) => {
     setTextEngraving(event.target.value);
@@ -645,7 +626,6 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
   wishlist.map((item) => {
     bandBeforeLoginWishlistIds.push(item.ring_id);
   });
-
 
   const [thumbnailItem, setThumbnailItem] = useState();
   const onchangeThumbnail = (thumbItem) => {
@@ -700,17 +680,32 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
           <>
             {/* ====================create your ring start */}
             {/* ====================create your ring start */}
-          {stock_num !== null ? (
-            <Tabbing stock_num={stock_num} type="ring-gemstone"   ringName={`2. Choose Rings`} ringLink={`/engagement-rings/start-with-a-setting`} diamondName={` 1. Choose Diamonds`}  diamondLink={`/diamond/start-with-a-diamond/`} gemStoneName={`1. Choose Gemstones`} gemStoneLink={`/gemstones/start-with-a-gemstone`}/>
-          ) : (
-            <>
-              <div className="main-arrow-heading">
-                {/* ====================create your ring start */}
-                <Tabbing  type="ring"  ringName={`1. Choose Setting`} ringLink={`javascript:void(0)`} diamondName={` 2. Choose Diamonds`}  diamondLink={`/diamond/start-with-a-diamond/`}/>
-              </div>
-            </>
-          )}
-          {/* ====================create your ring end */}
+            {stock_num !== null ? (
+              <Tabbing
+                stock_num={stock_num}
+                type="ring-gemstone"
+                ringName={`2. Choose Rings`}
+                ringLink={`/engagement-rings/start-with-a-setting`}
+                diamondName={` 1. Choose Diamonds`}
+                diamondLink={`/diamond/start-with-a-diamond/`}
+                gemStoneName={`1. Choose Gemstones`}
+                gemStoneLink={`/gemstones/start-with-a-gemstone`}
+              />
+            ) : (
+              <>
+                <div className="main-arrow-heading">
+                  {/* ====================create your ring start */}
+                  <Tabbing
+                    type="ring"
+                    ringName={`1. Choose Setting`}
+                    ringLink={`javascript:void(0)`}
+                    diamondName={` 2. Choose Diamonds`}
+                    diamondLink={`/diamond/start-with-a-diamond/`}
+                  />
+                </div>
+              </>
+            )}
+            {/* ====================create your ring end */}
             <div className="singleProduct">
               {!shapeData ? (
                 <div className="loading-details">
@@ -723,11 +718,11 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
                     {iconVideoColor ? (
                       <div className="details-videos">
                         <LazyLoadImage
-                        width="auto"
-                        height="auto"
-                          src={`${imgBaseUrl}/${
+                          width="auto"
+                          height="auto"
+                          src={`${imgBaseUrl}/${filterData.imgUrl}/${
                             filterData.imgUrl
-                          }/${filterData.imgUrl}${
+                          }${
                             listColor === white || listColor === platinum
                               ? `.jpg`
                               : listColor === yellow
@@ -736,10 +731,10 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
                           }`}
                           alt={filterData.product?.name}
                           className="video-poster"
-                          effect="blur" 
+                          effect="blur"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         />
                         <video
@@ -756,7 +751,7 @@ export default function ChooseRingGemstone({filterData, diamondData, listColor, 
                           playsInline
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         ></video>
 
@@ -772,7 +767,7 @@ ${changeClick === yellow ? "active" : ""}
                           loading="lazy"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         ></video>
 
@@ -788,7 +783,7 @@ ${changeClick === rose ? "active" : ""}
                           loading="lazy"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         ></video>
 
@@ -804,7 +799,7 @@ ${changeClick === rose ? "active" : ""}
                           loading="lazy"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         ></video>
                       </div>
@@ -814,19 +809,27 @@ ${changeClick === rose ? "active" : ""}
                           {thumbnailItem === ".jpg" ? (
                             <InnerImageZoom
                               src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
-                              imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                              imgAttributes={{
+                                width: "auto",
+                                height: "auto",
+                                alt: filterData.product?.name,
+                              }}
                               onError={(e) => {
                                 e.target.onerror = null;
-                                e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                               }}
                             />
                           ) : (
                             <InnerImageZoom
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}.jpg`}
-                              imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                              src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}`}
+                              imgAttributes={{
+                                width: "auto",
+                                height: "auto",
+                                alt: filterData.product?.name,
+                              }}
                               onError={(e) => {
                                 e.target.onerror = null;
-                                e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                               }}
                             />
                           )}
@@ -834,11 +837,11 @@ ${changeClick === rose ? "active" : ""}
                       ) : (
                         <div className="all-images video-place-images details-videos">
                           <LazyLoadImage
-                           width="auto"
-                        height="auto"
-                            src={`${imgBaseUrl}/${
+                            width="auto"
+                            height="auto"
+                            src={`${imgBaseUrl}/${filterData.imgUrl}/${
                               filterData.imgUrl
-                            }/${filterData.imgUrl}${
+                            }${
                               listColor === white || listColor === platinum
                                 ? `.jpg`
                                 : listColor === yellow
@@ -847,10 +850,10 @@ ${changeClick === rose ? "active" : ""}
                             }`}
                             alt={filterData.product?.name}
                             className="video-poster"
-                            effect="blur" 
+                            effect="blur"
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                             }}
                           />
                           <div className="detail-images">
@@ -869,10 +872,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -888,10 +895,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -906,10 +917,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -927,10 +942,14 @@ ${changeClick === rose ? "active" : ""}
                                 >
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -946,10 +965,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -964,10 +987,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -982,10 +1009,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1001,10 +1032,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1020,10 +1055,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1047,10 +1086,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.alt.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1066,10 +1109,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.alt.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1084,10 +1131,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.alt.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1105,10 +1156,14 @@ ${changeClick === rose ? "active" : ""}
                                 >
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.alt.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1124,10 +1179,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.alt.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1142,10 +1201,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.alt.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1160,10 +1223,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.alt.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1179,10 +1246,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.alt.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1198,13 +1269,16 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.alt.jpg`}
-                                   imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
-                                   onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                  }}
-                                   />
-
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                    }}
+                                  />
                                 </div>
                               </div>
                               {/* =========Pear yellow end */}
@@ -1226,10 +1300,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1245,10 +1323,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1263,10 +1345,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1284,10 +1370,14 @@ ${changeClick === rose ? "active" : ""}
                                 >
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1303,10 +1393,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1321,10 +1415,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1339,10 +1437,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1358,10 +1460,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1377,10 +1483,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.alt1.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1403,10 +1513,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1422,10 +1536,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1438,34 +1556,40 @@ ${changeClick === rose ? "active" : ""}
      ${shapeProduct === "as" ? "active" : ""}`}
                               >
                                 <div className={`asscher-common asscher-side `}>
-                                  <img width="auto"   height="auto"
+                                  <img
+                                    width="auto"
+                                    height="auto"
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.side.jpg`}
                                     alt={filterData.product?.name}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
                                 <div className={`asscher-common asscher-set `}>
-                                  <img width="auto"   height="auto"
+                                  <img
+                                    width="auto"
+                                    height="auto"
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.jpg`}
                                     alt={filterData.product?.name}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
                                 <div
                                   className={`asscher-common asscher-angle `}
                                 >
-                                  <img width="auto"   height="auto"
+                                  <img
+                                    width="auto"
+                                    height="auto"
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.angle.jpg`}
                                     alt={filterData.product?.name}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1483,10 +1607,14 @@ ${changeClick === rose ? "active" : ""}
                                 >
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1502,10 +1630,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1520,10 +1652,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1538,10 +1674,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1557,10 +1697,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1576,10 +1720,14 @@ ${changeClick === rose ? "active" : ""}
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
                                     src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.jpg`}
-                                    imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                                    imgAttributes={{
+                                      width: "auto",
+                                      height: "auto",
+                                      alt: filterData.product?.name,
+                                    }}
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                      e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                     }}
                                   />
                                 </div>
@@ -1595,19 +1743,27 @@ ${changeClick === rose ? "active" : ""}
                         {thumbnailItem === ".jpg" ? (
                           <InnerImageZoom
                             src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
-                            imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                            imgAttributes={{
+                              width: "auto",
+                              height: "auto",
+                              alt: filterData.product?.name,
+                            }}
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                             }}
                           />
                         ) : (
                           <InnerImageZoom
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}.jpg`}
-                            imgAttributes={{  width:"auto",  height:"auto", alt: filterData.product?.name}}
+                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}`}
+                            imgAttributes={{
+                              width: "auto",
+                              height: "auto",
+                              alt: filterData.product?.name,
+                            }}
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                              e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                             }}
                           />
                         )}
@@ -1615,11 +1771,11 @@ ${changeClick === rose ? "active" : ""}
                     ) : (
                       <div className="details-videos">
                         <LazyLoadImage
-                         width="auto"
-                        height="auto"
-                          src={`${imgBaseUrl}/${
+                          width="auto"
+                          height="auto"
+                          src={`${imgBaseUrl}/${filterData.imgUrl}/${
                             filterData.imgUrl
-                          }/${filterData.imgUrl}${
+                          }${
                             listColor === white || listColor === platinum
                               ? `.jpg`
                               : listColor === yellow
@@ -1628,10 +1784,10 @@ ${changeClick === rose ? "active" : ""}
                           }`}
                           alt={filterData.product?.name}
                           className="video-poster"
-                          effect="blur" 
+                          effect="blur"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         />
                         <video
@@ -1648,7 +1804,7 @@ ${changeClick === rose ? "active" : ""}
                           playsInline
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         ></video>
 
@@ -1664,7 +1820,7 @@ ${changeClick === rose ? "active" : ""}
                           loading="lazy"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         ></video>
 
@@ -1680,7 +1836,7 @@ ${changeClick === rose ? "active" : ""}
                           loading="lazy"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         ></video>
 
@@ -1696,7 +1852,7 @@ ${changeClick === rose ? "active" : ""}
                           loading="lazy"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                            e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                           }}
                         ></video>
                       </div>
@@ -1704,1754 +1860,148 @@ ${changeClick === rose ? "active" : ""}
 
                     <div className="all-images">
                       <div className="detail-images">
-                        {/* common image white start */}
-                        <div
-                          className={`detail-images-common detail-images-default ${
-                            changeClick === white ? "active" : ""
-                          }`}
-                        >
-                          {/* =========heart yellow start */}
-                          <div
-                            className={`heart-shape-img default-img white-common ${
-                              shapeProduct === "he" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`heart-common he-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".he.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`heart-common he-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".he.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`heart-common he-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".he.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
+                        <div className="white default-img">
+                          <div>
+                            <img
+                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
+                                filterData.imgUrl
+                              }${
+                                (changeClick === white ||
+                                  changeClick === platinum) &&
+                                shapeProduct
+                                  ? `.${shapeProduct}.side.jpg`
+                                  : changeClick === yellow && shapeProduct
+                                  ? `.${shapeProduct}.side.alt.jpg`
+                                  : changeClick === rose && shapeProduct
+                                  ? `.${shapeProduct}.side.alt1.jpg`
+                                  : changeClick === white
+                                  ? ".jpg"
+                                  : changeClick === yellow
+                                  ? ".alt.jpg"
+                                  : changeClick === rose
+                                  ? ".alt1.jpg"
+                                  : ".jpg"
+                              }`}
+                              alt={filterData.product?.name}
+                              width="auto"
+                              height="auto" 
+                              onError={handleError}
+                              onClick={() =>
+                                onchangeThumbnail(
+                                  (changeClick === white ||
+                                    changeClick === platinum) &&
+                                    shapeProduct
+                                    ? `.${shapeProduct}.side.jpg`
+                                    : changeClick === yellow && shapeProduct
+                                    ? `.${shapeProduct}.side.alt.jpg`
+                                    : changeClick === rose && shapeProduct
+                                    ? `.${shapeProduct}.side.alt1.jpg`
+                                    : changeClick === white
+                                    ? ".jpg"
+                                    : changeClick === yellow
+                                    ? ".alt.jpg"
+                                    : changeClick === rose
+                                    ? ".alt1.jpg"
+                                    : ".jpg"
+                                )
+                              }
+                            />
                           </div>
-                          {/* =========heart white end */}
 
-                          {/* =========radiant white start */}
-                          <div
-                            className={`radiant-shape-img default-img white-common ${
-                              shapeProduct === ".ra" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`radiant-common radiant-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ra.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`radiant-common radiant-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ra.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`radiant-common radiant-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ra.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
+                          <div>
+                            <img
+                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
+                                filterData.imgUrl
+                              }${
+                                (changeClick === white ||
+                                  changeClick === platinum) &&
+                                shapeProduct
+                                  ? `.${shapeProduct}.set.jpg`
+                                  : changeClick === yellow && shapeProduct
+                                  ? `.${shapeProduct}.set.alt.jpg`
+                                  : changeClick === rose && shapeProduct
+                                  ? `.${shapeProduct}.set.alt1.jpg`
+                                  : changeClick === white
+                                  ? ".side.jpg"
+                                  : changeClick === yellow
+                                  ? ".side.alt.jpg"
+                                  : changeClick === rose
+                                  ? ".side.alt1.jpg"
+                                  : ".side.jpg"
+                              }`}
+                              alt={filterData.product?.name}
+                              width="auto"
+                              height="auto" 
+                              onError={handleError}
+                              onClick={() =>
+                                onchangeThumbnail(
+                                  (changeClick === white ||
+                                    changeClick === platinum) &&
+                                    shapeProduct
+                                    ? `.${shapeProduct}.set.jpg`
+                                    : changeClick === yellow && shapeProduct
+                                    ? `.${shapeProduct}.set.alt.jpg`
+                                    : changeClick === rose && shapeProduct
+                                    ? `.${shapeProduct}.set.alt1.jpg`
+                                    : changeClick === white
+                                    ? ".side.jpg"
+                                    : changeClick === yellow
+                                    ? ".side.alt.jpg"
+                                    : changeClick === rose
+                                    ? ".side.alt1.jpg"
+                                    : ".side.jpg"
+                                )
+                              }
+                            />
                           </div>
-                          {/* =========radiant white end */}
 
-                          {/* =========asscher white start */}
-                          <div
-                            className={`asscher-shape-img default-img white-common
-                       ${shapeProduct === "as" ? "active" : ""}`}
-                          >
-                            <div className={`asscher-common asscher-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".as.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`asscher-common asscher-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".as.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`asscher-common asscher-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".as.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
+                          <div>
+                            <img
+                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
+                                filterData.imgUrl
+                              }${
+                                (changeClick === white ||
+                                  changeClick === platinum) &&
+                                shapeProduct
+                                  ? `.${shapeProduct}.angle.jpg`
+                                  : changeClick === yellow && shapeProduct
+                                  ? `.${shapeProduct}.angle.alt.jpg`
+                                  : changeClick === rose && shapeProduct
+                                  ? `.${shapeProduct}.angle.alt1.jpg`
+                                  : changeClick === white
+                                  ? ".set.jpg"
+                                  : changeClick === yellow
+                                  ? ".set.alt.jpg"
+                                  : changeClick === rose
+                                  ? ".set.alt1.jpg"
+                                  : ".set.jpg"
+                              }`}
+                              alt={filterData.product?.name}
+                              width="auto"
+                              height="auto" 
+                              onError={handleError}
+                              onClick={() =>
+                                onchangeThumbnail(
+                                  (changeClick === white ||
+                                    changeClick === platinum) &&
+                                    shapeProduct
+                                    ? `.${shapeProduct}.angle.jpg`
+                                    : changeClick === yellow && shapeProduct
+                                    ? `.${shapeProduct}.angle.alt.jpg`
+                                    : changeClick === rose && shapeProduct
+                                    ? `.${shapeProduct}.angle.alt1.jpg`
+                                    : changeClick === white
+                                    ? ".set.jpg"
+                                    : changeClick === yellow
+                                    ? ".set.alt.jpg"
+                                    : changeClick === rose
+                                    ? ".set.alt1.jpg"
+                                    : ".set.jpg"
+                                )
+                              }
+                            />
                           </div>
-                          {/* =========asscher white end */}
-
-                          {/* =========marquise white start */}
-                          <div
-                            className={`marquise-shape-img default-img white-common ${
-                              shapeProduct === "mq" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`marquise-common marquise-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".mq.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`marquise-common marquise-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".mq.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`marquise-common marquise-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".mq.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========marquise white end */}
-
-                          {/* =========emerald white start */}
-                          <div
-                            className={`emerald-shape-img default-img white-common ${
-                              shapeProduct === "em" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`emerald-common emerald-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".em.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`emerald-common emerald-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".em.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`emerald-common emerald-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".em.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========emerald white end */}
-                          {/* =========Oval white start */}
-                          <div
-                            className={`Oval-shape-img default-img white-common ${
-                              shapeProduct === "ov" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Oval-common Oval-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ov.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Oval-common Oval-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ov.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Oval-common Oval-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ov.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Oval white end */}
-                          {/* =========Round white start */}
-                          <div
-                            className={`Round-shape-img default-img white-common ${
-                              shapeProduct === "rd" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Round-common Round-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".rd.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Round-common Round-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".rd.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Round-common Round-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".rd.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Round white end */}
-
-                          {/* =========Cushion white start */}
-                          <div
-                            className={`Cushion-shape-img default-img white-common ${
-                              shapeProduct === "cu" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Cushion-common Cushion-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".cu.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Cushion-common Cushion-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".cu.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Cushion-common Cushion-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".cu.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Cushion white end */}
-
-                          {/* =========Pear white start */}
-                          <div
-                            className={`Pear-shape-img default-img white-common ${
-                              shapeProduct === "pe" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Pear-common Pear-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".pe.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Pear-common Pear-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".pe.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Pear-common Pear-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".pe.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Pear white end */}
-                          {/* default with video start */}
-                          {!shapeProduct && (
-                            <div className="white default-img">
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".jpg")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".side")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.side.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".set")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.set.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                            </div>
-                          )}
-
-                          {/* default white img end */}
                         </div>
-                        {/* common image white end */}
-
-                        {/* common image yellow start */}
-                        <div
-                          className={`detail-images-common  detail-images-alt ${
-                            changeClick === yellow ? "active" : ""
-                          }`}
-                        >
-                          {/* =========heart yellow start */}
-                          <div
-                            className={`heart-shape-img default-img yellow-common ${
-                              shapeProduct === "he" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`heart-common he-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".he.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`heart-common he-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".he.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`heart-common he-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".he.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========heart yellow end */}
-
-                          {/* =========radiant yellow start */}
-                          <div
-                            className={`radiant-shape-img default-img yellow-common ${
-                              shapeProduct === ".ra" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`radiant-common radiant-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ra.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`radiant-common radiant-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ra.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`radiant-common radiant-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ra.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========radiant yellow end */}
-
-                          {/* =========asscher yellow start */}
-                          <div
-                            className={`asscher-shape-img default-img yellow-common
-                       ${shapeProduct === "as" ? "active" : ""}`}
-                          >
-                            <div className={`asscher-common asscher-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".as.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`asscher-common asscher-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".as.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`asscher-common asscher-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".as.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========asscher yellow end */}
-
-                          {/* =========marquise yellow start */}
-                          <div
-                            className={`marquise-shape-img default-img yellow-common ${
-                              shapeProduct === "mq" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`marquise-common marquise-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".mq.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`marquise-common marquise-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".mq.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`marquise-common marquise-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".mq.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========marquise yellow end */}
-
-                          {/* =========emerald yellow start */}
-                          <div
-                            className={`emerald-shape-img default-img yellow-common ${
-                              shapeProduct === "em" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`emerald-common emerald-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".em.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`emerald-common emerald-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".em.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`emerald-common emerald-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".em.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========emerald yellow end */}
-                          {/* =========Oval yellow start */}
-                          <div
-                            className={`Oval-shape-img default-img yellow-common ${
-                              shapeProduct === "ov" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Oval-common Oval-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ov.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Oval-common Oval-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ov.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Oval-common Oval-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ov.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Oval yellow end */}
-                          {/* =========Round yellow start */}
-                          <div
-                            className={`Round-shape-img default-img yellow-common ${
-                              shapeProduct === "rd" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Round-common Round-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".rd.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Round-common Round-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".rd.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Round-common Round-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".rd.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Round yellow end */}
-
-                          {/* =========Cushion yellow start */}
-                          <div
-                            className={`Cushion-shape-img default-img yellow-common ${
-                              shapeProduct === "cu" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Cushion-common Cushion-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".cu.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Cushion-common Cushion-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".cu.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Cushion-common Cushion-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".cu.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Cushion yellow end */}
-
-                          {/* =========Pear yellow start */}
-                          <div
-                            className={`Pear-shape-img default-img yellow-common ${
-                              shapeProduct === "pe" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Pear-common Pear-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".pe.side.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.side.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Pear-common Pear-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".pe.set.alt")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Pear-common Pear-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".pe.angle.alt")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.angle.alt.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Pear yellow end */}
-
-                          {/* default with video img start white*/}
-                          {!shapeProduct && (
-                            <div className="yellow default-img">
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".alt")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".side.alt")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.side.alt.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".set.alt")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.set.alt.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                            </div>
-                          )}
-
-                          {/* default img start */}
-                        </div>
-                        {/* common image yellow end */}
-
-                        {/* common image rose start */}
-                        <div
-                          className={`detail-images-common detail-images-alt1 ${
-                            changeClick === rose ? "active" : ""
-                          }`}
-                        >
-                          {/* =========heart rose start */}
-                          <div
-                            className={`heart-shape-img default-img rose-common ${
-                              shapeProduct === "he" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`heart-common he-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".he.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`heart-common he-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".he.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`heart-common he-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".he.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========heart rose end */}
-
-                          {/* =========radiant rose start */}
-                          <div
-                            className={`radiant-shape-img default-img rose-common ${
-                              shapeProduct === ".ra" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`radiant-common radiant-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ra.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`radiant-common radiant-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ra.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`radiant-common radiant-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ra.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========radiant rose end */}
-
-                          {/* =========asscher rose start */}
-                          <div
-                            className={`asscher-shape-img default-img rose-common
-                       ${shapeProduct === "as" ? "active" : ""}`}
-                          >
-                            <div className={`asscher-common asscher-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".as.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`asscher-common asscher-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".as.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`asscher-common asscher-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".as.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========asscher rose end */}
-
-                          {/* =========marquise rose start */}
-                          <div
-                            className={`marquise-shape-img default-img rose-common ${
-                              shapeProduct === "mq" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`marquise-common marquise-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".mq.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`marquise-common marquise-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".mq.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`marquise-common marquise-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".mq.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========marquise rose end */}
-
-                          {/* =========emerald rose start */}
-                          <div
-                            className={`emerald-shape-img default-img rose-common ${
-                              shapeProduct === "em" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`emerald-common emerald-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".em.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`emerald-common emerald-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".em.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`emerald-common emerald-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".em.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========emerald rose end */}
-                          {/* =========Oval rose start */}
-                          <div
-                            className={`Oval-shape-img default-img rose-common ${
-                              shapeProduct === "ov" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Oval-common Oval-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ov.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Oval-common Oval-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ov.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Oval-common Oval-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".ov.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Oval rose end */}
-                          {/* =========Round rose start */}
-                          <div
-                            className={`Round-shape-img default-img rose-common ${
-                              shapeProduct === "rd" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Round-common Round-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".rd.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Round-common Round-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".rd.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Round-common Round-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".rd.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Round rose end */}
-
-                          {/* =========Cushion rose start */}
-                          <div
-                            className={`Cushion-shape-img default-img rose-common ${
-                              shapeProduct === "cu" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Cushion-common Cushion-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".cu.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Cushion-common Cushion-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".cu.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Cushion-common Cushion-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".cu.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Cushion rose end */}
-
-                          {/* =========Pear rose start */}
-                          <div
-                            className={`Pear-shape-img default-img rose-common ${
-                              shapeProduct === "pe" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Pear-common Pear-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".pe.side.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.side.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Pear-common Pear-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".pe.set.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Pear-common Pear-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() =>
-                                  onchangeThumbnail(".pe.angle.alt1")
-                                }
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.angle.alt1.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Pear rose end */}
-                          {/* default with video start */}
-                          {!shapeProduct && (
-                            <div className="rose default-img">
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".alt1")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt1.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() =>
-                                    onchangeThumbnail(".side.alt1")
-                                  }
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.side.alt1.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".set.alt1")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.set.alt1.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                            </div>
-                          )}
-
-                          {/* default img start */}
-                        </div>
-                        {/* common image rose end */}
-                        {/* common image platinum start */}
-                        <div
-                          className={`detail-images-common detail-images-default ${
-                            changeClick === platinum ? "active" : ""
-                          }`}
-                        >
-                          {/* =========heart platinum start */}
-                          <div
-                            className={`heart-shape-img default-img white-common ${
-                              shapeProduct === "he" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`heart-common he-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".he.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`heart-common he-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".he.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`heart-common he-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".he.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========heart platinum end */}
-
-                          {/* =========radiant platinum start */}
-                          <div
-                            className={`radiant-shape-img default-img white-common ${
-                              shapeProduct === ".ra" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`radiant-common radiant-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ra.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`radiant-common radiant-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ra.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`radiant-common radiant-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ra.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========radiant platinum end */}
-
-                          {/* =========asscher platinum start */}
-                          <div
-                            className={`asscher-shape-img default-img white-common
-                       ${shapeProduct === "as" ? "active" : ""}`}
-                          >
-                            <div className={`asscher-common asscher-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".as.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`asscher-common asscher-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".as.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`asscher-common asscher-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".as.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========asscher platinum end */}
-
-                          {/* =========marquise platinum start */}
-                          <div
-                            className={`marquise-shape-img default-img white-common ${
-                              shapeProduct === "mq" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`marquise-common marquise-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".mq.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`marquise-common marquise-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".mq.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`marquise-common marquise-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".mq.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========marquise platinum end */}
-
-                          {/* =========emerald platinum start */}
-                          <div
-                            className={`emerald-shape-img default-img white-common ${
-                              shapeProduct === "em" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`emerald-common emerald-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".em.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`emerald-common emerald-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".em.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`emerald-common emerald-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".em.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========emerald platinum end */}
-                          {/* =========Oval platinum start */}
-                          <div
-                            className={`Oval-shape-img default-img white-common ${
-                              shapeProduct === "ov" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Oval-common Oval-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ov.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Oval-common Oval-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ov.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Oval-common Oval-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".ov.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Oval platinum end */}
-                          {/* =========Round platinum start */}
-                          <div
-                            className={`Round-shape-img default-img white-common ${
-                              shapeProduct === "rd" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Round-common Round-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".rd.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Round-common Round-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".rd.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Round-common Round-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".rd.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Round platinum end */}
-
-                          {/* =========Cushion platinum start */}
-                          <div
-                            className={`Cushion-shape-img default-img white-common ${
-                              shapeProduct === "cu" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Cushion-common Cushion-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".cu.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Cushion-common Cushion-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".cu.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Cushion-common Cushion-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".cu.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Cushion white end */}
-
-                          {/* =========Pear white start */}
-                          <div
-                            className={`Pear-shape-img default-img white-common ${
-                              shapeProduct === "pe" ? "active" : ""
-                            }`}
-                          >
-                            <div className={`Pear-common Pear-side `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".pe.side")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.side.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Pear-common Pear-set `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".pe.set")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                            <div className={`Pear-common Pear-angle `}>
-                              <img width="auto"   height="auto"
-                                onClick={() => onchangeThumbnail(".pe.angle")}
-                                src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.angle.jpg`}
-                                alt={filterData.product?.name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
-                                }}
-                              />
-                            </div>
-                          </div>
-                          {/* =========Pear platinum end */}
-
-                          {/* default with video start */}
-                          {!shapeProduct && (
-                            <div className="platinum default-img">
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".jpg")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".side")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.side.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                              <div>
-                                <img width="auto"   height="auto"
-                                  onClick={() => onchangeThumbnail(".set")}
-                                  src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.set.jpg`}
-                                  alt={filterData.product?.name}
-                                  onError={handleImgError}
-                                />
-                              </div>
-                            </div>
-                          )}
-
-                          {/* default platinum img end */}
-                        </div>
-                        {/* common image platinum end */}
                       </div>
 
                       <div className="main-svg-icon-video">
@@ -3474,7 +2024,9 @@ ${changeClick === rose ? "active" : ""}
                             );
                           }}
                         >
-                          <img width="auto"   height="auto"
+                          <img
+                            width="auto"
+                            height="auto"
                             src="https://www.overnightmountings.com//js/videoplayer/images/rotatingnew.gif"
                             alt={filterData.product?.name}
                           />
@@ -3500,7 +2052,9 @@ ${changeClick === rose ? "active" : ""}
                             );
                           }}
                         >
-                          <img width="auto"   height="auto"
+                          <img
+                            width="auto"
+                            height="auto"
                             src="https://www.overnightmountings.com//js/videoplayer/images/rotatingnew.gif"
                             alt={filterData.product?.name}
                           />
@@ -3526,7 +2080,9 @@ ${changeClick === rose ? "active" : ""}
                             );
                           }}
                         >
-                          <img width="auto"   height="auto"
+                          <img
+                            width="auto"
+                            height="auto"
                             src="https://www.overnightmountings.com//js/videoplayer/images/rotatingnew.gif"
                             alt={filterData.product?.name}
                           />
@@ -3552,7 +2108,9 @@ ${changeClick === rose ? "active" : ""}
                             );
                           }}
                         >
-                          <img width="auto"   height="auto"
+                          <img
+                            width="auto"
+                            height="auto"
                             src="https://www.overnightmountings.com//js/videoplayer/images/rotatingnew.gif"
                             alt={filterData.product?.name}
                           />
@@ -3563,12 +2121,11 @@ ${changeClick === rose ? "active" : ""}
 
                   <div className="singleProduct-text">
                     <h4>{filterData.product?.name}</h4>
-                 
+
                     <span>
                       <p>{filterData.product?.description}</p>
                     </span>
 
-                  
                     <div className="shape-diamond">
                       {filterData.product?.images.map(
                         (allProductImg, index) => {
@@ -3612,7 +2169,7 @@ ${changeClick === rose ? "active" : ""}
                                       changeOverShape && "hover-active"
                                     }`}
                                   >
-                                    {changeOverShape }
+                                    {changeOverShape}
                                   </span>
                                   <span
                                     class={`unbold ${
@@ -3643,8 +2200,11 @@ ${changeClick === rose ? "active" : ""}
                                             }
                                             key={ShapeItem.id}
                                             onClick={() => {
-                                              shapeOnclick(ShapeItem.slug, ShapeItem.shape);
-                                             
+                                              shapeOnclick(
+                                                ShapeItem.slug,
+                                                ShapeItem.shape
+                                              );
+
                                               setShapeItemId((prevState) =>
                                                 ShapeItem.id === prevState
                                                   ? ""
@@ -3658,12 +2218,14 @@ ${changeClick === rose ? "active" : ""}
                                               onChangeOverShape("")
                                             }
                                           >
-                                            <img width="auto"   height="auto"
+                                            <img
+                                              width="auto"
+                                              height="auto"
                                               src={ShapeItem.icon}
                                               alt={ShapeItem.shape}
                                               onError={(e) => {
                                                 e.target.onerror = null;
-                                                e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;                                                                    
+                                                e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                               }}
                                             />
                                           </div>
@@ -3702,7 +2264,9 @@ ${changeClick === rose ? "active" : ""}
                             } 
                            `}
                           >
-                            <span className="span-click">{changeClick?.replace(/-/g, " ")}</span>
+                            <span className="span-click">
+                              {changeClick?.replace(/-/g, " ")}
+                            </span>
                             <span className="span-over">
                               {" "}
                               {changeOver?.replace(/-/g, " ")}{" "}
@@ -3725,14 +2289,16 @@ ${changeClick === rose ? "active" : ""}
                               changeClick === yellow ? "active" : ""
                             } `}
                           >
-                            <span className="span-click">{changeClick?.replace(/-/g, " ")}</span>
+                            <span className="span-click">
+                              {changeClick?.replace(/-/g, " ")}
+                            </span>
                             <span className="span-over">
                               {changeOver?.replace(/-/g, " ")}{" "}
                               {changeOver === platinum &&
                                 `$(${
                                   (filterData.product?.platinum_price -
-                                    filterData.product?.yellow_gold_price || 0) >
-                                  0
+                                    filterData.product?.yellow_gold_price ||
+                                    0) > 0
                                     ? `+${
                                         filterData.product?.platinum_price -
                                         filterData.product?.yellow_gold_price
@@ -3747,7 +2313,9 @@ ${changeClick === rose ? "active" : ""}
                               changeClick === rose ? "active" : ""
                             } `}
                           >
-                            <span className="span-click">{changeClick?.replace(/-/g, " ")}</span>
+                            <span className="span-click">
+                              {changeClick?.replace(/-/g, " ")}
+                            </span>
                             <span className="span-over">
                               {" "}
                               {changeOver?.replace(/-/g, " ")}{" "}
@@ -3770,7 +2338,9 @@ ${changeClick === rose ? "active" : ""}
                               changeClick === platinum ? "active" : ""
                             } `}
                           >
-                            <span className="span-click">{changeClick?.replace(/-/g, " ")}</span>
+                            <span className="span-click">
+                              {changeClick?.replace(/-/g, " ")}
+                            </span>
                             <span className="span-over">
                               {changeOver?.replace(/-/g, " ")}{" "}
                               {changeClick !== platinum &&
@@ -3876,79 +2446,80 @@ ${changeClick === rose ? "active" : ""}
                         />
                       </div>
                     </div>
-                    
-                    {
-                             
-                             filterData.product?.SideDiamondNumber > 0 &&    (
-                              filterData.product?.variants.length > 0 ? (
-                           
-                                                 <div className="Diamond-Original-main  Setting-Carat Variation">
-                                                  <span className="bold full-width">
-                                                     Setting Carat Weight (setting only) : <span className="bold-650">
-                                                     {
-                                                              <span>{changeOverVariation ? `${changeOverVariation} ct tw `: filterData.product?.fractionsemimount }  </span>
-                                                           }
-                                                       </span> 
-                                                   </span>
-                           
-                                                   {filterData.product?.variants.map(
-                                                     (variantItem, index) => {
-                                                       const inputString = variantItem.sku;
-                                                       const regex = /(\d+\/\d+)/;
-                                                       const match = inputString?.match(regex);
-                                                       if (match && match?.length > 0) {
-                                                         const fraction = match[0];
-                           
-                                                         return (
-                                                           <>
-                                                             <div
-                                                               className={
-                                                                 variantSlug === variantItem.slug
-                                                                   ? "active-variant variant-outer"
-                                                                   : "variant-outer"
-                                                               }
-                                                               key={index}
-                                                             >
-                                                               <span
-                                                                 onClick={() =>
-                                                                   handleVariation(variantItem.slug)
-                                                                 }
-                                                                 onMouseEnter={() => onChangeOverVariation(fraction)}
-                           
-                                                               
-                                                     onMouseOut={() => onChangeOverVariation( )}
-                                                               >
-                                                                  
-                                                                 {fraction}
-                                                               </span>
-                                                             </div>
-                                                           </>
-                                                         );
-                                                       }
-                                                       return null; // Make sure to return null if the condition is not met
-                                                     }
-                                                   )}
-                                                 </div>
-                                               ) : (
-                                                 filterData.product?.fractionsemimount && (
-                                                   <div className="Diamond-Original-main  Setting-Carat Variation N/A">
-                                                     <span className=" full-width">
-                                                       <span className="bold">
-                                                         Setting Carat Weight (setting only) :{" "}
-                                                       </span>{" "}
-                                                       <span className="bold-650">
-                                                         {" "}
-                                                         {filterData.product?.fractionsemimount}
-                                                       </span>
-                                                     </span>
-                                                   </div>
-                                                 )
-                                               )
-                           
-                              )
-                                                  }
 
-<div className="Diamond-Original-main">
+                    {filterData.product?.SideDiamondNumber > 0 &&
+                      (filterData.product?.variants.length > 0 ? (
+                        <div className="Diamond-Original-main  Setting-Carat Variation">
+                          <span className="bold full-width">
+                            Setting Carat Weight (setting only) :{" "}
+                            <span className="bold-650">
+                              {
+                                <span>
+                                  {changeOverVariation
+                                    ? `${changeOverVariation} ct tw `
+                                    : filterData.product
+                                        ?.fractionsemimount}{" "}
+                                </span>
+                              }
+                            </span>
+                          </span>
+
+                          {filterData.product?.variants.map(
+                            (variantItem, index) => {
+                              const inputString = variantItem.sku;
+                              const regex = /(\d+\/\d+)/;
+                              const match = inputString?.match(regex);
+                              if (match && match?.length > 0) {
+                                const fraction = match[0];
+
+                                return (
+                                  <>
+                                    <div
+                                      className={
+                                        variantSlug === variantItem.slug
+                                          ? "active-variant variant-outer"
+                                          : "variant-outer"
+                                      }
+                                      key={index}
+                                    >
+                                      <span
+                                        onClick={() =>
+                                          handleVariation(variantItem.slug)
+                                        }
+                                        onMouseEnter={() =>
+                                          onChangeOverVariation(fraction)
+                                        }
+                                        onMouseOut={() =>
+                                          onChangeOverVariation()
+                                        }
+                                      >
+                                        {fraction}
+                                      </span>
+                                    </div>
+                                  </>
+                                );
+                              }
+                              return null; // Make sure to return null if the condition is not met
+                            }
+                          )}
+                        </div>
+                      ) : (
+                        filterData.product?.fractionsemimount && (
+                          <div className="Diamond-Original-main  Setting-Carat Variation N/A">
+                            <span className=" full-width">
+                              <span className="bold">
+                                Setting Carat Weight (setting only) :{" "}
+                              </span>{" "}
+                              <span className="bold-650">
+                                {" "}
+                                {filterData.product?.fractionsemimount}
+                              </span>
+                            </span>
+                          </div>
+                        )
+                      ))}
+
+                    <div className="Diamond-Original-main">
                       <span class="bold">
                         Diamond Origin:
                         <span
@@ -3957,7 +2528,6 @@ ${changeClick === rose ? "active" : ""}
                               ? "unbold active bold-650"
                               : "unbold bold-650"
                           }
-                         
                         >
                           {diamondOrigin
                             ? diamondOrigin
@@ -3971,7 +2541,6 @@ ${changeClick === rose ? "active" : ""}
                               ? "unbold active bold-650"
                               : "unbold bold-650"
                           }
-                         
                         >
                           {diamondOrigin
                             ? diamondOrigin
@@ -3998,11 +2567,10 @@ ${changeClick === rose ? "active" : ""}
                               "natural"
                             );
                           }}
-                           onMouseEnter={() =>
+                          onMouseEnter={() =>
                             handleDiamondOriginHover("Natural")
                           }
                           onMouseOut={() => handleDiamondOriginHover("")}
-                          
                         >
                           Natural
                         </Link>
@@ -4037,12 +2605,12 @@ ${changeClick === rose ? "active" : ""}
                       <div class="bold"> Price $ </div>
                       <div class="unbold">{diamondType?.price}</div>
                     </div> */}
-                    {diamondType?.diamond_type === "lab_grown" || diamondTypeClick === 'lab_grown' ? (
+                    {diamondType?.diamond_type === "lab_grown" ||
+                    diamondTypeClick === "lab_grown" ? (
                       <div className="detail-price">
                         <div class="bold"> Price : </div>
                         <div class="unbold">
-                          $
-                          {Math.round(diamondType?.price)}
+                          ${Math.round(diamondType?.price)}
                         </div>
                       </div>
                     ) : (
@@ -4067,9 +2635,7 @@ ${changeClick === rose ? "active" : ""}
                                 } `
                               : `$${filterData.product?.white_gold_price}`} */}
                               $
-                              {
-                                Math.round(
-                                  filterData.product?.white_gold_price)}
+                              {Math.round(filterData.product?.white_gold_price)}
                             </span>
                           </div>
                           <div
@@ -4090,9 +2656,9 @@ ${changeClick === rose ? "active" : ""}
                                 } `
                               : `$${filterData.product?.yellow_gold_price}`} */}
                               $
-                              {
-                                Math.round(
-                                  filterData.product?.yellow_gold_price)}
+                              {Math.round(
+                                filterData.product?.yellow_gold_price
+                              )}
                             </span>
                           </div>
                           <div
@@ -4112,10 +2678,7 @@ ${changeClick === rose ? "active" : ""}
                                   )
                                 } `
                               : `$${filterData.product?.rose_gold_price}`} */}
-                              $
-                              {
-                                Math.round(
-                                  filterData.product?.rose_gold_price)}
+                              ${Math.round(filterData.product?.rose_gold_price)}
                             </span>
                           </div>
 
@@ -4136,20 +2699,20 @@ ${changeClick === rose ? "active" : ""}
                                   )
                                 } `
                               : `$${filterData.product?.platinum_price}`} */}
-                              $
-                              {
-                                Math.round(
-                                  filterData.product?.platinum_price)}
+                              ${Math.round(filterData.product?.platinum_price)}
                             </span>
                           </div>
                         </div>
                       </div>
                     )}
-                   
 
                     <div class="bold detail-price Engraving">
                       <span> Engraving : </span>{" "}
-                      <input type="text" onChange={onchangeEngraving} maxLength={25}/>
+                      <input
+                        type="text"
+                        onChange={onchangeEngraving}
+                        maxLength={25}
+                      />
                     </div>
                     <div class="bold detail-price Engraving">
                       <span> Fonts : </span>{" "}
@@ -4163,18 +2726,20 @@ ${changeClick === rose ? "active" : ""}
                       </div>
                     </div>
                     <div className="bold select-custom-size-side">
-                      <span>
-                       
-                       
-                       <Link href="/ring-sizer">
-                       <span>
-
+                    <span>
+                        {" "}
+                        <div onClick={() => togglePopup()}>
+                          <span>
                             <IoInformationCircleOutline />
-                       </span>
-                       
-                       <span> Size :{" "}</span>
-                       </Link>
-                    </span>
+                          </span>
+                          {ringSize && (
+                            <div>
+                              <RingSizeChart setRingSize={setRingSize} />
+                            </div>
+                          )}
+                        </div>{" "}
+                        Size :{" "}
+                      </span>{" "}
                       <Select
                         defaultValue={selectedOption}
                         onChange={handleSelectSize}
@@ -4188,66 +2753,108 @@ ${changeClick === rose ? "active" : ""}
                       style={{ color: "red" }}
                     ></p>
 
-<div className="choose-btnn">
-                    {stock_num != null ? (
-                      <Link
-                        href={`${
-                        selectedOption
-                          ? `/final_ring_gemstone/${
-                              filterData.product?.slug
-                            }/?color=${changeClick}&stock_num=${
-                              stock_num ? stock_num : ""
-                            }&diamond_original=${diamondTypeClick}${
-                              selectedFontStyleOption === undefined
-                                ? ""
-                                : `&font_style=${selectedFontStyleOption}`
-                            }${
-                              textEngraving === undefined
-                                ? ""
-                                : `&textEngraving=${textEngraving}`
-                            }&ring_size=${selectedOption}`
-                          : "javascript:void(0);"
-                      }`}
-                        className="ChooseSetting btn-custom"
-                        onClick={handleChooseRingSetting}
-                      >
-                        Choose This Setting
-                      </Link>
-                    ) : (
-                      <Link
-                        href={`${
-                          selectedOption
-                            ? `/diamond/start-with-a-diamond/${
-                                diamondTypeClick == "lab_grown"
-                                  ? "lab_grown"
-                                  : ""
-                              }/${
-                                filterData.product?.slug
-                              }/?color=${changeClick}&diamond_original=${diamondTypeClick}${
-                                typeof centerStoneData === "undefined"
-                                  ? ""
-                                  : `&center_stone=${centerStoneData}`
-                              }${
-                                selectedFontStyleOption === undefined
-                                  ? ""
-                                  : `&font_style=${selectedFontStyleOption}`
-                              }${
-                                textEngraving === undefined
-                                  ? ""
-                                  : `&textEngraving=${textEngraving}`
-                              }&ring_size=${selectedOption}`
-                            : "javascript:void(0);"
-                        }`}
-                        className="ChooseSetting btn-custom"
-                        onClick={handleChooseRingSetting}
-                      >
-                         Choose This Setting  
-                      </Link>
-                    )}
-                    <Link href="javascript:void(0);" className="wish-list">
-                      <span>
-                        {user_id ? (
-                          wishlistIds.includes(filterData.product?.id) ? (
+                    <div className="choose-btnn">
+                      {stock_num != null ? (
+                        <Link
+                          href={`${
+                            selectedOption
+                              ? `/final_ring_gemstone/${
+                                  filterData.product?.slug
+                                }/?color=${changeClick}&stock_num=${
+                                  stock_num ? stock_num : ""
+                                }&diamond_original=${diamondTypeClick}${
+                                  selectedFontStyleOption === undefined
+                                    ? ""
+                                    : `&font_style=${selectedFontStyleOption}`
+                                }${
+                                  textEngraving === undefined
+                                    ? ""
+                                    : `&textEngraving=${textEngraving}`
+                                }&ring_size=${selectedOption}`
+                              : "javascript:void(0);"
+                          }`}
+                          className="ChooseSetting btn-custom"
+                          onClick={handleChooseRingSetting}
+                        >
+                          Choose This Setting
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`${
+                            selectedOption
+                              ? `/diamond/start-with-a-diamond/${
+                                  diamondTypeClick == "lab_grown"
+                                    ? "lab_grown"
+                                    : ""
+                                }/${
+                                  filterData.product?.slug
+                                }/?color=${changeClick}&diamond_original=${diamondTypeClick}${
+                                  typeof centerStoneData === "undefined"
+                                    ? ""
+                                    : `&center_stone=${centerStoneData}`
+                                }${
+                                  selectedFontStyleOption === undefined
+                                    ? ""
+                                    : `&font_style=${selectedFontStyleOption}`
+                                }${
+                                  textEngraving === undefined
+                                    ? ""
+                                    : `&textEngraving=${textEngraving}`
+                                }&ring_size=${selectedOption}`
+                              : "javascript:void(0);"
+                          }`}
+                          className="ChooseSetting btn-custom"
+                          onClick={handleChooseRingSetting}
+                        >
+                          Choose This Setting
+                        </Link>
+                      )}
+                      <Link href="javascript:void(0);" className="wish-list">
+                        <span>
+                          {user_id ? (
+                            wishlistIds.includes(filterData.product?.id) ? (
+                              <IoMdHeart
+                                onClick={() =>
+                                  handleWishlistRemove(filterData.product)
+                                }
+                              />
+                            ) : (
+                              <CiHeart
+                                onClick={(e) => {
+                                  if (!selectedOption) {
+                                    e.preventDefault();
+                                    document.getElementById(
+                                      "error-message"
+                                    ).innerText = "Please select a ring size.";
+                                  } else {
+                                    handleWishlist(
+                                      filterData.product,
+                                      "ring",
+                                      user_id,
+                                      filterData.product?.id,
+                                      changeClick,
+                                      filterData.imgUrl,
+                                      diamondType?.diamond_type === "lab_grown"
+                                        ? diamondType?.price
+                                        : changeClick === white
+                                        ? filterData.product?.white_gold_price
+                                        : changeClick === yellow
+                                        ? filterData.product?.yellow_gold_price
+                                        : changeClick === rose
+                                        ? filterData.product?.rose_gold_price
+                                        : filterData.product?.platinum_price,
+
+                                      textEngraving,
+                                      selectedFontStyleOption,
+                                      selectedOption
+                                    );
+                                  }
+                                }}
+                              />
+                            )
+                          ) : beforeLoginWishlistIds.includes(
+                              filterData.product?.id
+                            ) ? (
                             <IoMdHeart
                               onClick={() =>
                                 handleWishlistRemove(filterData.product)
@@ -4269,8 +2876,7 @@ ${changeClick === rose ? "active" : ""}
                                     filterData.product?.id,
                                     changeClick,
                                     filterData.imgUrl,
-                                    diamondType?.diamond_type ===
-                                      "lab_grown"
+                                    diamondType?.diamond_type === "lab_grown"
                                       ? diamondType?.price
                                       : changeClick === white
                                       ? filterData.product?.white_gold_price
@@ -4287,60 +2893,16 @@ ${changeClick === rose ? "active" : ""}
                                 }
                               }}
                             />
-                          )
-                        ) : beforeLoginWishlistIds.includes(
-                            filterData.product?.id
-                          ) ? (
-                          <IoMdHeart
-                            onClick={() =>
-                              handleWishlistRemove(filterData.product)
-                            }
-                          />
-                        ) : (
-                          <CiHeart
-                            onClick={(e) => {
-                              if (!selectedOption) {
-                                e.preventDefault();
-                                document.getElementById(
-                                  "error-message"
-                                ).innerText = "Please select a ring size.";
-                              } else {
-                                handleWishlist(
-                                  filterData.product,
-                                  "ring",
-                                  user_id,
-                                  filterData.product?.id,
-                                  changeClick,
-                                  filterData.imgUrl,
-                                  diamondType?.diamond_type ===
-                                      "lab_grown"
-                                      ? diamondType?.price
-                                      : changeClick === white
-                                      ? filterData.product?.white_gold_price
-                                      : changeClick === yellow
-                                      ? filterData.product?.yellow_gold_price
-                                      : changeClick === rose
-                                      ? filterData.product?.rose_gold_price
-                                      : filterData.product?.platinum_price,
+                          )}
+                        </span>
+                      </Link>
+                    </div>
 
-
-                                  textEngraving,
-                                  selectedFontStyleOption,
-                                  selectedOption,
-                                );
-                              }
-                            }}
-                          />
-                        )}
-                      </span>
-                    </Link>
-                  </div>
-
-                  <div className="contact-us-btn shipping-add">
+                    <div className="contact-us-btn shipping-add">
                       {" "}
-                      Still can’t find your perfect ring?{" "} Send us a
-                      <Link href="/custom-concierge"> customization </Link> request
-
+                      Still can’t find your perfect ring? Send us a
+                      <Link href="/custom-concierge"> customization </Link>{" "}
+                      request
                     </div>
 
                     <div className="shipping-add">
@@ -4425,10 +2987,10 @@ ${changeClick === rose ? "active" : ""}
                         </div>
                       </div>
                       <div className="Need-More-Time footer">
-                      <NewsLetter
-                          portalId='45427602'
-          formId='5ada63ac-16ec-4ecb-bca7-21caf983c404'
-          targetId="commonId"
+                        <NewsLetter
+                          portalId="45427602"
+                          formId="5ada63ac-16ec-4ecb-bca7-21caf983c404"
+                          targetId="commonId"
                         />
                       </div>
                     </div>
@@ -4481,7 +3043,7 @@ ${changeClick === rose ? "active" : ""}
                           </div> */}
                           </div>
                           <div className="ring-info">
-                          <span>Accent Gemstones (sideStones)</span>
+                            <span>Accent Gemstones (sideStones)</span>
                             <div>
                               <span>
                                 Number:{" "}
@@ -4504,7 +3066,7 @@ ${changeClick === rose ? "active" : ""}
                                 <DiamondType setTypeOfRing={setTypeOfRing} />
                               </div>
                             )}
-                            
+
                             <div>
                               <span>
                                 Average Color:{" "}
@@ -4715,11 +3277,10 @@ ${changeClick === rose ? "active" : ""}
                                 add matching band
                               </Link>
                               <div className="add-matchring-column">
-                              <div className="inner-matching-bands">
+                                <div className="inner-matching-bands">
                                   <Link
                                     href={`/detail-wedding-band/${filterData?.product?.matching_wedding_band?.slug}?color=${listColor}`}
                                   >
-                                    
                                     <img
                                       width="auto"
                                       height="auto"
@@ -4916,7 +3477,9 @@ ${changeClick === rose ? "active" : ""}
                                   <div className="">
                                     <Slider {...DetailsRecommended}>
                                       <div>
-                                        <img width="auto"   height="auto"
+                                        <img
+                                          width="auto"
+                                          height="auto"
                                           src="https://image.brilliantearth.com/media/cache/da/2b/da2bff20b005b85e43f53badc6769d94.jpg"
                                           alt={filterData.product?.name}
                                         />
@@ -4926,7 +3489,9 @@ ${changeClick === rose ? "active" : ""}
                                         <p>Price $ 3271.41</p>
                                       </div>
                                       <div>
-                                        <img width="auto"   height="auto"
+                                        <img
+                                          width="auto"
+                                          height="auto"
                                           src="https://image.brilliantearth.com/media/cache/da/2b/da2bff20b005b85e43f53badc6769d94.jpg"
                                           alt={filterData.product?.name}
                                         />
@@ -4936,7 +3501,9 @@ ${changeClick === rose ? "active" : ""}
                                         <p>Price $ 3271.41</p>
                                       </div>
                                       <div>
-                                        <img width="auto"   height="auto"
+                                        <img
+                                          width="auto"
+                                          height="auto"
                                           src="https://image.brilliantearth.com/media/cache/da/2b/da2bff20b005b85e43f53badc6769d94.jpg"
                                           alt={filterData.product?.name}
                                         />
@@ -4946,7 +3513,9 @@ ${changeClick === rose ? "active" : ""}
                                         <p>Price $ 3271.41</p>
                                       </div>
                                       <div>
-                                        <img width="auto"   height="auto"
+                                        <img
+                                          width="auto"
+                                          height="auto"
                                           src="https://image.brilliantearth.com/media/cache/da/2b/da2bff20b005b85e43f53badc6769d94.jpg"
                                           alt={filterData.product?.name}
                                         />
@@ -4974,4 +3543,4 @@ ${changeClick === rose ? "active" : ""}
       </div>
     </>
   );
-};
+}

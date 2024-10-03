@@ -22,8 +22,7 @@ const Header = ({ navData, siteInfo }) => {
   const [active, setActive] = useState(false);
   const [selected, setSelected] = useState(null);
   const pathname = usePathname();
-  const {
-    searching,
+  const {searching,
     setSearching,
     setShowSuggestion,
     setShowSuggestionHeader,
@@ -38,6 +37,7 @@ const Header = ({ navData, siteInfo }) => {
   useEffect(() => {
     secureLocalStorage.setItem("searchedItem", JSON.stringify(searching));
   }, [searching]);
+
   const ToggleClass = () => {
     setActive(!active);
   };
@@ -83,14 +83,14 @@ const Header = ({ navData, siteInfo }) => {
           .catch(() => {
             console.log("API error");
           });
-      }, 500); // Adjust the debounce delay according to your preference
+      }, 500); 
 
-      delayedSuggestion(); // Initial call to avoid empty suggestion on component mount
+      delayedSuggestion(); 
 
-      return delayedSuggestion.cancel; // Cleanup function
+      return delayedSuggestion.cancel; 
     }
   }, [suggestion]);
-  //search api
+  
   const [searchValue, setSearchValue] = useState("");
   function handleSearch(value) {
     setShowSuggestionHeader(true);
@@ -115,14 +115,13 @@ const Header = ({ navData, siteInfo }) => {
           .catch(() => {
             console.log("API error");
           });
-      }, 500); // Adjust the debounce delay according to your preference
+      }, 500); 
 
-      delayedSearch(); // Initial call to avoid empty search on component mount
+      delayedSearch(); 
 
-      return delayedSearch.cancel; // Cleanup function
+      return delayedSearch.cancel; 
     }
   }, [searchValue, searching]);
-  // search end here
 
   const [hovered, setHovered] = useState(false);
   const [wishHovered, setWishHovered] = useState(false);
@@ -203,6 +202,7 @@ const Header = ({ navData, siteInfo }) => {
                 </span>
               </Link>
             </div>
+            
 
             <div className="header-logo">
               <Link href="/">

@@ -169,6 +169,8 @@ const ChooseDiamondsShape = ({
   const minColorRange = 0;
   const maxColorRange = 100;
   const [colorRange, setColorRange] = useState([minColorRange, maxColorRange]);
+  console.log(colorRange);
+  
   // cut
   const minCutRange = 0;
   const maxCutRange = 100;
@@ -348,12 +350,14 @@ const ChooseDiamondsShape = ({
     }
   }, []);
 
-  if (center_stone) {
-    secureLocalStorage.setItem(
-      "caratfilter",
-      JSON.stringify([center_stone, maxCaratRange])
-    );
-  }
+  useEffect(() => {
+    if (center_stone) {
+      secureLocalStorage.setItem(
+        "caratfilter",
+        JSON.stringify([center_stone, maxCaratRange])
+      );
+    }
+  }, [center_stone]);
 
   useEffect(() => {
     secureLocalStorage.setItem("colorRange", JSON.stringify(colorRange));
@@ -569,13 +573,13 @@ const ChooseDiamondsShape = ({
 
   const colorHandleChange = (value) => {
     const colorRanges = [
-      { label: "D", min: 0, max: 14.7 },
-      { label: "E", min: 14.5, max: 29.4 },
-      { label: "F", min: 29.2, max: 44.1 },
-      { label: "G", min: 44, max: 58.8 },
-      { label: "H", min: 58.5, max: 73.5 },
-      { label: "I", min: 73.1, max: 88.2 },
-      { label: "J", min: 88, max: 100 },
+      { label: "D", min: 0, max: 14.6 },
+      { label: "E", min: 14.6, max: 29.2 },
+      { label: "F", min: 29.2, max: 43.8 },
+      { label: "G", min: 43.8, max: 58.4 },
+      { label: "H", min: 58.4, max: 73 },
+      { label: "I", min: 73, max: 87.6 },
+      { label: "J", min: 87.6, max: 100 },
     ];
 
     updatedArray = updatedArray.filter((item) => {
@@ -1044,9 +1048,9 @@ const ChooseDiamondsShape = ({
                     value={colorRange}
                     min={minColorRange}
                     max={maxColorRange}
-                    minDistance={14.7}
+                    minDistance={14.6}
                     marks={[0, 14.6, 29.3, 44.1, 58.6, 73.4, 88.1]}
-                    step={14.7}
+                    step={14.6}
                     trackStyle={{ backgroundColor: "red" }}
                   />
                 </div>
@@ -1714,7 +1718,7 @@ const ChooseDiamondsShape = ({
                         >
                           <div class="inner-dimond-data-stucture">
                             <div class="prodcut-img">
-                              {!loadedIframes[item.id] && (
+                             
                                 <LazyLoadImage
                                   width="auto"
                                   height="auto"
@@ -1725,14 +1729,13 @@ const ChooseDiamondsShape = ({
                                     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
-                              )}
-                              <iframe
+                            
+                              {/* <iframe
                                 src={item.video_url}
                                 frameBorder="0"
-                                title="video"
+                                title={`video-${item.id}`}
                                 onLoad={() => handleIframeLoad(item.id)}
-                                allow="autoplay"
-                              ></iframe>
+                              ></iframe> */}
                             </div>
                             <div class="pro-cart-data">
                               <div class="pro-data-cart head">
@@ -1937,7 +1940,7 @@ const ChooseDiamondsShape = ({
                         >
                           <div class="inner-dimond-data-stucture">
                             <div class="prodcut-img">
-                              {!loadedIframes[item.id] && (
+                            
                                 <LazyLoadImage
                                   width="auto"
                                   height="auto"
@@ -1948,14 +1951,13 @@ const ChooseDiamondsShape = ({
                                     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
-                              )}
-                              <iframe
+                           
+                              {/* <iframe
                                 src={item.video_url}
                                 frameBorder="0"
-                                title="video"
+                                title={`video-${item.id}`}
                                 onLoad={() => handleIframeLoad(item.id)}
-                                allow="autoplay"
-                              ></iframe>
+                              ></iframe> */}
                             </div>
                             <div class="pro-cart-data">
                               <div class="pro-data-cart head">
@@ -2428,7 +2430,7 @@ const ChooseDiamondsShape = ({
                         >
                           <div class="inner-dimond-data-stucture">
                             <div class="prodcut-img">
-                              {!loadedIframes[item.id] && (
+                             
                                 <LazyLoadImage
                                   width="auto"
                                   height="auto"
@@ -2439,14 +2441,13 @@ const ChooseDiamondsShape = ({
                                     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
-                              )}
-                              <iframe
+                             
+                              {/* <iframe
                                 src={item.video_url}
                                 frameBorder="0"
-                                title="video"
+                                title={`video-${item.id}`}
                                 onLoad={() => handleIframeLoad(item.id)}
-                                allow="autoplay"
-                              ></iframe>
+                              ></iframe> */}
                             </div>
                             <div class="pro-cart-data">
                               <div class="pro-data-cart head">
@@ -2651,7 +2652,6 @@ const ChooseDiamondsShape = ({
                         >
                           <div class="inner-dimond-data-stucture">
                             <div class="prodcut-img">
-                              {!loadedIframes[item.id] && (
                                 <LazyLoadImage
                                   width="auto"
                                   height="auto"
@@ -2662,14 +2662,13 @@ const ChooseDiamondsShape = ({
                                     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
-                              )}
-                              <iframe
+                           
+                              {/* <iframe
                                 src={item.video_url}
                                 frameBorder="0"
-                                title="video"
+                                title={`video-${item.id}`}
                                 onLoad={() => handleIframeLoad(item.id)}
-                                allow="autoplay"
-                              ></iframe>
+                              ></iframe> */}
                             </div>
                             <div class="pro-cart-data">
                               <div class="pro-data-cart head">
