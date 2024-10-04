@@ -8,7 +8,7 @@ export const FooterMobile = ({ FooterData, toggle, selected, ftrIcon }) => {
       <div className="mobile-footer ftr-contact">
         <h4>Contact us</h4>
         <div className="contact-us-mobile">
-          <div className="chat">
+          {/* <div className="chat">
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,8 @@ export const FooterMobile = ({ FooterData, toggle, selected, ftrIcon }) => {
               </svg>
             </span>
             <div className="name">chat with Support</div>
-          </div>
+          </div> */}
+          <Link href="tel:609-507-0003">
           <div className="chat">
             <span>
               <svg
@@ -81,6 +82,8 @@ export const FooterMobile = ({ FooterData, toggle, selected, ftrIcon }) => {
             </span>
             <div className="name">call to Support</div>
           </div>
+          </Link>
+          <Link href="mailto:customercare@rocksama.com">
           <div className="chat">
             <span>
               <svg
@@ -113,6 +116,7 @@ export const FooterMobile = ({ FooterData, toggle, selected, ftrIcon }) => {
             </span>
             <div className="name">Email to Support</div>
           </div>
+          </Link>
         </div>
         <div className="mobile-ftr-contact ftr-contact flex">
           {FooterData.map((moFtrData) => {

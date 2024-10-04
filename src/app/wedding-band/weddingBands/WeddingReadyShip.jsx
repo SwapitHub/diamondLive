@@ -25,7 +25,7 @@ export const WeddingReadyShip = () => {
                             <h2>Looking for a matching wedding band?</h2>
                             <p>Select your engagement ring, then discover the perfect wedding ring to match.</p>
                             <div className="btn-bar">
-                                <Link href="/engagement-rings/start-with-a-setting?bridal-sets=true" className="btn-custom">Get Started</Link>
+                                <Link href="/engagement-rings/start-with-a-setting?bridalSets=true" className="btn-custom">Get Started</Link>
                             </div>
                         </div>
                        

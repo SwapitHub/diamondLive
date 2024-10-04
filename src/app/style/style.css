@@ -10133,14 +10133,15 @@ p.save-account, p.account {
   margin-right: auto;
 }
 
-
 .success-order .refer-friend-box {
+  margin-top: 26px;
+  border: 1px solid rgb(179, 178, 175);
   width: 100%;
   text-align: center;
   background-color: #734E90;
   padding: 25px 10px;
-  border: 0;
 }
+
 
 .success-order .refer-friend-box h5, .success-order .refer-friend-box p {
   color: #fff;
@@ -11309,12 +11310,7 @@ h3.order-details-heading {
   right: 0;
   top: 0px;
 }
-.success-order .refer-friend-box {
-  width: 50%;
-  margin-top: 26px;
-  border: 1px solid rgb(179, 178, 175);
-  padding: 15px;
-}
+
 
 .refer-friend-box p.refer-friend-para {
   margin: 13px 0px;
@@ -14708,7 +14704,7 @@ section.add-matching-wedding-band .love-right-content h4 {
   min-height: 236px;
 }
 .ShopDiamondShape-img-text:empty {
-  display: none;
+  display: none !important;
 }
 .server-side{
   display: none !important;
@@ -17424,7 +17420,7 @@ footer.footer .footer-main {
 
 .contact-us-mobile {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-top: 15px;
 }
 .contact-us-mobile .chat {
@@ -18395,7 +18391,7 @@ body.email-popup-open .main-ring-size-chart .popup-custom {
 }
 
 .table-ring-chart table.responsive {
-	width: 1000px;
+	width: 350px;
 }
 .order-history {
   margin-top: 20px;
@@ -18630,7 +18626,9 @@ ul.product-list-thumbnail {
 .our-story-accordian .accordion {
   padding-left: 0px;
 }
-
+.choose-setting-pages-main .main-common-active.product-main-img {
+  min-height: 170px;
+}
 
 }
 
