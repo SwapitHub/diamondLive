@@ -150,13 +150,13 @@ const ChooseDiamondsShape = ({
   const moreFilter = "moreFilter";
   const [filterProduct, setFilterProduct] = useState(moreFilter);
   // range slider==============
-  const minCaratRange = 0.01;
+  const minCaratRange = 0.0;
   const maxCaratRange = 5.0;
   const [minCarat, setMinCarat] = useState(minCaratRange);
   const [maxCarat, setMaxCarat] = useState(maxCaratRange);
+  const [newCaratRange, setNewCaratRange] = useState(0)
   const [caratRange, setCaratRange] = useState([
-    center_stone ? center_stone : 0.01,
-    5.0,
+    center_stone ? center_stone : 0.0, 5.0
   ]);
 
   const minDiamondPriceRange = 100;
@@ -169,7 +169,6 @@ const ChooseDiamondsShape = ({
   const minColorRange = 0;
   const maxColorRange = 100;
   const [colorRange, setColorRange] = useState([minColorRange, maxColorRange]);
-  console.log(colorRange);
   
   // cut
   const minCutRange = 0;
@@ -231,6 +230,7 @@ const ChooseDiamondsShape = ({
 
   const handleRemoveCarat = () => {
     setCaratRange([minCaratRange, maxCaratRange]);
+    setMinCarat(minCaratRange)
     secureLocalStorage.removeItem("caratfilter");
   };
   const handleRemovePrice = () => {
@@ -261,6 +261,7 @@ const ChooseDiamondsShape = ({
     }
     setShapeDataSlider([]);
     setCaratRange([minCaratRange, maxCaratRange]);
+    setMinCarat(minCaratRange)
     setDiamondPriceRange([minDiamondPriceRange, maxDiamondPriceRange]);
     setColorRange([minColorRange, maxColorRange]);
     setClarityRange([minClarityRange, maxClarityRange]);
@@ -462,10 +463,8 @@ const ChooseDiamondsShape = ({
 
         try {
           setLoading(true);
-          console.log(url);
 
           const response = await axios.get(url, { params });
-          console.log(response.data.response.body.total_diamonds_found);
 
           if (response.status === 200) {
             if (page === 1) {
@@ -558,11 +557,49 @@ const ChooseDiamondsShape = ({
   // =============== shop by price range==============
 
   const caratHandleChange = (newRange) => {
+    console.log(newRange, caratRange);
+    
     secureLocalStorage.setItem("caratfilter", JSON.stringify(newRange));
-    setCaratRange(newRange);
     setMinCarat(newRange[0]);
     setMaxCarat(newRange[1]);
+  
+    const caratRanges = {
+      0.25: [0.20, 0.30],
+      0.5: [0.45, 0.55],
+      0.75: [0.70, 0.80],
+      1: [0.95, 1.0],
+      1.25: [1.0, 1.1],
+      1.5: [1.45, 1.55],
+      1.75: [1.70, 1.80],
+      2: [1.95, 2.05],
+      2.25: [2.20, 2.30],
+      2.5: [2.45, 2.55],
+      2.75: [2.70, 2.80],
+      3: [2.95, 3.05],
+      3.25: [3.20, 3.30],
+      3.5: [3.45, 3.55],
+      3.75: [3.70, 3.80],
+      4: [3.95, 4.05],
+      4.25: [4.20, 4.30],
+      4.5: [4.45, 4.55],
+      4.75: [4.70, 4.80],
+      5: [4.95, 5.05],
+    };
+  
+    // Check if either newRange[0] or newRange[1] exists in caratRanges
+    const rangeStart = caratRanges[newRange];
+    const rangeEnd = caratRanges[newRange];
+  
+    if (rangeStart) {
+      setCaratRange(rangeStart);
+    } else if (rangeEnd) {
+      setCaratRange(rangeEnd);
+    } else {
+      setCaratRange(newRange);
+    }
   };
+  
+  
 
   const diamondPriceHandleChange = (newRange) => {
     secureLocalStorage.setItem("pricefilter", JSON.stringify(newRange));
@@ -944,10 +981,10 @@ const ChooseDiamondsShape = ({
                   <Slider
                     className="slider"
                     onAfterChange={caratHandleChange}
-                    value={caratRange}
+                    value={minCarat}
                     min={minCaratRange}
                     max={maxCaratRange}
-                    step={0.01}
+                    step={0.25}
                   />
                 </div>
 
@@ -1202,7 +1239,7 @@ const ChooseDiamondsShape = ({
                     value={caratRange}
                     min={minCaratRange}
                     max={maxCaratRange}
-                    step={0.01}
+                    step={0.25}
                   />
                 </div>
 
@@ -1214,8 +1251,8 @@ const ChooseDiamondsShape = ({
                   }}
                   className="slider-carat-inner-text"
                 >
-                  <div className="range-slider-show"> {caratRange[0]}</div>
-                  <div className="range-slider-show"> {caratRange[1]}</div>
+                  <div className="range-slider-show"> {caratRange ? caratRange[0] : null}</div>
+                  <div className="range-slider-show"> {caratRange ? caratRange[1] : null}</div>
                 </div>
               </div>
             </div>

@@ -489,7 +489,7 @@ const Header = ({ navData, siteInfo }) => {
                 }
               >
                 <ul>
-                  {navData.map((item) => (
+                  {navData?.map((item) => (
                     <li
                       key={item?.id}
                       className={`title ${item.slug}}`}
@@ -504,7 +504,7 @@ const Header = ({ navData, siteInfo }) => {
                 </ul>
               </div>
 
-              {navData.map((item) => (
+              {navData?.map((item) => (
                 <div
                   key={item?.id}
                   className={

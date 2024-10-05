@@ -2692,8 +2692,8 @@ ${changeClick === rose ? "active" : ""}
                                       ? "/lab_grown"
                                       : "/natural"
                                   }/?color=${changeClick}&diamond_original=${
-                                    diamondType.diamond_type
-                                      ? diamondType.diamond_type
+                                    diamondType?.diamond_type
+                                      ? diamondType?.diamond_type
                                       : "natural"
                                   }${
                                     typeof centerStoneData === "undefined"

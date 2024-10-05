@@ -12505,8 +12505,8 @@ object-position: top;
 
 
 .shop-by-page-common.Bridal-Sets-Only-setting-style .shop-style-img {
-  width: 101px;
-  height: 101px;
+  width: 90px;
+  height: 90px;
 }
 .shop-by-page-common .corusel-diamond {
   max-width: 100%;
@@ -14722,6 +14722,9 @@ section.add-matching-wedding-band .love-right-content h4 {
   height: 18px;
   margin-right: 1px;
 }
+.header-heart-icon div#user-log {
+  right: 55px;
+}
 @media (min-width: 2250px) {
   .bridalSets,
   .bridalSets-2 {
@@ -16418,6 +16421,9 @@ ul.product-list-thumbnail {
 }
 .shape-diamond-more-filter .slider .thumb.thumb-1 {
   margin-left: -11px !important;
+}
+.customization-form, div#request-ring-sizer {
+  max-width: 90%;
 }
 }
 
