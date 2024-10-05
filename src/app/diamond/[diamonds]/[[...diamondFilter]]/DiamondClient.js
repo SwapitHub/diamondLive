@@ -154,7 +154,6 @@ const ChooseDiamondsShape = ({
   const maxCaratRange = 5.0;
   const [minCarat, setMinCarat] = useState(minCaratRange);
   const [maxCarat, setMaxCarat] = useState(maxCaratRange);
-  const [newCaratRange, setNewCaratRange] = useState(0)
   const [caratRange, setCaratRange] = useState([
     center_stone ? center_stone : 0.0, 5.0
   ]);
@@ -557,7 +556,6 @@ const ChooseDiamondsShape = ({
   // =============== shop by price range==============
 
   const caratHandleChange = (newRange) => {
-    console.log(newRange, caratRange);
     
     secureLocalStorage.setItem("caratfilter", JSON.stringify(newRange));
     setMinCarat(newRange[0]);
@@ -996,8 +994,8 @@ const ChooseDiamondsShape = ({
                   }}
                   className="slider-carat-inner-text"
                 >
-                  <div className="range-slider-show"> {caratRange[0]}</div>
-                  <div className="range-slider-show"> {caratRange[1]}</div>
+                  <div className="range-slider-show"> {caratRange[0] || minCaratRange}</div>
+                  <div className="range-slider-show"> {caratRange[1] || maxCaratRange}</div>
                 </div>
               </div>
             </div>
@@ -1233,10 +1231,10 @@ const ChooseDiamondsShape = ({
               <div className="shape-slider-1">
                 <span>Carat</span>
                 <div className="slider-carat-slider">
-                  <Slider
+                <Slider
                     className="slider"
                     onAfterChange={caratHandleChange}
-                    value={caratRange}
+                    value={minCarat}
                     min={minCaratRange}
                     max={maxCaratRange}
                     step={0.25}
@@ -1251,8 +1249,8 @@ const ChooseDiamondsShape = ({
                   }}
                   className="slider-carat-inner-text"
                 >
-                  <div className="range-slider-show"> {caratRange ? caratRange[0] : null}</div>
-                  <div className="range-slider-show"> {caratRange ? caratRange[1] : null}</div>
+                  <div className="range-slider-show"> { caratRange[0] || minCaratRange}</div>
+                  <div className="range-slider-show"> { caratRange[1] || maxCaratRange}</div>
                 </div>
               </div>
             </div>
