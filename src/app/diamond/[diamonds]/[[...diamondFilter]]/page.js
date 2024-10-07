@@ -166,17 +166,15 @@ export default async function DetailRingPage({ params }) {
       }
     : null;
 
-  
-
   return (
     <div>
       <ChooseDiamondsShape
         diamonds={diamonds}
         diamondsFilter={diamondFilter ? diamondFilter[0] : diamondFilter}
         productSlug={diamondFilter?.length > 1 && diamondFilter[0]}
-        shapeData={shapeData.data}
-        dataServer={diamondData.response.body.diamonds}
-        totalDiamondServer={diamondData.response.body.total_diamonds_found}
+        shapeData={shapeData?.data}
+        dataServer={diamondData?.response?.body?.diamonds}
+        totalDiamondServer={diamondData?.response?.body?.total_diamonds_found}
         filterData={filterData ? filterData : null}
       />
     </div>

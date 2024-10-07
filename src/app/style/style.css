@@ -12592,7 +12592,7 @@ object-position: top;
 }
 
 .shop-by-shape-style .shop-style-text, .shape-main .shape-text {
-	font-size: 17.6px;
+	font-size: 13px;
 	font-style: normal;
 	font-weight: 400;
 	color: #000;
@@ -13139,7 +13139,7 @@ object-position: top;
   font-weight: 500;
   line-height: normal;
 }
-.card-right-side .add-form-gift .add-per-info p span {
+.card-right-side .add-form-gift .add-per-info p a {
   font-weight: 800;
 }
 .card-right-side .add-form-gift-checkout {

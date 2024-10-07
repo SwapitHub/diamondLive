@@ -29,18 +29,22 @@ import {
 
 import Cookies from "js-cookie";
 
-
-const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,shapeData, metalColor}) => {
+const StartWithASetting = ({
+  rings,
+  ringFilter,
+  filterRoseDatas,
+  ShopByStyle,
+  shapeData,
+  metalColor,
+}) => {
   const user_id = secureLocalStorage.getItem("formData");
 
-  
   const searchParams = useSearchParams();
   const wishListDataBase = useSelector((state) => state?.productDataWishlist);
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
   const pathname = usePathname();
-  const router = useRouter()
-
+  const router = useRouter();
 
   const [pathSegments, setPathSegments] = useState([]);
   const [queryParams, setQueryParams] = useState({});
@@ -58,25 +62,22 @@ const StartWithASetting = ({ rings, ringFilter, filterRoseDatas ,ShopByStyle,sha
   let menuShapeName, menuShopStyle;
   const [trellisRing, setTrellisRing] = useState();
   const [metalColorName, setMetalColorName] = useState("White");
-console.log(metalColorName);
+  console.log(metalColorName);
 
-  
   useEffect(() => {
     if (rings === "shape") {
       menuShapeName = ringFilter;
-      
     } else if (rings === "style") {
       menuShopStyle = ringFilter;
-    } else if(rings === 'metal'){
-      setMetalColorName(ringFilter)
-    }else{
-      setTrellisRing(rings)
+    } else if (rings === "metal") {
+      setMetalColorName(ringFilter);
+    } else {
+      setTrellisRing(rings);
     }
   }, []);
 
   const menuMetal = pathSegments[2] || "";
   console.log(menuMetal);
-  
 
   const diamond_origin = searchParams.get("diamond_origin");
   const ring = "ring";
@@ -98,7 +99,7 @@ console.log(metalColorName);
 
   const [filterRoseData, setFilterRoseData] = useState([]);
   const [newPrevData, setNewPrevData] = useState([]);
-  
+
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [changeName, setChangeName] = useState("");
@@ -118,11 +119,12 @@ console.log(metalColorName);
   const selectedShopStyleIdsString = mergedArray.join(",");
   const [metalId, setMetalId] = useState();
   const [priceShorting, setPriceShorting] = useState();
-  const [metalColorUrl, setMetalColorUrl] = useState();
-  useEffect(() => {
-    setMetalColorUrl(menuMetal);
-  }, [menuMetal]);
-  const getMetalColorValue = (menuMetal) => {
+
+  const [metalColorValue, setMetalColorValue] = useState(
+    getMetalColorValue(menuMetal)
+  );
+
+  function getMetalColorValue(menuMetal) {
     switch (menuMetal) {
       case "Yellow":
         return yellow;
@@ -135,19 +137,20 @@ console.log(metalColorName);
       default:
         return white;
     }
-  };
-  const [metalColorValue, setMetalColorValue] = useState(
-    getMetalColorValue(menuMetal)
-  );
+  }
+
+  useEffect(() => {
+    setMetalColorValue(getMetalColorValue(menuMetal));
+  }, [menuMetal]);
 
   useEffect(() => {
     if (menuShapeName) {
       secureLocalStorage.setItem("clickedShape", menuShapeName);
-      Cookies.set("clickedShape",menuShapeName,{
+      Cookies.set("clickedShape", menuShapeName, {
         expires: 3650,
         secure: true,
-        sameSite: 'Strict'
-      })
+        sameSite: "Strict",
+      });
       setGetLocalStoreShape(menuShapeName);
     }
   }, [menuShapeName]);
@@ -179,13 +182,10 @@ console.log(metalColorName);
   }, [localBridalData]);
 
   const getBridalSet = () => {
-    if(checkedBridalSets==='true'){
-
-      router.push('/engagement-rings/start-with-a-setting');
-    }
-    else {
-      router.push('/engagement-rings/start-with-bridal-set?bridalSets=true');
-
+    if (checkedBridalSets === "true") {
+      router.push("/engagement-rings/start-with-a-setting");
+    } else {
+      router.push("/engagement-rings/start-with-bridal-set?bridalSets=true");
     }
     setLocalBridalData((prevState) => !prevState);
   };
@@ -228,7 +228,7 @@ console.log(metalColorName);
       const params = {
         stock_item_type: "Diamond",
         status: "pending",
-      }
+      };
 
       try {
         const response = await axios.get(url, { params });
@@ -266,7 +266,7 @@ console.log(metalColorName);
           ? `&subcategory=${trellisRing == null ? "" : trellisRing}`
           : ""
       }`;
-      
+
       axios
         .get(URLNEW)
         .then((res) => {
@@ -323,7 +323,7 @@ console.log(metalColorName);
     // window.addEventListener("beforeunload", (event) => {
     //   fetchData();
     // });
-``
+    ``;
     // window.addEventListener("unload", (event) => {
     //   fetchData();
     // });
@@ -387,7 +387,6 @@ console.log(metalColorName);
   //  =====================scroll pagination end===================
   // ===========metal three color rose yellow white  =============================
 
-
   const onChangeName = (value, id, slug) => {
     setChangeName({ value, id });
     setIsActive(!isActive);
@@ -415,19 +414,16 @@ console.log(metalColorName);
   };
 
   // =============== shop by shape start ==============
- 
 
   const shapeOnclick = (shapeNameItem) => {
-    
     const clickedShape = secureLocalStorage.getItem("clickedShape");
     const clickedShapeCookies = Cookies.get("clickedShape");
 
-    if (clickedShape == shapeNameItem || clickedShapeCookies==shapeNameItem) {
+    if (clickedShape == shapeNameItem || clickedShapeCookies == shapeNameItem) {
       // If the clicked shape is already active, remove the filter
-     
 
       secureLocalStorage.removeItem("clickedShape");
-      Cookies.remove('clickedShape', { path: '/' })
+      Cookies.remove("clickedShape", { path: "/" });
 
       setShapeBreadCamb("");
       setShapeName("");
@@ -441,18 +437,17 @@ console.log(metalColorName);
       // router.replace(newURL);
       setShapeName(shapeNameItem);
 
-      Cookies.set("clickedShape",shapeNameItem,{
+      Cookies.set("clickedShape", shapeNameItem, {
         expires: 3650,
         secure: true,
-        sameSite: 'Strict'
-      })
+        sameSite: "Strict",
+      });
       secureLocalStorage.setItem("clickedShape", shapeNameItem);
     }
   };
 
   // =============== shop by metal start ==============
   const metalOnclick = (metaColorId, metalValueColor, MetalColorName) => {
-
     setMetalColorValue(metalValueColor);
     if (metaColorId === metalId) {
       setMetalId();
@@ -461,7 +456,6 @@ console.log(metalColorName);
     }
     setMetalColorName(MetalColorName);
 
-    
     // const searchParams = new URLSearchParams(window.location.search);
     // searchParams.delete("metal");
     // const newSearchString = searchParams.toString();
@@ -476,9 +470,7 @@ console.log(metalColorName);
 
   // =============== shop by  style ==============
 
-
   useEffect(() => {
-
     const storedSelectedShopStyleIdsCoo = Cookies.get("selectedShopStyleIds");
 
     const storedSelectedShopStyleIds =
@@ -503,23 +495,23 @@ console.log(metalColorName);
         "selectedShopStyleIds",
         JSON.stringify([menuShopStyle])
       );
-      Cookies.set("selectedShopStyleIds",JSON.stringify([menuShopStyle]),{
+      Cookies.set("selectedShopStyleIds", JSON.stringify([menuShopStyle]), {
         expires: 3650,
         secure: true,
-        sameSite: 'Strict'
-      })
-  Cookies.remove('clickedShape', { path: '/' })
+        sameSite: "Strict",
+      });
+      Cookies.remove("clickedShape", { path: "/" });
       secureLocalStorage.removeItem("clickedShape");
     }
     if (menuShapeName) {
       secureLocalStorage.setItem("clickedShape", menuShapeName);
       secureLocalStorage.removeItem("selectedShopStyleIds");
-      Cookies.set("clickedShape",menuShapeName,{
+      Cookies.set("clickedShape", menuShapeName, {
         expires: 3650,
         secure: true,
-        sameSite: 'Strict'
-      })
-  Cookies.remove('selectedShopStyleIds', { path: '/' })
+        sameSite: "Strict",
+      });
+      Cookies.remove("selectedShopStyleIds", { path: "/" });
     }
   }, [menuShopStyle, menuShapeName]);
   useEffect(() => {
@@ -530,7 +522,9 @@ console.log(metalColorName);
     // const storedColorData = secureLocalStorage.getItem("colorDataSlider");
 
     const parsedStyleData = storedStyleData ? JSON.parse(storedStyleData) : [];
-    const parsedStyleDataC = storedStyleDataC ? JSON.parse(storedStyleDataC) : [];
+    const parsedStyleDataC = storedStyleDataC
+      ? JSON.parse(storedStyleDataC)
+      : [];
 
     // const parsedColorData = storedColorData ? JSON.parse(storedColorData) : [];
 
@@ -546,18 +540,21 @@ console.log(metalColorName);
       updatedStyleDataSlider = activeStyleIds.filter(
         (item) => item !== styleItem
       );
-      
     } else {
       updatedStyleDataSlider = [...activeStyleIds, styleItem];
     }
 
     // Update state
     setActiveStyleIds(updatedStyleDataSlider);
-    Cookies.set("selectedShopStyleIds",JSON.stringify(updatedStyleDataSlider),{
-      expires: 3650,
-      secure: true,
-      sameSite: 'Strict'
-    })
+    Cookies.set(
+      "selectedShopStyleIds",
+      JSON.stringify(updatedStyleDataSlider),
+      {
+        expires: 3650,
+        secure: true,
+        sameSite: "Strict",
+      }
+    );
 
     secureLocalStorage.setItem(
       "selectedShopStyleIds",
@@ -568,13 +565,12 @@ console.log(metalColorName);
   const getBridalSetData = () => {
     setLocalBridalData(false);
     secureLocalStorage.removeItem("bridalSetsData");
-    
   };
 
   const resetAllShape = () => {
-     Cookies.remove('selectedShopStyleIds', { path: '/' })
-  Cookies.remove('ring_style', { path: '/' })
-  Cookies.remove('clickedShape', { path: '/' })
+    Cookies.remove("selectedShopStyleIds", { path: "/" });
+    Cookies.remove("ring_style", { path: "/" });
+    Cookies.remove("clickedShape", { path: "/" });
     commonMetalColor("White");
     setActiveStyleIds([]);
     setShapeName();
@@ -617,142 +613,145 @@ console.log(metalColorName);
       }
     });
   }
-  
 
   if (typeof window !== "undefined") {
     $(document).ready(function () {
-  $(".resultdata > div.all-pages-data").each(function (i, odiv) {
-    $(".shop-by-metal-color > .metal-all-color").on("click", function () {
-      var idMetal = $(this).attr("id");
+      $(".resultdata > div.all-pages-data").each(function (i, odiv) {
+        $(".shop-by-metal-color > .metal-all-color").on("click", function () {
+          var idMetal = $(this).attr("id");
 
-      if (metalId) {
-        commonMetalColor("White");
-      } else {
-        commonMetalColor(idMetal);
-      }
-    });
+          if (metalId) {
+            commonMetalColor("White");
+          } else {
+            commonMetalColor(idMetal);
+          }
+        });
 
-    // if (menuMetal) {
-    //   var idMetal = menuMetal;
-    //   commonMetalColor(idMetal);
-    // }
+        // if (menuMetal) {
+        //   var idMetal = menuMetal;
+        //   commonMetalColor(idMetal);
+        // }
 
-    // if(metalColorName){
-    // commonMetalColor(metalColorName);
-    // }
-    // onclick four color circle
-
-    $(odiv)
-      .find(".main-common-active > div")
-      .click(function () {
-        var index = $(this).index();
-        $(odiv)
-          .find(".outerDiv > a > .main-common-active.product-main-img > div")
-          .removeClass("active");
-        $(odiv).addClass("active");
+        // if(metalColorName){
+        // commonMetalColor(metalColorName);
+        // }
+        // onclick four color circle
 
         $(odiv)
-          .find(".main-common-active > div.defaultImg")
-          .removeClass("active")
-          .eq(index)
-          .addClass("active");
+          .find(".main-common-active > div")
+          .click(function () {
+            var index = $(this).index();
+            $(odiv)
+              .find(
+                ".outerDiv > a > .main-common-active.product-main-img > div"
+              )
+              .removeClass("active");
+            $(odiv).addClass("active");
 
-        $(odiv)
-          .find(".outerDiv > a > div.main-common-active > div")
-          .removeClass("active");
+            $(odiv)
+              .find(".main-common-active > div.defaultImg")
+              .removeClass("active")
+              .eq(index)
+              .addClass("active");
 
-        $(odiv)
-          .find(".outerDiv > a > div.main-common-active > div")
-          .eq(index)
-          .addClass("active");
+            $(odiv)
+              .find(".outerDiv > a > div.main-common-active > div")
+              .removeClass("active");
 
-        $(this).addClass("active");
+            $(odiv)
+              .find(".outerDiv > a > div.main-common-active > div")
+              .eq(index)
+              .addClass("active");
 
-        // Add 'metal-value-active' class to the corresponding .metal-name-item-name
-        $(odiv)
-          .find(".main-common-active .metal-name-item-name")
-          .removeClass("metal-value-active");
+            $(this).addClass("active");
 
-        var metalNameItem = $(odiv).find(".metal-name-item-name").eq(index);
-        metalNameItem.addClass("metal-value-active");
+            // Add 'metal-value-active' class to the corresponding .metal-name-item-name
+            $(odiv)
+              .find(".main-common-active .metal-name-item-name")
+              .removeClass("metal-value-active");
 
-        // 'price-active' class from all price elements
-        $(odiv)
-          .find(".main-common-active .product-price")
-          .removeClass("price-active");
+            var metalNameItem = $(odiv).find(".metal-name-item-name").eq(index);
+            metalNameItem.addClass("metal-value-active");
 
-        var priceElement;
-        switch (index) {
-          case 0:
-            priceElement = $(odiv).find(".all-img1.product-price.defaultImg");
-            break;
-          case 1:
-            priceElement = $(odiv).find(".all-img1.product-price.img-1");
-            break;
-          case 2:
-            priceElement = $(odiv).find(".all-img1.product-price.img-2");
-            break;
-          case 3:
-            priceElement = $(odiv).find(".all-img1.product-price.img-3");
-            break;
-          default:
-            break;
-        }
+            // 'price-active' class from all price elements
+            $(odiv)
+              .find(".main-common-active .product-price")
+              .removeClass("price-active");
 
-        priceElement.addClass("price-active");
+            var priceElement;
+            switch (index) {
+              case 0:
+                priceElement = $(odiv).find(
+                  ".all-img1.product-price.defaultImg"
+                );
+                break;
+              case 1:
+                priceElement = $(odiv).find(".all-img1.product-price.img-1");
+                break;
+              case 2:
+                priceElement = $(odiv).find(".all-img1.product-price.img-2");
+                break;
+              case 3:
+                priceElement = $(odiv).find(".all-img1.product-price.img-3");
+                break;
+              default:
+                break;
+            }
+
+            priceElement.addClass("price-active");
+          });
       });
-  });
-})
+    });
   }
   // ================
 
   // ==================== hover effect
   if (typeof window !== "undefined") {
-  $(document).ready(function () {
-    $(".resultdata > div.all-pages-data").each(function (i, odiv) {
-      $(odiv)
-        .find(".outerDiv > a .main-common-active > .all-card-four-color")
-        .on("mouseenter", function () {
-          var index = $(this).index();
+    $(document).ready(function () {
+      $(".resultdata > div.all-pages-data").each(function (i, odiv) {
+        $(odiv)
+          .find(".outerDiv > a .main-common-active > .all-card-four-color")
+          .on("mouseenter", function () {
+            var index = $(this).index();
 
-          // Add class on hover
+            // Add class on hover
 
-          $(odiv).addClass("hover-active");
-          $(odiv)
-            .find(".main-common-active .metal-name-item-name")
-            .eq(index)
-            .addClass("metal-hover-active");
-          $(odiv)
-            .find(".main-common-active > .product-price")
-            .eq(index)
-            .addClass("price-hover-active");
+            $(odiv).addClass("hover-active");
+            $(odiv)
+              .find(".main-common-active .metal-name-item-name")
+              .eq(index)
+              .addClass("metal-hover-active");
+            $(odiv)
+              .find(".main-common-active > .product-price")
+              .eq(index)
+              .addClass("price-hover-active");
 
-          $(odiv)
-            .find(".main-common-active > .common-img")
-            .eq(index)
-            .addClass("common-img-hover-active");
-        })
-        .on("mouseleave", function () {
-          var index = $(this).index();
+            $(odiv)
+              .find(".main-common-active > .common-img")
+              .eq(index)
+              .addClass("common-img-hover-active");
+          })
+          .on("mouseleave", function () {
+            var index = $(this).index();
 
-          // Remove class on hover out
-          $(odiv).removeClass("hover-active");
-          $(odiv)
-            .find(".main-common-active .metal-name-item-name")
-            .eq(index)
-            .removeClass("metal-hover-active");
-          $(odiv)
-            .find(".main-common-active > .product-price")
-            .eq(index)
-            .removeClass("price-hover-active");
+            // Remove class on hover out
+            $(odiv).removeClass("hover-active");
+            $(odiv)
+              .find(".main-common-active .metal-name-item-name")
+              .eq(index)
+              .removeClass("metal-hover-active");
+            $(odiv)
+              .find(".main-common-active > .product-price")
+              .eq(index)
+              .removeClass("price-hover-active");
 
-          $(odiv)
-            .find(".main-common-active > .common-img")
-            .eq(index)
-            .removeClass("common-img-hover-active");
-        });
+            $(odiv)
+              .find(".main-common-active > .common-img")
+              .eq(index)
+              .removeClass("common-img-hover-active");
+          });
+      });
     });
-  });
   }
 
   // ==================sort by price start
@@ -760,11 +759,11 @@ console.log(metalColorName);
   const handlePriceChange = (selectedOption) => {
     setPriceShorting(selectedOption.value);
 
-    Cookies.set("PriceShorting",selectedOption.value,{
+    Cookies.set("PriceShorting", selectedOption.value, {
       expires: 3650,
       secure: true,
-      sameSite: 'Strict'
-    })
+      sameSite: "Strict",
+    });
   };
   // ========
   const ShopStyleSlider = {
@@ -857,7 +856,6 @@ console.log(metalColorName);
     }
   };
 
-
   // =======remove to card
   useMemo(() => {
     setLoading(true);
@@ -931,34 +929,27 @@ console.log(metalColorName);
       );
 
       // Update secureLocalStorage with the new array
-      Cookies.set("selectedShopStyleIds", JSON.stringify(updatedStyles),{
+      Cookies.set("selectedShopStyleIds", JSON.stringify(updatedStyles), {
         expires: 3650,
         secure: true,
-        sameSite: 'Strict'
-      })
+        sameSite: "Strict",
+      });
       secureLocalStorage.setItem(
         "selectedShopStyleIds",
         JSON.stringify(updatedStyles)
       );
       // if (menuStyleNames?.includes(gemStyle)) {
 
-      
       // }
       return updatedStyles;
     });
   };
   const handleShapeRemove = () => {
-    
     setShapeName();
-  Cookies.remove('clickedShape', { path: '/' })
+    Cookies.remove("clickedShape", { path: "/" });
 
     secureLocalStorage.removeItem("clickedShape");
-
-    
   };
-
-
-
 
   return (
     <>
@@ -1558,7 +1549,13 @@ console.log(metalColorName);
             <form>
               <label for="#">Sort : </label>
               <Select
-                placeholder={options.length<0 ? options.map((item)=>{item.label}) : "Select Option"}
+                placeholder={
+                  options.length < 0
+                    ? options.map((item) => {
+                        item.label;
+                      })
+                    : "Select Option"
+                }
                 onChange={handlePriceChange}
                 options={options}
                 isSearchable={false}
@@ -1853,7 +1850,7 @@ console.log(metalColorName);
                     </div>
 
                     <div className="heart-icon">
-                      <Link href='javascript:void(0);'>
+                      <Link href="javascript:void(0);">
                         {user_id ? (
                           wishlistIds.includes(item.id) ? (
                             <IoMdHeart
@@ -1975,7 +1972,6 @@ console.log(metalColorName);
             <h3 className="center">{loading ? null : "Data Not Found"}</h3>
           )}
         </div>
-
 
         {/* =================server side */}
         <div className="resultdata setings-Page-img server-side">
@@ -2131,7 +2127,7 @@ console.log(metalColorName);
                     </div>
 
                     <div className="heart-icon">
-                      <Link href='javascript:void(0);'>
+                      <Link href="javascript:void(0);">
                         {user_id ? (
                           wishlistIds.includes(item.id) ? (
                             <IoMdHeart

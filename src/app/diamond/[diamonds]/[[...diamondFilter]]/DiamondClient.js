@@ -8,17 +8,19 @@ import SlickSlider from "react-slick";
 import Slider from "react-slider";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-
 import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { Tabbing } from "@/app/_componentStatic/Tabbing";
 import { UserContext } from "@/app/context/UserContext";
+import Cookies from "js-cookie";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IoClose } from "react-icons/io5";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
-import Cookies from "js-cookie";
-import { addToCompare, removeFromCompare } from "../../../../../store/actions/compareActions";
+import {
+  addToCompare,
+  removeFromCompare,
+} from "../../../../../store/actions/compareActions";
 
 const ChooseDiamondsShape = ({
   diamonds,
@@ -121,23 +123,21 @@ const ChooseDiamondsShape = ({
   const [checkedSecond, setCheckedSecond] = useState(false);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const resultArray = ["D", "E", "F", "G", "H", "I", "J"];
-  const clarityOptions = [
-    "VVS1",
-    "VVS2",
-    "VS1",
-    "VS2",
-    "SI1",
-    "SI2",
-    "FL",
-    "IF",
+  const resultArray = ["D", "F", "H", "K", "O", "R", "U", "Z"];
+  const clarityOptions = ["VVS1", "VS1", "SI1", "SI3", "VS", "VVS", "FL", "IF"];
+  const cutOptions = [
+    "Ideal",
+    "Excellent",
+    "Very Good",
+    "Good",
+    "Fair",
+    "Poor",
   ];
-  const cutOptions = ["Ideal", "Excellent", "Very Good", "Good", "Fair"];
   let updatedArray = [...resultArray];
-  const [sliderValue, setSliderValue] = useState(["D", "J"]);
+  const [sliderValue, setSliderValue] = useState([]);
 
-  const [cutSliderValue, setCutSliderValue] = useState(["Ideal", "Fair"]);
-  const [claritySliderValue, setClaritySliderValue] = useState(["VVS1", "IF"]);
+  const [cutSliderValue, setCutSliderValue] = useState([]);
+  const [claritySliderValue, setClaritySliderValue] = useState([]);
 
   function handleChange() {
     setChecked(!checked);
@@ -148,14 +148,15 @@ const ChooseDiamondsShape = ({
 
   const shape = "shape";
   const moreFilter = "moreFilter";
-  const [filterProduct, setFilterProduct] = useState(moreFilter);
+
   // range slider==============
-  const minCaratRange = 0.0;
-  const maxCaratRange = 5.0;
+  const minCaratRange = 0.01;
+  const maxCaratRange = 15.0;
   const [minCarat, setMinCarat] = useState(minCaratRange);
   const [maxCarat, setMaxCarat] = useState(maxCaratRange);
   const [caratRange, setCaratRange] = useState([
-    center_stone ? center_stone : 0.0, 5.0
+    center_stone ? center_stone : 0.01,
+    15.0,
   ]);
 
   const minDiamondPriceRange = 100;
@@ -168,7 +169,7 @@ const ChooseDiamondsShape = ({
   const minColorRange = 0;
   const maxColorRange = 100;
   const [colorRange, setColorRange] = useState([minColorRange, maxColorRange]);
-  
+
   // cut
   const minCutRange = 0;
   const maxCutRange = 100;
@@ -188,8 +189,6 @@ const ChooseDiamondsShape = ({
   const [diamondFilter, setDiamondFilter] = useState(
     diamondColor ? moreFilter : shape
   );
-  const [shapeName, setShapeName] = useState([]);
-  const [activeStyleIds, setActiveStyleIds] = useState([]);
 
   const handleShapeClick = (styleItem) => {
     // Ensure shapeDataSlider is an array
@@ -229,7 +228,6 @@ const ChooseDiamondsShape = ({
 
   const handleRemoveCarat = () => {
     setCaratRange([minCaratRange, maxCaratRange]);
-    setMinCarat(minCaratRange)
     secureLocalStorage.removeItem("caratfilter");
   };
   const handleRemovePrice = () => {
@@ -238,19 +236,19 @@ const ChooseDiamondsShape = ({
   };
   const handleRemoveColor = () => {
     setColorRange([minColorRange, maxColorRange]);
-    setSliderValue(["D", "J"]);
+    setSliderValue([]);
     secureLocalStorage.removeItem("colorRange");
     secureLocalStorage.removeItem("colorfilter");
   };
   const handleRemoveClarity = () => {
     setClarityRange([minClarityRange, maxClarityRange]);
-    setClaritySliderValue(["VVS1", "IF"]);
+    setClaritySliderValue([]);
     secureLocalStorage.removeItem("clarityfilter");
     secureLocalStorage.removeItem("clarityRange");
   };
   const handleRemoveCut = () => {
     setCutRange([minCutRange, maxCutRange]);
-    setCutSliderValue(["Ideal", "Fair"]);
+    setCutSliderValue([]);
     secureLocalStorage.removeItem("cutfilter");
     secureLocalStorage.removeItem("cutRange");
   };
@@ -260,14 +258,13 @@ const ChooseDiamondsShape = ({
     }
     setShapeDataSlider([]);
     setCaratRange([minCaratRange, maxCaratRange]);
-    setMinCarat(minCaratRange)
     setDiamondPriceRange([minDiamondPriceRange, maxDiamondPriceRange]);
     setColorRange([minColorRange, maxColorRange]);
     setClarityRange([minClarityRange, maxClarityRange]);
     setCutRange([minCutRange, maxCutRange]);
-    setSliderValue(["D", "J"]);
-    setClaritySliderValue(["VVS1", "IF"]);
-    setCutSliderValue(["Ideal", "Fair"]);
+    setSliderValue([]);
+    setClaritySliderValue([]);
+    setCutSliderValue([]);
     setSelectedOption("");
     secureLocalStorage.removeItem("caratfilter");
     secureLocalStorage.removeItem("pricefilter");
@@ -459,7 +456,6 @@ const ChooseDiamondsShape = ({
           page_size: pageSize,
         };
 
-
         try {
           setLoading(true);
 
@@ -484,9 +480,7 @@ const ChooseDiamondsShape = ({
         } finally {
           setLoading(false);
         }
-
-        
-      }
+      };
       const debouncedFetchDataGem = debounce(fetchData);
       debouncedFetchDataGem();
 
@@ -556,48 +550,11 @@ const ChooseDiamondsShape = ({
   // =============== shop by price range==============
 
   const caratHandleChange = (newRange) => {
-    
     secureLocalStorage.setItem("caratfilter", JSON.stringify(newRange));
+    setCaratRange(newRange);
     setMinCarat(newRange[0]);
     setMaxCarat(newRange[1]);
-  
-    const caratRanges = {
-      0.25: [0.20, 0.30],
-      0.5: [0.45, 0.55],
-      0.75: [0.70, 0.80],
-      1: [0.95, 1.0],
-      1.25: [1.0, 1.1],
-      1.5: [1.45, 1.55],
-      1.75: [1.70, 1.80],
-      2: [1.95, 2.05],
-      2.25: [2.20, 2.30],
-      2.5: [2.45, 2.55],
-      2.75: [2.70, 2.80],
-      3: [2.95, 3.05],
-      3.25: [3.20, 3.30],
-      3.5: [3.45, 3.55],
-      3.75: [3.70, 3.80],
-      4: [3.95, 4.05],
-      4.25: [4.20, 4.30],
-      4.5: [4.45, 4.55],
-      4.75: [4.70, 4.80],
-      5: [4.95, 5.05],
-    };
-  
-    // Check if either newRange[0] or newRange[1] exists in caratRanges
-    const rangeStart = caratRanges[newRange];
-    const rangeEnd = caratRanges[newRange];
-  
-    if (rangeStart) {
-      setCaratRange(rangeStart);
-    } else if (rangeEnd) {
-      setCaratRange(rangeEnd);
-    } else {
-      setCaratRange(newRange);
-    }
   };
-  
-  
 
   const diamondPriceHandleChange = (newRange) => {
     secureLocalStorage.setItem("pricefilter", JSON.stringify(newRange));
@@ -608,13 +565,14 @@ const ChooseDiamondsShape = ({
 
   const colorHandleChange = (value) => {
     const colorRanges = [
-      { label: "D", min: 0, max: 14.6 },
-      { label: "E", min: 14.6, max: 29.2 },
-      { label: "F", min: 29.2, max: 43.8 },
-      { label: "G", min: 43.8, max: 58.4 },
-      { label: "H", min: 58.4, max: 73 },
-      { label: "I", min: 73, max: 87.6 },
-      { label: "J", min: 87.6, max: 100 },
+      { label: "D", min: 0, max: 14.7 },
+      { label: "F", min: 14.5, max: 29.4 },
+      { label: "H", min: 29.2, max: 44.1 },
+      { label: "K", min: 44, max: 58.8 },
+      { label: "O", min: 58.5, max: 73.5 },
+      { label: "R", min: 73.1, max: 88.2 },
+      { label: "U", min: 88, max: 100 },
+      { label: "Z", min: 100, max: 100 },
     ];
 
     updatedArray = updatedArray.filter((item) => {
@@ -628,7 +586,7 @@ const ChooseDiamondsShape = ({
     secureLocalStorage.setItem("colorfilter", JSON.stringify(resultString));
 
     if (value[0] <= 0 && value[1] >= 100) {
-      setSliderValue(["D", "J"]);
+      setSliderValue([]);
       setColorRange([minColorRange, maxColorRange]);
     } else {
       setColorRange(value);
@@ -638,11 +596,12 @@ const ChooseDiamondsShape = ({
   const cutHandleChange = (newRange) => {
     let updatedCutArray = cutOptions.slice();
     const cutRanges = [
-      { label: "Ideal", min: 0, max: 20 },
-      { label: "Excellent", min: 20, max: 40 },
-      { label: "Very Good", min: 40, max: 60 },
-      { label: "Good", min: 60, max: 80 },
-      { label: "Fair", min: 80, max: 100 },
+      { label: "Ideal", min: 0, max: 17 },
+      { label: "Excellent", min: 17, max: 34 },
+      { label: "Very Good", min: 34, max: 51 },
+      { label: "Good", min: 51, max: 68 },
+      { label: "Fair", min: 68, max: 85 },
+      { label: "Poor", min: 85, max: 100 },
     ];
 
     updatedCutArray = updatedCutArray.filter((item) => {
@@ -655,7 +614,7 @@ const ChooseDiamondsShape = ({
     secureLocalStorage.setItem("cutfilter", JSON.stringify(updatedCutArray));
 
     if (newRange[0] <= 0 && newRange[1] >= 100) {
-      setCutSliderValue(["Ideal", "Fair"]);
+      setCutSliderValue([]);
       setCutRange([0, 100]);
     } else {
       setCutRange(newRange);
@@ -666,14 +625,14 @@ const ChooseDiamondsShape = ({
     let updateClarityOptions = clarityOptions.slice();
 
     const clarityRanges = [
-      { label: "VVS1", min: 0, max: 12.5 },
-      { label: "VVS2", min: 12.5, max: 25 },
-      { label: "VS1", min: 25, max: 37.5 },
-      { label: "VS2", min: 37.5, max: 50 },
-      { label: "SI1", min: 50, max: 62.5 },
-      { label: "SI2", min: 62.5, max: 75 },
-      { label: "FL", min: 75, max: 87.5 },
-      { label: "IF", min: 87.5, max: 100 },
+      { label: "VVS1", min: 0, max: 14.7 },
+      { label: "VS1", min: 14.5, max: 29.4 },
+      { label: "SI1", min: 29.2, max: 44.1 },
+      { label: "SI3", min: 44, max: 58.8 },
+      { label: "VS", min: 58.5, max: 73.5 },
+      { label: "VVS", min: 73.1, max: 88.2 },
+      { label: "FL", min: 88, max: 100 },
+      { label: "IF", min: 100, max: 100 },
     ];
 
     updateClarityOptions = updateClarityOptions.filter((item) => {
@@ -689,7 +648,7 @@ const ChooseDiamondsShape = ({
     );
 
     if (newRange[0] <= 0 && newRange[1] >= 100) {
-      setClaritySliderValue(["VVS1", "IF"]);
+      setClaritySliderValue([]);
       setClarityRange([minClarityRange, maxClarityRange]);
     } else {
       setClarityRange(newRange);
@@ -719,36 +678,36 @@ const ChooseDiamondsShape = ({
     setSelectedOption(e.target.value);
     switch (e.target.value) {
       case "optimal_balance":
-        setColorRange([29.2, 73.5]);
+        setColorRange([14.5, 29.4]);
         setSliderValue(["F", "G", "H"]);
-        setCutRange([20, 60]);
+        setCutRange([17, 51]);
         setCutSliderValue(["Excellent", "Very Good"]);
-        setClarityRange([21, 62.5]);
+        setClarityRange([14.5, 29.4]);
         setClaritySliderValue(["VS1", "VS2", "SI1"]);
         break;
       case "max_brilliance":
-        setCutRange([20, 40]);
+        setCutRange([17, 34]);
         setCutSliderValue(["Excellent"]);
         setColorRange([minColorRange, maxColorRange]);
-        setSliderValue(["D", "J"]);
+        setSliderValue([]);
         setClarityRange([minClarityRange, maxClarityRange]);
-        setClaritySliderValue(["VVS1", "IF"]);
+        setClaritySliderValue([]);
         break;
       case "superior_quality":
-        setCutRange([0, 40]);
+        setCutRange([0, 34]);
         setCutSliderValue(["Ideal", "Excellent"]);
-        setColorRange([0, 44.1]);
+        setColorRange([0, 14.5]);
         setSliderValue(["D", "E", "F"]);
-        setClarityRange([12.5, 87.5]);
+        setClarityRange([0, 88]);
         setClaritySliderValue(["VVS2", "FL"]);
         break;
       default:
         setColorRange([minColorRange, maxColorRange]);
-        setSliderValue(["D", "J"]);
-        setCutSliderValue(["Ideal", "Fair"]);
+        setSliderValue([]);
+        setCutSliderValue([]);
         setCutRange([minCutRange, maxCutRange]);
         setClarityRange([minClarityRange, maxClarityRange]);
-        setClaritySliderValue(["VVS1", "IF"]);
+        setClaritySliderValue([]);
     }
   };
   // ===============ring details Api==============
@@ -840,8 +799,6 @@ const ChooseDiamondsShape = ({
 
   return (
     <>
-     
-
       <div
         className={`container choose-diamonds container-1290-list-pages ${
           productSlug ? "chooseDiamond-active" : null
@@ -979,10 +936,10 @@ const ChooseDiamondsShape = ({
                   <Slider
                     className="slider"
                     onAfterChange={caratHandleChange}
-                    value={minCarat}
+                    value={caratRange}
                     min={minCaratRange}
                     max={maxCaratRange}
-                    step={0.25}
+                    step={0.01}
                   />
                 </div>
 
@@ -994,8 +951,8 @@ const ChooseDiamondsShape = ({
                   }}
                   className="slider-carat-inner-text"
                 >
-                  <div className="range-slider-show"> {caratRange[0] || minCaratRange}</div>
-                  <div className="range-slider-show"> {caratRange[1] || maxCaratRange}</div>
+                  <div className="range-slider-show"> {caratRange[0]}</div>
+                  <div className="range-slider-show"> {caratRange[1]}</div>
                 </div>
               </div>
             </div>
@@ -1083,22 +1040,22 @@ const ChooseDiamondsShape = ({
                     value={colorRange}
                     min={minColorRange}
                     max={maxColorRange}
-                    minDistance={14.6}
+                    minDistance={14.7}
                     marks={[0, 14.6, 29.3, 44.1, 58.6, 73.4, 88.1]}
-                    step={14.6}
+                    step={14.7}
                     trackStyle={{ backgroundColor: "red" }}
                   />
                 </div>
 
                 <div className="color-text">
                   <ul>
-                    <li>D</li>
-                    <li>E</li>
-                    <li>F</li>
-                    <li>G</li>
-                    <li>H</li>
-                    <li>I</li>
-                    <li>J</li>
+                    <li>D-F</li>
+                    <li>F-H</li>
+                    <li>H-K</li>
+                    <li>K-O</li>
+                    <li>O-R</li>
+                    <li>R-U</li>
+                    <li>U-Z</li>
                   </ul>
                 </div>
               </div>
@@ -1111,9 +1068,9 @@ const ChooseDiamondsShape = ({
                     max={maxCutRange}
                     value={cutRange}
                     onAfterChange={cutHandleChange}
-                    minDistance={20}
-                    marks={[0, 20, 40, 60, 80, 102.2]}
-                    step={20}
+                    minDistance={17}
+                    marks={17}
+                    step={17}
                   ></Slider>
                 </div>
 
@@ -1121,12 +1078,14 @@ const ChooseDiamondsShape = ({
                   <ul>
                     <li>Ideal</li>
                     <li>
-                      Excellent / <br />
+                      Excellent/
+                      <br />
                       Super Ideal
                     </li>
                     <li>Very Good</li>
                     <li>Good</li>
                     <li>Fair</li>
+                    <li>Poor</li>
                   </ul>
                 </div>
               </div>
@@ -1142,23 +1101,22 @@ const ChooseDiamondsShape = ({
                     min={minClarityRange}
                     max={maxClarityRange}
                     value={clarityRange}
-                    minDistance={12.5}
-                    marks={[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 102.2]}
-                    step={12.5}
+                    minDistance={14.7}
+                    marks={[0, 14.6, 29.3, 44.1, 58.6, 73.4, 88.1]}
+                    step={14.7}
                     trackStyle={{ backgroundColor: "red" }}
                   />
                 </div>
 
                 <div className="color-text">
                   <ul className="clarity">
-                    <li>VVS1</li>
-                    <li>VVS2</li>
-                    <li>VS1</li>
-                    <li>VS2</li>
-                    <li>SI1</li>
-                    <li>SI2</li>
-                    <li>FL</li>
-                    <li>IF</li>
+                    <li>VVS1-VS1</li>
+                    <li>VS1-SI1</li>
+                    <li>SI1-SI3</li>
+                    <li>SI3-VS</li>
+                    <li>VS-VVS</li>
+                    <li>VVS-FL</li>
+                    <li>FL-IF</li>
                   </ul>
                 </div>
               </div>
@@ -1231,13 +1189,13 @@ const ChooseDiamondsShape = ({
               <div className="shape-slider-1">
                 <span>Carat</span>
                 <div className="slider-carat-slider">
-                <Slider
+                  <Slider
                     className="slider"
                     onAfterChange={caratHandleChange}
-                    value={minCarat}
+                    value={caratRange}
                     min={minCaratRange}
                     max={maxCaratRange}
-                    step={0.25}
+                    step={0.01}
                   />
                 </div>
 
@@ -1249,8 +1207,8 @@ const ChooseDiamondsShape = ({
                   }}
                   className="slider-carat-inner-text"
                 >
-                  <div className="range-slider-show"> { caratRange[0] || minCaratRange}</div>
-                  <div className="range-slider-show"> { caratRange[1] || maxCaratRange}</div>
+                  <div className="range-slider-show"> {caratRange[0]}</div>
+                  <div className="range-slider-show"> {caratRange[1]}</div>
                 </div>
               </div>
             </div>
@@ -1340,13 +1298,13 @@ const ChooseDiamondsShape = ({
 
                 <div className="color-text">
                   <ul>
-                    <li>D</li>
-                    <li>E</li>
-                    <li>F</li>
-                    <li>G</li>
-                    <li>H</li>
-                    <li>I</li>
-                    <li>J</li>
+                    <li>D-F</li>
+                    <li>F-H</li>
+                    <li>H-K</li>
+                    <li>K-O</li>
+                    <li>O-R</li>
+                    <li>R-U</li>
+                    <li>U-Z</li>
                   </ul>
                 </div>
               </div>
@@ -1359,22 +1317,20 @@ const ChooseDiamondsShape = ({
                     max={maxCutRange}
                     value={cutRange}
                     onAfterChange={cutHandleChange}
-                    minDistance={20}
-                    marks={[0, 20, 40, 60, 80, 102.2]}
-                    step={20}
+                    minDistance={17}
+                    marks={17}
+                    step={17}
                   ></Slider>
                 </div>
 
                 <div className="cut-list-diamonds">
                   <ul>
                     <li>Ideal</li>
-                    <li>
-                      Excellent / <br />
-                      Super Ideal
-                    </li>
+                    <li>Excellent / Super Ideal</li>
                     <li>Very Good</li>
                     <li>Good</li>
                     <li>Fair</li>
+                    <li>Poor</li>
                   </ul>
                 </div>
               </div>
@@ -1387,24 +1343,25 @@ const ChooseDiamondsShape = ({
                   <Slider
                     className="slider"
                     onAfterChange={clarityHandleChange}
+                    min={minClarityRange}
+                    max={maxClarityRange}
                     value={clarityRange}
-                    minDistance={12.5}
-                    marks={[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 102.2]}
-                    step={12.5}
+                    minDistance={14.7}
+                    marks={[0, 14.6, 29.3, 44.1, 58.6, 73.4, 88.1]}
+                    step={14.7}
                     trackStyle={{ backgroundColor: "red" }}
                   />
                 </div>
 
                 <div className="color-text">
                   <ul className="clarity">
-                    <li>VVS1</li>
-                    <li>VVS2</li>
-                    <li>VS1</li>
-                    <li>VS2</li>
-                    <li>SI1</li>
-                    <li>SI2</li>
-                    <li>FL</li>
-                    <li>IF</li>
+                    <li>VVS1-VS1</li>
+                    <li>VS1-SI1</li>
+                    <li>SI1-SI3</li>
+                    <li>SI3-VS</li>
+                    <li>VS-VVS</li>
+                    <li>VVS-FL</li>
+                    <li>FL-IF</li>
                   </ul>
                 </div>
               </div>
@@ -1753,18 +1710,17 @@ const ChooseDiamondsShape = ({
                         >
                           <div class="inner-dimond-data-stucture">
                             <div class="prodcut-img">
-                             
-                                <LazyLoadImage
-                                  width="auto"
-                                  height="auto"
-                                  src={item.image_url}
-                                  alt={item.shape}
-                                  onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                  }}
-                                />
-                            
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.image_url}
+                                alt={item.shape}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                }}
+                              />
+
                               {/* <iframe
                                 src={item.video_url}
                                 frameBorder="0"
@@ -1776,9 +1732,7 @@ const ChooseDiamondsShape = ({
                               <div class="pro-data-cart head">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }/${
+                                    href={`/view_diamond/${item.stock_num}/${
                                       filterData.product?.slug
                                     }?color=${productColor}&diamond_original=${diamond_original}${
                                       newDiamondType === "lab_grown"
@@ -1800,9 +1754,7 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }${
+                                    href={`/view_diamond/${item.stock_num}${
                                       newDiamondType === "lab_grown"
                                         ? `?diamond_origin=${newDiamondType}`
                                         : ""
@@ -1872,9 +1824,7 @@ const ChooseDiamondsShape = ({
                               <div class="view-dmd">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }/${
+                                    href={`/view_diamond/${item.stock_num}/${
                                       filterData.product?.slug
                                     }?color=${productColor}&diamond_original=${diamond_original}${
                                       newDiamondType === "lab_grown"
@@ -1894,9 +1844,7 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }${
+                                    href={`/view_diamond/${item.stock_num}${
                                       newDiamondType === "lab_grown"
                                         ? `?diamond_origin=${newDiamondType}`
                                         : ""
@@ -1975,18 +1923,17 @@ const ChooseDiamondsShape = ({
                         >
                           <div class="inner-dimond-data-stucture">
                             <div class="prodcut-img">
-                            
-                                <LazyLoadImage
-                                  width="auto"
-                                  height="auto"
-                                  src={item.image_url}
-                                  alt={item.shape}
-                                  onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                  }}
-                                />
-                           
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.image_url}
+                                alt={item.shape}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                }}
+                              />
+
                               {/* <iframe
                                 src={item.video_url}
                                 frameBorder="0"
@@ -1998,9 +1945,7 @@ const ChooseDiamondsShape = ({
                               <div class="pro-data-cart head">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }/${
+                                    href={`/view_diamond/${item.stock_num}/${
                                       filterData.product?.slug
                                     }?color=${productColor}${
                                       item?.type === "lab_grown_diamond"
@@ -2022,9 +1967,7 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }${
+                                    href={`/view_diamond/${item.stock_num}${
                                       item?.type !== "diamond"
                                         ? `?diamond_origin=lab_grown`
                                         : ""
@@ -2099,9 +2042,7 @@ const ChooseDiamondsShape = ({
                               <div class="view-dmd">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }/${
+                                    href={`/view_diamond/${item.stock_num}/${
                                       filterData.product?.slug
                                     }?color=${productColor}${
                                       item?.type !== "diamond"
@@ -2121,9 +2062,7 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }${
+                                    href={`/view_diamond/${item.stock_num}${
                                       item?.type !== "diamond"
                                         ? `?diamond_origin=lab_grown`
                                         : ""
@@ -2407,7 +2346,7 @@ const ChooseDiamondsShape = ({
                 </div>
               </div>
               {activeResult === 1
-                ? dataServer.map((item) => {
+                ? dataServer?.map((item) => {
                     return (
                       <>
                         <ul
@@ -2465,18 +2404,17 @@ const ChooseDiamondsShape = ({
                         >
                           <div class="inner-dimond-data-stucture">
                             <div class="prodcut-img">
-                             
-                                <LazyLoadImage
-                                  width="auto"
-                                  height="auto"
-                                  src={item.image_url}
-                                  alt={item.shape}
-                                  onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                  }}
-                                />
-                             
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.image_url}
+                                alt={item.shape}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                }}
+                              />
+
                               {/* <iframe
                                 src={item.video_url}
                                 frameBorder="0"
@@ -2488,9 +2426,7 @@ const ChooseDiamondsShape = ({
                               <div class="pro-data-cart head">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }/${
+                                    href={`/view_diamond/${item.stock_num}/${
                                       filterData.product?.slug
                                     }?color=${productColor}&diamond_original=${diamond_original}${
                                       newDiamondType === "lab_grown"
@@ -2512,9 +2448,7 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }${
+                                    href={`/view_diamond/${item.stock_num}${
                                       newDiamondType === "lab_grown"
                                         ? `?diamond_origin=${newDiamondType}`
                                         : ""
@@ -2584,9 +2518,7 @@ const ChooseDiamondsShape = ({
                               <div class="view-dmd">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }/${
+                                    href={`/view_diamond/${item.stock_num}/${
                                       filterData.product?.slug
                                     }?color=${productColor}&diamond_original=${diamond_original}${
                                       newDiamondType === "lab_grown"
@@ -2606,9 +2538,7 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }${
+                                    href={`/view_diamond/${item.stock_num}${
                                       newDiamondType === "lab_grown"
                                         ? `?diamond_origin=${newDiamondType}`
                                         : ""
@@ -2687,17 +2617,17 @@ const ChooseDiamondsShape = ({
                         >
                           <div class="inner-dimond-data-stucture">
                             <div class="prodcut-img">
-                                <LazyLoadImage
-                                  width="auto"
-                                  height="auto"
-                                  src={item.image_url}
-                                  alt={item.shape}
-                                  onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
-                                  }}
-                                />
-                           
+                              <LazyLoadImage
+                                width="auto"
+                                height="auto"
+                                src={item.image_url}
+                                alt={item.shape}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                }}
+                              />
+
                               {/* <iframe
                                 src={item.video_url}
                                 frameBorder="0"
@@ -2709,9 +2639,7 @@ const ChooseDiamondsShape = ({
                               <div class="pro-data-cart head">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }/${
+                                    href={`/view_diamond/${item.stock_num}/${
                                       filterData.product?.slug
                                     }?color=${productColor}${
                                       item?.type === "lab_grown_diamond"
@@ -2733,9 +2661,7 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }${
+                                    href={`/view_diamond/${item.stock_num}${
                                       item?.type !== "diamond"
                                         ? `?diamond_origin=lab_grown`
                                         : ""
@@ -2810,9 +2736,7 @@ const ChooseDiamondsShape = ({
                               <div class="view-dmd">
                                 {productSlug ? (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }/${
+                                    href={`/view_diamond/${item.stock_num}/${
                                       filterData.product?.slug
                                     }?color=${productColor}${
                                       item?.type !== "diamond"
@@ -2832,9 +2756,7 @@ const ChooseDiamondsShape = ({
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`/view_diamond/${
-                                      item.stock_num
-                                    }${
+                                    href={`/view_diamond/${item.stock_num}${
                                       item?.type !== "diamond"
                                         ? `?diamond_origin=lab_grown`
                                         : ""

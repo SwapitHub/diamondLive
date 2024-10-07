@@ -1811,8 +1811,8 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                     </div>
                     <div className="add-form-gift">
                       <div className="add-per-info">
-                        <p>
-                          Need Assistance? <span>Chat Now or Call Us </span>{" "}
+                      <p>
+                          Need Assistance? <Link href="tel:+609-507-0003">Chat Now or Call Us </Link>{" "}
                         </p>
                         <span>
                           <svg
@@ -3006,8 +3006,8 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                     </div>
                     <div className="add-form-gift">
                       <div className="add-per-info">
-                        <p>
-                          Need Assistance? <span>Chat Now or Call Us </span>{" "}
+                      <p>
+                          Need Assistance? <Link href="tel:+609-507-0003">Chat Now or Call Us </Link>{" "}
                         </p>
                         <span>
                           <svg
