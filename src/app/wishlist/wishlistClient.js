@@ -203,6 +203,8 @@ const WishList = ({wishListDataBase, userId}) => {
         console.error("Error:", error);
         setDisableButton(false);
       });
+
+      window.location.reload()
   };
 
   const handleSubmit = (e) => {

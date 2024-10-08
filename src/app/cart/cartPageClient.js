@@ -41,7 +41,6 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
   const cartData = useSelector((state) => state.cartData);
   
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
-  const user_id = Cookies.get("userIdCookies");
   const now = new Date();
   const date = now.toLocaleDateString();
   const time = now.toLocaleTimeString();
@@ -227,7 +226,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
   const [disableButton, setDisableButton] = useState(false);
   const handleWishlist = async (
     product_type,
-    user_id,
+    userId,
     gemstone_id,
     gemstone_price,
     ring_id,
@@ -246,7 +245,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
   ) => {
     setDisableButton(true);
     try {
-      const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&gemstone_price=${gemstone_price}&gemstone_id=${gemstone_id}&gemstone_stock_no=${gemstone_stock_no}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${img_sku}&ring_price=${ring_price}&diamond_id=${diamond_id}&diamond_price=${diamond_price}&ring_type=${ring_type}&ring_size=${ring_size}&diamond_type=${diamond_type}&diamond_stock_no=${diamond_stock_no}&engraving=${textEngraving}&font=${font_style}`;
+      const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${userId}&gemstone_price=${gemstone_price}&gemstone_id=${gemstone_id}&gemstone_stock_no=${gemstone_stock_no}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${img_sku}&ring_price=${ring_price}&diamond_id=${diamond_id}&diamond_price=${diamond_price}&ring_type=${ring_type}&ring_size=${ring_size}&diamond_type=${diamond_type}&diamond_stock_no=${diamond_stock_no}&engraving=${textEngraving}&font=${font_style}`;
       const response = await axios.get(apiUrl);
 
       if (response.status === 200) {
@@ -313,7 +312,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
   const handleClickCheckOut = () => {
     const previousPath = window.location.pathname;
     
-    if (user_id) {
+    if (userId) {
       navigate.push("/check_out");
     } else {
       localStorage.setItem("previousPath",previousPath );
@@ -1858,9 +1857,9 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                         <div className="">
                           <Link
                             className=""
-                            href={user_id ? "/check_out" : "#"}
+                            href={userId ? "/check_out" : "#"}
                             onClick={() => {
-                              if (!user_id) {
+                              if (!userId) {
                                 toast.info(
                                   "Please log in to proceed to checkout. ",
                                   {
