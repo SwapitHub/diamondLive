@@ -21,13 +21,30 @@ console.log(emailData);
     );  
 
     try {
-      const response = await axios.post('https://api.rocksama.com/api/v1/password/email', emailData);
-      console.log('Response:', response);
+      // Prepare the data to send in the POST request
+      const response = await axios.post('https://api.rocksama.com/api/v1/password/email', {
+        email: emailData
+      });
+  
+      console.log('Response:', response.data);
+      // You can handle the response here, like showing a success message
     } catch (error) {
-      console.error('Error:', error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Error request:', error.request);
+      } else {
+        // Something happened in setting up the request
+        console.error('Error message:', error.message);
+      }
+      // You can also display an error message to the user
     }
-   
   }
+   
+  
   return (
     <>
    
