@@ -605,7 +605,7 @@ const PaymentForm = ({userAccountDataShip,cartDetails, metalColor}) => {
                                                                 diamondItem?.shape
                                                               }{" "}
                                                               Diamond{" "}
-                                                              {diamondItem?.cut}{" "}
+                                                              
                                                               {diamondItem?.cut &&
                                                                 `${diamondItem?.cut} Cut,`}{" "}
                                                               {

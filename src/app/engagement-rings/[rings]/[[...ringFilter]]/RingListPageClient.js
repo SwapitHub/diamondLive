@@ -27,7 +27,7 @@ import {
   removeToWishlist,
 } from "../../../../../store/actions/wishlistAction";
 
-import Cookies from "js-cookie";
+import Cookies from "js-cookie";                                                        
 
 const StartWithASetting = ({
   rings,

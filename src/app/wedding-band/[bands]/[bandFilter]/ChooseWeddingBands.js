@@ -3,13 +3,13 @@ import LoaderSpinner from "@/app/_componentStatic/LoaderSpinner";
 import { UserContext } from "@/app/context/UserContext";
 import axios from "axios";
 import $ from "jquery";
+import Cookies from "js-cookie";
 import debounce from "lodash.debounce";
 import Link from "next/link";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoMdHeart } from "react-icons/io";
-import { IoClose } from "react-icons/io5";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,12 +18,11 @@ import Select from "react-select";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
+import { productList } from "../../../../../store/actions/productActions";
 import {
   addToWishlist,
   removeToWishlist,
 } from "../../../../../store/actions/wishlistAction";
-import { productList } from "../../../../../store/actions/productActions";
-import Cookies from "js-cookie";
 
 const ChooseWeddingBands = ({
   weddingBands,
@@ -35,13 +34,10 @@ const ChooseWeddingBands = ({
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
   const router = useRouter();
-  const getLocalStoreShape = secureLocalStorage.getItem("clickedShape");
-  const getLocalMetaColorIds = secureLocalStorage.getItem("metaColorIds");
 
   const queryParams = useSearchParams();
   const menuShapeName = queryParams.get("shape");
   const menuShopStyle = queryParams.get("style");
-  const menuMetal = queryParams.get("metal");
   const diamond_origin = queryParams?.get("diamond_origin");
   const user_id = secureLocalStorage.getItem("formData");
   const ring = "matching_set";
@@ -72,7 +68,6 @@ const ChooseWeddingBands = ({
   const [isActive, setIsActive] = useState(false);
   const [activePage, setActivePage] = useState([]);
   const [activeColor, setActiveColor] = useState(white);
-  const [shapeName, setShapeName] = useState([]);
   const [shapeBreadCamb, setShapeBreadCamb] = useState([]);
   const [selectedShopStyleIds, setSelectedShopStyleIds] = useState(() => {
     const savedStyles = secureLocalStorage.getItem("selectedShopStyleIds");
@@ -250,14 +245,9 @@ const ChooseWeddingBands = ({
 
   // ======================metal three color rose yellow white end =============================
 
-  // filter shape
-  const style = "style";
-  const shape = "shape";
 
-  const [styleFilter, setStyleFilter] = useState(style);
-  const FilterProduct = (styleData) => {
-    setStyleFilter(styleData);
-  };
+
+ 
 
 
 
@@ -268,76 +258,21 @@ const ChooseWeddingBands = ({
     setActiveStyleIds(storedSelectedShopStyleIds);
   }, []);
 
-  const getBridalSetData = () => {
-    setLocalBridalData(false);
-    secureLocalStorage.removeItem("bridalSetsData");
-  };
-  const resetAllStyles = () => {
-    setActiveStyleIds([]);
-    setSelectedShopStyleIds([]);
-    setShapeBreadCamb([]);
-  
-    setMetalColorValue();
-    setMetalId([]);
-    setLocalBridalData(false);
-    secureLocalStorage.removeItem("bridalSetsData");
-    secureLocalStorage.removeItem("metaColorIds");
-    secureLocalStorage.removeItem("selectedShopStyleIds");
-    secureLocalStorage.removeItem("clickedShape");
-  };
-  const resetAllShape = () => {
-    setShapeBreadCamb();
+
  
 
-    secureLocalStorage.removeItem("clickedShape");
-  };
 
-  const resetAllColor = () => {
-    setMetalColorValue();
-    setMetalId([]);
-    secureLocalStorage.removeItem("metaColorIds");
-  };
 
-  const resetOneStyles = (resetOneStylesSlug) => {
-    setActiveStyleIds((prevActiveStyleIds) =>
-      prevActiveStyleIds.filter((id) => id !== resetOneStylesSlug)
-    );
-
-    setSelectedShopStyleIds((prevSelectedShopStyleIds) =>
-      prevSelectedShopStyleIds.filter((id) => id !== resetOneStylesSlug)
-    );
-    secureLocalStorage.removeItem("selectedShopStyleIds");
-  };
   // =============== shop by  style end==============
 
   // =============== shop by metal start ==============
-  const [metalColorValue, setMetalColorValue] = useState();
 
-  const metalOnclick = (metaColorId, metalValueColor) => {
-    const metaColorIds = secureLocalStorage.getItem("metaColorIds");
-    if (metaColorIds == metaColorId) {
-      secureLocalStorage.removeItem("metaColorIds");
-      setMetalId("");
-      setMetalColorValue("");
-    } else {
-      setMetalId((prevMetalID) =>
-        prevMetalID === metaColorId ? "" : metaColorId
-      );
-      setMetalColorValue((prevState) =>
-        prevState === metalValueColor ? "" : metalValueColor
-      );
-      secureLocalStorage.setItem("metaColorIds", metaColorId);
-    }
-  };
+
 
   // =============== shop by metal end ==============
 
   // =============== shop by price range==============
-  const handleChange = (newRange) => {
-    setRange(newRange);
-    setMinPrice(newRange[0]);
-    setMaxPrice(newRange[1]);
-  };
+ 
   // ===============shop by price range end==============
 
   if (typeof window !== "undefined") {
@@ -468,33 +403,7 @@ const ChooseWeddingBands = ({
     setPriceShorting(selectedOption.value);
   };
   // ========
-  const ShopStyleSlider = {
-    dots: false,
-    infinite: true,
-    speed: 700,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    autoplay: false,
-    autoplaySpeed: 2000,
-  };
-  const ShopShapeSlider = {
-    dots: false,
-    infinite: true,
-    speed: 700,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    autoplay: false,
-    autoplaySpeed: 2000,
-  };
-  const ShopStyleSliderOuter = {
-    dots: false,
-    infinite: true,
-    speed: 700,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    autoplay: false,
-    autoplaySpeed: 2000,
-  };
+
 
   const wishlist = useSelector((state) => state.wishlistData);
 
@@ -697,179 +606,7 @@ const ChooseWeddingBands = ({
           </div>
         </div>
 
-        <div
-          className={`bredCramStyleFilter ${
-            selectedShopStyleIdsString ? "style-active" : ""
-          } ${
-            (menuShapeName && "shape-active") ||
-            (shapeBreadCamb && "shape-active")
-          }
-          ${
-            metalColorValue === white ||
-            metalColorValue === yellow ||
-            metalColorValue === rose ||
-            metalColorValue === platinum
-              ? "metal-active"
-              : ""
-          }
-          `}
-        >
-          {mergedArray.map((item, index) => {
-            var bredCramStyleFilter_1 = item;
-            // console.log(bredCramStyleFilter_1);
-            const bredCramStyleFilter_2 = bredCramStyleFilter_1
-              ? bredCramStyleFilter_1.split(" ")
-              : [];
-            const bredCramStyleFilter = bredCramStyleFilter_2.map((word) =>
-              word.replace(/-/g, " ")
-            );
-
-            return (
-              <React.Fragment key={index}>
-                <React.Fragment key={index}>
-                  <Link
-                    href="#"
-                    onClick={(e) => {
-                      resetOneStyles(bredCramStyleFilter_1);
-                    }}
-                    className={`${
-                      activeStyleIds.includes(bredCramStyleFilter_1) ||
-                      (menuShopStyle && "style-active-common")
-                        ? "style-active-common"
-                        : "style-setting"
-                    }`}
-                  >
-                    {bredCramStyleFilter}{" "}
-                    <span>
-                      <IoClose />
-                    </span>
-                  </Link>
-                </React.Fragment>
-              </React.Fragment>
-            );
-          })}
-          {localBridalData === true && (
-            <>
-              <span
-                onClick={getBridalSetData}
-                className={`Bridal-Sets-Only-bread-crumb ${
-                  localBridalData === true ? "active" : ""
-                }`}
-              >
-                <span> Bridal Sets Only</span>{" "}
-                <span>
-                  <IoClose />
-                </span>
-              </span>
-            </>
-          )}
-          <Link
-            href="#"
-            onClick={(e) => {
-              resetAllShape();
-            }}
-            className={`${
-              (menuShapeName && "style-active-common") ||
-              (getLocalStoreShape ? "style-active-common" : "shape") ||
-              (shapeBreadCamb && "style-active-common")
-            }`}
-          >
-            <span>
-              {(menuShapeName && menuShapeName) ||
-                (shapeBreadCamb == getLocalStoreShape
-                  ? shapeBreadCamb
-                  : getLocalStoreShape)}{" "}
-              <IoClose />
-            </span>
-          </Link>
-
-          <Link
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              resetAllColor();
-            }}
-            className={`${
-              secureLocalStorage.getItem("metaColorIds") == 1 || menuMetal == 1
-                ? "style-active-common color"
-                : "color"
-            }`}
-          >
-            <span>
-              White <IoClose />
-            </span>
-          </Link>
-          <Link
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              resetAllColor();
-            }}
-            className={`${
-              secureLocalStorage.getItem("metaColorIds") == 2 || menuMetal == 2
-                ? "style-active-common color"
-                : "color"
-            }`}
-          >
-            <span>
-              Yellow <IoClose />{" "}
-            </span>
-          </Link>
-          <Link
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              resetAllColor();
-            }}
-            className={`${
-              secureLocalStorage.getItem("metaColorIds") == 3 || menuMetal == 3
-                ? "style-active-common color"
-                : "color"
-            }`}
-          >
-            <span>
-              Pink <IoClose />{" "}
-            </span>
-          </Link>
-          <Link
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              resetAllColor();
-            }}
-            className={`${
-              secureLocalStorage.getItem("metaColorIds") == 7 || menuMetal == 7
-                ? "style-active-common color"
-                : "color"
-            }`}
-          >
-            <span>
-              Platinum <IoClose />{" "}
-            </span>
-          </Link>
-
-          {mergedArray.length > 0 && (
-            <React.Fragment>
-              <Link
-                href="#"
-                onClick={(e) => {
-                  resetAllStyles();
-                }}
-              >
-                <span>
-                  Reset All
-                  <span>
-                    <IoClose />
-                  </span>
-                </span>
-              </Link>
-            </React.Fragment>
-          )}
-        </div>
+       
 
         <div className="resultdata setings-Page-img">
           {filterRoseData.length > 0 &&

@@ -1,14 +1,32 @@
 "use client";
+import axios from "axios";
 import Link from "next/link";
+import { useContext } from "react";
 import { validateEmail } from "../_componentStatic/ValidationFunctions";
+import { UserContext } from "../context/UserContext";
 
 const ForgetPass = () => {
-  function handleValidation() {
+
+  const {baseURl} = useContext(UserContext)
+
+  
+  async  function handleValidation () {
+let emailData = document.getElementById("forget-email").value
+console.log(emailData);
+
     validateEmail(
       document.getElementById("forget-email").value,
       "forget-email",
       "Email Address"
-    );
+    );  
+
+    try {
+      const response = await axios.post('https://api.rocksama.com/api/v1/password/email', emailData);
+      console.log('Response:', response);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+   
   }
   return (
     <>

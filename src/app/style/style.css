@@ -9255,6 +9255,7 @@ div#user-log .cart-right-main {
 .singleProduct .all-images .detail-images .default-img > div img,
 .singleProduct .gemstone-image-choose img {
   width: 340px;
+  cursor: pointer;
 }
 .iiz__btn.iiz__hint{
   display: none !important;
