@@ -185,6 +185,7 @@ export const WishlistHover = () => {
         dispatch(removeToWishlist(item));
       }
     });
+    window.location.reload()
   };
 
   return (

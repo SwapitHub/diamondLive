@@ -104,6 +104,7 @@ const WishList = ({wishListDataBase, userId}) => {
       }
     });
     setRemoveWishList(wish_list_id);
+    window.location.reload()
   };
   // =======remove to card
   useMemo(() => {
