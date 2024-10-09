@@ -99,6 +99,8 @@ export const CartHover = () => {
         console.log("cartItemAPI Error:", error);
       });
     }
+
+    
   }, [removeCart]);
   // ==================
 

@@ -105,7 +105,7 @@ const CartPageServer = async () => {
   
   return (
     <>
-      <CartPage cart={cart} cartDetails={cartDetails} metalColor={metalColor.data} userId={userId.value}/>
+      <CartPage cart={cart} cartDetails={cartDetails} metalColor={metalColor.data} userId={userId?.value}/>
     </>
   );
 };

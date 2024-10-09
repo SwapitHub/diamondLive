@@ -87,7 +87,7 @@ const WishlistPageServer = async () => {
   
   return (
     <>
-      <WishList wishListDataBase={wishlist.data} userId={user_id.value}/>
+      <WishList wishListDataBase={wishlist.data} userId={user_id?.value}/>
     </>
   );
 };
