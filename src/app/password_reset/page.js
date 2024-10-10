@@ -27,6 +27,9 @@ if(emailData!==""){
   })
   .then((res)=>{
     console.log(res);
+    toast.success(res.data.msg,{
+      position: "top-right"
+    })
     
   })
   
