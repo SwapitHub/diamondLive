@@ -30,7 +30,9 @@ if(emailData!==""){
       position: "top-right"
     })
 
-    res.data.res== "success"? router.push("/login") : " "
+    setTimeout(() => {      
+      res.data.res== "success"? router.push("/login") : " "
+    }, 2000);
     
   })
   
