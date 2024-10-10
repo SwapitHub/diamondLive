@@ -2875,7 +2875,7 @@ ${changeClick === rose ? "active" : ""}
                           diamondData.map((item) => {
                             return (
                               <Link
-                                href="javascript:void(0);"
+                                href="/help"
                                 onClick={() => handleClick(item)}
                               >
                                 <span>
@@ -2887,7 +2887,7 @@ ${changeClick === rose ? "active" : ""}
                           })
                         ) : (
                           <Link
-                            href="javascript:void(0);"
+                            href="/help"
                             onClick={() => handleClick()}
                           >
                             <span>

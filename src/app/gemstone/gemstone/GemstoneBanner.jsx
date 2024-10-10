@@ -25,7 +25,7 @@ export const GemstoneBanner = () => {
           <div className="mobile">
             <img
               className="mobile"
-              src={`${imgAssetsUrl}/frontend/images/gemstone_banner.jpg`}
+              src={`${imgAssetsUrl}/frontend/images/gemstone banner.jpg`}
               alt="banner"
               
               width="auto"  height="auto"  

@@ -40,7 +40,7 @@ const CutPopup = ({ setCutOpen }) => {
               </Link>
             </div>
             <div className="carat-content">
-            The cut refers to the angles and proportions of a diamond. The cut of a diamond—its depth and width, and the uniformity of the facets—determines its beauty. The skill with which a diamond is cut determines how well it reflects and refracts light.
+            The cut refers to the angles and proportions of a diamond. The cut of a diamond — its depth and width, and the uniformity of the facets — determines its beauty. The skill with which a diamond is cut determines how well it reflects and refracts light.
             </div>
             <div className="carat-image">
               <img src={`${imgAssetsUrl}/frontend/images/Diamond-5.png`} alt="hand" width="auto" height="auto"/>

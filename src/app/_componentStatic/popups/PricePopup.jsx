@@ -29,7 +29,7 @@ const PricePopup = ({ setPriceOpen }) => {
             <div className="close-popup-icon">
               <h3 className="modal-title">Price</h3>
               <Link href="javascript:void(0);" onClick={() => setPriceOpen(false)}>
-                Close <IoMdClose />
+               <IoMdClose />
               </Link>
             </div>
             <div className="carat-content">

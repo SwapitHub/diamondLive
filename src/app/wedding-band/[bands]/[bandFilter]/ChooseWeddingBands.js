@@ -566,7 +566,7 @@ const ChooseWeddingBands = ({
         </div>
       ) : null}
       <div
-        className={`container choose-setting-pages-main container-1290-list-pages ${
+        className={`container choose-setting-pages-main container-1290-list-pages wedding-band-page ${
           stock_num ? "diamond-bread-crumb-active" : null
         }`}
       >

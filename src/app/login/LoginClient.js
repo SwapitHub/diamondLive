@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -13,11 +14,10 @@ import {
   validatePass,
 } from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
-import Cookies from "js-cookie";
+
 export const LoginSignup = () => {
   const router = useRouter();
-  const user_id_cookies = Cookies.get("userIdCookies")
-
+  const user_id_cookies = secureLocalStorage.getItem("formData");
 
   const cartData = useSelector((state) => state.cartData);
   const wishlistData = useSelector((state) => state.wishlistData);
@@ -37,14 +37,13 @@ export const LoginSignup = () => {
 
   const [previousPath, setPreviousPath] = useState();
   console.log(previousPath);
-  
+
   useEffect(() => {
     const path = localStorage.getItem("previousPath") || "/";
     setPreviousPath(path);
   }, []);
 
   const handleValidationsSignIn = (event) => {
-
     event.preventDefault();
     const formData = {
       email: document.getElementById("sign-email").value,
@@ -71,9 +70,9 @@ export const LoginSignup = () => {
           if (response.status === 200) {
             const user_id = response.data.data.user_id;
             Cookies.set("userIdCookies", response.data.data.user_id, {
-              expires: 3650, 
-              secure: true,  
-              sameSite: 'Strict'
+              expires: 3650,
+              secure: true,
+              sameSite: "Strict",
             });
             secureLocalStorage.setItem(
               "formData",
@@ -192,8 +191,6 @@ export const LoginSignup = () => {
                 });
               // ============
             });
-            
-           
 
             wishlistData.forEach((item) => {
               var wishListURL = `${baseUrl}/add_to_wishlist?user_id=${user_id}&ring_price=${
@@ -328,25 +325,14 @@ export const LoginSignup = () => {
               position: "top-right",
             });
 
+            router.push(previousPath == "/cart" ? "/cart" : "/accounts");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
 
-          
-        
-            router
-              .push(previousPath == "/cart" ? "/cart"  : "/accounts" )
-setTimeout(() => {
-  window.location.reload()
-
-
-}, 2000)
-
-             
-                setTimeout(() => {
-                  localStorage.removeItem("previousPath");
-
-                }, 6000);
-
-             
-
+            setTimeout(() => {
+              localStorage.removeItem("previousPath");
+            }, 6000);
           } else {
             console.error("Error Status:", response.status);
           }
@@ -422,160 +408,159 @@ setTimeout(() => {
 
   return (
     <>
-    {
-      user_id_cookies ? router.push( "/accounts") :
-
-      <div className="my-accout-section">
-        <div className="container container-1290-list-pages">
-          <div className="title">
-            <h2>My Account</h2>
-          </div>
-
-          <div className="accout-inner">
-            <div className="sign-in-accout form-layout">
-              <h3>Sign In</h3>
-              <p>If you have a Sama customer account, please sign in.</p>
-
-              <form
-                enctype="multipart/form-data"
-                // method="post"
-                action=""
-                className="form-search"
-              >
-                <input
-                  type="text"
-                  name="first_name"
-                  placeholder="Email Address"
-                  id="sign-email"
-                  className="form-control"
-                />
-                <div className="error_1"></div>
-
-                <input
-                  type="password"
-                  placeholder="Password"
-                  id="sign-pass"
-                  maxLength={8}
-                  className="form-control"
-                />
-                <div className="error_1"></div>
-
-                <p>
-                  <Link className="forget" href="/password_reset">
-                    Forgot your password?
-                  </Link>
-                </p>
-
-                <button
-                  type="submit"
-                  className="btn"
-                  onClick={handleValidationsSignIn}
-                >
-                  sign in
-                </button>
-              </form>
+      {!user_id_cookies ? (
+        <div className="my-accout-section">
+          <div className="container container-1290-list-pages">
+            <div className="title">
+              <h2>My Account</h2>
             </div>
 
-            <div className="create-accout form-layout">
-              <h3>Create an Account</h3>
-              <p>Enjoy the benefits of a Sama account:</p>
-              <ul className="acc-list">
-                <li>Save items to Wish List and Shopping Cart</li>
-                <li>Request a ring resize online</li>
-                <li>Faster check out</li>
-                <li>Exclusive offers</li>
-                <li>View Order History</li>
-              </ul>
+            <div className="accout-inner">
+              <div className="sign-in-accout form-layout">
+                <h3>Sign In</h3>
+                <p>If you have a Sama customer account, please sign in.</p>
 
-              <form
-                className="form-search"
-                enctype="multipart/form-data"
-                method="post"
-                action=""
-              >
-                <input
-                  className="form-control"
-                  type="text"
-                  maxLength="30"
-                  name="first_name"
-                  placeholder="First Name"
-                  id="fname"
-                />
-                <div className="error_1"></div>
+                <form
+                  enctype="multipart/form-data"
+                  // method="post"
+                  action=""
+                  className="form-search"
+                >
+                  <input
+                    type="text"
+                    name="first_name"
+                    placeholder="Email Address"
+                    id="sign-email"
+                    className="form-control"
+                  />
+                  <div className="error_1"></div>
 
-                <input
-                  className="form-control"
-                  type="text"
-                  maxLength="30"
-                  name="last_name"
-                  placeholder="Last Name"
-                  id="lname"
-                />
-                <div className="error_1"></div>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    id="sign-pass"
+                    maxLength={8}
+                    className="form-control"
+                  />
+                  <div className="error_1"></div>
 
-                <input
-                  type="email"
-                  className="form-control"
-                  maxLength="75"
-                  name="email"
-                  placeholder="Email Address"
-                  id="create-email"
-                />
-                <div className="error_1"></div>
+                  <p>
+                    <Link className="forget" href="/password_reset">
+                      Forgot your password?
+                    </Link>
+                  </p>
 
-                <input
-                  className="form-control"
-                  type="password"
-                  maxLength="8"
-                  name="password"
-                  placeholder="Password"
-                  id="create-pass"
-                />
-                <div className="error_1"></div>
-
-                <input
-                  className="form-control"
-                  type="password"
-                  maxLength="8"
-                  name="c_password"
-                  placeholder="Confirm Password"
-                  id="create-cpass"
-                />
-                <div className="error_1"></div>
-
-                <p>
-                  Passwords are case sensitive and must be at least 8 characters
-                  long.
-                </p>
-
-                <p className="pt-10">
                   <button
-                    className="btn btn-success btn-lg btn-block"
                     type="submit"
-                    onClick={handleCreateAccount}
+                    className="btn"
+                    onClick={handleValidationsSignIn}
                   >
-                    create account
+                    sign in
                   </button>
-                </p>
-                <p className="mt-30 fs-12">
-                  SAMA needs the contact information you provide to us to
-                  contact you about our products and services. You may
-                  unsubscribe from these communications at any time. For
-                  information on how to unsubscribe, as well as our privacy
-                  practices and commitment to protecting your privacy, please
-                  review our
-                  <Link className="td-u" href="/privacy-policy">
-                    Privacy Policy
-                  </Link>
-                  .
-                </p>
-              </form>
+                </form>
+              </div>
+
+              <div className="create-accout form-layout">
+                <h3>Create an Account</h3>
+                <p>Enjoy the benefits of a Sama account:</p>
+                <ul className="acc-list">
+                  <li>Save items to Wish List and Shopping Cart</li>
+                  <li>Request a ring resize online</li>
+                  <li>Faster check out</li>
+                  <li>Exclusive offers</li>
+                  <li>View Order History</li>
+                </ul>
+
+                <form
+                  className="form-search"
+                  enctype="multipart/form-data"
+                  method="post"
+                  action=""
+                >
+                  <input
+                    className="form-control"
+                    type="text"
+                    maxLength="30"
+                    name="first_name"
+                    placeholder="First Name"
+                    id="fname"
+                  />
+                  <div className="error_1"></div>
+
+                  <input
+                    className="form-control"
+                    type="text"
+                    maxLength="30"
+                    name="last_name"
+                    placeholder="Last Name"
+                    id="lname"
+                  />
+                  <div className="error_1"></div>
+
+                  <input
+                    type="email"
+                    className="form-control"
+                    maxLength="75"
+                    name="email"
+                    placeholder="Email Address"
+                    id="create-email"
+                  />
+                  <div className="error_1"></div>
+
+                  <input
+                    className="form-control"
+                    type="password"
+                    maxLength="8"
+                    name="password"
+                    placeholder="Password"
+                    id="create-pass"
+                  />
+                  <div className="error_1"></div>
+
+                  <input
+                    className="form-control"
+                    type="password"
+                    maxLength="8"
+                    name="c_password"
+                    placeholder="Confirm Password"
+                    id="create-cpass"
+                  />
+                  <div className="error_1"></div>
+
+                  <p>
+                    Passwords are case sensitive and must be at least 8
+                    characters long.
+                  </p>
+
+                  <p className="pt-10">
+                    <button
+                      className="btn btn-success btn-lg btn-block"
+                      type="submit"
+                      onClick={handleCreateAccount}
+                    >
+                      create account
+                    </button>
+                  </p>
+                  <p className="mt-30 fs-12">
+                    SAMA needs the contact information you provide to us to
+                    contact you about our products and services. You may
+                    unsubscribe from these communications at any time. For
+                    information on how to unsubscribe, as well as our privacy
+                    practices and commitment to protecting your privacy, please
+                    review our
+                    <Link className="td-u" href="/privacy-policy">
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    }
-      
+      ) : (
+        router.push("/accounts")
+      )}
     </>
   );
 };

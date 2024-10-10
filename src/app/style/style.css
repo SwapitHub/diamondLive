@@ -4000,9 +4000,7 @@ span.heart-toggle-class > a {
   cursor: pointer;
 }
 
-.create-accout.form-layout p {
-  margin-bottom: 0;
-}
+
 
 .form-layout li {
   font-size: 14px;
@@ -11863,6 +11861,14 @@ section.see-products-main .see-products-img {
   padding-bottom: 10px;
   position: relative;
 }
+.header .container {
+  max-width: 100%;
+}
+.header-top {
+  max-width: calc(100% - 15rem);
+  margin: 0 auto;
+}
+/*
 .header nav.nav:before , .header nav.nav:after{
   content: "";  
   width: 100%;
@@ -11874,6 +11880,7 @@ section.see-products-main .see-products-img {
   top: 0;
   z-index: 1;
 }
+  */
 .header nav.nav:after{
 right: 100% !important;
 left: auto;
@@ -13886,7 +13893,7 @@ body.popup-open {
   right: 0;
 }
 .footer-all-pages-display ul {
-  padding-left: 12px;
+  padding-left: 15px;
 }
 
 .lab-grown-shape-icons .slick-slider {
@@ -14726,6 +14733,68 @@ section.add-matching-wedding-band .love-right-content h4 {
 .header-heart-icon div#user-log {
   right: 55px;
 }
+
+
+
+.footer-all-pages-display .accordion-item-body-content ul {
+  margin-top: 0;
+}
+.footer-all-pages-display .accordion-item-body-content li {
+  margin-top: 0;
+}
+.accordion-item-body-content {
+  padding-top: 10px;
+}
+/*===========10-october-2024 by-R================*/
+.whishlist-colum {
+  padding: 20px;
+  padding-bottom: 80px;
+  height: 100%;
+}
+.whishlist-colum, .wishlist_page-column .wishlists-inner-row {
+  height: 100% !important;
+}
+.whishlist-colum a.bg-btn {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  width: calc(100% - 40px) !important;
+  margin: 0 auto;
+}
+.need-ass-popup .close-popup-icon a {
+  top: 5px;
+  position: relative;
+}
+.wedding-band-page  h3.center {
+  margin-bottom: 24px;
+}
+body.email-popup-open .new-popups, body.email-popup-open .popup {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+}
+.popup__content {
+  width: 100%;
+}
+section.new-popups {
+  max-width: 650px !important;
+}
+.create-accout.form-layout > p:nth-child(2) {
+  margin: 0;
+}
+
+.account-user-name {
+  word-break: break-all;
+}
+.ftr-contact-ul {
+  width: auto;
+}
+.shop-by-page-common.Bridal-Sets-Only-setting-style .shop-style-img {
+  width: 80px;
+  height: 80px;
+}
+/*===========10-october-2024 by-R================*/
 @media (min-width: 2250px) {
   .bridalSets,
   .bridalSets-2 {
@@ -16426,6 +16495,9 @@ ul.product-list-thumbnail {
 .customization-form, div#request-ring-sizer {
   max-width: 90%;
 }
+.banner-text.min-ht.gemstone {
+  padding-right: 30px;
+}
 }
 
 
@@ -16435,6 +16507,7 @@ ul.product-list-thumbnail {
 
 
 @media (max-width: 767px) {
+  
   .bridalSets-img img {
     height: 100%;
     object-position: initial;
@@ -17630,7 +17703,8 @@ footer.footer h4 {
   display: block;
   white-space: nowrap;
   padding-bottom: 24px;
-  position: relative;   margin-top: 17px;
+  position: relative;   
+  margin-top: 0px;
 }
 .ShopDiamondShape div.flex::-webkit-scrollbar-track
 {
@@ -19240,7 +19314,9 @@ max-width: 90%;
   .data-base-cart .gemstone-cart > div {
     width: 100%;
   }
-
+  .my-account-info ul li {
+    word-break: break-all;
+}
 }
 
 
@@ -19261,6 +19337,9 @@ max-width: 90%;
   /*.cut-list-diamonds ul li {
     padding: 0px 3px 0px 10px;
   }*/
+  .choose-setting-pages h1.center {
+    margin-bottom: 20px;
+}
   .ShopDiamondShape-img-text {
     width: calc(100% / 3 - 0px);
     padding: 15px 10px;
@@ -20173,5 +20252,18 @@ ul.dimaond-details-sub-list li {
     font-size: 12px;
     padding: 10px;
 }
+.ring-choose-setting.flex{
+  margin-top: 0;
+}
+.popular-grid-wrapper .imgg-sec img {
+  max-height: 80px !important;
+}
 }
 
+
+
+@media (max-width: 350px) {
+  .banner-main.engment-banner-sec .banner-text {
+    bottom: -15px !important;
+}
+}

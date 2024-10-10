@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
 import secureLocalStorage from "react-secure-storage";
@@ -26,7 +26,7 @@ const Help = () => {
     engraving,
   } = helpData;
   console.log(helpData);
-  
+
   useEffect(() => {
     const data = JSON.parse(secureLocalStorage.getItem("helpData"));
 
@@ -34,7 +34,6 @@ const Help = () => {
       setHelpData(data);
     }
   }, []);
-
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -55,9 +54,11 @@ const Help = () => {
     e.target.onerror = null;
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
   };
+
+  console.log(helpData);
+
   return (
     <>
-   
       <section className="request-help-main">
         <div className="container">
           <div className="request-helped-cnt">
@@ -174,7 +175,7 @@ const Help = () => {
                       )}
                     </ul>
                   </Link>
-                  {!helpData && (
+                  {Object.keys(helpData).length === 0 && (
                     <Link href="/">
                       <ul>
                         <li>
@@ -190,57 +191,63 @@ const Help = () => {
                     </Link>
                   )}
                 </div>
-                <h5>
-                  <Link
-                    href={
-                      filterData && diamond?.gem_type == null && diamond_origin
-                        ? `/final_ring/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}&diamond_original=${diamond_original}&diamond_origin=${diamond_origin}&ring_size=${ring_size}&font_style=${font}&textEngraving=${engraving}`
-                        : filterData &&
-                          !diamond?.gem_type != null &&
+                {Object.keys(helpData).length === 0 ? null : (
+                  <>
+                    <h5>
+                      <Link
+                        href={
+                          filterData &&
+                          diamond?.gem_type == null &&
                           diamond_origin
-                        ? `/final_ring_gemstone/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}&diamond_original=${diamond_origin}&ring_size=${ring_size}`
-                        : !filterData && diamond?.gem_type == null
-                        ?  `/view_diamond/${diamond?.stock_num}${
-                          diamond?.lab_grown === true
-                            ? "?diamond_origin=lab_grown"
+                            ? `/final_ring/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}&diamond_original=${diamond_original}&diamond_origin=${diamond_origin}&ring_size=${ring_size}&font_style=${font}&textEngraving=${engraving}`
+                            : filterData &&
+                              !diamond?.gem_type != null &&
+                              diamond_origin
+                            ? `/final_ring_gemstone/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}&diamond_original=${diamond_origin}&ring_size=${ring_size}`
+                            : !filterData && diamond?.gem_type == null
+                            ? `/view_diamond/${diamond?.stock_num}${
+                                diamond?.lab_grown === true
+                                  ? "?diamond_origin=lab_grown"
+                                  : ""
+                              }`
+                            : !filterData && diamond?.gem_type != null
+                            ? `/gemstones-detail/${diamond?.stock_num}`
+                            : filterData && diamond?.gem_type == null
+                            ? `/engagement-ring/${
+                                filterData?.product?.slug
+                              }?color=${listColor}${
+                                diamond?.stock_num
+                                  ? `&stock_num=${diamond?.stock_num}`
+                                  : ""
+                              }`
+                            : filterData && !diamond?.gem_type != null
+                            ? `/detail-ring-product-gemstone/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}`
                             : ""
-                        }`
-                        : !filterData && diamond?.gem_type != null
-                        ? `/gemstones-detail/${diamond?.stock_num}`
-                        : filterData && diamond?.gem_type == null
-                        ? `/engagement-ring/${
-                            filterData?.product?.slug
-                          }?color=${listColor}${
-                            diamond?.stock_num
-                              ? `&stock_num=${diamond?.stock_num}`
-                              : ""
-                          }`
-                        : filterData && !diamond?.gem_type != null
-                        ? `/detail-ring-product-gemstone/${filterData?.product?.slug}?color=${listColor}&stock_num=${diamond?.stock_num}`
-                        : ""
-                    }
-                  >
-                    {listColor ? listColor?.replace(/-/g, " ") : ""}{" "}
-                    {filterData?.product?.name && filterData?.product?.name}
-                    {filterData && diamond ? " with " : null}
-                    {diamond?.gem_type != null ? (
-                      <span> {diamond?.short_title} </span>
-                    ) : diamond && diamond?.gem_type == null ? (
-                      <span>
-                        {diamond?.size} Carat {diamond?.shape} Diamond{" "}
-                      </span>
-                    ) : null}
-                  </Link>
-                </h5>
-                <p>
-                  <span>{diamond?.stock_num}</span> {filterData?.product?.sku}
-                </p>
+                        }
+                      >
+                        {listColor ? listColor?.replace(/-/g, " ") : ""}{" "}
+                        {filterData?.product?.name && filterData?.product?.name}
+                        {filterData && diamond ? " with " : null}
+                        {diamond?.gem_type != null ? (
+                          <span> {diamond?.short_title} </span>
+                        ) : diamond && diamond?.gem_type == null ? (
+                          <span>
+                            {diamond?.size} Carat {diamond?.shape} Diamond{" "}
+                          </span>
+                        ) : null}
+                      </Link>
+                    </h5>
+                    <p>
+                      <span>{diamond?.stock_num}</span>{" "}
+                      {filterData?.product?.sku}
+                    </p>
+                  </>
+                )}
               </div>
             </div>
           </div>
         </div>
       </section>
-      
     </>
   );
 };
