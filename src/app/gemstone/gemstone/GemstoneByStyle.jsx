@@ -47,8 +47,8 @@ export const GemstoneByStyle = ({ gemstoneBands }) => {
                 {
                   breakpoint: 375,
                   settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 2,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
                     infinite: true,
                   },
                 },
