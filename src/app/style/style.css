@@ -4177,7 +4177,7 @@ div#user-log {
   margin-bottom: 10px;
 }
 
-.reset-forms .input-group input[type="text"] {
+.reset-forms .input-group input[type="email"] {
   width: 100%;
   height: 45px;
   font-size: 13px;
@@ -10220,7 +10220,7 @@ p.save-account, p.account {
 	text-transform: capitalize;
 	padding: 0 25px; cursor: pointer;
 }
-.reset-forms .input-group input[type="text"] {
+.reset-forms .input-group input[type="email"] {
   padding-right: 130px;
 }
 

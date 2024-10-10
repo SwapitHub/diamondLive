@@ -27,7 +27,7 @@ import {
   removeToWishlist,
 } from "../../../../../store/actions/wishlistAction";
 
-import Cookies from "js-cookie";                                                        
+import Cookies from "js-cookie";
 
 const StartWithASetting = ({
   rings,
@@ -1698,7 +1698,7 @@ const StartWithASetting = ({
         </div>
 
         <div className="resultdata setings-Page-img">
-          {filterRoseData.length > 0 ? (
+          {filterRoseData.length > 0 &&
             filterRoseData.map((item, index) => (
               <div
                 key={index}
@@ -1967,9 +1967,11 @@ const StartWithASetting = ({
                   {/* <div>{item.id}</div> */}
                 </div>
               </div>
-            ))
-          ) : (
-            <h3 className="center">{loading ? null : "Data Not Found"}</h3>
+            ))}
+          {filterRoseData.length < 1 && (
+            <h3 className="center">
+              {loading ? <LoaderSpinner /> : "Data Not Found"}
+            </h3>
           )}
         </div>
 

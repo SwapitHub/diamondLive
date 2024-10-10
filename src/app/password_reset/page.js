@@ -30,9 +30,9 @@ if(emailData!==""){
       position: "top-right"
     })
 
-    setTimeout(() => {      
-      res.data.res== "success"? router.push("/login") : " "
-    }, 2000);
+    // setTimeout(() => {      
+    //   res.data.res== "success"? router.push("/login") : " "
+    // }, 2000);
     
   })
   
@@ -90,7 +90,7 @@ if(emailData!==""){
               <form className="form-inline">
                 <div className="input-group">
                   <input
-                    type="text"
+                    type="email"
                     className="zip-code"
                     placeholder="Email Address"
                     name="email"
