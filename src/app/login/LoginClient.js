@@ -559,7 +559,7 @@ export const LoginSignup = () => {
           </div>
         </div>
       ) : (
-        router.push("/accounts")
+        window.location.replace("/accounts")
       )}
     </>
   );
