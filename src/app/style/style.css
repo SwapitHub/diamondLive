@@ -1245,7 +1245,7 @@ line-height: normal;
   padding-top: 50px;
   padding-bottom: 50px;
 }
-.Accordian-main .content-show p, .Accordian-main .content-show span {
+.Accordian-main .content-show p, .Accordian-main .content-show span, .Accordian-main .content-show b {
   font-family: Montserrat !important;
 }
 .Accordian-main .faq-img-text {
