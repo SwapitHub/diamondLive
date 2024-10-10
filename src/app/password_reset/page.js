@@ -22,7 +22,9 @@ let emailData = document.getElementById("forget-email").value
     );  
     
 if(emailData!==""){
-  axios.post("https://api.rocksama.com/api/v1/password/email",emailData)
+  axios.post("https://api.rocksama.com/api/v1/password/email",{
+    email: emailData
+  })
   .then((res)=>{
     console.log(res);
     
@@ -43,10 +45,11 @@ if(emailData!==""){
   
     //   console.log('Response:', response.data);
     // } catch (error) {
-    //   console.error('Error:', error);
-    //   toast.error(response.errors.email[0],{
-    //     position: "top-right",
-    //   })
+    //   console.log("error",error);
+    //   toast.error(error.response.data.errors.email[0],{
+    //         position: "top-right",
+    //       })
+  
     // }
   }
    
