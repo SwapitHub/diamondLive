@@ -24,12 +24,13 @@ let emailData = document.getElementById("forget-email").value
 if(emailData!==""){
   axios.post("https://api.rocksama.com/api/v1/password/email",emailData)
   .then((res)=>{
+    console.log(res);
     
   })
   
   .catch((error)=>{
     console.log("error",error);
-    toast.error(response.errors.email[0],{
+    toast.error(error.response.data.errors.email[0],{
           position: "top-right",
         })
   })
