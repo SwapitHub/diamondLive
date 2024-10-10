@@ -5,14 +5,13 @@ import { useContext } from "react";
 import { validateEmail } from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const ForgetPass = () => {
-
+const router=useRouter()
   const {baseURl} = useContext(UserContext)
-
   
   function handleValidation () {
-
 let emailData = document.getElementById("forget-email").value
 
     validateEmail(
@@ -22,7 +21,7 @@ let emailData = document.getElementById("forget-email").value
     );  
     
 if(emailData!==""){
-  axios.post("https://api.rocksama.com/api/v1/password/email",{
+  axios.post(`${baseURl}/password/email`,{
     email: emailData
   })
   .then((res)=>{
@@ -30,6 +29,8 @@ if(emailData!==""){
     toast.success(res.data.msg,{
       position: "top-right"
     })
+
+    res.data.res== "success"? router.push("/login") : " "
     
   })
   
