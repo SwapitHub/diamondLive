@@ -5,11 +5,12 @@ import { useContext } from "react";
 import { validateEmail } from "../_componentStatic/ValidationFunctions";
 import { UserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const ForgetPass = () => {
 
   const {baseURl} = useContext(UserContext)
-
+const router = useRouter()
   
   function handleValidation () {
 let emailData = document.getElementById("forget-email").value
@@ -30,11 +31,12 @@ if(emailData!==""){
       position: "top-right"
     })
     
+router.push("/login")
   })
   
   .catch((error)=>{
     console.log("error",error);
-    toast.error(error.response.data.errors.email[0],{
+    toast.error(error.response.data.msg,{
           position: "top-right",
         })
   })
