@@ -781,12 +781,12 @@ const WishList = ({wishListDataBase, userId}) => {
                                       </span>
                                       <div class="top-whish-list">
                                         <Link
-                                          href={`/view_diamond?stock_num=${
+                                          href={`/view_diamond/${
                                             item.diamond_id
                                           }${
                                             item?.diamond_type === "Diamond"
                                               ? ""
-                                              : `&diamond_origin=lab_grown`
+                                              : `?diamond_origin=lab_grown`
                                           }`}
                                         >
                                           <img
@@ -803,12 +803,12 @@ const WishList = ({wishListDataBase, userId}) => {
                                       </div>
                                       <div class="caption">
                                         <Link
-                                          href={`/view_diamond?stock_num=${
+                                          href={`/view_diamond/${
                                             item.diamond_id
                                           }${
                                             item?.diamond_type === "Diamond"
                                               ? ""
-                                              : `&diamond_origin=lab_grown`
+                                              : `?diamond_origin=lab_grown`
                                           }`}
                                           class="product-info"
                                         >
@@ -917,7 +917,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       </span>
                                       <div class="top-whish-list">
                                         <Link
-                                          href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                          href={`/gemstones-detail/${item.gemstone_id}`}
                                         >
                                           <img
                                             width="auto"
@@ -933,7 +933,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       </div>
                                       <div class="caption">
                                         <Link
-                                          href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                          href={`/gemstones-detail/${item.gemstone_id}`}
                                           class="product-info"
                                         >
                                           <div
@@ -1668,12 +1668,12 @@ const WishList = ({wishListDataBase, userId}) => {
                                     </span>
                                     <div class="top-whish-list">
                                       <Link
-                                        href={`/view_diamond?stock_num=${
+                                        href={`/view_diamond/${
                                           item.diamond_id
                                         }${
                                           item?.diamond_type === "Diamond"
                                             ? ""
-                                            : `&diamond_origin=lab_grown`
+                                            : `?diamond_origin=lab_grown`
                                         }`}
                                       >
                                         <img
@@ -1690,12 +1690,12 @@ const WishList = ({wishListDataBase, userId}) => {
                                     </div>
                                     <div class="caption">
                                       <Link
-                                        href={`/view_diamond?stock_num=${
+                                        href={`/view_diamond${
                                           item.diamond_id
                                         }${
                                           item?.diamond_type === "Diamond"
                                             ? ""
-                                            : `&diamond_origin=lab_grown`
+                                            : `?diamond_origin=lab_grown`
                                         }`}
                                         class="product-info"
                                       >
@@ -1811,7 +1811,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                     </span>
                                     <div class="top-whish-list">
                                       <Link
-                                        href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                        href={`/gemstones-detail/${item.gemstone_id}`}
                                       >
                                         <img
                                           width="auto"
@@ -1827,7 +1827,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                     </div>
                                     <div class="caption">
                                       <Link
-                                        href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                        href={`/gemstones-detail/${item.gemstone_id}`}
                                         class="product-info"
                                       >
                                         <div
@@ -2572,12 +2572,12 @@ const WishList = ({wishListDataBase, userId}) => {
                               </span>
                               <div class="top-whish-list">
                                 <Link
-                                  href={`/view_diamond?stock_num=${
+                                  href={`/view_diamond/${
                                     item.diamonds?.stock_num
                                   }${
                                     item?.diamond_type === "natural"
                                       ? ""
-                                      : `&diamond_origin=${item.diamond_type}`
+                                      : `?diamond_origin=${item.diamond_type}`
                                   }`}
                                 >
                                   <img
@@ -2594,12 +2594,12 @@ const WishList = ({wishListDataBase, userId}) => {
                               </div>
                               <div class="caption">
                                 <Link
-                                  href={`/view_diamond?stock_num=${
+                                  href={`/view_diamond/${
                                     item.diamonds?.stock_num
                                   }${
                                     item?.diamond_type === "natural"
                                       ? ""
-                                      : `&diamond_origin=${item.diamond_type}`
+                                      : `?diamond_origin=${item.diamond_type}`
                                   }`}
                                   class="product-info"
                                 >
@@ -2649,7 +2649,7 @@ const WishList = ({wishListDataBase, userId}) => {
                               </span>
                               <div class="top-whish-list">
                                 <Link
-                                  href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                                  href={`/gemstones-detail/${item.item?.stock_num}`}
                                 >
                                   <img
                                     width="auto"
@@ -2665,7 +2665,7 @@ const WishList = ({wishListDataBase, userId}) => {
                               </div>
                               <div class="caption">
                                 <Link
-                                  href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                                  href={`/gemstones-detail/${item.item?.stock_num}`}
                                   class="product-info"
                                 >
                                   <div class="headline" data-item="CYO Rings">
@@ -3164,12 +3164,12 @@ const WishList = ({wishListDataBase, userId}) => {
                               </span>
                               <div class="top-whish-list">
                                 <Link
-                                  href={`/view_diamond?stock_num=${
+                                  href={`/view_diamond/${
                                     item.diamonds?.stock_num
                                   }${
                                     item?.diamond_type === "natural"
                                       ? ""
-                                      : `&diamond_origin=${item.diamond_type}`
+                                      : `?diamond_origin=${item.diamond_type}`
                                   }`}
                                 >
                                   <img
@@ -3186,12 +3186,12 @@ const WishList = ({wishListDataBase, userId}) => {
                               </div>
                               <div class="caption">
                                 <Link
-                                  href={`/view_diamond?stock_num=${
+                                  href={`/view_diamond${
                                     item.diamonds?.stock_num
                                   }${
                                     item?.diamond_type === "natural"
                                       ? ""
-                                      : `&diamond_origin=${item.diamond_type}`
+                                      : `?diamond_origin=${item.diamond_type}`
                                   }`}
                                   class="product-info"
                                 >
@@ -3249,7 +3249,7 @@ const WishList = ({wishListDataBase, userId}) => {
                               </span>
                               <div class="top-whish-list">
                                 <Link
-                                  href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                                  href={`/gemstones-detail/${item.item?.stock_num}`}
                                 >
                                   <img
                                     width="auto"
@@ -3265,7 +3265,7 @@ const WishList = ({wishListDataBase, userId}) => {
                               </div>
                               <div class="caption">
                                 <Link
-                                  href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                                  href={`/gemstones-detail/${item.item?.stock_num}`}
                                   class="product-info"
                                 >
                                   <div class="headline" data-item="CYO Rings">

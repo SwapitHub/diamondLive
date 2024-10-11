@@ -381,7 +381,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                         <div class="detail-col img white">
                                           <div class="detail-ring-image ring">
                                             <Link
-                                              href={`/gemstones-detail/?stock_num=${item?.gemstone_id}`}
+                                              href={`/gemstones-detail/${item?.gemstone_id}`}
                                             >
                                               <img
                                                 width="auto"
@@ -402,7 +402,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                             <h4>
                                               {" "}
                                               <Link
-                                                href={`/gemstones-detail/?stock_num=${item?.gemstone_id}`}
+                                                href={`/gemstones-detail/${item?.gemstone_id}`}
                                               >
                                                 {gemstoneItem.short_title}
                                               </Link>
@@ -687,9 +687,9 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                         <div class="detail-col img white">
                                           <div class="detail-ring-image ring">
                                             <Link
-                                              href={`/view_diamond/?stock_num=${
+                                              href={`/view_diamond/${
                                                 item.diamond_id
-                                              }&diamond_origin=${
+                                              }?diamond_origin=${
                                                 item.diamond_type ===
                                                 "Lab_grown_Diamond"
                                                   ? "lab_grown"
@@ -714,9 +714,9 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                           <div class="detail-content-main">
                                             <h4>
                                               <Link
-                                                href={`/view_diamond/?stock_num=${
+                                                href={`/view_diamond/${
                                                   item.diamond_id
-                                                }&diamond_origin=${
+                                                }?diamond_origin=${
                                                   item.diamond_type ===
                                                   "Lab_grown_Diamond"
                                                     ? "lab_grown"
@@ -1238,7 +1238,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                       <div class="detail-col img white">
                                         <div class="detail-ring-image ring">
                                           <Link
-                                            href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                            href={`/gemstones-detail/${item.gemstone_id}`}
                                           >
                                             <img
                                               width="auto"
@@ -1258,7 +1258,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                         <div class="detail-content-main">
                                           <h4>
                                             <Link
-                                              href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                              href={`/gemstones-detail/${item.gemstone_id}`}
                                             >
                                               {gemstoneItem.short_title}
                                             </Link>
@@ -2006,7 +2006,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                       <div class="detail-col img white">
                                         <div class="detail-ring-image ring">
                                           <Link
-                                            href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                                            href={`/gemstones-detail/${item.item?.stock_num}`}
                                           >
                                             <img
                                               width="auto"
@@ -2035,7 +2035,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                         <div class="detail-content-main">
                                           <h4>
                                             <Link
-                                              href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                                              href={`/gemstones-detail/${item.item?.stock_num}`}
                                             >
                                               {" "}
                                               {item.gemstoneSingle?.short_title
@@ -2269,7 +2269,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                     <div class="detail-col img white">
                                       <div class="detail-ring-image ring">
                                         <Link
-                                          href={`/view_diamond/?stock_num=${item.diamondItem?.stock_num}&diamond_origin=${item?.type_diamond}`}
+                                          href={`/view_diamond/${item.diamondItem?.stock_num}?diamond_origin=${item?.type_diamond}`}
                                         >
                                           <img
                                             width="auto"
@@ -2289,7 +2289,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                       <div class="detail-content-main">
                                         <h4>
                                           <Link
-                                            href={`/view_diamond/?stock_num=${item.diamondItem?.stock_num}&diamond_origin=${item?.type_diamond}`}
+                                            href={`/view_diamond/${item.diamondItem?.stock_num}?diamond_origin=${item?.type_diamond}`}
                                           >
                                             {item.diamondItem?.size} Carat{" "}
                                             {item.diamondItem?.shape} Diamond
@@ -2395,7 +2395,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                     <div class="detail-col img white">
                                       <div class="detail-ring-image ring">
                                         <Link
-                                          href={`/gemstones-detail/?stock_num=${item.gemstone?.stock_num}`}
+                                          href={`/gemstones-detail/${item.gemstone?.stock_num}`}
                                         >
                                           <img
                                             width="auto"
@@ -2416,7 +2416,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                         <h4>
                                           {" "}
                                           <Link
-                                            href={`/gemstones-detail/?stock_num=${item.gemstone?.stock_num}`}
+                                            href={`/gemstones-detail/${item.gemstone?.stock_num}`}
                                           >
                                             {item.gemstone?.short_title}
                                           </Link>

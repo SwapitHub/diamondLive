@@ -92,7 +92,7 @@ const accountPageServer = async () => {
     <>
     <Suspense>
 
-      <MyAccountDashboard  profileData={profileData}/>
+      <MyAccountDashboard  profileData={profileData} userId={userId?.value}/>
     </Suspense>
     </>
   );

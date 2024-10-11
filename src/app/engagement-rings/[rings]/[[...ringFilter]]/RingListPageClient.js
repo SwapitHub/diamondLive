@@ -480,7 +480,7 @@ const StartWithASetting = ({
 
     if (storedSelectedShopStyleIdsCoo) {
       try {
-        const parsedShopStyleIds = JSON.parse(storedSelectedShopStyleIds);
+        const parsedShopStyleIds = storedSelectedShopStyleIds;
         setSelectedShopStyleIds(parsedShopStyleIds);
         setActiveStyleIds(parsedShopStyleIds);
       } catch (error) {
@@ -2255,7 +2255,6 @@ const StartWithASetting = ({
         {/* <div>
           <ProductListMoreToExplore />
           </div> */}
-        <div>{loading && <LoaderSpinner />}</div>
         <div>{/* <ProductListFaq /> */}</div>
       </div>
     </>

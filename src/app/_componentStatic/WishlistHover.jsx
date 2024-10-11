@@ -518,7 +518,7 @@ export const WishlistHover = () => {
                                           );
                                         }}
                                       >
-                                        Add to Bag
+                                        Add To Bag
                                       </Link>
                                     )}
                                   </div>
@@ -650,7 +650,7 @@ export const WishlistHover = () => {
                                         );
                                       }}
                                     >
-                                      Add to Bag
+                                      Add To Bag
                                     </Link>
                                   )}
                                 </div>
@@ -832,7 +832,7 @@ export const WishlistHover = () => {
                                     );
                                   }}
                                 >
-                                  Add to Bag
+                                  Add To Bag
                                 </Link>
                               ) : (
                                 <Link
@@ -871,7 +871,7 @@ export const WishlistHover = () => {
                               <div className="cart-left-main">
                                 <ul className="carts-pic">
                                   <Link
-                                    href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                    href={`/gemstones-detail/${item.gemstone_id}`}
                                   >
                                     <li>
                                       <img
@@ -894,7 +894,7 @@ export const WishlistHover = () => {
                                   <div className="cart-info-inner">
                                     <div className="cart-info-left">
                                       <Link
-                                        href={`/gemstones-detail/?stock_num=${item?.gemstone_id}`}
+                                        href={`/gemstones-detail/${item?.gemstone_id}`}
                                         className="money"
                                       >
                                         {gemstoneItem?.short_title}
@@ -963,7 +963,7 @@ export const WishlistHover = () => {
                                       );
                                     }}
                                   >
-                                    Add to Bag
+                                    Add To Bag
                                   </Link>
                                 </div>
                               </div>
@@ -992,12 +992,12 @@ export const WishlistHover = () => {
                               <div className="cart-left-main">
                                 <ul className="carts-pic">
                                   <Link
-                                    href={`/view_diamond?stock_num=${
+                                    href={`/view_diamond/${
                                       item.diamond_id
                                     }${
                                       item?.diamond_type === "Diamond"
                                         ? ""
-                                        : `&diamond_origin=lab_grown`
+                                        : `?diamond_origin=lab_grown`
                                     }`}
                                   >
                                     <li>
@@ -1021,12 +1021,12 @@ export const WishlistHover = () => {
                                   <div className="cart-info-inner">
                                     <div className="cart-info-left">
                                       <Link
-                                        href={`/view_diamond?stock_num=${
+                                        href={`/view_diamond/${
                                           item.diamond_id
                                         }${
                                           item?.diamond_type === "Diamond"
                                             ? ""
-                                            : `&diamond_origin=lab_grown`
+                                            : `?diamond_origin=lab_grown`
                                         }`}
                                         className="money"
                                       >
@@ -1101,7 +1101,7 @@ export const WishlistHover = () => {
                                       );
                                     }}
                                   >
-                                    Add to Bag
+                                    Add To Bag
                                   </Link>
                                 </div>
                                 <div className="cart-checkcross">
@@ -1149,7 +1149,7 @@ export const WishlistHover = () => {
                         <div className="cart-left-main">
                           <ul className="carts-pic">
                             <Link
-                              href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                              href={`/gemstones-detail/${item.item?.stock_num}`}
                             >
                               <li>
                                 <img
@@ -1182,7 +1182,7 @@ export const WishlistHover = () => {
                                 <div>
                                   <h2>
                                     <Link
-                                      href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                                      href={`/gemstones-detail/${item.item?.stock_num}`}
                                       className="td-n2"
                                     >
                                       {item.item?.short_title ||
@@ -1224,7 +1224,7 @@ export const WishlistHover = () => {
                                         //   }));
                                       }}
                                     >
-                                      Add to Bag
+                                      Add To Bag
                                     </Link>
                                   </div>
                                 </div>
@@ -1475,7 +1475,7 @@ export const WishlistHover = () => {
                                             
                                           }}
                                         >
-                                          Add to Bag
+                                          Add To Bag
                                         </Link>
                                       </div>
                                     )
@@ -1551,7 +1551,7 @@ export const WishlistHover = () => {
                                             );
                                           }}
                                         >
-                                          Add to Bag
+                                          Add To Bag
                                         </Link>
                                       </div>
                                     </div>
@@ -1687,7 +1687,7 @@ export const WishlistHover = () => {
                                             //   }));
                                           }}
                                         >
-                                          Add to Bag
+                                          Add To Bag
                                         </Link>
                                       ) : (
                                         <Link
@@ -1733,12 +1733,12 @@ export const WishlistHover = () => {
                             </div>
                             <div className="cart-left-main">
                               <Link
-                                href={`/view_diamond?stock_num=${
+                                href={`/view_diamond/${
                                   item.diamonds?.stock_num
                                 }${
                                   item?.diamond_type === "natural"
                                     ? ""
-                                    : `&diamond_origin=${item.diamond_type}`
+                                    : `?diamond_origin=${item.diamond_type}`
                                 }`}
                               >
                                 <img
@@ -1760,12 +1760,12 @@ export const WishlistHover = () => {
                                     <div>
                                       <h2>
                                         <Link
-                                          href={`/view_diamond?stock_num=${
+                                          href={`/view_diamond/${
                                             item.diamonds?.stock_num
                                           }${
                                             item?.diamond_type === "natural"
                                               ? ""
-                                              : `&diamond_origin=${item.diamond_type}`
+                                              : `?diamond_origin=${item.diamond_type}`
                                           }`}
                                           className="td-n2"
                                         >
@@ -1798,7 +1798,7 @@ export const WishlistHover = () => {
                                             handleHoverWishlistDiamond(item);
                                           }}
                                         >
-                                          Add to Bag
+                                          Add To Bag
                                         </Link>
                                       </div>
                                     </div>

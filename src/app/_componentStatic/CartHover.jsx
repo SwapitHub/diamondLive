@@ -128,7 +128,7 @@ export const CartHover = () => {
                             <>
                               <div className="cart-left-main">
                                 <Link
-                                  href={`/gemstones-detail/?stock_num=${item?.gemstone_id}`}
+                                  href={`/gemstones-detail/${item?.gemstone_id}`}
                                   className="carts-pic"
                                 >
                                   <img
@@ -142,7 +142,7 @@ export const CartHover = () => {
                               </div>
                               <div className="cart-right-main">
                                 <Link
-                                  href={`/gemstones-detail/?stock_num=${item?.gemstone_id}`}
+                                  href={`/gemstones-detail/${item?.gemstone_id}`}
                                   className="cart-info"
                                 >
                                   <span>{gemstoneItem.short_title}</span>
@@ -300,9 +300,9 @@ export const CartHover = () => {
                               <>
                                 <div className="cart-left-main">
                                   <Link
-                                    href={`/view_diamond/?stock_num=${
+                                    href={`/view_diamond/${
                                       item.diamond_id
-                                    }&diamond_origin=${
+                                    }?diamond_origin=${
                                       item.diamond_type === "Lab_grown_Diamond"
                                         ? "lab_grown"
                                         : "natural"
@@ -325,9 +325,9 @@ export const CartHover = () => {
                                         <div className="td-n2">
                                           <p>
                                             <Link
-                                              href={`/view_diamond/?stock_num=${
+                                              href={`/view_diamond/${
                                                 item.diamond_id
-                                              }&diamond_origin=${
+                                              }?diamond_origin=${
                                                 item.diamond_type ===
                                                 "Lab_grown_Diamond"
                                                   ? "lab_grown"
@@ -490,7 +490,7 @@ export const CartHover = () => {
                               <>
                                 <div className="cart-left-main">
                                   <Link
-                                    href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                    href={`/gemstones-detail/${item.gemstone_id}`}
                                     className="carts-pic"
                                   >
                                     <img
@@ -504,7 +504,7 @@ export const CartHover = () => {
                                 </div>
                                 <div className="cart-right-main">
                                   <Link
-                                    href={`/gemstones-detail/?stock_num=${item.gemstone_id}`}
+                                    href={`/gemstones-detail/${item.gemstone_id}`}
                                     className="cart-info"
                                   >
                                     <span>{gemstoneItem.short_title}</span>
@@ -775,7 +775,7 @@ export const CartHover = () => {
                         <>
                           <div className="product-pic-diamond-top">
                             <Link
-                              href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                              href={`/gemstones-detail/${item.item?.stock_num}`}
                             >
                               <img
                                 width="auto"
@@ -791,7 +791,7 @@ export const CartHover = () => {
                               <div>
                                 <h2>
                                   <Link
-                                    href={`/gemstones-detail/?stock_num=${item.item?.stock_num}`}
+                                    href={`/gemstones-detail/${item.item?.stock_num}`}
                                     className="td-n2"
                                   >
                                     <span>{item.item?.short_title}</span>
@@ -1040,7 +1040,7 @@ export const CartHover = () => {
                             {item.diamondItem?.sub_title_description ? (
                               <div>
                                 <Link
-                                  href={`/view_diamond/?stock_num=${item.diamondItem?.stock_num}&diamond_origin=${item?.type_diamond}`}
+                                  href={`/view_diamond/${item.diamondItem?.stock_num}?diamond_origin=${item?.type_diamond}`}
                                 >
                                   <img
                                     width="auto"
@@ -1054,7 +1054,7 @@ export const CartHover = () => {
                             ) : (
                               <div>
                                 <Link
-                                  href={`/gemstones-detail/?stock_num=${item.gemstone?.stock_num}`}
+                                  href={`/gemstones-detail/${item.gemstone?.stock_num}`}
                                 >
                                   <img
                                     width="auto"
@@ -1122,7 +1122,7 @@ export const CartHover = () => {
                                   {item.diamondItem?.sub_title_description ? (
                                     <>
                                       <Link
-                                        href={`/view_diamond/?stock_num=${item.diamondItem?.stock_num}&diamond_origin=${item?.type_diamond}`}
+                                        href={`/view_diamond/${item.diamondItem?.stock_num}?diamond_origin=${item?.type_diamond}`}
                                         className="td-n2"
                                       >
                                         {item.diamondItem?.size} Carat,{" "}
@@ -1134,7 +1134,7 @@ export const CartHover = () => {
                                     </>
                                   ) : (
                                     <Link
-                                      href={`/gemstones-detail/?stock_num=${item.gemstone?.stock_num}`}
+                                      href={`/gemstones-detail/${item.gemstone?.stock_num}`}
                                       className="td-n2"
                                     >
                                       {item.gemstone?.short_title}
