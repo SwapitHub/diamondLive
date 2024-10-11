@@ -1643,6 +1643,9 @@ ul.ftr-contact-form > h4 {
   font-family: "Inter", sans-serif;
   
 }
+.ftr-contact.flex ul li > a:hover {
+  color: #310f4c;
+}
 ul.ftr-contact-form > p {
   color: #310F4C;
   font-size: 13px;
@@ -13080,6 +13083,7 @@ object-position: top;
 }
 .card-right-side .order-box .detail-content-list-checkout li span {
   font-weight: 400;
+  text-align: justify;
 }
 .shoping-car-page .shoping-card-main-wrap .card-right-side {
   width: 50%;

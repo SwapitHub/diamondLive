@@ -20,6 +20,7 @@ import { addToWishlist } from "../../../store/actions/wishlistAction";
 import { ChooseYourImpact } from "../_componentStatic/ChooseYourImpact";
 import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
+import { ContinueShoping } from "../_componentStatic/ContinueShopping";
 
 const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
 
@@ -1955,6 +1956,8 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
               <div className="shopping-card-main-wrap empty-cart">
                 
                 <h1>Your Shopping Bag Is Empty</h1>
+                <ContinueShoping />
+
               </div>
             )}
           </div>
@@ -3082,7 +3085,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                   <button onClick={handleClickCheckOut}>Sign in</button> to view
                   previously saved items or track a recent order
                 </p>
-                {/* <ContinueShoping /> */}
+                <ContinueShoping />
               </div>
             )}
 
