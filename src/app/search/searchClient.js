@@ -381,7 +381,7 @@ const SearchPage = ({
           console.log("API error");
           setLoading(false);
         });
-    }, 200);
+    });
     delayedSearch();
 
     const timeoutColor = setTimeout(() => {
@@ -399,7 +399,7 @@ const SearchPage = ({
 
   //  scroll pagination start============
   useEffect(() => {
-    const handleInfiniteScroll = debounce(() => {
+    const handleInfiniteScroll = () => {
       try {
         const scrollHeight = document.documentElement.scrollHeight;
         const scrollTop =
@@ -423,7 +423,7 @@ const SearchPage = ({
       } catch (error) {
         console.log(error);
       }
-    }, 100);
+    };
     if (page * 30 < searchedProductCount?.product_count) {
       window.addEventListener("scroll", handleInfiniteScroll);
     }

@@ -8894,6 +8894,7 @@ a.transparent-btn {
 }
 .whishlist-colum .money {
   font-size: 14px;
+  font-weight: 600;
 }
 /*==============29-feb-2024-css-end-here===============*/
 
@@ -14061,7 +14062,6 @@ span.Bridal-Sets-Only-bread-crumb.active {
 }
 .header nav.nav li.wedding-band .engagement-ring {
   height: fit-content;
-  max-width: 100%;
   padding: 0 110px;
 }
 
@@ -14797,6 +14797,9 @@ section.new-popups {
 .shop-by-page-common.Bridal-Sets-Only-setting-style .shop-style-img {
   width: 80px;
   height: 80px;
+}
+footer.footer ul.ftr-contact-ul h4 > a {
+  cursor: auto;
 }
 /*===========10-october-2024 by-R================*/
 @media (min-width: 2250px) {
@@ -16502,6 +16505,10 @@ ul.product-list-thumbnail {
 .banner-text.min-ht.gemstone {
   padding-right: 30px;
 }
+.searching-bar-field.container {
+  display: none;
+}
+
 }
 
 

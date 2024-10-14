@@ -1,15 +1,15 @@
 "use client";
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { CiGift, CiHeart } from "react-icons/ci";
-import { IoIosClose } from "react-icons/io";
-import { toast } from "react-toastify";
 import GooglePayButton from "@google-pay/button-react";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import { CiGift, CiHeart } from "react-icons/ci";
 import { FaExclamationCircle } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import secureLocalStorage from "react-secure-storage";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { removeFromCart } from "../../../store/actions/cartActions";
 import {
@@ -18,10 +18,10 @@ import {
 } from "../../../store/actions/productActions";
 import { addToWishlist } from "../../../store/actions/wishlistAction";
 import { ChooseYourImpact } from "../_componentStatic/ChooseYourImpact";
-import { UserContext } from "../context/UserContext";
-import Cookies from "js-cookie";
 import { ContinueShoping } from "../_componentStatic/ContinueShopping";
-
+import PaypalCheckoutButton from "../_componentStatic/PaypalCheckoutButton";
+import { UserContext } from "../context/UserContext";
+   
 const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
 
   const dispatch = useDispatch();
@@ -1946,7 +1946,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                         buttonType="Buy"
                       />
 
-                      {/* <PaypalCheckoutButton /> */}
+                      <PaypalCheckoutButton />
                       {/* <ApplePayCheckoutButton/> */}
                     </div>
                   </div>

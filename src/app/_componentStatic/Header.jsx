@@ -298,7 +298,7 @@ const Header = ({ navData, siteInfo }) => {
                     {userId &&
                       `${
                         profileData?.userdata?.first_name
-                          ? `Hi, ${profileData?.userdata?.first_name.slice(0, 5)}...`
+                          ? `Hi, ${profileData?.userdata?.first_name.slice(0, 3)}...`
                           : ""
                       }`}
                   </span>
