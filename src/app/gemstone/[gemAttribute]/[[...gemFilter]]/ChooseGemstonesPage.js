@@ -308,7 +308,7 @@ export const ChooseGemstonesPage = ({
 
   useEffect(() => {
     const fetchDataGem = async () => {
-      const url = `${baseUrl}/vdb-gemstones?markup_mode=true&page_number=${page}${
+      const url = `${baseUrl}/sama-gemstones?markup_mode=true&page_number=${page}${
         gemStyleSlider ? gemStyleSlider : ""
       }${newStyleSliderData ? newStyleSliderData : ""}${
         newColorSliderData ? newColorSliderData : ""

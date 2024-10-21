@@ -56,7 +56,7 @@ const fetchDiamondDetail = async (diamond_origin, stock_num) => {
   try {
    
     const response = await fetch(
-      `${process.env.BASE_URL}/vdb-diamonds?type=${
+      `${process.env.BASE_URL}/sama-diamonds?type=${
         diamond_origin === "lab_grown" ? "Lab_grown_Diamond" : "Diamond"
       }&stock_num=${stock_num}`,
       {

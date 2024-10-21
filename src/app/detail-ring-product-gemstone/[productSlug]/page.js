@@ -35,16 +35,10 @@ const fetchDetailFontOption = async () => {
 const fetchGemstoneDetail = async (stock_num) => {
   let gemstone = [];
   try {
-    const headers = {
-      Authorization:
-        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
-    };
+    
     const response = await fetch(
-      `https://apiservices.vdbapp.com//v2/gemstones?stock_num=${stock_num}`,
-      {
-        method: "GET",
-        headers: headers,
-      }
+      `${process.env.BASE_URL}/sama-gemstones?markup_mode=true?stock_num=${stock_num}`,
+     
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

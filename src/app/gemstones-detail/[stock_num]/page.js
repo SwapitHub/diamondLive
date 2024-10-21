@@ -21,7 +21,7 @@ const fetchGemstoneDetail = async (stock_num) => {
   try {
     
     const response = await fetch(
-      `${process.env.BASE_URL}/vdb-gemstones?markup_mode=true&stock_num=${stock_num}`,
+      `${process.env.BASE_URL}/sama-gemstones?markup_mode=true&stock_num=${stock_num}`,
       {
         method: "GET",
         

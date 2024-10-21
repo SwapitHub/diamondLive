@@ -34,7 +34,7 @@ const fetchDiamonds = async (diamondShapeFilter, newDiamondType) => {
   let diamond = [];
   try {
     const response = await fetch(
-      `${process.env.BASE_URL}/vdb-diamonds?type=${
+      `${process.env.BASE_URL}/sama-diamonds?type=${
         newDiamondType == "lab_grown" ? "Lab_grown_diamond" : "Diamond"
       }&${diamondShapeFilter ? diamondShapeFilter : ""}&with_images=true`,
       {

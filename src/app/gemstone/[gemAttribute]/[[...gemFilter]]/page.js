@@ -32,7 +32,7 @@ const fetchGemstones = async (
   let gemstone = [];
   try {
     const response = await fetch(
-      `${process.env.BASE_URL}/vdb-gemstones?markup_mode=true&${
+      `${process.env.BASE_URL}/sama-gemstones?markup_mode=true&${
         gemStyleFilter ? gemStyleFilter : ""
       }${gemColorFilter ? gemColorFilter : ""}${
         gemShapeFilter ? gemShapeFilter : ""

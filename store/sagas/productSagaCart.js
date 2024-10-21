@@ -18,7 +18,6 @@ function* getProducts() {
       yield put({ type: SET_CART_LIST, payload: data });
     } catch (error) {
       console.error("Error fetching cart items:", error);
-      // Handle error or dispatch an action to update the store with an error state
     }
   }
 }

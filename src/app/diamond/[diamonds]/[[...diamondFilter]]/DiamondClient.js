@@ -387,7 +387,7 @@ const ChooseDiamondsShape = ({
   useEffect(() => {
     if (activeResult === 1) {
       const fetchData = async () => {
-        const url = `${baseUrl}/vdb-diamonds?type=${
+        const url = `${baseUrl}/sama-diamonds?type=${
           newDiamondType == "lab_grown" ? "Lab_grown_diamond" : "Diamond"
         }&markup_mode=true${
           diamondPriceRange[0]

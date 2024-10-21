@@ -199,7 +199,7 @@ const StartWithASetting = ({
 
   useMemo(() => {
     const fetchData = async () => {
-      const url = `${baseUrl}/vdb-gemstones?markup_mode=true&stock_num=${stock_num}`;
+      const url = `${baseUrl}/sama-gemstones?markup_mode=true&stock_num=${stock_num}`;
       const params = {
         stock_item_type: "gemstones",
         status: "pending",
@@ -221,7 +221,7 @@ const StartWithASetting = ({
   // Diamond api
   useMemo(() => {
     const fetchData = async () => {
-      const url = `${baseUrl}/vdb-diamonds?type=${
+      const url = `${baseUrl}/sama-diamonds?type=${
         diamond_origin == "lab_grown" ? "Lab_grown_Diamond" : "Diamond"
       }&stock_num=${stock_num}`;
 
