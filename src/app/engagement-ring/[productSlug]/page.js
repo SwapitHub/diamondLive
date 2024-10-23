@@ -119,7 +119,7 @@ export default async function RingDetailPage({ params, searchParams }) {
 
   return (
     <>
-      <DetailRingProduct filterData={filterData} shapeData={shape.data} diamondData={diamond.response.body.diamonds} fontStyleOptions={FontOption.data}/>
+      <DetailRingProduct filterData={filterData} shapeData={shape.data} diamondData={diamond.response?.body?.diamonds} fontStyleOptions={FontOption.data}/>
     </>
   );
 }
