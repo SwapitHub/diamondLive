@@ -280,9 +280,6 @@ const StartWithASetting = ({
               image: product.default_image_url,
               images: product.default_image_url
                 .split("/")
-                .slice(-1)
-                .join()
-                .split(".")
                 .shift(),
               slug: product.slug,
               CenterShape: product.CenterShape,
@@ -865,7 +862,10 @@ const StartWithASetting = ({
       axios
         .get(removeWish)
         .then((res) => {
-          setLoading(false);
+          setTimeout(() => {
+            
+            setLoading(false);
+          }, 4000);
           dispatch(productList());
         })
         .catch((error) => {

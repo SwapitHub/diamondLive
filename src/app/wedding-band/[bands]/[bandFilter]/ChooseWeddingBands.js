@@ -1094,10 +1094,11 @@ const ChooseWeddingBands = ({
         {/* <div>
           <ProductListFaq />
         </div> */}
-        <h3 className="center">
-          {filterRoseData.length > 0 ? null : `data not found`}
-        </h3>
-        <div>{loading && <LoaderSpinner />}</div>
+        {filterRoseData.length < 1 && (
+            <h3 className="center">
+              {loading ? <LoaderSpinner /> : "Data Not Found"}
+            </h3>
+          )}
       </div>
     </>
   );
