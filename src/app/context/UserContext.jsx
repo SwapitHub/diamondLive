@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
   const [toggle, setToggle] = useState(1);
 
   const baseUrl = "https://api.rocksama.com/api/v1";
-  const imgBaseUrl = "https://assets.rocksama.com/products/images";
+  const imgBaseUrl = "https://assets.rocksama.com/images_and_videos/images";
   const imgAssetsUrl = "https://assets.rocksama.com";
 
   return (

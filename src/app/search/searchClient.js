@@ -369,12 +369,13 @@ const SearchPage = ({
 
           if (page > 1) {
             setSearchData((prevData) => [...prevData, ...res.data.data]);
-            setLoading(false);
           } else {
             setSearchData(res.data.data);
           }
 
-          setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 3500);
           setFirstApiCall(true);
         })
         .catch(() => {
@@ -418,7 +419,7 @@ const SearchPage = ({
           setPage((prev) => prev + 1);
           setTimeout(() => {
             setLoading(false);
-          }, 1000);
+          }, 3500);
         }
       } catch (error) {
         console.log(error);
@@ -690,7 +691,7 @@ const SearchPage = ({
             )}
           </div>
           <div className="resultdata setings-Page-img">
-            {searchData.length > 0 ? (
+            {searchData.length > 0 && (
               searchData.map((item) => {
                 return (
                   <div className="resultdata all-pages-data" key={item.id}>
@@ -858,12 +859,10 @@ const SearchPage = ({
                   </div>
                 );
               })
-            ) : (
-              <h3 className="center">Data not found</h3>
             )}
           </div>
           <div className="resultdata setings-Page-img server-side">
-            {searchDataServer.length > 0 ? (
+            {searchDataServer.length > 0 && (
               searchDataServer.map((item) => {
                 return (
                   <div className="resultdata all-pages-data" key={item.id}>
@@ -1031,13 +1030,16 @@ const SearchPage = ({
                   </div>
                 );
               })
-            ) : (
-              <h3 className="center">Data not found</h3>
             )}
           </div>
         </div>
+        {searchData.length < 1 && (
+            <h3 className="center">
+              {loading ? <LoaderSpinner /> : "Data Not Found"}
+            </h3>
+          )}
       </div>
-      <div>{loading && <LoaderSpinner />}</div>
+      
     </>
   );
 };

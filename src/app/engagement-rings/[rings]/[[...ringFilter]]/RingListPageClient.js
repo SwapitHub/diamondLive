@@ -244,6 +244,7 @@ const StartWithASetting = ({
   // ===============  shop by price range==============
 
   // =============== shop by price range end==============
+console.log(filterRoseData);
 
   useMemo(() => {
     const fetchData = () => {
@@ -284,12 +285,7 @@ const StartWithASetting = ({
               slug: product.slug,
               CenterShape: product.CenterShape,
               multiCategory: product.multiCategory,
-              imageName: product.default_image_url
-                .split("/")
-                .slice(-1)
-                .join()
-                .split(".")
-                .shift(),
+              imageName:product.entity_id,
               white_gold_price: product.white_gold_price,
               yellow_gold_price: product.yellow_gold_price,
               rose_gold_price: product.rose_gold_price,
@@ -1761,7 +1757,8 @@ const StartWithASetting = ({
                           alt={item.name}
                         />
                       </div>
-
+{console.log(`${imgBaseUrl}/${item.imageName}/${item.imageName}.alt.jpg`)
+}
                       <div className="all-img1 img-1 common-img Yellow">
                         <span className="common-stand-img-1">
                           <LazyLoadImage

@@ -35,10 +35,16 @@ const fetchDetailFontOption = async () => {
 const fetchGemstoneDetail = async (stock_num) => {
   let gemstone = [];
   try {
-    
+    const headers = {
+      Authorization:
+        "Token token=CX7r3wiul169qAGnMjzlZm8iEpJIMAgks_IgGD0hywg, api_key=_amT48wMLQ3rh4SP1inCzRQ",
+    };
     const response = await fetch(
-      `${process.env.BASE_URL}/sama-gemstones?markup_mode=true?stock_num=${stock_num}`,
-     
+      `https://apiservices.vdbapp.com//v2/gemstones?stock_num=${stock_num}`,
+      {
+        method: "GET",
+        headers: headers,
+      }
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -102,8 +108,9 @@ export default async function RingDetailPage({ searchParams, params }) {
   const FontOption = await fetchDetailFontOption()
 
   const filterData = {
-    product: ringDetail.data,
-    imgUrl: ringDetail.data.internal_sku,
+    product: ringDetail?.data,
+    imgUrl: ringDetail?.data?.sama_sku,
+    entity_id: ringDetail?.data?.entity_id
   };
 
   return (

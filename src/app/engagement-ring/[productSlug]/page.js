@@ -56,7 +56,7 @@ const fetchDiamondDetail = async (diamond_origin, stock_num) => {
   try {
    
     const response = await fetch(
-      `${process.env.BASE_URL}/sama-diamonds?type=${
+      `${process.env.BASE_URL}/vdb-diamonds?type=${
         diamond_origin === "lab_grown" ? "Lab_grown_Diamond" : "Diamond"
       }&stock_num=${stock_num}`,
       {
@@ -113,7 +113,8 @@ export default async function RingDetailPage({ params, searchParams }) {
   const FontOption = await fetchDetailFontOption()
   const filterData = {
     product: ringDetail?.data,
-    imgUrl: ringDetail?.data?.internal_sku,
+    imgUrl: ringDetail?.data?.sama_sku,
+    entity_id: ringDetail?.data?.entity_id
   };
 
   return (

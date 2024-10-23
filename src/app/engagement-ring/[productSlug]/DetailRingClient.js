@@ -41,7 +41,7 @@ const DetailRingProduct = ({
   diamondData,
   fontStyleOptions,
 }) => {
-  const history = useRouter(); // Call useHistory at the top level of the component
+  const history = useRouter(); 
   const [urlColor, setUrlColor] = useState("");
   const queryParams = useSearchParams();
   const pathname = usePathname();
@@ -663,6 +663,9 @@ const DetailRingProduct = ({
     e.target.onerror = null;
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
   };
+
+  console.log(filterData);
+  
   return (
     <>
       <div
@@ -709,8 +712,8 @@ const DetailRingProduct = ({
                     {iconVideoColor ? (
                       <div className="details-videos">
                         <LazyLoadImage
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${
-                            filterData.imgUrl
+                          src={`${imgBaseUrl}/${filterData.entity_id}/${
+                            filterData.entity_id
                           }${
                             listColor === white || listColor === platinum
                               ? `.jpg`
@@ -782,7 +785,7 @@ ${changeClick === rose ? "active" : ""}
                         <div className="details-videos-images-thumbnail">
                           {thumbnailItem === ".jpg" ? (
                             <InnerImageZoom
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                               imgAttributes={{
                                 width: "auto",
                                 height: "auto",
@@ -792,7 +795,7 @@ ${changeClick === rose ? "active" : ""}
                             />
                           ) : (
                             <InnerImageZoom
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}`}
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}${thumbnailItem}`}
                               imgAttributes={{
                                 width: "auto",
                                 height: "auto",
@@ -805,8 +808,8 @@ ${changeClick === rose ? "active" : ""}
                       ) : (
                         <div className="all-images video-place-images details-videos">
                           <LazyLoadImage
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${
-                              filterData.imgUrl
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${
+                              filterData.entity_id
                             }${
                               listColor === white || listColor === platinum
                                 ? `.jpg`
@@ -834,7 +837,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.he.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -854,7 +857,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ra.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -873,7 +876,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -895,7 +898,7 @@ ${changeClick === rose ? "active" : ""}
                                   className={`marquise-common marquise-set `}
                                 >
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.mq.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -915,7 +918,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.em.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -934,7 +937,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ov.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -953,7 +956,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.rd.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -973,7 +976,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.cu.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -993,7 +996,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.pe.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1021,7 +1024,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.he.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1041,7 +1044,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ra.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1060,7 +1063,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1082,7 +1085,7 @@ ${changeClick === rose ? "active" : ""}
                                   className={`marquise-common marquise-set `}
                                 >
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.mq.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1102,7 +1105,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.em.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1121,7 +1124,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ov.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1140,7 +1143,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.rd.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1160,7 +1163,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.cu.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1180,7 +1183,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.pe.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1208,7 +1211,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.he.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1228,7 +1231,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ra.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1247,7 +1250,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1269,7 +1272,7 @@ ${changeClick === rose ? "active" : ""}
                                   className={`marquise-common marquise-set `}
                                 >
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.mq.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1289,7 +1292,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.em.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1308,7 +1311,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ov.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1327,7 +1330,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.rd.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1347,7 +1350,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.cu.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1367,7 +1370,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.pe.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1394,7 +1397,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.he.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1414,7 +1417,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ra.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1435,7 +1438,7 @@ ${changeClick === rose ? "active" : ""}
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.side.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.side.jpg`}
                                     alt={filterData.product?.name}
                                     onError={handleError}
                                   />
@@ -1444,7 +1447,7 @@ ${changeClick === rose ? "active" : ""}
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.set.jpg`}
                                     alt={filterData.product?.name}
                                     onError={handleError}
                                   />
@@ -1455,7 +1458,7 @@ ${changeClick === rose ? "active" : ""}
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.angle.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.angle.jpg`}
                                     alt={filterData.product?.name}
                                     onError={handleError}
                                   />
@@ -1473,7 +1476,7 @@ ${changeClick === rose ? "active" : ""}
                                   className={`marquise-common marquise-set `}
                                 >
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.mq.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1493,7 +1496,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.em.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1512,7 +1515,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ov.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1531,7 +1534,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.rd.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1551,7 +1554,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.cu.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1571,7 +1574,7 @@ ${changeClick === rose ? "active" : ""}
                               >
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.pe.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
@@ -1591,7 +1594,7 @@ ${changeClick === rose ? "active" : ""}
                       <div className="details-videos-images-thumbnail">
                         {thumbnailItem === ".jpg" ? (
                           <InnerImageZoom
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                             imgAttributes={{
                               width: "auto",
                               height: "auto",
@@ -1601,7 +1604,7 @@ ${changeClick === rose ? "active" : ""}
                           />
                         ) : (
                           <InnerImageZoom
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}`}
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}${thumbnailItem}`}
                             imgAttributes={{
                               width: "auto",
                               height: "auto",
@@ -1614,7 +1617,7 @@ ${changeClick === rose ? "active" : ""}
                     ) : (
                       <div className="details-videos">
                         <LazyLoadImage
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}`}
+                          src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}${thumbnailItem}`}
                           alt={filterData.product?.name}
                           className="video-poster"
                           effect="blur"
@@ -1681,8 +1684,8 @@ ${changeClick === rose ? "active" : ""}
                         <div className="white default-img">
                           <div>
                             <img
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
-                                filterData.imgUrl
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${
+                                filterData.entity_id
                               }${
                                 (changeClick === white ||
                                   changeClick === platinum) &&
@@ -1728,8 +1731,8 @@ ${changeClick === rose ? "active" : ""}
 
                           <div>
                             <img
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
-                                filterData.imgUrl
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${
+                                filterData.entity_id
                               }${
                                 (changeClick === white ||
                                   changeClick === platinum) &&
@@ -1775,8 +1778,8 @@ ${changeClick === rose ? "active" : ""}
 
                           <div>
                             <img
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
-                                filterData.imgUrl
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${
+                                filterData.entity_id
                               }${
                                 (changeClick === white ||
                                   changeClick === platinum) &&
@@ -2741,7 +2744,7 @@ ${changeClick === rose ? "active" : ""}
                                         user_id,
                                         filterData.product?.id,
                                         changeClick,
-                                        filterData.imgUrl,
+                                        filterData.entity_id,
                                         diamondType?.diamond_type ===
                                           "lab_grown"
                                           ? diamondType?.price
@@ -2785,7 +2788,7 @@ ${changeClick === rose ? "active" : ""}
                                       user_id,
                                       filterData.product?.id,
                                       changeClick,
-                                      filterData.imgUrl,
+                                      filterData.entity_id,
                                       diamondType?.diamond_type === "lab_grown"
                                         ? diamondType?.price
                                         : changeClick === white
