@@ -83,13 +83,14 @@ export default async function bandDetailPage({ params }) {
   const FontOption = await fetchDetailFontOption()
   
   const filterData={
-    product: bandDetail.data,
-    imgUrl: bandDetail.data.internal_sku,
+    product: bandDetail?.data,
+    imgUrl: bandDetail?.data?.internal_sku,
+    entity_id: bandDetail?.data?.entity_id
   }
 
   return (
     <>
-      <WeddingBandsDetail productSlug={productSlug} filterData={filterData} shapeData={shape.data} fontStyleOptions={FontOption.data}/>
+      <WeddingBandsDetail productSlug={productSlug} filterData={filterData} shapeData={shape?.data} fontStyleOptions={FontOption?.data}/>
     </>
   );
 }

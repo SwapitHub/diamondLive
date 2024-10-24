@@ -37,11 +37,18 @@ import {
   productList,
   productListCart,
 } from "../../../../store/actions/productActions";
-import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
+import {
+  addToWishlist,
+  removeToWishlist,
+} from "../../../../store/actions/wishlistAction";
 import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
 
-export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyleOptions}) => {
-
+export const WeddingBandsDetail = ({
+  productSlug,
+  filterData,
+  shapeData,
+  fontStyleOptions,
+}) => {
   const router = useRouter(); // Call userouter at the top level of the component
   const [urlColor, setUrlColor] = useState("");
   const searchParams = useSearchParams();
@@ -52,7 +59,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   const diamond_original = queryParams.get("diamond_original");
 
   // find url area
-  const { baseUrl, imgBaseUrl, imgAssetsUrl} = useContext(UserContext);
+  const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
@@ -259,8 +266,6 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
     wishlist.map((item) => {
       if (belowItem?.id === item.ring?.id || belowItem.id === item.ring_id) {
         dispatch(removeToWishlist(item));
-
-        
       }
     });
 
@@ -284,8 +289,8 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   useMemo(() => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_id=${
-          filterData.product?.id
+        `${baseUrl}/get_product_price?product_sku=${
+          filterData.product?.sku
         }&metalType=${
           listColor === "platinum" ? "Platinum" : "18kt"
         }&metalColor=${urlColor}&diamond_type=${
@@ -306,9 +311,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [
-    urlColor,
-  ]);
+  }, [urlColor]);
 
   useMemo(() => {
     const fetchData = () => {
@@ -416,7 +419,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
 
     axios
       .get(
-        `${baseUrl}/get_product_price?product_id=${productSku}&metalType=${productType}&metalColor=${diamondColor}&diamond_type=${diamond_type}`
+        `${baseUrl}/get_product_price?product_sku=${productSku}&metalType=${productType}&metalColor=${diamondColor}&diamond_type=${diamond_type}`
       )
 
       .then((response) => {
@@ -463,7 +466,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   ) => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_id=${productSku}&metalType=${productType}&metalColor=${
+        `${baseUrl}/get_product_price?product_sku=${productSku}&metalType=${productType}&metalColor=${
           diamondColor ? diamondColor : urlColor
         }&diamond_type=${diamond_type}`
       )
@@ -542,15 +545,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   });
 
   // variant start here
-  const [changeOverVariation, setChangeOverVariation] = useState()
-  
-  
-  const onChangeOverVariation = (fraction)=>{
+  const [changeOverVariation, setChangeOverVariation] = useState();
+
+  const onChangeOverVariation = (fraction) => {
     setChangeOverVariation(fraction);
-  }
+  };
 
   const handleVariation = (variantSlug) => {
-  
     const searchParams = new URLSearchParams(queryParams);
 
     searchParams.delete("diamond_original");
@@ -583,7 +584,6 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   useEffect(() => {
     const totalCaratWeight = secureLocalStorage.getItem("totalCaratWeight");
     if (totalCaratWeight) {
-
       const newSearchString = searchParams.toString();
 
       const newURL = `${`/detail-wedding-band/${productSlug}`}?${newSearchString}`;
@@ -646,8 +646,6 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   const handleSelectFontStyle = (fontStyleOptions) => {
     setSelectedFontStyleOption(fontStyleOptions);
   };
-
- 
 
   const [textEngraving, setTextEngraving] = useState();
   const onchangeEngraving = (event) => {
@@ -747,17 +745,21 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                     {iconVideoColor ? (
                       <div className="details-videos">
                         <LazyLoadImage
-                          src="https://www.icegif.com/wp-content/uploads/2023/07/icegif-1260.gif"
+                          src={`${imgBaseUrl}/${filterData.entity_id}/${
+                            filterData.entity_id
+                          }${
+                            listColor === white || listColor === platinum
+                              ? `.jpg`
+                              : listColor === yellow
+                              ? `.alt.jpg`
+                              : listColor === rose && `.alt1.jpg`
+                          }`}
                           alt={filterData.product?.name}
                           className="video-poster"
                           effect="blur"
-                          width="auto"
-                          height="auto"
                           onError={handleError}
                         />
-                        <img
-                          width="auto"
-                          height="auto"
+                        <span
                           className={`details-video-common 
                                             ${
                                               changeClick === white
@@ -766,81 +768,106 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                             }
                                             
                                             `}
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
-                          alt={filterData.product?.name}
-                          onError={handleError}
-                        />
-
-                        <img
-                          width="auto"
-                          height="auto"
+                        >
+                          <InnerImageZoom
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
+                            imgAttributes={{
+                              alt: filterData.product?.name,
+                              width: "auto",
+                              height: "auto",
+                            }}
+                            onError={handleError}
+                          />
+                        </span>
+                        <span
                           className={`details-video-common 
     ${changeClick === yellow ? "active" : ""}
     
     `}
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt.jpg`}
-                          alt={filterData.product?.name}
-                          onError={handleError}
-                        />
-
-                        <img
-                          width="auto"
-                          height="auto"
+                        >
+                          <InnerImageZoom
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.alt.jpg`}
+                            imgAttributes={{
+                              alt: filterData.product?.name,
+                              width: "auto",
+                              height: "auto",
+                            }}
+                            onError={handleError}
+                          />
+                        </span>
+                        <span
                           className={`details-video-common 
                                     ${changeClick === rose ? "active" : ""}
                                     
                                     `}
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt1.jpg`}
-                          alt={filterData.product?.name}
-                          onError={handleError}
-                        />
-
-                        <img
-                          width="auto"
-                          height="auto"
+                        >
+                          <InnerImageZoom
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.alt1.jpg`}
+                            imgAttributes={{
+                              alt: filterData.product?.name,
+                              width: "auto",
+                              height: "auto",
+                            }}
+                            onError={handleError}
+                          />
+                        </span>
+                        <span
                           className={`details-video-common 
     ${changeClick === platinum ? "active" : ""}
     
     `}
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
-                          alt={filterData.product?.name}
-                          onError={handleError}
-                        />
+                        >
+                          <InnerImageZoom
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
+                            imgAttributes={{
+                              alt: filterData.product?.name,
+                              width: "auto",
+                              height: "auto",
+                            }}
+                            onError={handleError}
+                          />
+                        </span>
                       </div>
                     ) : shapeProduct ? (
                       thumbnailItem || thumbnailItem?.isEmpty() ? (
                         <div className="details-videos-images-thumbnail">
                           {thumbnailItem === ".jpg" ? (
                             <InnerImageZoom
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                               imgAttributes={{
                                 width: "auto",
                                 height: "auto",
-                                onError: handleError,
                                 alt: filterData.product?.name,
                               }}
+                              onError={handleError}
                             />
                           ) : (
                             <InnerImageZoom
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}`}
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}${thumbnailItem}`}
                               imgAttributes={{
                                 width: "auto",
                                 height: "auto",
-                                onError: handleError,
                                 alt: filterData.product?.name,
                               }}
+                              onError={handleError}
                             />
                           )}
                         </div>
                       ) : (
                         <div className="all-images video-place-images details-videos">
                           <LazyLoadImage
-                            src="https://www.icegif.com/wp-content/uploads/2023/07/icegif-1260.gif"
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${
+                              filterData.entity_id
+                            }${
+                              listColor === white || listColor === platinum
+                                ? `.jpg`
+                                : listColor === yellow
+                                ? `.alt.jpg`
+                                : listColor === rose && `.alt1.jpg`
+                            }`}
                             alt={filterData.product?.name}
                             className="video-poster"
                             effect="blur"
-                            width="auto"
-                            height="auto"
                             onError={handleError}
                           />
                           <div className="detail-images">
@@ -858,13 +885,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.he.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -878,13 +905,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ra.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -897,13 +924,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -919,13 +946,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                   className={`marquise-common marquise-set `}
                                 >
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.mq.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -939,13 +966,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.em.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -958,13 +985,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ov.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -977,13 +1004,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.rd.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -997,13 +1024,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.cu.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1017,13 +1044,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.pe.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1045,13 +1072,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.he.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1065,13 +1092,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ra.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1084,13 +1111,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1106,13 +1133,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                   className={`marquise-common marquise-set `}
                                 >
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.mq.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1126,13 +1153,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.em.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1145,13 +1172,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ov.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1164,13 +1191,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.rd.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1184,13 +1211,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.cu.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1204,13 +1231,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.alt.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.pe.set.alt.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1232,13 +1259,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.he.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1252,13 +1279,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ra.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1271,13 +1298,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`asscher-common asscher-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1293,13 +1320,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                   className={`marquise-common marquise-set `}
                                 >
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.mq.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1313,13 +1340,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.em.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1332,13 +1359,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ov.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1351,13 +1378,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.rd.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1371,13 +1398,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.cu.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1391,13 +1418,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.pe.set.alt1.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1418,13 +1445,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`heart-common he-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.he.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.he.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1438,13 +1465,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`radiant-common radiant-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ra.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ra.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1459,18 +1486,18 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                   <img
                                     width="auto"
                                     height="auto"
-                                    onError={handleError}
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.side.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.side.jpg`}
                                     alt={filterData.product?.name}
+                                    onError={handleError}
                                   />
                                 </div>
                                 <div className={`asscher-common asscher-set `}>
                                   <img
                                     width="auto"
                                     height="auto"
-                                    onError={handleError}
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.set.jpg`}
                                     alt={filterData.product?.name}
+                                    onError={handleError}
                                   />
                                 </div>
                                 <div
@@ -1479,9 +1506,9 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                   <img
                                     width="auto"
                                     height="auto"
-                                    onError={handleError}
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.as.angle.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.as.angle.jpg`}
                                     alt={filterData.product?.name}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1497,13 +1524,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                   className={`marquise-common marquise-set `}
                                 >
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.mq.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.mq.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1517,13 +1544,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`emerald-common emerald-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.em.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.em.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1536,13 +1563,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Oval-common Oval-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.ov.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.ov.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1555,13 +1582,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Round-common Round-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.rd.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.rd.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1575,13 +1602,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Cushion-common Cushion-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.cu.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.cu.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1595,13 +1622,13 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               >
                                 <div className={`Pear-common Pear-set `}>
                                   <InnerImageZoom
-                                    src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.pe.set.jpg`}
+                                    src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.pe.set.jpg`}
                                     imgAttributes={{
                                       width: "auto",
                                       height: "auto",
-                                      onError: handleError,
                                       alt: filterData.product?.name,
                                     }}
+                                    onError={handleError}
                                   />
                                 </div>
                               </div>
@@ -1615,115 +1642,109 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                       <div className="details-videos-images-thumbnail">
                         {thumbnailItem === ".jpg" ? (
                           <InnerImageZoom
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                             imgAttributes={{
                               width: "auto",
                               height: "auto",
-                              onError: handleError,
                               alt: filterData.product?.name,
                             }}
+                            onError={handleError}
                           />
                         ) : (
                           <InnerImageZoom
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}${thumbnailItem}`}
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}${thumbnailItem}`}
                             imgAttributes={{
                               width: "auto",
                               height: "auto",
-                              onError: handleError,
                               alt: filterData.product?.name,
                             }}
+                            onError={handleError}
                           />
                         )}
                       </div>
                     ) : (
                       <div className="details-videos">
                         <LazyLoadImage
-                          src="https://www.icegif.com/wp-content/uploads/2023/07/icegif-1260.gif"
+                          src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}${thumbnailItem}`}
                           alt={filterData.product?.name}
                           className="video-poster"
                           effect="blur"
-                          width="auto"
-                          height="auto"
                           onError={handleError}
                         />
                         <span
                           className={`details-video-common 
-                                          ${
-                                            changeClick === white
-                                              ? "active"
-                                              : ""
-                                          }
-                                          
-                                          `}
+                          ${changeClick === white ? "active" : ""}
+                          
+                          `}
                         >
                           <InnerImageZoom
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                             imgAttributes={{
+                              alt: filterData.product?.name,
                               width: "auto",
                               height: "auto",
-                              onError: handleError,
-                              alt: filterData.product?.name,
                             }}
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                            onError={handleError}
                           />
                         </span>
                         <span
                           className={`details-video-common 
-  ${changeClick === yellow ? "active" : ""}
-  
-  `}
+    ${changeClick === yellow ? "active" : ""}
+    
+    `}
                         >
                           <InnerImageZoom
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.alt.jpg`}
                             imgAttributes={{
+                              alt: filterData.product?.name,
                               width: "auto",
                               height: "auto",
-                              onError: handleError,
-                              alt: filterData.product?.name,
                             }}
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt.jpg`}
+                            onError={handleError}
                           />
                         </span>
                         <span
                           className={`details-video-common 
-                                  ${changeClick === rose ? "active" : ""}
-                                  
-                                  `}
+                                    ${changeClick === rose ? "active" : ""}
+                                    
+                                    `}
                         >
                           <InnerImageZoom
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.alt1.jpg`}
                             imgAttributes={{
+                              alt: filterData.product?.name,
                               width: "auto",
                               height: "auto",
-                              onError: handleError,
-                              alt: filterData.product?.name,
                             }}
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt1.jpg`}
+                            onError={handleError}
                           />
                         </span>
                         <span
                           className={`details-video-common 
-  ${changeClick === platinum ? "active" : ""}
-  
-  `}
+    ${changeClick === platinum ? "active" : ""}
+    
+    `}
                         >
                           <InnerImageZoom
+                            src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                             imgAttributes={{
+                              alt: filterData.product?.name,
                               width: "auto",
                               height: "auto",
-                              onError: handleError,
-                              alt: filterData.product?.name,
                             }}
-                            src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                            onError={handleError}
                           />
                         </span>
                       </div>
                     )}
 
                     <div className="all-images">
-                    <div className="detail-images">
+                      <div className="detail-images">
                         <div className="white default-img">
                           <div>
                             <img
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
-                                filterData.imgUrl
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${
+                                filterData.entity_id
                               }${
                                 (changeClick === white ||
                                   changeClick === platinum) &&
@@ -1743,7 +1764,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               }`}
                               alt={filterData.product?.name}
                               width="auto"
-                              height="auto" 
+                              height="auto"
                               onError={handleError}
                               onClick={() =>
                                 onchangeThumbnail(
@@ -1769,8 +1790,8 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
 
                           <div>
                             <img
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
-                                filterData.imgUrl
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${
+                                filterData.entity_id
                               }${
                                 (changeClick === white ||
                                   changeClick === platinum) &&
@@ -1790,7 +1811,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               }`}
                               alt={filterData.product?.name}
                               width="auto"
-                              height="auto" 
+                              height="auto"
                               onError={handleError}
                               onClick={() =>
                                 onchangeThumbnail(
@@ -1814,10 +1835,10 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             />
                           </div>
 
-                          <div>
+                          {/* <div>
                             <img
-                              src={`${imgBaseUrl}/${filterData.imgUrl}/${
-                                filterData.imgUrl
+                              src={`${imgBaseUrl}/${filterData.entity_id}/${
+                                filterData.entity_id
                               }${
                                 (changeClick === white ||
                                   changeClick === platinum) &&
@@ -1837,7 +1858,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               }`}
                               alt={filterData.product?.name}
                               width="auto"
-                              height="auto" 
+                              height="auto"
                               onError={handleError}
                               onClick={() =>
                                 onchangeThumbnail(
@@ -1859,127 +1880,9 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                                 )
                               }
                             />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
-                      {filterData.product?.videos && (
-                        <div className="main-svg-icon-video">
-                          <div
-                            className={`svg-video ${
-                              changeClick === white ? "active" : ""
-                            }`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              onChangeClick(
-                                filterData.product?.id,
-                                filterData.product?.metalColor,
-                                "18kt",
-                                "natural",
-                                white,
-                                filterData.product?.white_gold_price,
-                                "white",
-                                "svgVideoWhite"
-                              );
-                            }}
-                          >
-                            <img
-                              width="auto"
-                              height="auto"
-                              onError={handleError}
-                              src="https://www.overnightmountings.com//js/videoplayer/images/rotatingnew.gif"
-                              alt={filterData.product?.name}
-                            />
-                          </div>
-
-                          <div
-                            className={`svg-video ${
-                              changeClick === yellow ? "active" : ""
-                            }`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              onChangeClick(
-                                filterData.product?.id,
-                                filterData.product?.metalColor,
-                                "18kt",
-                                "natural",
-
-                                yellow,
-                                filterData.product?.yellow_gold_price,
-                                "yellow",
-                                "svgVideoYellow"
-                              );
-                            }}
-                          >
-                            <img
-                              width="auto"
-                              height="auto"
-                              onError={handleError}
-                              src="https://www.overnightmountings.com//js/videoplayer/images/rotatingnew.gif"
-                              alt={filterData.product?.name}
-                            />
-                          </div>
-
-                          <div
-                            className={`svg-video ${
-                              changeClick === rose ? "active" : ""
-                            }`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              onChangeClick(
-                                filterData.product?.id,
-                                filterData.product?.metalColor,
-                                "18kt",
-                                "natural",
-
-                                rose,
-                                filterData.product?.rose_gold_price,
-                                "rose",
-                                "svgVideoRose"
-                              );
-                            }}
-                          >
-                            <img
-                              width="auto"
-                              height="auto"
-                              onError={handleError}
-                              src="https://www.overnightmountings.com//js/videoplayer/images/rotatingnew.gif"
-                              alt={filterData.product?.name}
-                            />
-                          </div>
-
-                          <div
-                            className={`svg-video ${
-                              changeClick === platinum ? "active" : ""
-                            }`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              onChangeClick(
-                                filterData.product?.id,
-                                filterData.product?.metalColor,
-                                "Platinum",
-                                "natural",
-
-                                platinum,
-                                filterData.product?.rose_gold_price,
-                                "white",
-                                "svgVideoPlatinum"
-                              );
-                            }}
-                          >
-                            <img
-                              width="auto"
-                              height="auto"
-                              onError={handleError}
-                              src="https://www.overnightmountings.com//js/videoplayer/images/rotatingnew.gif"
-                              alt={filterData.product?.name}
-                            />
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
                   <div className="singleProduct-text">
@@ -2107,7 +2010,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.id,
+                              filterData.product?.sku,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2129,7 +2032,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.id,
+                              filterData.product?.sku,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2148,7 +2051,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.id,
+                              filterData.product?.sku,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2170,7 +2073,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.id,
+                              filterData.product?.sku,
                               filterData.product?.metalColor,
                               "Platinum",
                               "natural",
@@ -2186,78 +2089,79 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                       </div>
                     </div>
 
-                    {
-                             
-                             filterData.product?.SideDiamondNumber > 0 &&    (
-                              filterData.product?.variants.length > 0 ? (
-                           
-                                                 <div className="Diamond-Original-main  Setting-Carat Variation">
-                                                  <span className="bold full-width">
-                                                     Setting Carat Weight (setting only) : <span className="bold-650">
-                                                     {
-                                                              <span>{changeOverVariation ? `${changeOverVariation} ct tw `: filterData.product?.fractionsemimount }  </span>
-                                                           }
-                                                       </span> 
-                                                   </span>
-                           
-                                                   {filterData.product?.variants.map(
-                                                     (variantItem, index) => {
-                                                       const inputString = variantItem.sku;
-                                                       const regex = /(\d+\/\d+)/;
-                                                       const match = inputString?.match(regex);
-                                                       if (match && match?.length > 0) {
-                                                         const fraction = match[0];
-                           
-                                                         return (
-                                                           <>
-                                                             <div
-                                                               className={
-                                                                 variantSlug === variantItem.slug
-                                                                   ? "active-variant variant-outer"
-                                                                   : "variant-outer"
-                                                               }
-                                                               key={index}
-                                                             >
-                                                               <span
-                                                                 onClick={() =>
-                                                                   handleVariation(variantItem.slug)
-                                                                 }
-                                                                 onMouseEnter={() => onChangeOverVariation(fraction)}
-                           
-                                                               
-                                                     onMouseOut={() => onChangeOverVariation( )}
-                                                               >
-                                                                  
-                                                                 {fraction}
-                                                               </span>
-                                                             </div>
-                                                           </>
-                                                         );
-                                                       }
-                                                       return null; // Make sure to return null if the condition is not met
-                                                     }
-                                                   )}
-                                                 </div>
-                                               ) : (
-                                                 filterData.product?.fractionsemimount && (
-                                                   <div className="Diamond-Original-main  Setting-Carat Variation N/A">
-                                                     <span className=" full-width">
-                                                       <span className="bold">
-                                                         Setting Carat Weight (setting only) :{" "}
-                                                       </span>{" "}
-                                                       <span className="bold-650">
-                                                         {" "}
-                                                         {filterData.product?.fractionsemimount}
-                                                       </span>
-                                                     </span>
-                                                   </div>
-                                                 )
-                                               )
-                           
-                              )
-                                                  }
+                    {filterData.product?.SideDiamondNumber > 0 &&
+                      (filterData.product?.variants.length > 0 ? (
+                        <div className="Diamond-Original-main  Setting-Carat Variation">
+                          <span className="bold full-width">
+                            Setting Carat Weight (setting only) :{" "}
+                            <span className="bold-650">
+                              {
+                                <span>
+                                  {changeOverVariation
+                                    ? `${changeOverVariation} ct tw `
+                                    : filterData.product
+                                        ?.fractionsemimount}{" "}
+                                </span>
+                              }
+                            </span>
+                          </span>
 
-<div className="Diamond-Original-main">
+                          {filterData.product?.variants.map(
+                            (variantItem, index) => {
+                              const inputString = variantItem.sku;
+                              const regex = /(\d+\/\d+)/;
+                              const match = inputString?.match(regex);
+                              if (match && match?.length > 0) {
+                                const fraction = match[0];
+
+                                return (
+                                  <>
+                                    <div
+                                      className={
+                                        variantSlug === variantItem.slug
+                                          ? "active-variant variant-outer"
+                                          : "variant-outer"
+                                      }
+                                      key={index}
+                                    >
+                                      <span
+                                        onClick={() =>
+                                          handleVariation(variantItem.slug)
+                                        }
+                                        onMouseEnter={() =>
+                                          onChangeOverVariation(fraction)
+                                        }
+                                        onMouseOut={() =>
+                                          onChangeOverVariation()
+                                        }
+                                      >
+                                        {fraction}
+                                      </span>
+                                    </div>
+                                  </>
+                                );
+                              }
+                              return null; // Make sure to return null if the condition is not met
+                            }
+                          )}
+                        </div>
+                      ) : (
+                        filterData.product?.fractionsemimount && (
+                          <div className="Diamond-Original-main  Setting-Carat Variation N/A">
+                            <span className=" full-width">
+                              <span className="bold">
+                                Setting Carat Weight (setting only) :{" "}
+                              </span>{" "}
+                              <span className="bold-650">
+                                {" "}
+                                {filterData.product?.fractionsemimount}
+                              </span>
+                            </span>
+                          </div>
+                        )
+                      ))}
+
+                    <div className="Diamond-Original-main">
                       <span class="bold">
                         Diamond Origin:
                         <span
@@ -2266,7 +2170,6 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               ? "unbold active bold-650"
                               : "unbold bold-650"
                           }
-                         
                         >
                           {diamondOrigin
                             ? diamondOrigin
@@ -2280,7 +2183,6 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               ? "unbold active bold-650"
                               : "unbold bold-650"
                           }
-                         
                         >
                           {diamondOrigin
                             ? diamondOrigin
@@ -2301,17 +2203,16 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClickNature(
-                              filterData.product?.id,
+                              filterData.product?.sku,
                               filterData.product?.metalColor,
                               listColor === "platinum" ? "Platinum" : "18kt",
                               "natural"
                             );
                           }}
-                           onMouseEnter={() =>
+                          onMouseEnter={() =>
                             handleDiamondOriginHover("Natural")
                           }
                           onMouseOut={() => handleDiamondOriginHover("")}
-                          
                         >
                           Natural
                         </Link>
@@ -2326,7 +2227,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClickNature(
-                              filterData.product?.id,
+                              filterData.product?.sku,
                               filterData.product?.metalColor,
                               listColor === "platinum" ? "Platinum" : "18kt",
                               "lab_grown"
@@ -2466,7 +2367,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                       </div>
                     </div>
                     <div className="bold select-custom-size-side">
-                    <span>
+                      <span>
                         {" "}
                         <div onClick={() => togglePopup()}>
                           <span>
@@ -2636,9 +2537,9 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
 
                     <div className="contact-us-btn shipping-add">
                       {" "}
-                      Still can’t find your perfect ring?{" "} Send us a
-                      <Link href="/custom-concierge"> customization </Link> request
-
+                      Still can’t find your perfect ring? Send us a
+                      <Link href="/custom-concierge"> customization </Link>{" "}
+                      request
                     </div>
 
                     <div className="shipping-add">
@@ -2647,7 +2548,9 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                           <RiTruckLine />
                         </li>
                         <li>
-                          <Link href="#">Free Shipping, Free 30 Day Returns</Link>
+                          <Link href="#">
+                            Free Shipping, Free 30 Day Returns
+                          </Link>
                         </li>
                       </ul>
 

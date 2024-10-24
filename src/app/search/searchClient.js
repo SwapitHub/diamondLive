@@ -724,7 +724,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.side.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -736,7 +736,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.alt.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.alt.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -745,7 +745,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.alt.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.side.alt.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -757,7 +757,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.alt1.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.alt1.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -766,7 +766,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.alt1.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.side.alt1.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -786,7 +786,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.side.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -895,7 +895,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.side.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -907,7 +907,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.alt.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.alt.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -916,7 +916,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.alt.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.side.alt.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -928,7 +928,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.alt1.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.alt1.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -937,7 +937,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.alt1.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.side.alt1.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
@@ -957,7 +957,7 @@ const SearchPage = ({
                               <LazyLoadImage
                                 width="auto"
                                 height="auto"
-                                src={`${imgBaseUrl}/${item.internal_sku}/${item.internal_sku}.side.jpg`}
+                                src={`${imgBaseUrl}/${item.entity_id}/${item.entity_id}.side.jpg`}
                                 alt={item.name}
                                 onError={handleError}
                               />
