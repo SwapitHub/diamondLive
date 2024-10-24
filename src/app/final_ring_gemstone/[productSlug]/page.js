@@ -87,7 +87,7 @@ const gemstonePage = async ({searchParams, params}) => {
   
   const filterData={
     product: ringData.data,
-    imgUrl: ringData.data.internal_sku
+    imgUrl: ringData.data.entity_id
   }
   
   return (

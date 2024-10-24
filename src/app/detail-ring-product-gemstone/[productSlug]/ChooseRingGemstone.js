@@ -253,8 +253,8 @@ export default function ChooseRingGemstone({
   useMemo(() => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${
-          filterData.product?.sku
+        `${baseUrl}/get_product_price?product_id=${
+          filterData.product?.id
         }&metalType=${
           listColor === "platinum" ? "Platinum" : "18kt"
         }&metalColor=${urlColor}&diamond_type=${
@@ -345,7 +345,7 @@ export default function ChooseRingGemstone({
     }
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${productSku}&metalType=${productType}&metalColor=${diamondColor}&diamond_type=${diamond_type}`
+        `${baseUrl}/get_product_price?product_id=${productSku}&metalType=${productType}&metalColor=${diamondColor}&diamond_type=${diamond_type}`
       )
 
       .then((response) => {
@@ -389,7 +389,7 @@ export default function ChooseRingGemstone({
   ) => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${productSku}&metalType=${productType}&metalColor=${
+        `${baseUrl}/get_product_price?product_id=${productSku}&metalType=${productType}&metalColor=${
           diamondColor ? diamondColor : urlColor
         }&diamond_type=${diamond_type}`
       )
@@ -2013,7 +2013,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2040,7 +2040,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2068,7 +2068,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2096,7 +2096,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "Platinum",
                               "natural",
@@ -2368,7 +2368,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2390,7 +2390,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2409,7 +2409,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2431,7 +2431,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "Platinum",
                               "natural",
@@ -2561,7 +2561,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClickNature(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               listColor === "platinum" ? "Platinum" : "18kt",
                               "natural"
@@ -2585,7 +2585,7 @@ ${changeClick === rose ? "active" : ""}
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClickNature(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               listColor === "platinum" ? "Platinum" : "18kt",
                               "lab_grown"

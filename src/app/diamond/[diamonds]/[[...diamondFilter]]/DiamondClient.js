@@ -747,14 +747,15 @@ const ChooseDiamondsShape = ({
       return updatedState;
     });
   };
+console.log(filterData);
 
   // ============ price  lab_grown =======================//
   useMemo(() => {
     if (filterData) {
       axios
         .get(
-          `${baseUrl}/get_product_price?product_sku=${
-            filterData?.product?.sku
+          `${baseUrl}/get_product_price?product_id=${
+            filterData?.product?.id
           }&metalType=${
             listColor === "Platinum" ? "Platinum" : "18kt"
           }&metalColor=${

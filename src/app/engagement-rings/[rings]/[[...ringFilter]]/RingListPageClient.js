@@ -1757,8 +1757,7 @@ console.log(filterRoseData);
                           alt={item.name}
                         />
                       </div>
-{console.log(`${imgBaseUrl}/${item.imageName}/${item.imageName}.alt.jpg`)
-}
+
                       <div className="all-img1 img-1 common-img Yellow">
                         <span className="common-stand-img-1">
                           <LazyLoadImage

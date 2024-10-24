@@ -23,6 +23,7 @@ import PaypalCheckoutButton from "../_componentStatic/PaypalCheckoutButton";
 import { UserContext } from "../context/UserContext";
    
 const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
+console.log(cartDetails);
 
   const dispatch = useDispatch();
   const white = "18k-white-gold";
@@ -1994,6 +1995,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                       hasDuplicates = true;
                     }
 
+
                     return (
                       <>
                         <div className="shop-card-inner main-cart-inner">
@@ -2558,6 +2560,7 @@ const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
                                                   }}
                                                 />
                                               </li>
+                                             
                                               <li
                                                 className={
                                                   item.ring_color === rose

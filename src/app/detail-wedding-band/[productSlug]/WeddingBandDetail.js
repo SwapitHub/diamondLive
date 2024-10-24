@@ -2301,7 +2301,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClickNature(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               listColor === "platinum" ? "Platinum" : "18kt",
                               "natural"

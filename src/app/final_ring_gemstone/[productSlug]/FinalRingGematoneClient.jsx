@@ -332,8 +332,8 @@ export default function FinalGemstone({data, filterData}){
   useEffect(() => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${
-          filterData.product?.sku
+        `${baseUrl}/get_product_price?product_id=${
+          filterData.product?.id
         }&metalType=${
           listColor === "platinum" ? "platinum" : "18kt"
         }&metalColor=${metalColorShow}&diamond_type=${diamond_original}`

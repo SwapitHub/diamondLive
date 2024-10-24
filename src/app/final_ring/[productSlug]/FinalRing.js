@@ -144,7 +144,6 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
   // ===============ring details Api==============
 
   const [filterData, setFilterData] = useState([]);
-  const [similarProducts, setSimilarProducts] = useState([]);
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
@@ -153,7 +152,8 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
   useMemo(() => {
     setFilterData({
       product: ringData.data,
-      imgUrl: ringData.data.internal_sku
+      imgUrl: ringData.data.internal_sku,
+      entity_id: ringData.data.entity_id
     })
   }, [productSlug]);
   // ring api details Api end
@@ -416,8 +416,8 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
   }
   // ============ price  lab_grown =======================//
   useEffect(() => {
-    let api = `${baseUrl}/get_product_price?product_sku=${
-      filterData.product?.sku
+    let api = `${baseUrl}/get_product_price?product_id=${
+      filterData.product?.id
     }&metalType=${
       listColor === "platinum" ? "Platinum" : "18kt"
     }&metalColor=${metalColorShow}&diamond_type=${diamond_original}`;
@@ -560,7 +560,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
                             alt: filterData.product?.name,
                             onError: handleError,
                           }}
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                          src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                         />
                       </li>
                       <li
@@ -573,7 +573,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
                             alt: filterData.product?.name,
                             onError: handleError,
                           }}
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt.jpg`}
+                          src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.alt.jpg`}
                         />
                       </li>
                       <li
@@ -586,7 +586,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
                             alt: filterData.product?.name,
                             onError: handleError,
                           }}
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt1.jpg`}
+                          src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.alt1.jpg`}
                         />
                       </li>
                       <li
@@ -599,7 +599,7 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
                             alt: filterData.product?.name,
                             onError: handleError,
                           }}
-                          src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                          src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                         />
                       </li>
                       <li>
