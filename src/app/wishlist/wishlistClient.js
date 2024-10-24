@@ -2341,7 +2341,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                        src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {

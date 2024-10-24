@@ -943,7 +943,7 @@ const FinalRing = ({ diamondDataServer, filterData }) => {
                                                 ?.rose_gold_price
                                             : filterData.product
                                                 ?.platinum_price,
-                                          filterData.imgUrl,
+                                          filterData.product.entity_id,
                                           diamondItem?.stock_num,
                                           diamondData?.total_sales_price,
                                           diamondItem?.id,

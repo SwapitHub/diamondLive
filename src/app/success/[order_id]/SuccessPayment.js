@@ -9,6 +9,7 @@ import secureLocalStorage from "react-secure-storage";
 
 const SuccessPayment = ({orderId, order_id}) => {
   const pdfRef = useRef();
+console.log(orderId);
 
   const { imgAssetsUrl } = useContext(UserContext);
   const cartDetails = useSelector((state) => state.cartReducer);

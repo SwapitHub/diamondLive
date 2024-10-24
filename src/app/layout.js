@@ -13,11 +13,20 @@ import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 async function fetchDataFromAPI() {
-  const response = await fetch(`${process.env.BASE_URL}/siteinfo`);
-  const data = await response?.json();
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/siteinfo`);
 
-  return data;
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 }
+
 
 export async function generateMetadata() {
   const data = await fetchDataFromAPI();

@@ -290,6 +290,7 @@ console.log(filterRoseData);
               yellow_gold_price: product.yellow_gold_price,
               rose_gold_price: product.rose_gold_price,
               platinum_price: product.platinum_price,
+              entity_id: product.entity_id
             }));
 
             if (page > 1) {
