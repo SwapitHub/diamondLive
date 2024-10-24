@@ -2270,6 +2270,8 @@ const WishList = ({wishListDataBase, userId}) => {
 
               <div className="wishlist_page-column">
                 {wishlist?.map((item) => {
+                  console.log(item);
+                  
                   return (
                     <>
                       <div
@@ -2339,7 +2341,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.jpg`}
+                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {

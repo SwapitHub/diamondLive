@@ -1142,7 +1142,6 @@ export const WishlistHover = () => {
           <div className="cart-card">
             {wishlist.length > 0 ? (
               wishlist.map((item, index) => {
-                console.log(item.item.entity_id);
                 
                 return (
                   <>
@@ -1286,7 +1285,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.jpg`}
+                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1306,7 +1305,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.alt.jpg`}
+                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1326,7 +1325,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.alt1.jpg`}
+                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1346,7 +1345,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.jpg`}
+                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1586,7 +1585,7 @@ export const WishlistHover = () => {
                                   className="img-responsive center-block"
                                   onError={(e) => {
                                     e.target.onerror = null;
-                                    // e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
                               </li>
@@ -1606,7 +1605,7 @@ export const WishlistHover = () => {
                                   className="img-responsive center-block"
                                   onError={(e) => {
                                     e.target.onerror = null;
-                                    // e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
                               </li>
@@ -1626,7 +1625,7 @@ export const WishlistHover = () => {
                                   className="img-responsive center-block"
                                   onError={(e) => {
                                     e.target.onerror = null;
-                                    // e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
                               </li>

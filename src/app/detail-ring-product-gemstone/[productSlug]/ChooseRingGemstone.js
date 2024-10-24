@@ -31,8 +31,9 @@ import Popup from "reactjs-popup";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { v4 as uuidv4 } from "uuid";
-import { removeToWishlist } from "../../../../store/actions/wishlistAction";
+import { addToWishlist, removeToWishlist } from "../../../../store/actions/wishlistAction";
 import { RingSizeChart } from "@/app/_componentStatic/RingSizeChart";
+import { productList } from "../../../../store/actions/productActions";
 
 export default function ChooseRingGemstone({
   filterData,
@@ -161,7 +162,7 @@ export default function ChooseRingGemstone({
         ring_size,
         img_sku,
       };
-      dispatch(addToWishList(newItem));
+      dispatch(addToWishlist(newItem));
 
       // Construct URL for API call
       const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${img_sku}&ring_price=${ring_price}&ring_type=${diamondTypeClick}${
@@ -207,7 +208,7 @@ export default function ChooseRingGemstone({
         ring_type,
         uniqueId: uuidv4(),
       };
-      dispatch(addToWishList(newItem));
+      dispatch(addToWishlist(newItem));
 
       const apiUrl = `${baseUrl}/add_to_wishlist?user_id=${user_id}&product_type=${product_type}&ring_id=${ring_id}&ring_color=${ring_color}&img_sku=${ring_img}&ring_price=${ring_price}&ring_type=${ring_type}`;
       // Make API call

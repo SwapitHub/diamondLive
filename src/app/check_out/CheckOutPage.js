@@ -1,7 +1,6 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { useSelector } from "react-redux";
 
 import axios from "axios";
 import {
@@ -14,11 +13,11 @@ import {
   validateTelephone,
 } from "../_componentStatic/ValidationFunctions";
 
+import Cookies from "js-cookie";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { UserContext } from "../context/UserContext";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Cookies from "js-cookie";
 
 export const CheckOutPage = ({cartDetails, metalColor}) => {
   
@@ -874,6 +873,8 @@ export const CheckOutPage = ({cartDetails, metalColor}) => {
                       <div className="checkout-right-scroll">
                         <h3>Order Summary</h3>
                         {cartDetails?.map((item) => {
+                          console.log(item);
+                          
                           const selectedMetalColor = metalColor.find(
                             (colorItem) =>
                               colorItem?.slug === item?.active_color
@@ -940,7 +941,7 @@ export const CheckOutPage = ({cartDetails, metalColor}) => {
                                               width="auto"
                                               height="auto"
                                               onError={handleError}
-                                              src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.jpg`}
+                                              src={`${imgBaseUrl}/${item.ring.entity_id}/${item.ring.entity_id}.jpg`}
                                               alt={item.ring?.name}
                                               className="img-responsive center-block"
                                             />
@@ -956,7 +957,7 @@ export const CheckOutPage = ({cartDetails, metalColor}) => {
                                               width="auto"
                                               height="auto"
                                               onError={handleError}
-                                              src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.alt.jpg`}
+                                              src={`${imgBaseUrl}/${item.ring.entity_id}/${item.ring.entity_id}.alt.jpg`}
                                               alt={item.ring?.name}
                                               className="img-responsive center-block"
                                             />
@@ -972,7 +973,7 @@ export const CheckOutPage = ({cartDetails, metalColor}) => {
                                               width="auto"
                                               height="auto"
                                               onError={handleError}
-                                              src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.alt1.jpg`}
+                                              src={`${imgBaseUrl}/${item.ring.entity_id}/${item.ring.entity_id}.alt1.jpg`}
                                               alt={item.ring?.name}
                                               className="img-responsive center-block"
                                             />
@@ -988,7 +989,7 @@ export const CheckOutPage = ({cartDetails, metalColor}) => {
                                               width="auto"
                                               height="auto"
                                               onError={handleError}
-                                              src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.jpg`}
+                                              src={`${imgBaseUrl}/${item.ring.entity_id}/${item.ring.entity_id}.jpg`}
                                               alt={item.ring?.name}
                                               className="img-responsive center-block"
                                             />

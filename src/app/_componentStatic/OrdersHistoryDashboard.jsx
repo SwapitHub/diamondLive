@@ -60,7 +60,6 @@ export const OrdersHistoryDashboard = ({ showOrderId, setShowOrderId }) => {
       });
   }, [user_id, currentPage]);
 
-
   return (
     <>
       <div className="account-right-data">

@@ -449,7 +449,7 @@ const PaymentForm = ({userAccountDataShip,cartDetails, metalColor}) => {
                                                   width="auto"
                                                   height="auto"
                                                   onError={handleError}
-                                                  src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.jpg`}
+                                                  src={`${imgBaseUrl}/${item.ring.entity_id}/${item.ring.entity_id}.jpg`}
                                                   alt={item.ring?.name}
                                                   className="img-responsive center-block"
                                                 />
@@ -465,7 +465,7 @@ const PaymentForm = ({userAccountDataShip,cartDetails, metalColor}) => {
                                                   width="auto"
                                                   height="auto"
                                                   onError={handleError}
-                                                  src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.alt.jpg`}
+                                                  src={`${imgBaseUrl}/${item.ring.entity_id}/${item.ring.entity_id}.alt.jpg`}
                                                   alt={item.ring?.name}
                                                   className="img-responsive center-block"
                                                 />
@@ -481,7 +481,7 @@ const PaymentForm = ({userAccountDataShip,cartDetails, metalColor}) => {
                                                   width="auto"
                                                   height="auto"
                                                   onError={handleError}
-                                                  src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.alt1.jpg`}
+                                                  src={`${imgBaseUrl}/${item.ring.entity_id}/${item.ring.entity_id}.alt1.jpg`}
                                                   alt={item.ring?.name}
                                                   className="img-responsive center-block"
                                                 />
@@ -497,7 +497,7 @@ const PaymentForm = ({userAccountDataShip,cartDetails, metalColor}) => {
                                                   width="auto"
                                                   height="auto"
                                                   onError={handleError}
-                                                  src={`${imgBaseUrl}/${item.img_sku}/${item.img_sku}.jpg`}
+                                                  src={`${imgBaseUrl}/${item.ring.entity_id}/${item.ring.entity_id}.jpg`}
                                                   alt={item.ring?.name}
                                                   className="img-responsive center-block"
                                                 />
