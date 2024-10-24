@@ -284,8 +284,8 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   useMemo(() => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${
-          filterData.product?.sku
+        `${baseUrl}/get_product_price?product_id=${
+          filterData.product?.id
         }&metalType=${
           listColor === "platinum" ? "Platinum" : "18kt"
         }&metalColor=${urlColor}&diamond_type=${
@@ -416,7 +416,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
 
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${productSku}&metalType=${productType}&metalColor=${diamondColor}&diamond_type=${diamond_type}`
+        `${baseUrl}/get_product_price?product_id=${productSku}&metalType=${productType}&metalColor=${diamondColor}&diamond_type=${diamond_type}`
       )
 
       .then((response) => {
@@ -463,7 +463,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
   ) => {
     axios
       .get(
-        `${baseUrl}/get_product_price?product_sku=${productSku}&metalType=${productType}&metalColor=${
+        `${baseUrl}/get_product_price?product_id=${productSku}&metalType=${productType}&metalColor=${
           diamondColor ? diamondColor : urlColor
         }&diamond_type=${diamond_type}`
       )
@@ -1872,7 +1872,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               e.preventDefault();
                               e.stopPropagation();
                               onChangeClick(
-                                filterData.product?.sku,
+                                filterData.product?.id,
                                 filterData.product?.metalColor,
                                 "18kt",
                                 "natural",
@@ -1900,7 +1900,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               e.preventDefault();
                               e.stopPropagation();
                               onChangeClick(
-                                filterData.product?.sku,
+                                filterData.product?.id,
                                 filterData.product?.metalColor,
                                 "18kt",
                                 "natural",
@@ -1929,7 +1929,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               e.preventDefault();
                               e.stopPropagation();
                               onChangeClick(
-                                filterData.product?.sku,
+                                filterData.product?.id,
                                 filterData.product?.metalColor,
                                 "18kt",
                                 "natural",
@@ -1958,7 +1958,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                               e.preventDefault();
                               e.stopPropagation();
                               onChangeClick(
-                                filterData.product?.sku,
+                                filterData.product?.id,
                                 filterData.product?.metalColor,
                                 "Platinum",
                                 "natural",
@@ -2107,7 +2107,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2129,7 +2129,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2148,7 +2148,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "18kt",
                               "natural",
@@ -2170,7 +2170,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClick(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               "Platinum",
                               "natural",
@@ -2326,7 +2326,7 @@ export const WeddingBandsDetail = ({productSlug, filterData, shapeData, fontStyl
                             e.preventDefault();
                             e.stopPropagation();
                             onChangeClickNature(
-                              filterData.product?.sku,
+                              filterData.product?.id,
                               filterData.product?.metalColor,
                               listColor === "platinum" ? "Platinum" : "18kt",
                               "lab_grown"

@@ -33,7 +33,9 @@ import {
 } from "../../../../store/actions/wishlistAction";
 import Cookies from "js-cookie";
 
-const FinalRing = ({ diamondDataServer, ringData }) => {
+const FinalRing = ({ diamondDataServer, filterData }) => {
+  console.log(filterData);
+  
   const [removeWishList, setRemoveWishList] = useState();
   const dispatch = useDispatch();
   const wishListDataBase = useSelector((state) => state.productDataWishlist);
@@ -143,19 +145,13 @@ const FinalRing = ({ diamondDataServer, ringData }) => {
 
   // ===============ring details Api==============
 
-  const [filterData, setFilterData] = useState([]);
+ 
   const white = "18k-white-gold";
   const yellow = "18k-yellow-gold";
   const rose = "18k-rose-gold";
   const platinum = "platinum";
 
-  useMemo(() => {
-    setFilterData({
-      product: ringData.data,
-      imgUrl: ringData.data.internal_sku,
-      entity_id: ringData.data.entity_id
-    })
-  }, [productSlug]);
+
   // ring api details Api end
 
   

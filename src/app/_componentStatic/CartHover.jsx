@@ -181,7 +181,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -198,7 +198,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -215,7 +215,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -232,7 +232,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -397,7 +397,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -414,7 +414,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -431,7 +431,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -448,7 +448,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -622,7 +622,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -639,7 +639,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -656,7 +656,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -673,7 +673,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                    src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -878,7 +878,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
+                                    src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -895,7 +895,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt.jpg`}
+                                    src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.alt.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -912,7 +912,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.alt1.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -929,7 +929,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
+                                    src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -978,7 +978,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
+                                    src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -995,7 +995,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt.jpg`}
+                                    src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.alt.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -1012,7 +1012,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt1.jpg`}
+                                    src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.alt1.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}
@@ -1029,7 +1029,7 @@ export const CartHover = () => {
                                   <img
                                     width="auto"
                                     height="auto"
-                                    src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
+                                    src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.jpg`}
                                     alt={item?.name}
                                     className="img-responsive center-block"
                                     onError={handleError}

@@ -88,10 +88,14 @@ const DiamondPage = async ({searchParams, params}) => {
   const diamondData = await fetchDiamondDetail(stock_num, diamond_origin);
   const ringData = await fetchRingDetail(productSlug);
   
-  
+  const filterData={
+    product: ringData.data,
+    imgUrl: ringData.data.internal_sku,
+    entity_id: ringData.data.entity_id
+  }
   return (
     <>
-      <FinalRing diamondDataServer={diamondData.response.body.diamonds} ringData={ringData}/>
+      <FinalRing diamondDataServer={diamondData.response.body.diamonds} filterData={filterData}/>
     </>
   );
 };

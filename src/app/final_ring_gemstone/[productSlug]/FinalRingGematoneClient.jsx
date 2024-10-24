@@ -35,6 +35,7 @@ export default function FinalGemstone({data, filterData}){
   const wishListDataBase = useSelector((state) => state.productDataWishlist);
 
   const dispatch = useDispatch();
+console.log(filterData);
 
   const queryParams = useSearchParams();
   const textEngraving = queryParams.get("textEngraving");
@@ -463,7 +464,7 @@ export default function FinalGemstone({data, filterData}){
                       }
                     >
                       <InnerImageZoom  width="auto"  height="auto" 
-                        src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                        src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                         imgAttributes={{alt: filterData.product?.name, onError:handleError}}
                       />
                     </li>
@@ -473,7 +474,7 @@ export default function FinalGemstone({data, filterData}){
                       }
                     >
                       <InnerImageZoom  width="auto"  height="auto" 
-                        src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt.jpg`}
+                        src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.alt.jpg`}
                         imgAttributes={{alt: filterData.product?.name, onError:handleError}}
                       />
                     </li>
@@ -481,7 +482,7 @@ export default function FinalGemstone({data, filterData}){
                       className={productColor === rose ? "active" : "displayed"}
                     >
                       <InnerImageZoom  width="auto"  height="auto" 
-                        src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.alt1.jpg`}
+                        src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.alt1.jpg`}
                         imgAttributes={{alt: filterData.product?.name, onError:handleError}}
                       />
                     </li>
@@ -491,7 +492,7 @@ export default function FinalGemstone({data, filterData}){
                       }
                     >
                       <InnerImageZoom  width="auto"  height="auto" 
-                        src={`${imgBaseUrl}/${filterData.imgUrl}/${filterData.imgUrl}.jpg`}
+                        src={`${imgBaseUrl}/${filterData.entity_id}/${filterData.entity_id}.jpg`}
                         imgAttributes={{alt: filterData.product?.name, onError:handleError}}
                       />
                     </li>

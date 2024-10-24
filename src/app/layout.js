@@ -14,7 +14,7 @@ import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 async function fetchDataFromAPI() {
   const response = await fetch(`${process.env.BASE_URL}/siteinfo`);
-  const data = await response.json();
+  const data = await response?.json();
 
   return data;
 }

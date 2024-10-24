@@ -416,7 +416,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                             alt={item?.name}
                                             onError={(e) => {
                                               e.target.onerror = null;
@@ -436,7 +436,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                             alt={item?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -456,7 +456,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                             alt={item?.name}
                                             onError={(e) => {
                                               e.target.onerror = null;
@@ -476,7 +476,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                             alt={item?.name}
                                             onError={(e) => {
                                               e.target.onerror = null;
@@ -1058,7 +1058,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1078,7 +1078,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1098,7 +1098,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1118,7 +1118,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1305,7 +1305,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                         <img
                                           width="auto"
                                           height="auto"
-                                          src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                          src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                           alt={item?.name}
                                           className="img-responsive center-block"
                                           onError={(e) => {
@@ -1325,7 +1325,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                         <img
                                           width="auto"
                                           height="auto"
-                                          src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                          src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                           alt={item?.name}
                                           className="img-responsive center-block"
                                           onError={(e) => {
@@ -1345,7 +1345,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                         <img
                                           width="auto"
                                           height="auto"
-                                          src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                          src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                           alt={item?.name}
                                           className="img-responsive center-block"
                                           onError={(e) => {
@@ -1365,7 +1365,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                         <img
                                           width="auto"
                                           height="auto"
-                                          src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                          src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                           alt={item?.name}
                                           className="img-responsive center-block"
                                           onError={(e) => {
@@ -1958,7 +1958,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                         <img
                                           width="auto"
                                           height="auto"
-                                          src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                          src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                           alt={item.ring?.name}
                                           className="img-responsive center-block"
                                           onError={(e) => {
@@ -1978,7 +1978,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                         <img
                                           width="auto"
                                           height="auto"
-                                          src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                          src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                           alt={item.ring?.name}
                                           className="img-responsive center-block"
                                           onError={(e) => {
@@ -1998,7 +1998,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                         <img
                                           width="auto"
                                           height="auto"
-                                          src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                          src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                           alt={item.ring?.name}
                                           className="img-responsive center-block"
                                           onError={(e) => {
@@ -2018,7 +2018,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                         <img
                                           width="auto"
                                           height="auto"
-                                          src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                          src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                           alt={item.ring?.name}
                                           className="img-responsive center-block"
                                           onError={(e) => {
@@ -2339,7 +2339,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                        src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {
@@ -2359,7 +2359,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                        src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.alt.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {
@@ -2379,7 +2379,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                        src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.alt1.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {
@@ -2399,7 +2399,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                        src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {
@@ -2919,7 +2919,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                        src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {
@@ -2939,7 +2939,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                        src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {
@@ -2959,7 +2959,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                        src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {
@@ -2979,7 +2979,7 @@ const WishList = ({wishListDataBase, userId}) => {
                                       <img
                                         width="auto"
                                         height="auto"
-                                        src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                        src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                         alt={item?.name}
                                         className="img-responsive center-block"
                                         onError={(e) => {

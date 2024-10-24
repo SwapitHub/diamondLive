@@ -238,7 +238,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                  src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -258,7 +258,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                  src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -278,7 +278,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                  src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -298,7 +298,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                  src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -688,7 +688,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                  src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                   alt={item.ring?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -708,7 +708,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                  src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                   alt={item.ring?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -728,7 +728,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                  src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                   alt={item.ring?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -748,7 +748,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                  src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                   alt={item.ring?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1142,6 +1142,8 @@ export const WishlistHover = () => {
           <div className="cart-card">
             {wishlist.length > 0 ? (
               wishlist.map((item, index) => {
+                console.log(item.item.entity_id);
+                
                 return (
                   <>
                     {item.product_type === "gemstone" ? (
@@ -1284,7 +1286,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                  src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1304,7 +1306,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                  src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.alt.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1324,7 +1326,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                  src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.alt1.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1344,7 +1346,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                  src={`${imgBaseUrl}/${item?.item?.entity_id}/${item?.item?.entity_id}.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
@@ -1579,12 +1581,12 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.ring_img}/${item?.ring_img}.jpg`}
+                                  src={`${imgBaseUrl}/${item.item.entity_id}/${item.item.entity_id}.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
                                     e.target.onerror = null;
-                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                    // e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
                               </li>
@@ -1599,12 +1601,12 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.ring_img}/${item?.ring_img}.alt.jpg`}
+                                  src={`${imgBaseUrl}/${item.item.entity_id}/${item.item.entity_id}.alt.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
                                     e.target.onerror = null;
-                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                    // e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
                               </li>
@@ -1619,12 +1621,12 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.ring_img}/${item?.ring_img}.alt1.jpg`}
+                                  src={`${imgBaseUrl}/${item.item.entity_id}/${item.item.entity_id}.alt1.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {
                                     e.target.onerror = null;
-                                    e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
+                                    // e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
                                   }}
                                 />
                               </li>
@@ -1639,7 +1641,7 @@ export const WishlistHover = () => {
                                 <img
                                   width="auto"
                                   height="auto"
-                                  src={`${imgBaseUrl}/${item?.ring_img}/${item?.ring_img}.jpg`}
+                                  src={`${imgBaseUrl}/${item.item.entity_id}/${item.item.entity_id}.jpg`}
                                   alt={item?.name}
                                   className="img-responsive center-block"
                                   onError={(e) => {

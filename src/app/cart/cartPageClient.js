@@ -23,7 +23,6 @@ import PaypalCheckoutButton from "../_componentStatic/PaypalCheckoutButton";
 import { UserContext } from "../context/UserContext";
    
 const CartPage = ({ cart, cartDetails, metalColor, userId }) => {
-console.log(cartDetails);
 
   const dispatch = useDispatch();
   const white = "18k-white-gold";
@@ -41,6 +40,7 @@ console.log(cartDetails);
   const [plans, setPlans] = useState(1);
   const handleChange = (event) => setMessage(event.target.value);
   const cartData = useSelector((state) => state.cartData);
+  console.log(cartData);
   
   const { baseUrl, imgBaseUrl, imgAssetsUrl } = useContext(UserContext);
   const now = new Date();
@@ -561,7 +561,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -580,7 +580,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -599,7 +599,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -618,7 +618,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1114,7 +1114,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1133,7 +1133,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1152,7 +1152,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1171,7 +1171,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                            src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                             alt={item.ring?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -1396,7 +1396,7 @@ console.log(cartDetails);
                                             <img
                                               width="auto"
                                               height="auto"
-                                              src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                              src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                               alt={item.ring?.name}
                                               className="img-responsive center-block"
                                               onError={(e) => {
@@ -1415,7 +1415,7 @@ console.log(cartDetails);
                                             <img
                                               width="auto"
                                               height="auto"
-                                              src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt.jpg`}
+                                              src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt.jpg`}
                                               alt={item.ring?.name}
                                               className="img-responsive center-block"
                                               onError={(e) => {
@@ -1434,7 +1434,7 @@ console.log(cartDetails);
                                             <img
                                               width="auto"
                                               height="auto"
-                                              src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.alt1.jpg`}
+                                              src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.alt1.jpg`}
                                               alt={item.ring?.name}
                                               className="img-responsive center-block"
                                               onError={(e) => {
@@ -1453,7 +1453,7 @@ console.log(cartDetails);
                                             <img
                                               width="auto"
                                               height="auto"
-                                              src={`${imgBaseUrl}/${item?.img_sku}/${item?.img_sku}.jpg`}
+                                              src={`${imgBaseUrl}/${item?.ring?.entity_id}/${item?.ring?.entity_id}.jpg`}
                                               alt={item.ring?.name}
                                               className="img-responsive center-block"
                                               onError={(e) => {
@@ -1995,7 +1995,6 @@ console.log(cartDetails);
                       hasDuplicates = true;
                     }
 
-
                     return (
                       <>
                         <div className="shop-card-inner main-cart-inner">
@@ -2143,7 +2142,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
+                                            src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.jpg`}
                                             alt={item.ring_data?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -2162,7 +2161,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt.jpg`}
+                                            src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.alt.jpg`}
                                             alt={item.ring_data?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -2181,7 +2180,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.alt1.jpg`}
+                                            src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.alt1.jpg`}
                                             alt={item.ring_data?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -2200,7 +2199,7 @@ console.log(cartDetails);
                                           <img
                                             width="auto"
                                             height="auto"
-                                            src={`${imgBaseUrl}/${item.ring_img}/${item.ring_img}.jpg`}
+                                            src={`${imgBaseUrl}/${item.ring_data.entity_id}/${item.ring_data.entity_id}.jpg`}
                                             alt={item.ring_data?.name}
                                             className="img-responsive center-block"
                                             onError={(e) => {
@@ -2560,7 +2559,6 @@ console.log(cartDetails);
                                                   }}
                                                 />
                                               </li>
-                                             
                                               <li
                                                 className={
                                                   item.ring_color === rose
