@@ -2419,7 +2419,7 @@ export const WeddingBandsDetail = ({
                                   : filterData.product?.platinum_price,
                                 filterData.product?.id,
                                 filterData.product,
-                                filterData.product?.internal_sku,
+                                filterData.product?.sama_sku,
                                 listColor,
                                 user_id,
                                 "matching_set",
@@ -2659,7 +2659,7 @@ export const WeddingBandsDetail = ({
                             <span>BAND INFORMATION</span>
                             <div>
                               <span>
-                                Style: {filterData.product?.internal_sku}
+                                Style: {filterData.product?.sama_sku}
                               </span>
                             </div>
                             <div>

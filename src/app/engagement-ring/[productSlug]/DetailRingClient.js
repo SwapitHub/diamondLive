@@ -46,6 +46,7 @@ const DetailRingProduct = ({
   const queryParams = useSearchParams();
   const pathname = usePathname();
 
+
   // Split the pathname into segments
   const pathSegments = pathname.split("/").filter(Boolean);
 
@@ -72,10 +73,10 @@ const DetailRingProduct = ({
       setAltColor("");
     } else if (listColor === yellow) {
       setUrlColor("yellow");
-      setAltColor("alt");
+      setAltColor(".alt");
     } else if (listColor === rose) {
       setUrlColor("rose");
-      setAltColor("alt1");
+      setAltColor(".alt1");
     } else if (listColor === platinum) {
       setUrlColor("white");
       setAltColor("");
@@ -437,7 +438,6 @@ const DetailRingProduct = ({
     );
   };
 
-  console.log(shapeProduct);
 
   // faq details page
   var index = 1;
@@ -665,7 +665,6 @@ const DetailRingProduct = ({
     e.target.src = `${imgAssetsUrl}/frontend/images/grayscalelogo.png`;
   };
 
-  console.log(filterData);
   
   return (
     <>
@@ -2943,7 +2942,7 @@ ${changeClick === rose ? "active" : ""}
                             <span>RING INFORMATION</span>
                             <div>
                               <span>
-                                Style: {filterData.product?.internal_sku}
+                                Style: {filterData.product?.sama_sku}
                               </span>
                             </div>
                             <div>
@@ -3178,7 +3177,7 @@ ${changeClick === rose ? "active" : ""}
                                     <img
                                       width="auto"
                                       height="auto"
-                                      src={`${imgBaseUrl}/${filterData?.product?.matching_wedding_band?.internal_sku}/${filterData?.product?.matching_wedding_band?.internal_sku}.${altColor}.jpg`}
+                                      src={`${imgBaseUrl}/${filterData?.product?.matching_wedding_band?.entity_id}/${filterData?.product?.matching_wedding_band?.entity_id}${altColor}.jpg`}
                                       alt={filterData.product?.name}
                                       onError={handleError}
                                     />
@@ -3214,7 +3213,7 @@ ${changeClick === rose ? "active" : ""}
                                                     ?.matching_wedding_band,
                                                   filterData.product
                                                     ?.matching_wedding_band
-                                                    ?.internal_sku,
+                                                    ?.sama_sku,
                                                   listColor,
                                                   user_id,
                                                   "matching_set",
@@ -3252,7 +3251,7 @@ ${changeClick === rose ? "active" : ""}
                                                   ?.matching_wedding_band,
                                                 filterData.product
                                                   ?.matching_wedding_band
-                                                  ?.internal_sku,
+                                                  ?.sama_sku,
                                                 listColor,
                                                 user_id,
                                                 "matching_set",
